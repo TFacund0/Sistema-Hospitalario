@@ -85,6 +85,9 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Pacientes.resx">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Turnos.resx">
+      <DependentUpon>UC_Turnos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
