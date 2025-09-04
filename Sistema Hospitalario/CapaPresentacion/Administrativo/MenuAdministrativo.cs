@@ -17,24 +17,22 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void AbrirUserControl(UserControl uc)
         {
-
+            panelContenedor.Controls.Clear();   // Limpia el panel
+            uc.Dock = DockStyle.Fill;           // Que ocupe todo el espacio disponible
+            panelContenedor.Controls.Add(uc);   // Lo agrega al panel
+            uc.BringToFront();                  // Lo trae al frente
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void btn_pacientes_Click(object sender, EventArgs e)
         {
-
+            AbrirUserControl(new UC_Pacientes());
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void btn_home_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
+            AbrirUserControl(new UC_Home());
         }
     }
 }
