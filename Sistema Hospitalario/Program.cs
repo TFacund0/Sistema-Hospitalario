@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Hospitalario.CapaPresentacion.Administrativo;
+using Sistema_Hospitalario.CapaPresentacion;
+using WindowsFormsInicio_de_sesion;
 
 namespace Sistema_Hospitalario
 
@@ -18,7 +19,7 @@ namespace Sistema_Hospitalario
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MenuAdministrativo());
+            Application.Run(new Login());
         }
     }
 }

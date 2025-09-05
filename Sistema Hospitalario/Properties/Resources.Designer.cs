@@ -63,6 +63,26 @@ namespace Sistema_Hospitalario.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ChatGPT_Image_1_sept_2025__03_00_36_p_m_ {
+            get {
+                object obj = ResourceManager.GetObject("ChatGPT Image 1 sept 2025, 03_00_36 p.m.", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ChatGPT_Image_1_sept_2025__03_12_01_p_m_ {
+            get {
+                object obj = ResourceManager.GetObject("ChatGPT Image 1 sept 2025, 03_12_01 p.m.", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Clinicks_Logo {
             get {
                 object obj = ResourceManager.GetObject("Clinicks-Logo", resourceCulture);
