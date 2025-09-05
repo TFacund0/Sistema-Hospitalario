@@ -74,6 +74,24 @@
     <Compile Include="CapaPresentacion\Administrativo\UC_Turnos.Designer.cs">
       <DependentUpon>UC_Turnos.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Medico\MenuMedicos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\MenuMedicos.Designer.cs">
+      <DependentUpon>MenuMedicos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_Home.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_Home.Designer.cs">
+      <DependentUpon>UC_Home.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_Pacientes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_Pacientes.Designer.cs">
+      <DependentUpon>UC_Pacientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CapaPresentacion\Administrativo\MenuAdministrativo.resx">
@@ -87,6 +105,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Turnos.resx">
       <DependentUpon>UC_Turnos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\MenuMedicos.resx">
+      <DependentUpon>MenuMedicos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\UC_Home.resx">
+      <DependentUpon>UC_Home.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -116,7 +140,6 @@
     <Folder Include="CapaEntidad\" />
     <Folder Include="CapaNegocio\" />
     <Folder Include="CapaPresentacion\Enfermero\" />
-    <Folder Include="CapaPresentacion\Medico\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Clinicks-Logo-Small.png" />
