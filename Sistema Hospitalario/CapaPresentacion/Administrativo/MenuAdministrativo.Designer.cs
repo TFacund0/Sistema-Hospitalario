@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnProcedimientos = new System.Windows.Forms.Button();
+            this.btnHospitalizacion = new System.Windows.Forms.Button();
+            this.btnTurnos = new System.Windows.Forms.Button();
             this.btn_pacientes = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_salir = new System.Windows.Forms.Button();
@@ -53,12 +51,10 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.panelMenu.Controls.Add(this.button7);
             this.panelMenu.Controls.Add(this.button6);
-            this.panelMenu.Controls.Add(this.button5);
-            this.panelMenu.Controls.Add(this.button4);
-            this.panelMenu.Controls.Add(this.button3);
-            this.panelMenu.Controls.Add(this.button2);
+            this.panelMenu.Controls.Add(this.btnProcedimientos);
+            this.panelMenu.Controls.Add(this.btnHospitalizacion);
+            this.panelMenu.Controls.Add(this.btnTurnos);
             this.panelMenu.Controls.Add(this.btn_pacientes);
             this.panelMenu.Controls.Add(this.label2);
             this.panelMenu.Controls.Add(this.btn_salir);
@@ -70,84 +66,60 @@
             this.panelMenu.Size = new System.Drawing.Size(251, 768);
             this.panelMenu.TabIndex = 0;
             // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.SystemColors.Menu;
-            this.button7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button7.FlatAppearance.BorderSize = 0;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(0, 684);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(251, 42);
-            this.button7.TabIndex = 13;
-            this.button7.Text = "Configuración";
-            this.button7.UseVisualStyleBackColor = false;
-            // 
             // button6
             // 
             this.button6.Dock = System.Windows.Forms.DockStyle.Top;
             this.button6.FlatAppearance.BorderSize = 0;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(0, 463);
+            this.button6.Location = new System.Drawing.Point(0, 407);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(251, 56);
             this.button6.TabIndex = 12;
             this.button6.Text = "Historial";
             this.button6.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnProcedimientos
             // 
-            this.button5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(0, 407);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(251, 56);
-            this.button5.TabIndex = 11;
-            this.button5.Text = "Procedimientos";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnProcedimientos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnProcedimientos.FlatAppearance.BorderSize = 0;
+            this.btnProcedimientos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProcedimientos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProcedimientos.Location = new System.Drawing.Point(0, 351);
+            this.btnProcedimientos.Name = "btnProcedimientos";
+            this.btnProcedimientos.Size = new System.Drawing.Size(251, 56);
+            this.btnProcedimientos.TabIndex = 11;
+            this.btnProcedimientos.Text = "Procedimientos";
+            this.btnProcedimientos.UseVisualStyleBackColor = true;
+            this.btnProcedimientos.Click += new System.EventHandler(this.btnProcedimientos_Click);
             // 
-            // button4
+            // btnHospitalizacion
             // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button4.FlatAppearance.BorderSize = 0;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(0, 351);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(251, 56);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "Hospitalización";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnHospitalizacion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnHospitalizacion.FlatAppearance.BorderSize = 0;
+            this.btnHospitalizacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHospitalizacion.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHospitalizacion.Location = new System.Drawing.Point(0, 295);
+            this.btnHospitalizacion.Name = "btnHospitalizacion";
+            this.btnHospitalizacion.Size = new System.Drawing.Size(251, 56);
+            this.btnHospitalizacion.TabIndex = 10;
+            this.btnHospitalizacion.Text = "Hospitalización";
+            this.btnHospitalizacion.UseVisualStyleBackColor = true;
+            this.btnHospitalizacion.Click += new System.EventHandler(this.btnHospitalizacion_Click);
             // 
-            // button3
+            // btnTurnos
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(0, 295);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(251, 56);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Emergencias";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(0, 239);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(251, 56);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Turnos";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnTurnos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTurnos.FlatAppearance.BorderSize = 0;
+            this.btnTurnos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTurnos.Location = new System.Drawing.Point(0, 239);
+            this.btnTurnos.Name = "btnTurnos";
+            this.btnTurnos.Size = new System.Drawing.Size(251, 56);
+            this.btnTurnos.TabIndex = 8;
+            this.btnTurnos.Text = "Turnos";
+            this.btnTurnos.UseVisualStyleBackColor = true;
+            this.btnTurnos.Click += new System.EventHandler(this.btnTurnos_Click);
             // 
             // btn_pacientes
             // 
@@ -168,7 +140,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Location = new System.Drawing.Point(-1, 512);
+            this.label2.Location = new System.Drawing.Point(-3, 457);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(259, 16);
             this.label2.TabIndex = 3;
@@ -291,11 +263,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnProcedimientos;
+        private System.Windows.Forms.Button btnHospitalizacion;
+        private System.Windows.Forms.Button btnTurnos;
         private System.Windows.Forms.Button btn_pacientes;
-        private System.Windows.Forms.Button button7;
     }
 }

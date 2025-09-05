@@ -56,17 +56,35 @@
     <Compile Include="CapaPresentacion\Administrativo\MenuAdministrativo.Designer.cs">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\UC_Historial.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\UC_Historial.Designer.cs">
+      <DependentUpon>UC_Historial.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Home.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Home.Designer.cs">
       <DependentUpon>UC_Home.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.Designer.cs">
+      <DependentUpon>UC_Hospitalizacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Pacientes.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Pacientes.Designer.cs">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\UC_Procedimientos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\UC_Procedimientos.Designer.cs">
+      <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Turnos.cs">
       <SubType>UserControl</SubType>
@@ -103,11 +121,20 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\MenuAdministrativo.resx">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Historial.resx">
+      <DependentUpon>UC_Historial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Home.resx">
       <DependentUpon>UC_Home.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.resx">
+      <DependentUpon>UC_Hospitalizacion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Pacientes.resx">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Procedimientos.resx">
+      <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Turnos.resx">
       <DependentUpon>UC_Turnos.cs</DependentUpon>

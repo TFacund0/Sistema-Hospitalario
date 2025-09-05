@@ -34,5 +34,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             AbrirUserControl(new UC_Home());
         }
+
+        private void btnTurnos_Click(object sender, EventArgs e)
+        {
+            AbrirUserControl(new UC_Turnos());
+        }
+
+        private void btnHospitalizacion_Click(object sender, EventArgs e)
+        {
+            AbrirUserControl(new UC_Hospitalizacion());
+        }
+
+        private void btnProcedimientos_Click(object sender, EventArgs e)
+        {
+            AbrirUserControl(new UC_Procedimientos());
+        }
     }
 }
