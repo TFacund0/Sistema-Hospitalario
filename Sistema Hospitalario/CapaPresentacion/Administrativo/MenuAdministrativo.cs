@@ -15,6 +15,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         public MenuAdministrativo()
         {
             InitializeComponent();
+            
+            this.Text = "Sistema Hospitalario"; // el título del formulario se sigue mostrando
         }
 
         private void AbrirUserControl(UserControl uc)
@@ -48,6 +50,24 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private void btnProcedimientos_Click(object sender, EventArgs e)
         {
             AbrirUserControl(new UC_Procedimientos());
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
+            AbrirUserControl(new UC_Historial());
+        }
+
+        private void btn_salir_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("¿Seguro que desea salir?",
+                                      "Confirmación",
+                                      MessageBoxButtons.YesNo,
+                                      MessageBoxIcon.Question);
+            
+            if (dr == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }
