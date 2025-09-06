@@ -57,6 +57,12 @@
     <Compile Include="CapaPresentacion\Administrativo\MenuAdministrativo.Designer.cs">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.Designer.cs">
+      <DependentUpon>UC_RegistrarPaciente.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Historial.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -75,10 +81,10 @@
     <Compile Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.Designer.cs">
       <DependentUpon>UC_Hospitalizacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Pacientes.cs">
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Pacientes.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.Designer.cs">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Procedimientos.cs">
@@ -131,7 +137,7 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.resx">
       <DependentUpon>UC_Hospitalizacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Pacientes.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.resx">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Procedimientos.resx">

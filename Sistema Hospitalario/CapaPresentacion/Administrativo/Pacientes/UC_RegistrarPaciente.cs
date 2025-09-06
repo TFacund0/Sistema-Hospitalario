@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
+namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
-    public partial class UC_Pacientes : UserControl
+    public partial class UC_RegistrarPaciente : UserControl
     {
-        public UC_Pacientes()
+        public UC_RegistrarPaciente()
         {
             InitializeComponent();
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

@@ -31,51 +31,50 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEdad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colContacto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAcciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
+            this.lblAlta = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.lblAmbulatorio = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lblEmergencias = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblInternados = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblPacientes = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.dgvPacientes = new System.Windows.Forms.DataGridView();
+            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEdad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colContacto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAcciones = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -88,7 +87,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1290, 760);
             this.panel1.TabIndex = 6;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel2
             // 
@@ -114,96 +112,13 @@
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.White;
-            this.panel8.Controls.Add(this.dataGridView1);
+            this.panel8.Controls.Add(this.dgvPacientes);
             this.panel8.Controls.Add(this.label4);
             this.panel8.Controls.Add(this.label3);
             this.panel8.Location = new System.Drawing.Point(42, 267);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(1118, 377);
             this.panel8.TabIndex = 6;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colCheck,
-            this.colPaciente,
-            this.colDni,
-            this.colEdad,
-            this.colContacto,
-            this.colHabitacion,
-            this.colEstado,
-            this.colMedico,
-            this.colAcciones});
-            this.dataGridView1.Location = new System.Drawing.Point(23, 83);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1071, 272);
-            this.dataGridView1.TabIndex = 9;
-            // 
-            // colCheck
-            // 
-            this.colCheck.HeaderText = "Check";
-            this.colCheck.MinimumWidth = 6;
-            this.colCheck.Name = "colCheck";
-            this.colCheck.Width = 125;
-            // 
-            // colPaciente
-            // 
-            this.colPaciente.HeaderText = "Paciente";
-            this.colPaciente.MinimumWidth = 6;
-            this.colPaciente.Name = "colPaciente";
-            this.colPaciente.Width = 125;
-            // 
-            // colDni
-            // 
-            this.colDni.HeaderText = "DNI";
-            this.colDni.MinimumWidth = 6;
-            this.colDni.Name = "colDni";
-            this.colDni.Width = 125;
-            // 
-            // colEdad
-            // 
-            this.colEdad.HeaderText = "Edad";
-            this.colEdad.MinimumWidth = 6;
-            this.colEdad.Name = "colEdad";
-            this.colEdad.Width = 125;
-            // 
-            // colContacto
-            // 
-            this.colContacto.HeaderText = "Contacto";
-            this.colContacto.MinimumWidth = 6;
-            this.colContacto.Name = "colContacto";
-            this.colContacto.Width = 125;
-            // 
-            // colHabitacion
-            // 
-            this.colHabitacion.HeaderText = "Habitación";
-            this.colHabitacion.MinimumWidth = 6;
-            this.colHabitacion.Name = "colHabitacion";
-            this.colHabitacion.Width = 125;
-            // 
-            // colEstado
-            // 
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.Width = 125;
-            // 
-            // colMedico
-            // 
-            this.colMedico.HeaderText = "Médico";
-            this.colMedico.MinimumWidth = 6;
-            this.colMedico.Name = "colMedico";
-            this.colMedico.Width = 125;
-            // 
-            // colAcciones
-            // 
-            this.colAcciones.HeaderText = "Acciones";
-            this.colAcciones.MinimumWidth = 6;
-            this.colAcciones.Name = "colAcciones";
-            this.colAcciones.Width = 125;
             // 
             // label4
             // 
@@ -231,7 +146,7 @@
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.label17);
             this.panel7.Controls.Add(this.label19);
-            this.panel7.Controls.Add(this.label18);
+            this.panel7.Controls.Add(this.lblAlta);
             this.panel7.Location = new System.Drawing.Point(965, 130);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(195, 102);
@@ -256,22 +171,22 @@
             this.label19.TabIndex = 10;
             this.label19.Text = "Alta";
             // 
-            // label18
+            // lblAlta
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(16, 40);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(19, 18);
-            this.label18.TabIndex = 11;
-            this.label18.Text = "1";
+            this.lblAlta.AutoSize = true;
+            this.lblAlta.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAlta.Location = new System.Drawing.Point(16, 40);
+            this.lblAlta.Name = "lblAlta";
+            this.lblAlta.Size = new System.Drawing.Size(19, 18);
+            this.lblAlta.TabIndex = 11;
+            this.lblAlta.Text = "1";
             // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.White;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.label14);
-            this.panel6.Controls.Add(this.label15);
+            this.panel6.Controls.Add(this.lblAmbulatorio);
             this.panel6.Controls.Add(this.label16);
             this.panel6.Location = new System.Drawing.Point(737, 130);
             this.panel6.Name = "panel6";
@@ -287,15 +202,15 @@
             this.label14.TabIndex = 12;
             this.label14.Text = "Consulta";
             // 
-            // label15
+            // lblAmbulatorio
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(17, 40);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(19, 18);
-            this.label15.TabIndex = 11;
-            this.label15.Text = "0";
+            this.lblAmbulatorio.AutoSize = true;
+            this.lblAmbulatorio.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmbulatorio.Location = new System.Drawing.Point(17, 40);
+            this.lblAmbulatorio.Name = "lblAmbulatorio";
+            this.lblAmbulatorio.Size = new System.Drawing.Size(19, 18);
+            this.lblAmbulatorio.TabIndex = 11;
+            this.lblAmbulatorio.Text = "0";
             // 
             // label16
             // 
@@ -312,7 +227,7 @@
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.label11);
-            this.panel5.Controls.Add(this.label12);
+            this.panel5.Controls.Add(this.lblEmergencias);
             this.panel5.Controls.Add(this.label13);
             this.panel5.Location = new System.Drawing.Point(505, 130);
             this.panel5.Name = "panel5";
@@ -328,15 +243,15 @@
             this.label11.TabIndex = 12;
             this.label11.Text = "Urgentes";
             // 
-            // label12
+            // lblEmergencias
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(17, 40);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(19, 18);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "1";
+            this.lblEmergencias.AutoSize = true;
+            this.lblEmergencias.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmergencias.Location = new System.Drawing.Point(17, 40);
+            this.lblEmergencias.Name = "lblEmergencias";
+            this.lblEmergencias.Size = new System.Drawing.Size(19, 18);
+            this.lblEmergencias.TabIndex = 11;
+            this.lblEmergencias.Text = "1";
             // 
             // label13
             // 
@@ -353,7 +268,7 @@
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.label8);
-            this.panel4.Controls.Add(this.label9);
+            this.panel4.Controls.Add(this.lblInternados);
             this.panel4.Controls.Add(this.label10);
             this.panel4.Location = new System.Drawing.Point(270, 130);
             this.panel4.Name = "panel4";
@@ -369,15 +284,15 @@
             this.label8.TabIndex = 12;
             this.label8.Text = "Hospitalizados";
             // 
-            // label9
+            // lblInternados
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(14, 40);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(19, 18);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "1";
+            this.lblInternados.AutoSize = true;
+            this.lblInternados.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInternados.Location = new System.Drawing.Point(14, 40);
+            this.lblInternados.Name = "lblInternados";
+            this.lblInternados.Size = new System.Drawing.Size(19, 18);
+            this.lblInternados.TabIndex = 11;
+            this.lblInternados.Text = "1";
             // 
             // label10
             // 
@@ -394,7 +309,7 @@
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.label7);
-            this.panel3.Controls.Add(this.label6);
+            this.panel3.Controls.Add(this.lblPacientes);
             this.panel3.Controls.Add(this.label5);
             this.panel3.Location = new System.Drawing.Point(42, 130);
             this.panel3.Name = "panel3";
@@ -410,15 +325,15 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "Pacientes";
             // 
-            // label6
+            // lblPacientes
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(19, 39);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 18);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "3";
+            this.lblPacientes.AutoSize = true;
+            this.lblPacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPacientes.Location = new System.Drawing.Point(19, 39);
+            this.lblPacientes.Name = "lblPacientes";
+            this.lblPacientes.Size = new System.Drawing.Size(19, 18);
+            this.lblPacientes.TabIndex = 8;
+            this.lblPacientes.Text = "3";
             // 
             // label5
             // 
@@ -477,6 +392,96 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Gestión de Pacientes";
             // 
+            // dgvPacientes
+            // 
+            this.dgvPacientes.AllowUserToAddRows = false;
+            this.dgvPacientes.AllowUserToDeleteRows = false;
+            this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPacientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colPaciente,
+            this.colDni,
+            this.colEdad,
+            this.colContacto,
+            this.colHabitacion,
+            this.colEstado,
+            this.colMedico,
+            this.colAcciones});
+            this.dgvPacientes.Location = new System.Drawing.Point(23, 83);
+            this.dgvPacientes.Name = "dgvPacientes";
+            this.dgvPacientes.ReadOnly = true;
+            this.dgvPacientes.RowHeadersWidth = 51;
+            this.dgvPacientes.RowTemplate.Height = 24;
+            this.dgvPacientes.Size = new System.Drawing.Size(1071, 272);
+            this.dgvPacientes.TabIndex = 9;
+            // 
+            // colPaciente
+            // 
+            this.colPaciente.HeaderText = "Paciente";
+            this.colPaciente.MinimumWidth = 6;
+            this.colPaciente.Name = "colPaciente";
+            this.colPaciente.ReadOnly = true;
+            this.colPaciente.Width = 125;
+            // 
+            // colDni
+            // 
+            this.colDni.HeaderText = "DNI";
+            this.colDni.MinimumWidth = 6;
+            this.colDni.Name = "colDni";
+            this.colDni.ReadOnly = true;
+            this.colDni.Width = 125;
+            // 
+            // colEdad
+            // 
+            this.colEdad.HeaderText = "Edad";
+            this.colEdad.MinimumWidth = 6;
+            this.colEdad.Name = "colEdad";
+            this.colEdad.ReadOnly = true;
+            this.colEdad.Width = 125;
+            // 
+            // colContacto
+            // 
+            this.colContacto.HeaderText = "Contacto";
+            this.colContacto.MinimumWidth = 6;
+            this.colContacto.Name = "colContacto";
+            this.colContacto.ReadOnly = true;
+            this.colContacto.Width = 125;
+            // 
+            // colHabitacion
+            // 
+            this.colHabitacion.HeaderText = "Habitación";
+            this.colHabitacion.MinimumWidth = 6;
+            this.colHabitacion.Name = "colHabitacion";
+            this.colHabitacion.ReadOnly = true;
+            this.colHabitacion.Width = 125;
+            // 
+            // colEstado
+            // 
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 6;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            this.colEstado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colEstado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colEstado.Width = 125;
+            // 
+            // colMedico
+            // 
+            this.colMedico.HeaderText = "Médico";
+            this.colMedico.MinimumWidth = 6;
+            this.colMedico.Name = "colMedico";
+            this.colMedico.ReadOnly = true;
+            this.colMedico.Width = 125;
+            // 
+            // colAcciones
+            // 
+            this.colAcciones.HeaderText = "Acciones";
+            this.colAcciones.MinimumWidth = 6;
+            this.colAcciones.Name = "colAcciones";
+            this.colAcciones.ReadOnly = true;
+            this.colAcciones.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colAcciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colAcciones.Width = 125;
+            // 
             // UC_Pacientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -489,7 +494,6 @@
             this.panel2.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -500,6 +504,7 @@
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -521,29 +526,28 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblPacientes;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label lblAlta;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label lblAmbulatorio;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblEmergencias;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblInternados;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colCheck;
+        private System.Windows.Forms.DataGridView dgvPacientes;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDni;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEdad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colContacto;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHabitacion;
-        private System.Windows.Forms.DataGridViewButtonColumn colEstado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMedico;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAcciones;
+        private System.Windows.Forms.DataGridViewButtonColumn colAcciones;
     }
 }
