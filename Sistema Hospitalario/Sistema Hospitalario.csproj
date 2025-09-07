@@ -37,6 +37,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -173,7 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CapaDatos\" />
-    <Folder Include="CapaEntidad\" />
     <Folder Include="CapaNegocio\" />
     <Folder Include="CapaPresentacion\Enfermero\" />
   </ItemGroup>
