@@ -37,24 +37,24 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panelLogin = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panelFormLogin = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panelFormLogin = new System.Windows.Forms.Panel();
             this.panelLogin.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panelFormLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelFormLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(112, 122);
+            this.txtUsuario.Location = new System.Drawing.Point(131, 138);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(150, 20);
             this.txtUsuario.TabIndex = 0;
             // 
             // txtContraseña
             // 
-            this.txtContraseña.Location = new System.Drawing.Point(112, 186);
+            this.txtContraseña.Location = new System.Drawing.Point(131, 202);
             this.txtContraseña.Name = "txtContraseña";
             this.txtContraseña.Size = new System.Drawing.Size(150, 20);
             this.txtContraseña.TabIndex = 1;
@@ -64,7 +64,7 @@
             // 
             this.LabelUsuario.AutoSize = true;
             this.LabelUsuario.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelUsuario.Location = new System.Drawing.Point(150, 101);
+            this.LabelUsuario.Location = new System.Drawing.Point(169, 117);
             this.LabelUsuario.Name = "LabelUsuario";
             this.LabelUsuario.Size = new System.Drawing.Size(70, 18);
             this.LabelUsuario.TabIndex = 2;
@@ -73,20 +73,24 @@
             // 
             // BotonIngresar
             // 
+            this.BotonIngresar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(69)))), ((int)(((byte)(122)))));
+            this.BotonIngresar.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.BotonIngresar.FlatAppearance.BorderSize = 0;
             this.BotonIngresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BotonIngresar.Location = new System.Drawing.Point(153, 244);
+            this.BotonIngresar.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.BotonIngresar.Location = new System.Drawing.Point(144, 260);
             this.BotonIngresar.Name = "BotonIngresar";
-            this.BotonIngresar.Size = new System.Drawing.Size(75, 23);
+            this.BotonIngresar.Size = new System.Drawing.Size(122, 23);
             this.BotonIngresar.TabIndex = 3;
             this.BotonIngresar.Text = "Ingresar";
-            this.BotonIngresar.UseVisualStyleBackColor = true;
+            this.BotonIngresar.UseVisualStyleBackColor = false;
             this.BotonIngresar.Click += new System.EventHandler(this.BotonIngresar_Click_1);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial Rounded MT Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(94, 53);
+            this.label3.Location = new System.Drawing.Point(115, 69);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(191, 32);
             this.label3.TabIndex = 7;
@@ -96,7 +100,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(132, 165);
+            this.label4.Location = new System.Drawing.Point(151, 181);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 18);
             this.label4.TabIndex = 8;
@@ -109,7 +113,7 @@
             this.label2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.label2.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.MediumSpringGreen;
-            this.label2.Location = new System.Drawing.Point(120, 270);
+            this.label2.Location = new System.Drawing.Point(127, 286);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(130, 32);
             this.label2.TabIndex = 6;
@@ -129,37 +133,40 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Location = new System.Drawing.Point(21, 12);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(373, 345);
+            this.panel2.Size = new System.Drawing.Size(403, 381);
             this.panel2.TabIndex = 0;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Sistema_Hospitalario.Properties.Resources.ChatGPT_Image_1_sept_2025__03_00_36_p_m_;
+            this.pictureBox1.Location = new System.Drawing.Point(49, 19);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(282, 264);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // panelFormLogin
             // 
+            this.panelFormLogin.BackColor = System.Drawing.Color.LightSeaGreen;
             this.panelFormLogin.Controls.Add(this.txtContraseña);
             this.panelFormLogin.Controls.Add(this.LabelUsuario);
             this.panelFormLogin.Controls.Add(this.label3);
             this.panelFormLogin.Controls.Add(this.txtUsuario);
             this.panelFormLogin.Controls.Add(this.BotonIngresar);
             this.panelFormLogin.Controls.Add(this.label4);
-            this.panelFormLogin.Location = new System.Drawing.Point(400, 12);
+            this.panelFormLogin.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panelFormLogin.Location = new System.Drawing.Point(400, 0);
             this.panelFormLogin.Name = "panelFormLogin";
-            this.panelFormLogin.Size = new System.Drawing.Size(377, 345);
+            this.panelFormLogin.Size = new System.Drawing.Size(400, 381);
             this.panelFormLogin.TabIndex = 9;
             this.panelFormLogin.Paint += new System.Windows.Forms.PaintEventHandler(this.panelFormLogin_Paint);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Sistema_Hospitalario.Properties.Resources.ChatGPT_Image_1_sept_2025__03_00_36_p_m_;
-            this.pictureBox1.Location = new System.Drawing.Point(42, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(282, 264);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // Login
             // 
@@ -174,9 +181,9 @@
             this.panelLogin.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelFormLogin.ResumeLayout(false);
             this.panelFormLogin.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
