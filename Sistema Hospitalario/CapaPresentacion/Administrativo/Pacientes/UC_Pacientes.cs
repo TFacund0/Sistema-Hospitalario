@@ -73,5 +73,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.Rows.Add("Carlos Rodríguez", "23456789", 60, "3794-654321", "Emergencias", "Urgencia", "Dra. López", "Ver");
             dgvPacientes.Rows.Add("Susana Pérez", "34567890", 30, "3794-987654", "Ambulatorio", "Consulta", "Dr. García", "Ver");
         }
+
+        // Evento para manejar el clic en el botón "Registrar Paciente"
+        public event EventHandler RegistrarPacienteSolicitado;
+
+        private void btnRegistrarPaciente_Click(object sender, EventArgs e)
+        {
+            // Dispara un evento que tiene que manejar el formulario del Menu Administrativo
+            RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

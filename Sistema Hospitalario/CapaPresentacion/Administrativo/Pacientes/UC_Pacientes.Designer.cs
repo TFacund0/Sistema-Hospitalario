@@ -31,6 +31,15 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.dgvPacientes = new System.Windows.Forms.DataGridView();
+            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEdad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colContacto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colObraSocial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAcciones = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -53,28 +62,19 @@
             this.label7 = new System.Windows.Forms.Label();
             this.lblPacientes = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnRegistrarPaciente = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dgvPacientes = new System.Windows.Forms.DataGridView();
-            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEdad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colContacto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAcciones = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -100,7 +100,7 @@
             this.panel2.Controls.Add(this.panel5);
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
-            this.panel2.Controls.Add(this.button2);
+            this.panel2.Controls.Add(this.btnRegistrarPaciente);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
@@ -119,6 +119,94 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(1118, 377);
             this.panel8.TabIndex = 6;
+            // 
+            // dgvPacientes
+            // 
+            this.dgvPacientes.AllowUserToAddRows = false;
+            this.dgvPacientes.AllowUserToDeleteRows = false;
+            this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPacientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colPaciente,
+            this.colDni,
+            this.colEdad,
+            this.colContacto,
+            this.colEstado,
+            this.colHabitacion,
+            this.colObraSocial,
+            this.colAcciones});
+            this.dgvPacientes.Location = new System.Drawing.Point(23, 83);
+            this.dgvPacientes.Name = "dgvPacientes";
+            this.dgvPacientes.ReadOnly = true;
+            this.dgvPacientes.RowHeadersWidth = 51;
+            this.dgvPacientes.RowTemplate.Height = 24;
+            this.dgvPacientes.Size = new System.Drawing.Size(1071, 272);
+            this.dgvPacientes.TabIndex = 9;
+            // 
+            // colPaciente
+            // 
+            this.colPaciente.HeaderText = "Paciente";
+            this.colPaciente.MinimumWidth = 6;
+            this.colPaciente.Name = "colPaciente";
+            this.colPaciente.ReadOnly = true;
+            this.colPaciente.Width = 125;
+            // 
+            // colDni
+            // 
+            this.colDni.HeaderText = "DNI";
+            this.colDni.MinimumWidth = 6;
+            this.colDni.Name = "colDni";
+            this.colDni.ReadOnly = true;
+            this.colDni.Width = 125;
+            // 
+            // colEdad
+            // 
+            this.colEdad.HeaderText = "Edad";
+            this.colEdad.MinimumWidth = 6;
+            this.colEdad.Name = "colEdad";
+            this.colEdad.ReadOnly = true;
+            this.colEdad.Width = 125;
+            // 
+            // colContacto
+            // 
+            this.colContacto.HeaderText = "Contacto";
+            this.colContacto.MinimumWidth = 6;
+            this.colContacto.Name = "colContacto";
+            this.colContacto.ReadOnly = true;
+            this.colContacto.Width = 125;
+            // 
+            // colEstado
+            // 
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 6;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            this.colEstado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colEstado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colEstado.Width = 125;
+            // 
+            // colHabitacion
+            // 
+            this.colHabitacion.HeaderText = "Habitación";
+            this.colHabitacion.MinimumWidth = 6;
+            this.colHabitacion.Name = "colHabitacion";
+            this.colHabitacion.ReadOnly = true;
+            this.colHabitacion.Width = 125;
+            // 
+            // colObraSocial
+            // 
+            this.colObraSocial.HeaderText = "Obra Social";
+            this.colObraSocial.MinimumWidth = 6;
+            this.colObraSocial.Name = "colObraSocial";
+            this.colObraSocial.ReadOnly = true;
+            this.colObraSocial.Width = 125;
+            // 
+            // colAcciones
+            // 
+            this.colAcciones.HeaderText = "Acción";
+            this.colAcciones.MinimumWidth = 6;
+            this.colAcciones.Name = "colAcciones";
+            this.colAcciones.ReadOnly = true;
+            this.colAcciones.Width = 125;
             // 
             // label4
             // 
@@ -345,19 +433,20 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Total";
             // 
-            // button2
+            // btnRegistrarPaciente
             // 
-            this.button2.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(965, 41);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(195, 28);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Registrar Paciente";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnRegistrarPaciente.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnRegistrarPaciente.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnRegistrarPaciente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarPaciente.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarPaciente.ForeColor = System.Drawing.Color.White;
+            this.btnRegistrarPaciente.Location = new System.Drawing.Point(965, 41);
+            this.btnRegistrarPaciente.Name = "btnRegistrarPaciente";
+            this.btnRegistrarPaciente.Size = new System.Drawing.Size(195, 28);
+            this.btnRegistrarPaciente.TabIndex = 3;
+            this.btnRegistrarPaciente.Text = "Registrar Paciente";
+            this.btnRegistrarPaciente.UseVisualStyleBackColor = false;
+            this.btnRegistrarPaciente.Click += new System.EventHandler(this.btnRegistrarPaciente_Click);
             // 
             // button1
             // 
@@ -392,96 +481,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Gestión de Pacientes";
             // 
-            // dgvPacientes
-            // 
-            this.dgvPacientes.AllowUserToAddRows = false;
-            this.dgvPacientes.AllowUserToDeleteRows = false;
-            this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPacientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colPaciente,
-            this.colDni,
-            this.colEdad,
-            this.colContacto,
-            this.colHabitacion,
-            this.colEstado,
-            this.colMedico,
-            this.colAcciones});
-            this.dgvPacientes.Location = new System.Drawing.Point(23, 83);
-            this.dgvPacientes.Name = "dgvPacientes";
-            this.dgvPacientes.ReadOnly = true;
-            this.dgvPacientes.RowHeadersWidth = 51;
-            this.dgvPacientes.RowTemplate.Height = 24;
-            this.dgvPacientes.Size = new System.Drawing.Size(1071, 272);
-            this.dgvPacientes.TabIndex = 9;
-            // 
-            // colPaciente
-            // 
-            this.colPaciente.HeaderText = "Paciente";
-            this.colPaciente.MinimumWidth = 6;
-            this.colPaciente.Name = "colPaciente";
-            this.colPaciente.ReadOnly = true;
-            this.colPaciente.Width = 125;
-            // 
-            // colDni
-            // 
-            this.colDni.HeaderText = "DNI";
-            this.colDni.MinimumWidth = 6;
-            this.colDni.Name = "colDni";
-            this.colDni.ReadOnly = true;
-            this.colDni.Width = 125;
-            // 
-            // colEdad
-            // 
-            this.colEdad.HeaderText = "Edad";
-            this.colEdad.MinimumWidth = 6;
-            this.colEdad.Name = "colEdad";
-            this.colEdad.ReadOnly = true;
-            this.colEdad.Width = 125;
-            // 
-            // colContacto
-            // 
-            this.colContacto.HeaderText = "Contacto";
-            this.colContacto.MinimumWidth = 6;
-            this.colContacto.Name = "colContacto";
-            this.colContacto.ReadOnly = true;
-            this.colContacto.Width = 125;
-            // 
-            // colHabitacion
-            // 
-            this.colHabitacion.HeaderText = "Habitación";
-            this.colHabitacion.MinimumWidth = 6;
-            this.colHabitacion.Name = "colHabitacion";
-            this.colHabitacion.ReadOnly = true;
-            this.colHabitacion.Width = 125;
-            // 
-            // colEstado
-            // 
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
-            this.colEstado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colEstado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colEstado.Width = 125;
-            // 
-            // colMedico
-            // 
-            this.colMedico.HeaderText = "Médico";
-            this.colMedico.MinimumWidth = 6;
-            this.colMedico.Name = "colMedico";
-            this.colMedico.ReadOnly = true;
-            this.colMedico.Width = 125;
-            // 
-            // colAcciones
-            // 
-            this.colAcciones.HeaderText = "Acciones";
-            this.colAcciones.MinimumWidth = 6;
-            this.colAcciones.Name = "colAcciones";
-            this.colAcciones.ReadOnly = true;
-            this.colAcciones.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colAcciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colAcciones.Width = 125;
-            // 
             // UC_Pacientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -494,6 +493,7 @@
             this.panel2.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -504,7 +504,6 @@
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -512,7 +511,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnRegistrarPaciente;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -545,9 +544,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDni;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEdad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colContacto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHabitacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colMedico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHabitacion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colObraSocial;
         private System.Windows.Forms.DataGridViewButtonColumn colAcciones;
     }
 }
