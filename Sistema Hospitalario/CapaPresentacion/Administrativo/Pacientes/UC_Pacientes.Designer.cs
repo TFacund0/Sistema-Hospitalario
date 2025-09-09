@@ -137,23 +137,6 @@
             this.colHabitacion,
             this.colObraSocial,
             this.colAcciones});
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.dataGridView1.Location = new System.Drawing.Point(17, 67);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(803, 221);
-            this.dataGridView1.TabIndex = 9;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // colCheck
-            // 
-            this.colCheck.HeaderText = "Check";
-            this.colCheck.MinimumWidth = 6;
-            this.colCheck.Name = "colCheck";
-            this.colCheck.Width = 125;
-=======
             this.dgvPacientes.Location = new System.Drawing.Point(23, 83);
             this.dgvPacientes.Name = "dgvPacientes";
             this.dgvPacientes.ReadOnly = true;
@@ -161,7 +144,6 @@
             this.dgvPacientes.RowTemplate.Height = 24;
             this.dgvPacientes.Size = new System.Drawing.Size(1071, 272);
             this.dgvPacientes.TabIndex = 9;
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             // 
             // colPaciente
             // 
@@ -257,14 +239,8 @@
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.label17);
             this.panel7.Controls.Add(this.label19);
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.panel7.Controls.Add(this.label18);
-            this.panel7.Location = new System.Drawing.Point(724, 106);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-=======
             this.panel7.Controls.Add(this.lblAlta);
             this.panel7.Location = new System.Drawing.Point(965, 130);
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(147, 83);
             this.panel7.TabIndex = 5;
@@ -292,16 +268,6 @@
             // 
             // lblAlta
             // 
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(12, 32);
-            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(16, 14);
-            this.label18.TabIndex = 11;
-            this.label18.Text = "1";
-=======
             this.lblAlta.AutoSize = true;
             this.lblAlta.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlta.Location = new System.Drawing.Point(16, 40);
@@ -309,7 +275,6 @@
             this.lblAlta.Size = new System.Drawing.Size(19, 18);
             this.lblAlta.TabIndex = 11;
             this.lblAlta.Text = "1";
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             // 
             // panel6
             // 
@@ -336,16 +301,6 @@
             // 
             // lblAmbulatorio
             // 
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(13, 32);
-            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(16, 14);
-            this.label15.TabIndex = 11;
-            this.label15.Text = "0";
-=======
             this.lblAmbulatorio.AutoSize = true;
             this.lblAmbulatorio.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAmbulatorio.Location = new System.Drawing.Point(17, 40);
@@ -353,7 +308,6 @@
             this.lblAmbulatorio.Size = new System.Drawing.Size(19, 18);
             this.lblAmbulatorio.TabIndex = 11;
             this.lblAmbulatorio.Text = "0";
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             // 
             // label16
             // 
@@ -391,16 +345,6 @@
             // 
             // lblEmergencias
             // 
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(13, 32);
-            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(16, 14);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "1";
-=======
             this.lblEmergencias.AutoSize = true;
             this.lblEmergencias.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmergencias.Location = new System.Drawing.Point(17, 40);
@@ -408,7 +352,6 @@
             this.lblEmergencias.Size = new System.Drawing.Size(19, 18);
             this.lblEmergencias.TabIndex = 11;
             this.lblEmergencias.Text = "1";
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             // 
             // label13
             // 
@@ -446,16 +389,6 @@
             // 
             // lblInternados
             // 
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(10, 32);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(16, 14);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "1";
-=======
             this.lblInternados.AutoSize = true;
             this.lblInternados.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInternados.Location = new System.Drawing.Point(14, 40);
@@ -463,7 +396,6 @@
             this.lblInternados.Size = new System.Drawing.Size(19, 18);
             this.lblInternados.TabIndex = 11;
             this.lblInternados.Text = "1";
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             // 
             // label10
             // 
@@ -501,16 +433,6 @@
             // 
             // lblPacientes
             // 
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(14, 32);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(16, 14);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "3";
-=======
             this.lblPacientes.AutoSize = true;
             this.lblPacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPacientes.Location = new System.Drawing.Point(19, 39);
@@ -518,7 +440,6 @@
             this.lblPacientes.Size = new System.Drawing.Size(19, 18);
             this.lblPacientes.TabIndex = 8;
             this.lblPacientes.Text = "3";
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             // 
             // label5
             // 
@@ -533,20 +454,6 @@
             // 
             // btnRegistrarPaciente
             // 
-<<<<<<< HEAD:Sistema Hospitalario/CapaPresentacion/Administrativo/UC_Pacientes.Designer.cs
-            this.button2.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(724, 33);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(146, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Registrar Paciente";
-            this.button2.UseVisualStyleBackColor = false;
-=======
             this.btnRegistrarPaciente.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnRegistrarPaciente.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
             this.btnRegistrarPaciente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -559,7 +466,6 @@
             this.btnRegistrarPaciente.Text = "Registrar Paciente";
             this.btnRegistrarPaciente.UseVisualStyleBackColor = false;
             this.btnRegistrarPaciente.Click += new System.EventHandler(this.btnRegistrarPaciente_Click);
->>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32:Sistema Hospitalario/CapaPresentacion/Administrativo/Pacientes/UC_Pacientes.Designer.cs
             // 
             // button1
             // 
