@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
-    public partial class UC_Home : UserControl
+    public partial class UC_ProcedimientosM : UserControl
     {
-        public UC_Home()
+        public UC_ProcedimientosM()
         {
             InitializeComponent();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

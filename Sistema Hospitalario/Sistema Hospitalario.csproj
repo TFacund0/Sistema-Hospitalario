@@ -111,17 +111,29 @@
     <Compile Include="CapaPresentacion\Medico\MenuMedicos.Designer.cs">
       <DependentUpon>MenuMedicos.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_Home.cs">
+    <Compile Include="CapaPresentacion\Medico\UC_HomeM.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_Home.Designer.cs">
-      <DependentUpon>UC_Home.cs</DependentUpon>
+    <Compile Include="CapaPresentacion\Medico\UC_HomeM.Designer.cs">
+      <DependentUpon>UC_HomeM.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_Pacientes.cs">
+    <Compile Include="CapaPresentacion\Medico\UC_PacientesM.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_Pacientes.Designer.cs">
-      <DependentUpon>UC_Pacientes.cs</DependentUpon>
+    <Compile Include="CapaPresentacion\Medico\UC_PacientesM.Designer.cs">
+      <DependentUpon>UC_PacientesM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_ProcedimientosM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_ProcedimientosM.Designer.cs">
+      <DependentUpon>UC_ProcedimientosM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_TurnosM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\UC_TurnosM.Designer.cs">
+      <DependentUpon>UC_TurnosM.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -155,8 +167,17 @@
     <EmbeddedResource Include="CapaPresentacion\Medico\MenuMedicos.resx">
       <DependentUpon>MenuMedicos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\UC_Home.resx">
-      <DependentUpon>UC_Home.cs</DependentUpon>
+    <EmbeddedResource Include="CapaPresentacion\Medico\UC_HomeM.resx">
+      <DependentUpon>UC_HomeM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\UC_PacientesM.resx">
+      <DependentUpon>UC_PacientesM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\UC_ProcedimientosM.resx">
+      <DependentUpon>UC_ProcedimientosM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\UC_TurnosM.resx">
+      <DependentUpon>UC_TurnosM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
