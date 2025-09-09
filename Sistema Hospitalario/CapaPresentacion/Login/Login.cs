@@ -57,15 +57,6 @@ namespace WindowsFormsInicio_de_sesion
             }
         }
 
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panelFormLogin_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
