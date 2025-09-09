@@ -57,17 +57,17 @@
     <Compile Include="CapaPresentacion\Administrativo\MenuAdministrativo.Designer.cs">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Exportar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Exportar.Designer.cs">
+      <DependentUpon>UC_Exportar.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.Designer.cs">
       <DependentUpon>UC_RegistrarPaciente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Historial.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Historial.Designer.cs">
-      <DependentUpon>UC_Historial.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Home.cs">
       <SubType>UserControl</SubType>
@@ -128,11 +128,11 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\MenuAdministrativo.resx">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_Exportar.resx">
+      <DependentUpon>UC_Exportar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.resx">
       <DependentUpon>UC_RegistrarPaciente.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Historial.resx">
-      <DependentUpon>UC_Historial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Home.resx">
       <DependentUpon>UC_Home.cs</DependentUpon>

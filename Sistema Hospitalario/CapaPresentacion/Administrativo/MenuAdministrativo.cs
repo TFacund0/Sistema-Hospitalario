@@ -37,6 +37,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AbrirUserControl(uc_pacientes);
         }
 
+        private void AbrirListaPacientes()
+        {
+            var ucPacientes = new UC_Pacientes();
+
+            // Suscribirse también al evento de "RegistrarPacienteSolicitado"
+            ucPacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
+            //ucPacientes.ExportarPacientesSolicitado += (_, __) => AbrirExportarPacientes();
+
+            AbrirUserControl(ucPacientes);
+        }
+
         private void AbrirRegistrarPaciente()
         {
             var ucRegistrar = new UC_RegistrarPaciente();
@@ -47,14 +58,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AbrirUserControl(ucRegistrar);
         }
 
-        private void AbrirListaPacientes()
+        private void AbrirExportarPacientes()
         {
-            var ucPacientes = new UC_Pacientes();
-
-            // Suscribirse también al evento de "RegistrarPacienteSolicitado"
-            ucPacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
-
-            AbrirUserControl(ucPacientes);
+            var ucExportar = new UC_Exportar();
+            
+            // Cuando el UC pida cancelar → volver a lista de pacientes
+            //ucExportar.CancelarExportacionSolicitado += (_, __) => AbrirListaPacientes();
+            AbrirUserControl(ucExportar);
         }
 
         private void btn_home_Click(object sender, EventArgs e)
@@ -75,11 +85,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private void btnProcedimientos_Click(object sender, EventArgs e)
         {
             AbrirUserControl(new UC_Procedimientos());
-        }
-
-        private void btnHistorial_Click(object sender, EventArgs e)
-        {
-            AbrirUserControl(new UC_Historial());
         }
 
         private void btn_salir_Click(object sender, EventArgs e)

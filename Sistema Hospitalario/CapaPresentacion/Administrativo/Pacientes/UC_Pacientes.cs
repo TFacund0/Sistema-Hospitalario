@@ -82,5 +82,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             // Dispara un evento que tiene que manejar el formulario del Menu Administrativo
             RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
         }
+
+        public event EventHandler ExportarDatosSolicitado;
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            ExportarDatosSolicitado?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

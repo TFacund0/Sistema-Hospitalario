@@ -63,7 +63,7 @@
             this.lblPacientes = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnRegistrarPaciente = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnExportar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -101,7 +101,7 @@
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.btnRegistrarPaciente);
-            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.btnExportar);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(42, 38);
@@ -448,18 +448,19 @@
             this.btnRegistrarPaciente.UseVisualStyleBackColor = false;
             this.btnRegistrarPaciente.Click += new System.EventHandler(this.btnRegistrarPaciente_Click);
             // 
-            // button1
+            // btnExportar
             // 
-            this.button1.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(839, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 28);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Exportar";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnExportar.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnExportar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
+            this.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportar.ForeColor = System.Drawing.Color.White;
+            this.btnExportar.Location = new System.Drawing.Point(839, 41);
+            this.btnExportar.Name = "btnExportar";
+            this.btnExportar.Size = new System.Drawing.Size(93, 28);
+            this.btnExportar.TabIndex = 2;
+            this.btnExportar.Text = "Exportar";
+            this.btnExportar.UseVisualStyleBackColor = false;
+            this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
             // label2
             // 
@@ -512,7 +513,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRegistrarPaciente;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;

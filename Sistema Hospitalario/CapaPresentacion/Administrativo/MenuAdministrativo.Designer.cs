@@ -33,7 +33,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnHistorial = new System.Windows.Forms.Button();
             this.btnProcedimientos = new System.Windows.Forms.Button();
             this.btnHospitalizacion = new System.Windows.Forms.Button();
             this.btnTurnos = new System.Windows.Forms.Button();
@@ -58,7 +57,6 @@
             // 
             this.panelMenu.BackColor = System.Drawing.Color.LightSeaGreen;
             this.panelMenu.Controls.Add(this.panel1);
-            this.panelMenu.Controls.Add(this.btnHistorial);
             this.panelMenu.Controls.Add(this.btnProcedimientos);
             this.panelMenu.Controls.Add(this.btnHospitalizacion);
             this.panelMenu.Controls.Add(this.btnTurnos);
@@ -117,20 +115,6 @@
             this.label3.Size = new System.Drawing.Size(47, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "Rol:";
-            // 
-            // btnHistorial
-            // 
-            this.btnHistorial.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnHistorial.FlatAppearance.BorderSize = 0;
-            this.btnHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHistorial.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHistorial.Location = new System.Drawing.Point(0, 407);
-            this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new System.Drawing.Size(251, 56);
-            this.btnHistorial.TabIndex = 12;
-            this.btnHistorial.Text = "Historial";
-            this.btnHistorial.UseVisualStyleBackColor = true;
-            this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
             // 
             // btnProcedimientos
             // 
@@ -193,7 +177,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Location = new System.Drawing.Point(-3, 457);
+            this.label2.Location = new System.Drawing.Point(-3, 400);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(259, 16);
             this.label2.TabIndex = 3;
@@ -323,7 +307,6 @@
         private System.Windows.Forms.Panel panelContenedor;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnHistorial;
         private System.Windows.Forms.Button btnProcedimientos;
         private System.Windows.Forms.Button btnHospitalizacion;
         private System.Windows.Forms.Button btnTurnos;
