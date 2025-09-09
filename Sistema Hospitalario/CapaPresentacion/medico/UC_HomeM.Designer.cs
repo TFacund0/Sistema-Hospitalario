@@ -1,6 +1,6 @@
-﻿namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
+﻿namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
-    partial class UC_Home
+    partial class UC_HomeM
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.dgvActividad = new System.Windows.Forms.DataGridView();
@@ -56,7 +55,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvActividad)).BeginInit();
@@ -66,20 +64,8 @@
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(968, 618);
-            this.panel1.TabIndex = 0;
-            // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.LightGray;
             this.panel2.Controls.Add(this.panel7);
             this.panel2.Controls.Add(this.panel6);
@@ -89,10 +75,9 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(32, 31);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(900, 552);
-            this.panel2.TabIndex = 0;
+            this.panel2.TabIndex = 1;
             // 
             // panel7
             // 
@@ -101,7 +86,7 @@
             this.panel7.Controls.Add(this.label4);
             this.panel7.Controls.Add(this.label3);
             this.panel7.Location = new System.Drawing.Point(31, 214);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(841, 316);
             this.panel7.TabIndex = 3;
@@ -118,13 +103,14 @@
             this.Horario,
             this.colTipo});
             this.dgvActividad.Location = new System.Drawing.Point(16, 61);
-            this.dgvActividad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvActividad.Margin = new System.Windows.Forms.Padding(2);
             this.dgvActividad.Name = "dgvActividad";
             this.dgvActividad.ReadOnly = true;
             this.dgvActividad.RowHeadersWidth = 51;
             this.dgvActividad.RowTemplate.Height = 24;
             this.dgvActividad.Size = new System.Drawing.Size(810, 245);
             this.dgvActividad.TabIndex = 6;
+            this.dgvActividad.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvActividad_CellContentClick);
             // 
             // colNombre
             // 
@@ -195,7 +181,7 @@
             this.panel6.Controls.Add(this.lblEmergencias);
             this.panel6.Controls.Add(this.label18);
             this.panel6.Location = new System.Drawing.Point(685, 91);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(187, 93);
             this.panel6.TabIndex = 3;
@@ -236,7 +222,7 @@
             this.panel5.Controls.Add(this.lblCantidadConsultas);
             this.panel5.Controls.Add(this.label);
             this.panel5.Location = new System.Drawing.Point(468, 91);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(183, 93);
             this.panel5.TabIndex = 3;
@@ -291,7 +277,7 @@
             this.panel4.Controls.Add(this.lblCamasOcupadas);
             this.panel4.Controls.Add(this.label12);
             this.panel4.Location = new System.Drawing.Point(254, 91);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(182, 93);
             this.panel4.TabIndex = 3;
@@ -346,7 +332,7 @@
             this.panel3.Controls.Add(this.lblPacientesActivos);
             this.panel3.Controls.Add(this.label7);
             this.panel3.Location = new System.Drawing.Point(31, 91);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(192, 93);
             this.panel3.TabIndex = 2;
@@ -403,7 +389,6 @@
             this.label2.Size = new System.Drawing.Size(299, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Resumen general del sistema hospitalario";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -416,15 +401,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Dashboard";
             // 
-            // UC_Home
+            // UC_HomeM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "UC_Home";
+            this.Controls.Add(this.panel2);
+            this.Name = "UC_HomeM";
             this.Size = new System.Drawing.Size(968, 618);
-            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel7.ResumeLayout(false);
@@ -444,33 +427,32 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dgvActividad;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label lblPacientesActivos;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label lblEmergencias;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label lblCantidadConsultas;
-        private System.Windows.Forms.Label label;
-        private System.Windows.Forms.Label lblPorcentajeCamas;
-        private System.Windows.Forms.Label lblCamasOcupadas;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Apellido;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Horario;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTipo;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label lblEmergencias;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lblCantidadConsultas;
+        private System.Windows.Forms.Label label;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label lblPorcentajeCamas;
+        private System.Windows.Forms.Label lblCamasOcupadas;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblPacientesActivos;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

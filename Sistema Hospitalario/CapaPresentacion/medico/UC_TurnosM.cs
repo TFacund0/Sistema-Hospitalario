@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
-    public partial class UC_Pacientes : UserControl
+    public partial class UC_TurnosM : UserControl
     {
-        public UC_Pacientes()
+        public UC_TurnosM()
         {
             InitializeComponent();
         }

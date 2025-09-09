@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
+namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
-    public partial class UC_Home : UserControl
+    public partial class UC_HomeM : UserControl
     {
-        public UC_Home()
+        public UC_HomeM()
         {
             InitializeComponent();
 
@@ -76,6 +76,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvActividad_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

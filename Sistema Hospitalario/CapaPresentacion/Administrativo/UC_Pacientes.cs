@@ -21,5 +21,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
