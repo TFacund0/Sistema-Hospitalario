@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,7 +30,31 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         private void btn_pacientes_Click(object sender, EventArgs e)
         {
-            AbrirUserControl(new UC_Pacientes());
+            var uc_pacientes = new UC_Pacientes();
+            
+            // Escucha el evento y ejecuta el metodo
+            uc_pacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
+            AbrirUserControl(uc_pacientes);
+        }
+
+        private void AbrirRegistrarPaciente()
+        {
+            var ucRegistrar = new UC_RegistrarPaciente();
+
+            // Cuando el UC pida cancelar → volver a lista de pacientes
+            ucRegistrar.CancelarRegistroSolicitado += (_, __) => AbrirListaPacientes();
+
+            AbrirUserControl(ucRegistrar);
+        }
+
+        private void AbrirListaPacientes()
+        {
+            var ucPacientes = new UC_Pacientes();
+
+            // Suscribirse también al evento de "RegistrarPacienteSolicitado"
+            ucPacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
+
+            AbrirUserControl(ucPacientes);
         }
 
         private void btn_home_Click(object sender, EventArgs e)

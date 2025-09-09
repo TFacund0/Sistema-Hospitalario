@@ -211,13 +211,17 @@
             // 
             // btn_salir
             // 
-            this.btn_salir.BackColor = System.Drawing.Color.DarkCyan;
+            this.btn_salir.BackColor = System.Drawing.Color.Black;
             this.btn_salir.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_salir.FlatAppearance.BorderSize = 0;
-            this.btn_salir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_salir.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+<<<<<<< HEAD
             this.btn_salir.Location = new System.Drawing.Point(0, 575);
             this.btn_salir.Margin = new System.Windows.Forms.Padding(2);
+=======
+            this.btn_salir.ForeColor = System.Drawing.Color.White;
+            this.btn_salir.Location = new System.Drawing.Point(0, 726);
+>>>>>>> e8714d23e4eaf8023d0e0196e3de514141df2f32
             this.btn_salir.Name = "btn_salir";
             this.btn_salir.Size = new System.Drawing.Size(188, 34);
             this.btn_salir.TabIndex = 6;
