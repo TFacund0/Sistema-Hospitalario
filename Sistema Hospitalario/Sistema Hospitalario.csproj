@@ -72,6 +72,12 @@
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.Designer.cs">
       <DependentUpon>UC_RegistrarPaciente.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_RegistrarTurno.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_RegistrarTurno.Designer.cs">
+      <DependentUpon>UC_RegistrarTurno.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Home.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -96,10 +102,10 @@
     <Compile Include="CapaPresentacion\Administrativo\UC_Procedimientos.Designer.cs">
       <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Turnos.cs">
+    <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Turnos.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.Designer.cs">
       <DependentUpon>UC_Turnos.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Login\Login.cs">
@@ -149,6 +155,9 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.resx">
       <DependentUpon>UC_RegistrarPaciente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Turnos\UC_RegistrarTurno.resx">
+      <DependentUpon>UC_RegistrarTurno.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Home.resx">
       <DependentUpon>UC_Home.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,7 +170,7 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Procedimientos.resx">
       <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Turnos.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.resx">
       <DependentUpon>UC_Turnos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Login\Login.resx">

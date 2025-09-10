@@ -34,18 +34,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             
             // Escucha el evento y ejecuta el metodo
             uc_pacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
+            
+            //uc_pacientes.ExportarPacientesSolicitado += (_, __) => AbrirExportarPacientes();
+            
             AbrirUserControl(uc_pacientes);
-        }
-
-        private void AbrirListaPacientes()
-        {
-            var ucPacientes = new UC_Pacientes();
-
-            // Suscribirse también al evento de "RegistrarPacienteSolicitado"
-            ucPacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
-            //ucPacientes.ExportarPacientesSolicitado += (_, __) => AbrirExportarPacientes();
-
-            AbrirUserControl(ucPacientes);
         }
 
         private void AbrirRegistrarPaciente()
@@ -53,7 +45,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             var ucRegistrar = new UC_RegistrarPaciente();
 
             // Cuando el UC pida cancelar → volver a lista de pacientes
-            ucRegistrar.CancelarRegistroSolicitado += (_, __) => AbrirListaPacientes();
+            ucRegistrar.CancelarRegistroSolicitado += (_, __) => AbrirUserControl(new UC_Pacientes());
 
             AbrirUserControl(ucRegistrar);
         }
@@ -74,7 +66,21 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         private void btnTurnos_Click(object sender, EventArgs e)
         {
-            AbrirUserControl(new UC_Turnos());
+            UC_Turnos ucTurnos = new UC_Turnos();
+            // Escucha el evento y ejecuta el metodo
+            ucTurnos.RegistrarTurnoSolicitado += (_, __) => AbrirRegistrarTurno();
+
+            AbrirUserControl(ucTurnos);
+        }
+
+        private void AbrirRegistrarTurno()
+        {
+            var ucRegistrar = new Turnos.UC_RegistrarTurno();
+            
+            // Cuando el UC pida cancelar → volver a lista de turnos
+            ucRegistrar.CancelarTurnoSolicitado += (_, __) => AbrirUserControl(new UC_Turnos());
+
+            AbrirUserControl(ucRegistrar);
         }
 
         private void btnHospitalizacion_Click(object sender, EventArgs e)

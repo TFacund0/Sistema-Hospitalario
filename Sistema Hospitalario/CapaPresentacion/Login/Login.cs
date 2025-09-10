@@ -19,12 +19,6 @@ namespace WindowsFormsInicio_de_sesion
             InitializeComponent();
         }
 
-        
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void BotonIngresar_Click_1(object sender, EventArgs e)
         {
             string usuario = txtUsuario.Text;
@@ -55,17 +49,6 @@ namespace WindowsFormsInicio_de_sesion
                 MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panelLogin_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

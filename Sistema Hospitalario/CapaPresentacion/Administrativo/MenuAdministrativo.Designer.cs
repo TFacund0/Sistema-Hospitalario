@@ -69,7 +69,7 @@
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(251, 761);
+            this.panelMenu.Size = new System.Drawing.Size(251, 780);
             this.panelMenu.TabIndex = 0;
             // 
             // panel1
@@ -77,7 +77,7 @@
             this.panel1.BackColor = System.Drawing.Color.MediumTurquoise;
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 669);
+            this.panel1.Location = new System.Drawing.Point(0, 688);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(251, 50);
@@ -198,7 +198,7 @@
             this.btn_salir.FlatAppearance.BorderSize = 0;
             this.btn_salir.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_salir.ForeColor = System.Drawing.Color.White;
-            this.btn_salir.Location = new System.Drawing.Point(0, 719);
+            this.btn_salir.Location = new System.Drawing.Point(0, 738);
             this.btn_salir.Margin = new System.Windows.Forms.Padding(4);
             this.btn_salir.Name = "btn_salir";
             this.btn_salir.Size = new System.Drawing.Size(251, 42);
@@ -278,7 +278,7 @@
             this.panelContenedor.Location = new System.Drawing.Point(251, 0);
             this.panelContenedor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelContenedor.Name = "panelContenedor";
-            this.panelContenedor.Size = new System.Drawing.Size(1290, 761);
+            this.panelContenedor.Size = new System.Drawing.Size(1290, 780);
             this.panelContenedor.TabIndex = 5;
             // 
             // MenuAdministrativo
@@ -286,7 +286,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.GhostWhite;
-            this.ClientSize = new System.Drawing.Size(1541, 761);
+            this.ClientSize = new System.Drawing.Size(1541, 780);
             this.ControlBox = false;
             this.Controls.Add(this.panelContenedor);
             this.Controls.Add(this.panelMenu);

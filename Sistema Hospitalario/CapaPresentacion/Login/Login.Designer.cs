@@ -72,7 +72,6 @@
             this.LabelUsuario.Size = new System.Drawing.Size(79, 25);
             this.LabelUsuario.TabIndex = 2;
             this.LabelUsuario.Text = "Usuario";
-            this.LabelUsuario.Click += new System.EventHandler(this.label1_Click);
             // 
             // BotonIngresar
             // 
@@ -137,7 +136,6 @@
             this.panelLogin.Name = "panelLogin";
             this.panelLogin.Size = new System.Drawing.Size(1067, 469);
             this.panelLogin.TabIndex = 9;
-            this.panelLogin.Paint += new System.Windows.Forms.PaintEventHandler(this.panelLogin_Paint);
             // 
             // panel2
             // 
@@ -149,7 +147,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(537, 469);
             this.panel2.TabIndex = 0;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // pictureBox1
             // 

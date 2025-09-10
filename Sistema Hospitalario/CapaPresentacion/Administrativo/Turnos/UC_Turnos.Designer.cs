@@ -29,46 +29,44 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel11 = new System.Windows.Forms.Panel();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnNuevoTurno = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.lblTurnosCancelados = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.lblTurnosCompletados = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.lblTurnosCurso = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.lblTurnosPendientes = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dgvTurnos = new System.Windows.Forms.DataGridView();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.colAcciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboCampo = new System.Windows.Forms.ComboBox();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAcciones = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -76,8 +74,8 @@
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTurnos)).BeginInit();
+            this.panel11.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -95,48 +93,15 @@
             this.panel1.Size = new System.Drawing.Size(1290, 760);
             this.panel1.TabIndex = 0;
             // 
-            // panel9
-            // 
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 0);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1290, 40);
-            this.panel9.TabIndex = 1;
-            // 
-            // panel10
-            // 
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel10.Location = new System.Drawing.Point(0, 40);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(45, 720);
-            this.panel10.TabIndex = 9;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(1245, 40);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(45, 720);
-            this.flowLayoutPanel1.TabIndex = 0;
-            // 
-            // panel11
-            // 
-            this.panel11.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel11.Location = new System.Drawing.Point(45, 720);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(1200, 40);
-            this.panel11.TabIndex = 9;
-            // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.Color.LightGray;
-            this.panel12.Controls.Add(this.button2);
+            this.panel12.Controls.Add(this.btnNuevoTurno);
             this.panel12.Controls.Add(this.panel8);
             this.panel12.Controls.Add(this.panel7);
             this.panel12.Controls.Add(this.panel6);
             this.panel12.Controls.Add(this.panel5);
             this.panel12.Controls.Add(this.panel4);
-            this.panel12.Controls.Add(this.panel3);
             this.panel12.Controls.Add(this.label2);
             this.panel12.Controls.Add(this.label1);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -145,25 +110,26 @@
             this.panel12.Size = new System.Drawing.Size(1200, 680);
             this.panel12.TabIndex = 10;
             // 
-            // button2
+            // btnNuevoTurno
             // 
-            this.button2.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(959, 35);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(195, 28);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Nuevo Turno";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnNuevoTurno.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnNuevoTurno.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnNuevoTurno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNuevoTurno.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNuevoTurno.ForeColor = System.Drawing.Color.White;
+            this.btnNuevoTurno.Location = new System.Drawing.Point(959, 35);
+            this.btnNuevoTurno.Name = "btnNuevoTurno";
+            this.btnNuevoTurno.Size = new System.Drawing.Size(195, 28);
+            this.btnNuevoTurno.TabIndex = 17;
+            this.btnNuevoTurno.Text = "Nuevo Turno";
+            this.btnNuevoTurno.UseVisualStyleBackColor = false;
+            this.btnNuevoTurno.Click += new System.EventHandler(this.btnNuevoTurno_Click);
             // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.White;
             this.panel8.Controls.Add(this.label18);
-            this.panel8.Controls.Add(this.label19);
+            this.panel8.Controls.Add(this.lblTurnosCancelados);
             this.panel8.Controls.Add(this.label20);
             this.panel8.Location = new System.Drawing.Point(948, 518);
             this.panel8.Name = "panel8";
@@ -179,15 +145,15 @@
             this.label18.TabIndex = 11;
             this.label18.Text = "Reprogramar";
             // 
-            // label19
+            // lblTurnosCancelados
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(90, 39);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(21, 20);
-            this.label19.TabIndex = 10;
-            this.label19.Text = "3";
+            this.lblTurnosCancelados.AutoSize = true;
+            this.lblTurnosCancelados.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosCancelados.Location = new System.Drawing.Point(90, 39);
+            this.lblTurnosCancelados.Name = "lblTurnosCancelados";
+            this.lblTurnosCancelados.Size = new System.Drawing.Size(21, 20);
+            this.lblTurnosCancelados.TabIndex = 10;
+            this.lblTurnosCancelados.Text = "3";
             // 
             // label20
             // 
@@ -203,7 +169,7 @@
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.Controls.Add(this.label15);
-            this.panel7.Controls.Add(this.label16);
+            this.panel7.Controls.Add(this.lblTurnosCompletados);
             this.panel7.Controls.Add(this.label17);
             this.panel7.Location = new System.Drawing.Point(648, 518);
             this.panel7.Name = "panel7";
@@ -219,15 +185,15 @@
             this.label15.TabIndex = 8;
             this.label15.Text = "Finalizadas hoy";
             // 
-            // label16
+            // lblTurnosCompletados
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(85, 40);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(33, 20);
-            this.label16.TabIndex = 7;
-            this.label16.Text = "13";
+            this.lblTurnosCompletados.AutoSize = true;
+            this.lblTurnosCompletados.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosCompletados.Location = new System.Drawing.Point(85, 40);
+            this.lblTurnosCompletados.Name = "lblTurnosCompletados";
+            this.lblTurnosCompletados.Size = new System.Drawing.Size(33, 20);
+            this.lblTurnosCompletados.TabIndex = 7;
+            this.lblTurnosCompletados.Text = "13";
             // 
             // label17
             // 
@@ -243,7 +209,7 @@
             // 
             this.panel6.BackColor = System.Drawing.Color.White;
             this.panel6.Controls.Add(this.label12);
-            this.panel6.Controls.Add(this.label13);
+            this.panel6.Controls.Add(this.lblTurnosCurso);
             this.panel6.Controls.Add(this.label14);
             this.panel6.Location = new System.Drawing.Point(346, 518);
             this.panel6.Name = "panel6";
@@ -259,15 +225,15 @@
             this.label12.TabIndex = 5;
             this.label12.Text = "Consultas activas";
             // 
-            // label13
+            // lblTurnosCurso
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(88, 36);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(33, 20);
-            this.label13.TabIndex = 4;
-            this.label13.Text = "10";
+            this.lblTurnosCurso.AutoSize = true;
+            this.lblTurnosCurso.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosCurso.Location = new System.Drawing.Point(88, 36);
+            this.lblTurnosCurso.Name = "lblTurnosCurso";
+            this.lblTurnosCurso.Size = new System.Drawing.Size(33, 20);
+            this.lblTurnosCurso.TabIndex = 4;
+            this.lblTurnosCurso.Text = "10";
             // 
             // label14
             // 
@@ -283,31 +249,22 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.Controls.Add(this.label11);
-            this.panel5.Controls.Add(this.label10);
+            this.panel5.Controls.Add(this.lblTurnosPendientes);
             this.panel5.Controls.Add(this.label9);
             this.panel5.Location = new System.Drawing.Point(48, 518);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(207, 101);
             this.panel5.TabIndex = 13;
             // 
-            // label11
+            // lblTurnosPendientes
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(61, 64);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(84, 16);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "5 pendientes";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(88, 36);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(33, 20);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "15";
+            this.lblTurnosPendientes.AutoSize = true;
+            this.lblTurnosPendientes.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosPendientes.Location = new System.Drawing.Point(88, 36);
+            this.lblTurnosPendientes.Name = "lblTurnosPendientes";
+            this.lblTurnosPendientes.Size = new System.Drawing.Size(33, 20);
+            this.lblTurnosPendientes.TabIndex = 1;
+            this.lblTurnosPendientes.Text = "15";
             // 
             // label9
             // 
@@ -322,22 +279,36 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
-            this.panel4.Controls.Add(this.dataGridView1);
-            this.panel4.Controls.Add(this.comboBox1);
+            this.panel4.Controls.Add(this.btnLimpiar);
+            this.panel4.Controls.Add(this.btnBuscar);
+            this.panel4.Controls.Add(this.txtBuscar);
+            this.panel4.Controls.Add(this.cboCampo);
+            this.panel4.Controls.Add(this.dgvTurnos);
             this.panel4.Controls.Add(this.label8);
             this.panel4.Controls.Add(this.label7);
-            this.panel4.Location = new System.Drawing.Point(476, 107);
+            this.panel4.Location = new System.Drawing.Point(47, 107);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(678, 393);
+            this.panel4.Size = new System.Drawing.Size(1107, 393);
             this.panel4.TabIndex = 12;
             // 
-            // comboBox1
+            // dgvTurnos
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(35, 70);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(196, 24);
-            this.comboBox1.TabIndex = 2;
+            this.dgvTurnos.AllowUserToAddRows = false;
+            this.dgvTurnos.AllowUserToDeleteRows = false;
+            this.dgvTurnos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTurnos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colHora,
+            this.colPaciente,
+            this.colMedico,
+            this.colEstado,
+            this.colAcciones});
+            this.dgvTurnos.Location = new System.Drawing.Point(35, 112);
+            this.dgvTurnos.Name = "dgvTurnos";
+            this.dgvTurnos.ReadOnly = true;
+            this.dgvTurnos.RowHeadersWidth = 51;
+            this.dgvTurnos.RowTemplate.Height = 24;
+            this.dgvTurnos.Size = new System.Drawing.Size(1035, 253);
+            this.dgvTurnos.TabIndex = 3;
             // 
             // label8
             // 
@@ -357,68 +328,6 @@
             this.label7.Size = new System.Drawing.Size(175, 25);
             this.label7.TabIndex = 0;
             this.label7.Text = "Turnos de Hoy";
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.Controls.Add(this.label6);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Controls.Add(this.label3);
-            this.panel3.Controls.Add(this.monthCalendar1);
-            this.panel3.Location = new System.Drawing.Point(47, 107);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(384, 393);
-            this.panel3.TabIndex = 11;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Tomato;
-            this.label6.Location = new System.Drawing.Point(39, 337);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(71, 16);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Ocupado";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.LimeGreen;
-            this.label5.Location = new System.Drawing.Point(39, 306);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(82, 16);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Disponible";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.label4.Location = new System.Drawing.Point(39, 278);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(145, 16);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Citas Programadas";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(29, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 25);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Calendario";
-            // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(32, 52);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 3;
             // 
             // label2
             // 
@@ -440,56 +349,145 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Agenda de Turnos";
             // 
-            // colAcciones
+            // panel11
             // 
-            this.colAcciones.HeaderText = "Acciones";
-            this.colAcciones.MinimumWidth = 6;
-            this.colAcciones.Name = "colAcciones";
-            this.colAcciones.Width = 125;
+            this.panel11.Controls.Add(this.panel2);
+            this.panel11.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel11.Location = new System.Drawing.Point(45, 720);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(1200, 40);
+            this.panel11.TabIndex = 9;
             // 
-            // colEstado
+            // panel2
             // 
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.Width = 125;
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1200, 40);
+            this.panel2.TabIndex = 3;
             // 
-            // colMedico
+            // flowLayoutPanel1
             // 
-            this.colMedico.HeaderText = "Médico";
-            this.colMedico.MinimumWidth = 6;
-            this.colMedico.Name = "colMedico";
-            this.colMedico.Width = 125;
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(1245, 40);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(45, 720);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // colPaciente
+            // panel10
             // 
-            this.colPaciente.HeaderText = "Paciente";
-            this.colPaciente.MinimumWidth = 6;
-            this.colPaciente.Name = "colPaciente";
-            this.colPaciente.Width = 125;
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel10.Location = new System.Drawing.Point(0, 40);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(45, 720);
+            this.panel10.TabIndex = 9;
+            // 
+            // panel9
+            // 
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel9.Location = new System.Drawing.Point(0, 0);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(1290, 40);
+            this.panel9.TabIndex = 1;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(66, 64);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(75, 16);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Pendientes";
+            // 
+            // cboCampo
+            // 
+            this.cboCampo.FormattingEnabled = true;
+            this.cboCampo.Location = new System.Drawing.Point(35, 71);
+            this.cboCampo.Name = "cboCampo";
+            this.cboCampo.Size = new System.Drawing.Size(173, 24);
+            this.cboCampo.TabIndex = 4;
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscar.Location = new System.Drawing.Point(232, 71);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(274, 24);
+            this.txtBuscar.TabIndex = 5;
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscar.ForeColor = System.Drawing.Color.White;
+            this.btnBuscar.Location = new System.Drawing.Point(876, 59);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(96, 36);
+            this.btnBuscar.TabIndex = 18;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiar.Location = new System.Drawing.Point(987, 59);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(83, 36);
+            this.btnLimpiar.TabIndex = 19;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // colHora
             // 
             this.colHora.HeaderText = "Hora";
             this.colHora.MinimumWidth = 6;
             this.colHora.Name = "colHora";
+            this.colHora.ReadOnly = true;
             this.colHora.Width = 125;
             // 
-            // dataGridView1
+            // colPaciente
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colHora,
-            this.colPaciente,
-            this.colMedico,
-            this.colEstado,
-            this.colAcciones});
-            this.dataGridView1.Location = new System.Drawing.Point(35, 112);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(607, 253);
-            this.dataGridView1.TabIndex = 3;
+            this.colPaciente.HeaderText = "Paciente";
+            this.colPaciente.MinimumWidth = 6;
+            this.colPaciente.Name = "colPaciente";
+            this.colPaciente.ReadOnly = true;
+            this.colPaciente.Width = 125;
+            // 
+            // colMedico
+            // 
+            this.colMedico.HeaderText = "Médico";
+            this.colMedico.MinimumWidth = 6;
+            this.colMedico.Name = "colMedico";
+            this.colMedico.ReadOnly = true;
+            this.colMedico.Width = 125;
+            // 
+            // colEstado
+            // 
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 6;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            this.colEstado.Width = 125;
+            // 
+            // colAcciones
+            // 
+            this.colAcciones.HeaderText = "Acciones";
+            this.colAcciones.MinimumWidth = 6;
+            this.colAcciones.Name = "colAcciones";
+            this.colAcciones.ReadOnly = true;
+            this.colAcciones.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colAcciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colAcciones.Text = "Ver";
+            this.colAcciones.UseColumnTextForButtonValue = true;
+            this.colAcciones.Width = 125;
             // 
             // UC_Turnos
             // 
@@ -511,9 +509,8 @@
             this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTurnos)).EndInit();
+            this.panel11.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -526,40 +523,38 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnNuevoTurno;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lblTurnosCancelados;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblTurnosCompletados;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lblTurnosCurso;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblTurnosPendientes;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvTurnos;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cboCampo;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHora;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMedico;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAcciones;
+        private System.Windows.Forms.DataGridViewButtonColumn colAcciones;
     }
 }

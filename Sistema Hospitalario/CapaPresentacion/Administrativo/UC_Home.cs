@@ -27,13 +27,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             string cantCamasOcupadas = "50";
             string totalCamas = "100";
             string cantConsultas = "115";
-            string cantEmergencias = "15";
 
             if (int.TryParse(cantPacientes, out int valorPaciente) && valorPaciente >= 0 && valorPaciente < 1000 &&
                 int.TryParse(cantCamasOcupadas, out int valorCamasOcupadas) && valorCamasOcupadas >= 0 && valorCamasOcupadas < 1000 &&
                 int.TryParse(totalCamas, out int valorCamas) && valorCamas >= 0 && valorCamas < 1000 && valorCamasOcupadas <= valorCamas &&
-                int.TryParse(cantConsultas, out int valorConsultas) && valorConsultas >= 0 && valorConsultas < 1000 &&
-                int.TryParse(cantEmergencias, out int valorEmergencias) && valorEmergencias >= 0 && valorEmergencias < 1000)
+                int.TryParse(cantConsultas, out int valorConsultas) && valorConsultas >= 0 && valorConsultas < 1000)
             {
                 string porcentajeCamas = (((float)valorCamasOcupadas / (float)valorCamas) * 100).ToString() + "%";
 
@@ -41,7 +39,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 lblCamasOcupadas.Text = cantCamasOcupadas + "/" + totalCamas;
                 lblPorcentajeCamas.Text = porcentajeCamas + " de ocupación";
                 lblCantidadConsultas.Text = cantConsultas;
-                lblEmergencias.Text = cantEmergencias;
             }
             else
             {
@@ -73,11 +70,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvActividad.Rows.Add("María", "González", "Ingreso a emergencias", "10:30", "Urgencia");
             dgvActividad.Rows.Add("Carlos", "Rodríguez", "Alta médica", "09:05", "Info");
             dgvActividad.Rows.Add("Susana", "Pérez", "Consulta programada", "08:45", "Consulta");
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

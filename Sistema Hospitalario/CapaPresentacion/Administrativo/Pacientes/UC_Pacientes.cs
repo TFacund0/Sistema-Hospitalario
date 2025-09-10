@@ -25,22 +25,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             string cantPacientes = "5";
             string cantInternados = "3";
-            string cantEmergencias = "1";
-            string cantAmbulatorio = "3";
             string cantAlta = "2";
 
             if (int.TryParse(cantPacientes, out int valorPaciente) && valorPaciente >= 0 && valorPaciente < 1000 &&
                 int.TryParse(cantInternados, out int valorInternados) && valorInternados >= 0 && valorInternados < 1000 &&
-                int.TryParse(cantAmbulatorio, out int valorAmbulatorio) && valorAmbulatorio >= 0 && valorAmbulatorio < 1000 &&
-                int.TryParse(cantAlta, out int valorAlta) && valorAlta >= 0 && valorAlta < 1000 &&
-                int.TryParse(cantEmergencias, out int valorEmergencias) && valorEmergencias >= 0 && valorEmergencias < 1000)
+                int.TryParse(cantAlta, out int valorAlta) && valorAlta >= 0 && valorAlta < 1000)
             {
                 lblPacientes.Text = cantPacientes;
                 lblInternados.Text = cantInternados;
-                lblEmergencias.Text = cantEmergencias;
-                lblAmbulatorio.Text = cantAmbulatorio;
                 lblAlta.Text = cantAlta;
-
             }
             else
             {
@@ -69,18 +62,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         private void CargarFilasEjemplo()
         {
-            dgvPacientes.Rows.Add("María González", "12345678", 45, "3794-123456", "101", "Internada", "Dr. Pérez", "Ver");
-            dgvPacientes.Rows.Add("Carlos Rodríguez", "23456789", 60, "3794-654321", "Emergencias", "Urgencia", "Dra. López", "Ver");
-            dgvPacientes.Rows.Add("Susana Pérez", "34567890", 30, "3794-987654", "Ambulatorio", "Consulta", "Dr. García", "Ver");
-        }
-
-        // Evento para manejar el clic en el botón "Registrar Paciente"
-        public event EventHandler RegistrarPacienteSolicitado;
-
-        private void btnRegistrarPaciente_Click(object sender, EventArgs e)
-        {
-            // Dispara un evento que tiene que manejar el formulario del Menu Administrativo
-            RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
+            dgvPacientes.Rows.Add("María González", "12345678", 45, "Internada", "101", "Ver");
+            dgvPacientes.Rows.Add("Carlos Rodríguez", "23456789", 60, "Urgencia", "200", "Ver");
+            dgvPacientes.Rows.Add("Susana Pérez", "34567890", 30, "Consulta", "305", "Ver");
         }
 
         public event EventHandler ExportarDatosSolicitado;
@@ -88,6 +72,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private void btnExportar_Click(object sender, EventArgs e)
         {
             ExportarDatosSolicitado?.Invoke(this, EventArgs.Empty);
+        }
+
+        // Evento para manejar el clic en el botón "Registrar Paciente"
+        public event EventHandler RegistrarPacienteSolicitado;
+
+        private void btnNuevoPaciente_Click(object sender, EventArgs e)
+        {
+            // Dispara un evento que tiene que manejar el formulario del Menu Administrativo
+            RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
         }
     }
 }
