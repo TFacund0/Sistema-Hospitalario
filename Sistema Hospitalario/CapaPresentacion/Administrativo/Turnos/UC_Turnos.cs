@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,7 +23,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             ConfigurarActividad();     
             CargarFilasEjemplo();      
             ConfigurarEnlazadoDeColumnas(); 
-            CargarOpcionesDeFiltro();  
+            CargarOpcionesDeFiltro();
+
+            dgvTurnos.CellContentClick += dgvTurnos_CellContentClick;
         }
 
         public event EventHandler RegistrarTurnoSolicitado;
@@ -69,11 +72,32 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 dgvTurnos.Columns["colEstado"].DataPropertyName = "Estado";
         }
 
+        public event EventHandler<TurnoDTO> VerTurnoSolicitado;
+
+        private void dgvTurnos_CellContentClick(object s, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (dgvTurnos.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                var turno = _bs[e.RowIndex] as TurnoDTO;
+                if (turno != null) VerTurnoSolicitado?.Invoke(this, turno);
+            }
+        }
+
+
         public class TurnoDTO
         {
             public DateTime Fecha { get; set; }
             public string Paciente { get; set; }
             public string Medico { get; set; }
+            public string Procedimiento { get; set; }
+            public string Correo { get; set; }
+            public string DNI { get; set; }
+            public string Telefono { get; set; }
+            public DateTime FechaTurno { get; set; }
+            public DateTime FechaRegistro { get; set; }
+            public string Observaciones { get; set; }
+
             public string Estado { get; set; }
         }
 
@@ -119,7 +143,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         query = query.Where(t =>
                             t.Fecha.ToString("yyyy-MM-dd HH:mm").ToLower().Contains(q) ||
                             t.Fecha.ToString("HH:mm").Contains(q)); break;
-                    default: // "Todos"
+                    default:
                         query = query.Where(t =>
                             (t.Paciente ?? "").ToLower().Contains(q) ||
                             (t.Medico ?? "").ToLower().Contains(q) ||

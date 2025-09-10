@@ -78,11 +78,23 @@
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.Designer.cs">
       <DependentUpon>UC_RegistrarPaciente.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_VisualizarPaciente.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_VisualizarPaciente.Designer.cs">
+      <DependentUpon>UC_VisualizarPaciente.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_RegistrarTurno.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_RegistrarTurno.Designer.cs">
       <DependentUpon>UC_RegistrarTurno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_VisualizarTurno.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_VisualizarTurno.Designer.cs">
+      <DependentUpon>UC_VisualizarTurno.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\UC_Home.cs">
       <SubType>UserControl</SubType>
@@ -166,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Turnos\UC_RegistrarTurno.resx">
       <DependentUpon>UC_RegistrarTurno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Turnos\UC_VisualizarTurno.resx">
+      <DependentUpon>UC_VisualizarTurno.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Home.resx">
       <DependentUpon>UC_Home.cs</DependentUpon>

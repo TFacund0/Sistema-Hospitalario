@@ -53,11 +53,6 @@
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cboCampo = new System.Windows.Forms.ComboBox();
             this.dgvTurnos = new System.Windows.Forms.DataGridView();
-            this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAcciones = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -67,6 +62,11 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -356,7 +356,7 @@
             this.colPaciente,
             this.colMedico,
             this.colEstado,
-            this.colAcciones});
+            this.colAccion});
             this.dgvTurnos.Location = new System.Drawing.Point(35, 112);
             this.dgvTurnos.Name = "dgvTurnos";
             this.dgvTurnos.ReadOnly = true;
@@ -364,50 +364,6 @@
             this.dgvTurnos.RowTemplate.Height = 24;
             this.dgvTurnos.Size = new System.Drawing.Size(1035, 253);
             this.dgvTurnos.TabIndex = 3;
-            // 
-            // colHora
-            // 
-            this.colHora.HeaderText = "Hora";
-            this.colHora.MinimumWidth = 6;
-            this.colHora.Name = "colHora";
-            this.colHora.ReadOnly = true;
-            this.colHora.Width = 125;
-            // 
-            // colPaciente
-            // 
-            this.colPaciente.HeaderText = "Paciente";
-            this.colPaciente.MinimumWidth = 6;
-            this.colPaciente.Name = "colPaciente";
-            this.colPaciente.ReadOnly = true;
-            this.colPaciente.Width = 125;
-            // 
-            // colMedico
-            // 
-            this.colMedico.HeaderText = "Médico";
-            this.colMedico.MinimumWidth = 6;
-            this.colMedico.Name = "colMedico";
-            this.colMedico.ReadOnly = true;
-            this.colMedico.Width = 125;
-            // 
-            // colEstado
-            // 
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
-            this.colEstado.Width = 125;
-            // 
-            // colAcciones
-            // 
-            this.colAcciones.HeaderText = "Acciones";
-            this.colAcciones.MinimumWidth = 6;
-            this.colAcciones.Name = "colAcciones";
-            this.colAcciones.ReadOnly = true;
-            this.colAcciones.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colAcciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colAcciones.Text = "Ver";
-            this.colAcciones.UseColumnTextForButtonValue = true;
-            this.colAcciones.Width = 125;
             // 
             // label8
             // 
@@ -489,6 +445,50 @@
             this.panel9.Size = new System.Drawing.Size(1290, 40);
             this.panel9.TabIndex = 1;
             // 
+            // colHora
+            // 
+            this.colHora.HeaderText = "Hora";
+            this.colHora.MinimumWidth = 6;
+            this.colHora.Name = "colHora";
+            this.colHora.ReadOnly = true;
+            this.colHora.Width = 125;
+            // 
+            // colPaciente
+            // 
+            this.colPaciente.HeaderText = "Paciente";
+            this.colPaciente.MinimumWidth = 6;
+            this.colPaciente.Name = "colPaciente";
+            this.colPaciente.ReadOnly = true;
+            this.colPaciente.Width = 125;
+            // 
+            // colMedico
+            // 
+            this.colMedico.HeaderText = "Médico";
+            this.colMedico.MinimumWidth = 6;
+            this.colMedico.Name = "colMedico";
+            this.colMedico.ReadOnly = true;
+            this.colMedico.Width = 125;
+            // 
+            // colEstado
+            // 
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 6;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            this.colEstado.Width = 125;
+            // 
+            // colAccion
+            // 
+            this.colAccion.HeaderText = "Acciones";
+            this.colAccion.MinimumWidth = 6;
+            this.colAccion.Name = "colAccion";
+            this.colAccion.ReadOnly = true;
+            this.colAccion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colAccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colAccion.Text = "Ver";
+            this.colAccion.UseColumnTextForButtonValue = true;
+            this.colAccion.Width = 125;
+            // 
             // UC_Turnos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -555,6 +555,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMedico;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
-        private System.Windows.Forms.DataGridViewButtonColumn colAcciones;
+        private System.Windows.Forms.DataGridViewButtonColumn colAccion;
     }
 }

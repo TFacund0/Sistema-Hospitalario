@@ -70,6 +70,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             public int telefono { get; set; }
             public string observaciones { get; set; }
             public string Estado { get; set; }
+
+            public string Paciente => $"{nombre} {apellido}";
+            public int Edad
+            {
+                get
+                {
+                    var today = DateTime.Today;
+                    var age = today.Year - FechaNacimiento.Year;
+                    if (FechaNacimiento.Date > today.AddYears(-age)) age--;
+                    return age;
+                }
+            }
+            
+            public string DNI => dni.ToString();
         }
 
         private void ConfigurarEnlazadoDeColumnas()

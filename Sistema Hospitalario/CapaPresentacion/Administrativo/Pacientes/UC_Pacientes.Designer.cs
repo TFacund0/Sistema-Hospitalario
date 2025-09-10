@@ -37,6 +37,10 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.cboCampo = new System.Windows.Forms.ComboBox();
             this.dgvPacientes = new System.Windows.Forms.DataGridView();
             this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,17 +62,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.lblPacientes = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnExportar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.cboCampo = new System.Windows.Forms.ComboBox();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -111,7 +110,6 @@
             this.panel2.Controls.Add(this.panel7);
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
-            this.panel2.Controls.Add(this.btnExportar);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -195,6 +193,52 @@
             this.panel8.Size = new System.Drawing.Size(1117, 361);
             this.panel8.TabIndex = 6;
             // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiar.Location = new System.Drawing.Point(973, 81);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(124, 28);
+            this.btnLimpiar.TabIndex = 20;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
+            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscar.ForeColor = System.Drawing.Color.White;
+            this.btnBuscar.Location = new System.Drawing.Point(831, 81);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(124, 28);
+            this.btnBuscar.TabIndex = 19;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscar.Location = new System.Drawing.Point(170, 85);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(154, 24);
+            this.txtBuscar.TabIndex = 11;
+            // 
+            // cboCampo
+            // 
+            this.cboCampo.FormattingEnabled = true;
+            this.cboCampo.Location = new System.Drawing.Point(21, 85);
+            this.cboCampo.Name = "cboCampo";
+            this.cboCampo.Size = new System.Drawing.Size(121, 24);
+            this.cboCampo.TabIndex = 10;
+            // 
             // dgvPacientes
             // 
             this.dgvPacientes.AllowUserToAddRows = false;
@@ -264,6 +308,8 @@
             this.colAcciones.MinimumWidth = 6;
             this.colAcciones.Name = "colAcciones";
             this.colAcciones.ReadOnly = true;
+            this.colAcciones.Text = "Ver";
+            this.colAcciones.UseColumnTextForButtonValue = true;
             this.colAcciones.Width = 125;
             // 
             // label4
@@ -415,21 +461,6 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Total";
             // 
-            // btnExportar
-            // 
-            this.btnExportar.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnExportar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
-            this.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExportar.ForeColor = System.Drawing.Color.White;
-            this.btnExportar.Location = new System.Drawing.Point(808, 37);
-            this.btnExportar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnExportar.Name = "btnExportar";
-            this.btnExportar.Size = new System.Drawing.Size(124, 28);
-            this.btnExportar.TabIndex = 2;
-            this.btnExportar.Text = "Exportar";
-            this.btnExportar.UseVisualStyleBackColor = false;
-            this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -481,52 +512,6 @@
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(1291, 40);
             this.panel9.TabIndex = 5;
-            // 
-            // cboCampo
-            // 
-            this.cboCampo.FormattingEnabled = true;
-            this.cboCampo.Location = new System.Drawing.Point(21, 85);
-            this.cboCampo.Name = "cboCampo";
-            this.cboCampo.Size = new System.Drawing.Size(121, 24);
-            this.cboCampo.TabIndex = 10;
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscar.Location = new System.Drawing.Point(170, 85);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(154, 24);
-            this.txtBuscar.TabIndex = 11;
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
-            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBuscar.ForeColor = System.Drawing.Color.White;
-            this.btnBuscar.Location = new System.Drawing.Point(831, 81);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(124, 28);
-            this.btnBuscar.TabIndex = 19;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = false;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.BackColor = System.Drawing.Color.MediumTurquoise;
-            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
-            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(973, 81);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(124, 28);
-            this.btnLimpiar.TabIndex = 20;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // UC_Pacientes
             // 
@@ -580,16 +565,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblPacientes;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnNuevoPaciente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDni;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEdad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHabitacion;
-        private System.Windows.Forms.DataGridViewButtonColumn colAcciones;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel10;
@@ -598,5 +576,11 @@
         private System.Windows.Forms.ComboBox cboCampo;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDni;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEdad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHabitacion;
+        private System.Windows.Forms.DataGridViewButtonColumn colAcciones;
     }
 }

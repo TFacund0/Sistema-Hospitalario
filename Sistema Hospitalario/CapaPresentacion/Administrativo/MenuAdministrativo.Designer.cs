@@ -296,7 +296,6 @@
             this.Name = "MenuAdministrativo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menú Administrativo";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
