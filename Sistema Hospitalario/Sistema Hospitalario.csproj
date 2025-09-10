@@ -54,6 +54,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.Designer.cs">
+      <DependentUpon>UC_RegistrarInternacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\MenuAdministrativo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,10 +90,10 @@
     <Compile Include="CapaPresentacion\Administrativo\UC_Home.Designer.cs">
       <DependentUpon>UC_Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.cs">
+    <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_Hospitalizacion.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_Hospitalizacion.Designer.cs">
       <DependentUpon>UC_Hospitalizacion.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.cs">
@@ -146,6 +152,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.resx">
+      <DependentUpon>UC_RegistrarInternacion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\MenuAdministrativo.resx">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,7 +170,7 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Home.resx">
       <DependentUpon>UC_Home.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrativo\UC_Hospitalizacion.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Hospitalización\UC_Hospitalizacion.resx">
       <DependentUpon>UC_Hospitalizacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.resx">

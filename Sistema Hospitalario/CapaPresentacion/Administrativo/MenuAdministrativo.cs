@@ -1,4 +1,5 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
+﻿using Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización;
+using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,8 +67,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         private void btnTurnos_Click(object sender, EventArgs e)
         {
-            UC_Turnos ucTurnos = new UC_Turnos();
-            // Escucha el evento y ejecuta el metodo
+            var ucTurnos = new UC_Turnos();
+            
             ucTurnos.RegistrarTurnoSolicitado += (_, __) => AbrirRegistrarTurno();
 
             AbrirUserControl(ucTurnos);
@@ -85,7 +86,21 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         private void btnHospitalizacion_Click(object sender, EventArgs e)
         {
-            AbrirUserControl(new UC_Hospitalizacion());
+            var ucHospitalizacion = new UC_Hospitalizacion();
+
+            ucHospitalizacion.RegistrarInternacionSolicitada += (_, __) => AbrirRegistrarInternacion();
+
+            AbrirUserControl(ucHospitalizacion);
+        }
+
+        private void AbrirRegistrarInternacion()
+        {
+            var ucRegistrarInternacion = new UC_RegistrarInternacion();
+
+            // Cuando el UC pida cancelar → volver a lista de hospitalización
+            ucRegistrarInternacion.CancelarInternacionSolicitada += (_, __) => AbrirUserControl(new UC_Hospitalizacion());
+
+            AbrirUserControl(ucRegistrarInternacion);
         }
 
         private void btnProcedimientos_Click(object sender, EventArgs e)

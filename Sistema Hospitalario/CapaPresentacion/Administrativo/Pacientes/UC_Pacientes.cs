@@ -7,43 +7,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_Pacientes : UserControl
     {
+        private List<PacienteDTO> pacienteDTOs = new List<PacienteDTO>();
+        private readonly BindingSource _bs = new BindingSource();
+
         public UC_Pacientes()
         {
             InitializeComponent();
 
-            InformacionPaneles();
             ConfigurarActividad();
+            CargarOpcionesDeFiltro();
+            ConfigurarEnlazadoDeColumnas();
             CargarFilasEjemplo();
         }
 
-        private void InformacionPaneles()
-        {
-            string cantPacientes = "5";
-            string cantInternados = "3";
-            string cantAlta = "2";
+        public event EventHandler ExportarDatosSolicitado;
 
-            if (int.TryParse(cantPacientes, out int valorPaciente) && valorPaciente >= 0 && valorPaciente < 1000 &&
-                int.TryParse(cantInternados, out int valorInternados) && valorInternados >= 0 && valorInternados < 1000 &&
-                int.TryParse(cantAlta, out int valorAlta) && valorAlta >= 0 && valorAlta < 1000)
-            {
-                lblPacientes.Text = cantPacientes;
-                lblInternados.Text = cantInternados;
-                lblAlta.Text = cantAlta;
-            }
-            else
-            {
-                MessageBox.Show("Error: Los valores de los paneles deben ser números enteros no negativos y dentro del rango permitido.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            ExportarDatosSolicitado?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler RegistrarPacienteSolicitado;
+
+        private void btnNuevoPaciente_Click(object sender, EventArgs e)
+        {
+            RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
         }
 
         private void ConfigurarActividad()
         {
-            // Estilos generales
             dgvPacientes.ReadOnly = true;
             dgvPacientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPacientes.RowHeadersVisible = false;
@@ -59,28 +57,128 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
         }
 
+        public class PacienteDTO
+        {
+            public DateTime FechaNacimiento { get; set; }
+            public string nombre { get; set; }
+            public string apellido { get; set; }
+            public string direccion { get; set; }
+            public string obraSocial { get; set; }
+            public int nroAfiliado { get; set; }
+            public int dni { get; set; }
+            public int habitacion { get; set; }
+            public int telefono { get; set; }
+            public string observaciones { get; set; }
+            public string Estado { get; set; }
+        }
+
+        private void ConfigurarEnlazadoDeColumnas()
+        {
+            dgvPacientes.AutoGenerateColumns = false;
+
+            dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente";   // string calculado: nombre + apellido
+            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";        // string (dni.ToString())
+            dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";       // int calculado por fecha nac.
+            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
+            dgvPacientes.Columns["colHabitacion"].DataPropertyName = "Habitacion"; // string ("" si 0)
+        }
 
         private void CargarFilasEjemplo()
         {
-            dgvPacientes.Rows.Add("María González", "12345678", 45, "Internada", "101", "Ver");
-            dgvPacientes.Rows.Add("Carlos Rodríguez", "23456789", 60, "Urgencia", "200", "Ver");
-            dgvPacientes.Rows.Add("Susana Pérez", "34567890", 30, "Consulta", "305", "Ver");
+            pacienteDTOs = new List<PacienteDTO>
+            {
+                new PacienteDTO()
+                {
+                    nombre = "Juan",
+                    apellido = "Pérez",
+                    direccion = "Calle Falsa 123",
+                    obraSocial = "OSDE",
+                    nroAfiliado = 123456,
+                    dni = 12345678,
+                    habitacion = 101,
+                    telefono = 123456789,
+                    observaciones = "Ninguna",
+                    Estado = "Internado",
+                    FechaNacimiento = new DateTime(1980, 5, 15)
+                },
+                new PacienteDTO()
+                {
+                    nombre = "María",
+                    apellido = "Gómez",
+                    direccion = "Avenida Siempre Viva 742",
+                    obraSocial = "Swiss Medical",
+                    nroAfiliado = 654321,
+                    dni = 87654321,
+                    habitacion = 202,
+                    telefono = 987654321,
+                    observaciones = "Alergia a la penicilina",
+                    Estado = "Consulta",
+                    FechaNacimiento = new DateTime(1990, 8, 22)
+                },
+            }
+            ;
+
+            _bs.DataSource = pacienteDTOs;
+            dgvPacientes.DataSource = _bs;
         }
 
-        public event EventHandler ExportarDatosSolicitado;
-
-        private void btnExportar_Click(object sender, EventArgs e)
+        private void CargarOpcionesDeFiltro()
         {
-            ExportarDatosSolicitado?.Invoke(this, EventArgs.Empty);
+            if (cboCampo == null) return;
+
+            cboCampo.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCampo.Items.Clear();
+            cboCampo.Items.AddRange(new[] { "Todos", "Paciente", "DNI", "Estado" });
+            cboCampo.SelectedIndex = 0;
         }
 
-        // Evento para manejar el clic en el botón "Registrar Paciente"
-        public event EventHandler RegistrarPacienteSolicitado;
-
-        private void btnNuevoPaciente_Click(object sender, EventArgs e)
+        private void AplicarFiltro(string campo, string texto)
         {
-            // Dispara un evento que tiene que manejar el formulario del Menu Administrativo
-            RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
+            string q = (texto ?? "").Trim().ToLowerInvariant();
+            IEnumerable<PacienteDTO> query = pacienteDTOs;
+
+            if (!string.IsNullOrEmpty(q))
+            {
+                switch (campo)
+                {
+                    case "Paciente":
+                        query = query.Where(t => ($"{t.nombre} {t.apellido}".ToLower()).Contains(q));
+                        break;
+                    case "DNI":
+                        query = query.Where(t => t.dni.ToString().Contains(q));
+                        break;
+                    case "Estado":
+                        query = query.Where(t => (t.Estado ?? "").ToLower().Contains(q));
+                        break;
+                    default:
+                        query = query.Where(t =>
+                            ($"{t.nombre} {t.apellido}".ToLower()).Contains(q) ||
+                            t.dni.ToString().Contains(q) ||
+                            (t.Estado ?? "").ToLower().Contains(q) ||
+                            (t.direccion ?? "").ToLower().Contains(q));
+                        break;
+                }
+            }
+
+            _bs.DataSource = query.OrderBy(t => t.apellido).ThenBy(t => t.nombre).ToList();
+            _bs.ResetBindings(false);     // <<--- refresca el DGV
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Clear();
+            if (cboCampo != null) cboCampo.SelectedIndex = 0;
+
+            _bs.DataSource = pacienteDTOs.OrderBy(t => t.FechaNacimiento).ToList();
+            _bs.ResetBindings(false);     // <<--- refresca
+        }
+
+
+        private void btnBuscar_Click_1(object sender, EventArgs e)
+        {
+            var campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
+            var texto = txtBuscar.Text;
+            AplicarFiltro(campo, texto);
         }
     }
 }

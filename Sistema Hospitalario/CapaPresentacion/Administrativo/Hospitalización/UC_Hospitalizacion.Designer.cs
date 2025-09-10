@@ -41,7 +41,11 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.cboCampo = new System.Windows.Forms.ComboBox();
+            this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
             this.colPiso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colInternado = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,7 +66,7 @@
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -202,35 +206,89 @@
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.White;
-            this.panel8.Controls.Add(this.dataGridView1);
+            this.panel8.Controls.Add(this.btnLimpiar);
+            this.panel8.Controls.Add(this.btnBuscar);
+            this.panel8.Controls.Add(this.txtBuscar);
+            this.panel8.Controls.Add(this.cboCampo);
+            this.panel8.Controls.Add(this.dgvHabitaciones);
             this.panel8.Controls.Add(this.label3);
             this.panel8.Location = new System.Drawing.Point(42, 267);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(1118, 377);
             this.panel8.TabIndex = 6;
             // 
-            // dataGridView1
+            // btnLimpiar
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.btnLimpiar.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiar.Location = new System.Drawing.Point(1007, 43);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(83, 36);
+            this.btnLimpiar.TabIndex = 20;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscar.ForeColor = System.Drawing.Color.White;
+            this.btnBuscar.Location = new System.Drawing.Point(885, 43);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(96, 36);
+            this.btnBuscar.TabIndex = 19;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscar.Location = new System.Drawing.Point(265, 50);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(210, 24);
+            this.txtBuscar.TabIndex = 11;
+            // 
+            // cboCampo
+            // 
+            this.cboCampo.FormattingEnabled = true;
+            this.cboCampo.Location = new System.Drawing.Point(18, 50);
+            this.cboCampo.Name = "cboCampo";
+            this.cboCampo.Size = new System.Drawing.Size(216, 24);
+            this.cboCampo.TabIndex = 10;
+            // 
+            // dgvHabitaciones
+            // 
+            this.dgvHabitaciones.AllowUserToAddRows = false;
+            this.dgvHabitaciones.AllowUserToDeleteRows = false;
+            this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colPiso,
             this.colHabitacion,
             this.colInternado,
             this.colFechaIngreso,
             this.colTipo,
             this.colEstado});
-            this.dataGridView1.Location = new System.Drawing.Point(23, 60);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1071, 295);
-            this.dataGridView1.TabIndex = 9;
+            this.dgvHabitaciones.Location = new System.Drawing.Point(19, 89);
+            this.dgvHabitaciones.Name = "dgvHabitaciones";
+            this.dgvHabitaciones.ReadOnly = true;
+            this.dgvHabitaciones.RowHeadersWidth = 51;
+            this.dgvHabitaciones.RowTemplate.Height = 24;
+            this.dgvHabitaciones.Size = new System.Drawing.Size(1071, 266);
+            this.dgvHabitaciones.TabIndex = 9;
             // 
             // colPiso
             // 
             this.colPiso.HeaderText = "Piso";
             this.colPiso.MinimumWidth = 6;
             this.colPiso.Name = "colPiso";
+            this.colPiso.ReadOnly = true;
             this.colPiso.Width = 125;
             // 
             // colHabitacion
@@ -238,6 +296,7 @@
             this.colHabitacion.HeaderText = "Habitación";
             this.colHabitacion.MinimumWidth = 6;
             this.colHabitacion.Name = "colHabitacion";
+            this.colHabitacion.ReadOnly = true;
             this.colHabitacion.Width = 125;
             // 
             // colInternado
@@ -245,6 +304,7 @@
             this.colInternado.HeaderText = "Internado";
             this.colInternado.MinimumWidth = 6;
             this.colInternado.Name = "colInternado";
+            this.colInternado.ReadOnly = true;
             this.colInternado.Width = 125;
             // 
             // colFechaIngreso
@@ -252,6 +312,7 @@
             this.colFechaIngreso.HeaderText = "Fecha_Ingreso";
             this.colFechaIngreso.MinimumWidth = 6;
             this.colFechaIngreso.Name = "colFechaIngreso";
+            this.colFechaIngreso.ReadOnly = true;
             this.colFechaIngreso.Width = 125;
             // 
             // colTipo
@@ -259,6 +320,7 @@
             this.colTipo.HeaderText = "Tipo";
             this.colTipo.MinimumWidth = 6;
             this.colTipo.Name = "colTipo";
+            this.colTipo.ReadOnly = true;
             this.colTipo.Width = 125;
             // 
             // colEstado
@@ -266,6 +328,7 @@
             this.colEstado.HeaderText = "Estado";
             this.colEstado.MinimumWidth = 6;
             this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
             this.colEstado.Width = 125;
             // 
             // label3
@@ -273,7 +336,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(16, 18);
+            this.label3.Location = new System.Drawing.Point(14, 15);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(280, 25);
             this.label3.TabIndex = 8;
@@ -334,6 +397,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Nueva Internación";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.btnRegistrarInternacion_Click);
             // 
             // label2
             // 
@@ -373,7 +437,7 @@
             this.panel3.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.ResumeLayout(false);
@@ -385,7 +449,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvHabitaciones;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label8;
@@ -410,5 +474,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colFechaIngreso;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTipo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.ComboBox cboCampo;
+        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }
