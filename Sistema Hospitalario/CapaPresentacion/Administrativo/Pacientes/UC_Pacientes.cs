@@ -16,6 +16,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private List<PacienteDTO> pacienteDTOs = new List<PacienteDTO>();
         private readonly BindingSource _bs = new BindingSource();
 
+        public event EventHandler ExportarDatosSolicitado;
+        public event EventHandler RegistrarPacienteSolicitado;
+        public event EventHandler<PacienteDTO> VerPacienteSolicitado;
+
         public UC_Pacientes()
         {
             InitializeComponent();
@@ -24,16 +28,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             CargarOpcionesDeFiltro();
             ConfigurarEnlazadoDeColumnas();
             CargarFilasEjemplo();
-        }
 
-        public event EventHandler ExportarDatosSolicitado;
+            dgvPacientes.CellContentClick += dgvPacientes_CellContentClick;
+        }
+        
 
         private void btnExportar_Click(object sender, EventArgs e)
         {
             ExportarDatosSolicitado?.Invoke(this, EventArgs.Empty);
         }
-
-        public event EventHandler RegistrarPacienteSolicitado;
 
         private void btnNuevoPaciente_Click(object sender, EventArgs e)
         {
@@ -81,9 +84,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                     if (FechaNacimiento.Date > today.AddYears(-age)) age--;
                     return age;
                 }
-            }
-            
-            public string DNI => dni.ToString();
+            }            
         }
 
         private void ConfigurarEnlazadoDeColumnas()
@@ -95,6 +96,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";       // int calculado por fecha nac.
             dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
             dgvPacientes.Columns["colHabitacion"].DataPropertyName = "Habitacion"; // string ("" si 0)
+        }
+
+        private void dgvPacientes_CellContentClick(object s, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (dgvPacientes.Columns[e.ColumnIndex].Name == "colAccion")
+            {
+                var paciente = _bs[e.RowIndex] as PacienteDTO;
+                if (paciente != null) VerPacienteSolicitado?.Invoke(this, paciente);
+            }
         }
 
         private void CargarFilasEjemplo()

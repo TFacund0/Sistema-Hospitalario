@@ -2,7 +2,9 @@
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
 using System;
 using System.Windows.Forms;
+
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
+using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -39,27 +41,40 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ======================= PACIENTES =======================
         private void btn_pacientes_Click(object sender, EventArgs e)
         {
-            var uc_pacientes = new UC_Pacientes();
-
-            // Patrón “pub-sub”: el UC avisa y el contenedor decide qué hacer.
-            // Suscripción a evento: cuando el UC de Pacientes pida registrar, abrimos la vista para registrar.
-            uc_pacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
-
-            // uc_pacientes.ExportarPacientesSolicitado += (_, __) => AbrirExportarPacientes();
-
-            AbrirUserControl(uc_pacientes);
+            AbrirUserControl(CrearUCPaciente());
         }
 
-        // Abre el formulario de registrar paciente.
+        private UC_Pacientes CrearUCPaciente()
+        {
+            var ucPacientes = new UC_Pacientes();
+
+            ucPacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
+            ucPacientes.VerPacienteSolicitado += (_, p) => AbrirVisualizarPaciente(p);
+            // ucPacientes.ExportarDatosSolicitado  += ...
+
+            return ucPacientes;
+        }
+
         private void AbrirRegistrarPaciente()
         {
             var ucRegistrar = new UC_RegistrarPaciente();
 
-            // Cuando el UC pida CANCELAR, volvemos a la lista de pacientes.
-            ucRegistrar.CancelarRegistroSolicitado += (_, __) => AbrirUserControl(new UC_Pacientes());
+            // ⬅️ ANTES: AbrirUserControl(new UC_Pacientes());
+            ucRegistrar.CancelarRegistroSolicitado += (_, __) => AbrirUserControl(CrearUCPaciente());
 
             AbrirUserControl(ucRegistrar);
         }
+
+        private void AbrirVisualizarPaciente(PacienteDTO paciente)
+        {
+            var ucVisualizar = new UC_VisualizarPaciente(paciente);
+
+            ucVisualizar.CancelarVisualizacionSolicitada += (_, __) =>
+                AbrirUserControl(CrearUCPaciente());
+
+            AbrirUserControl(ucVisualizar);
+        }
+
 
         // ======================= TURNOS =======================
         // Botón del menú: abre SIEMPRE un UC_Turnos “cableado” con sus eventos.
@@ -91,8 +106,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             var ucRegistrar = new Turnos.UC_RegistrarTurno();
 
             // Cancelar → volvemos a la lista de turnos con el factory (eventos garantizados)
-            ucRegistrar.CancelarTurnoSolicitado += (_, __) =>
-                AbrirUserControl(CrearUCTurnos());
+            ucRegistrar.CancelarTurnoSolicitado += (_, __) => AbrirUserControl(CrearUCTurnos());
 
             AbrirUserControl(ucRegistrar);
         }
@@ -103,8 +117,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             var ucVisualizar = new Turnos.UC_VisualizarTurno(turno);
 
             // Al cancelar visualización → volvemos a la lista con factory
-            ucVisualizar.CancelarVisualizacionSolicitada += (_, __) =>
-                AbrirUserControl(CrearUCTurnos());
+            ucVisualizar.CancelarVisualizacionSolicitada += (_, __) => AbrirUserControl(CrearUCTurnos());
 
             // También podrías escuchar eventos como “TurnoActualizado” o “TurnoEliminado”
             // para persistir en DB y refrescar la lista al volver.
@@ -115,24 +128,27 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ======================= HOSPITALIZACIÓN =======================
         private void btnHospitalizacion_Click(object sender, EventArgs e)
         {
-            var ucHospitalizacion = new UC_Hospitalizacion();
+            AbrirUserControl(CrearUCHospitalizacion());
+        }
 
-            // Registrar internación → abrir pantalla de alta de internación
-            ucHospitalizacion.RegistrarInternacionSolicitada += (_, __) => AbrirRegistrarInternacion();
-
-            AbrirUserControl(ucHospitalizacion);
+        private UC_Hospitalizacion CrearUCHospitalizacion()
+        {
+            var uc = new UC_Hospitalizacion();
+            uc.RegistrarInternacionSolicitada += (_, __) => AbrirRegistrarInternacion();
+            return uc;
         }
 
         private void AbrirRegistrarInternacion()
         {
-            var ucRegistrarInternacion = new UC_RegistrarInternacion();
+            var ucRegistrar = new UC_RegistrarInternacion();
 
-            // Al cancelar → volver a la lista de hospitalización (aquí no hay factory porque no hay eventos dependientes)
-            ucRegistrarInternacion.CancelarInternacionSolicitada += (_, __) =>
-                AbrirUserControl(new UC_Hospitalizacion());
+            // ⬅️ ANTES: AbrirUserControl(new UC_Hospitalizacion());
+            ucRegistrar.CancelarInternacionSolicitada += (_, __) =>
+                AbrirUserControl(CrearUCHospitalizacion());
 
-            AbrirUserControl(ucRegistrarInternacion);
+            AbrirUserControl(ucRegistrar);
         }
+
 
         // ======================= PROCEDIMIENTOS =======================
         private void btnProcedimientos_Click(object sender, EventArgs e)

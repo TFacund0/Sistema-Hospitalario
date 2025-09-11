@@ -42,12 +42,6 @@
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cboCampo = new System.Windows.Forms.ComboBox();
             this.dgvPacientes = new System.Windows.Forms.DataGridView();
-            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEdad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAcciones = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -68,6 +62,12 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEdad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -250,7 +250,7 @@
             this.colEdad,
             this.colEstado,
             this.colHabitacion,
-            this.colAcciones});
+            this.colAccion});
             this.dgvPacientes.Location = new System.Drawing.Point(21, 116);
             this.dgvPacientes.Margin = new System.Windows.Forms.Padding(4);
             this.dgvPacientes.Name = "dgvPacientes";
@@ -259,58 +259,6 @@
             this.dgvPacientes.RowTemplate.Height = 24;
             this.dgvPacientes.Size = new System.Drawing.Size(1076, 226);
             this.dgvPacientes.TabIndex = 9;
-            // 
-            // colPaciente
-            // 
-            this.colPaciente.HeaderText = "Paciente";
-            this.colPaciente.MinimumWidth = 6;
-            this.colPaciente.Name = "colPaciente";
-            this.colPaciente.ReadOnly = true;
-            this.colPaciente.Width = 125;
-            // 
-            // colDni
-            // 
-            this.colDni.HeaderText = "DNI";
-            this.colDni.MinimumWidth = 6;
-            this.colDni.Name = "colDni";
-            this.colDni.ReadOnly = true;
-            this.colDni.Width = 125;
-            // 
-            // colEdad
-            // 
-            this.colEdad.HeaderText = "Edad";
-            this.colEdad.MinimumWidth = 6;
-            this.colEdad.Name = "colEdad";
-            this.colEdad.ReadOnly = true;
-            this.colEdad.Width = 125;
-            // 
-            // colEstado
-            // 
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
-            this.colEstado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colEstado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colEstado.Width = 125;
-            // 
-            // colHabitacion
-            // 
-            this.colHabitacion.HeaderText = "Habitación";
-            this.colHabitacion.MinimumWidth = 6;
-            this.colHabitacion.Name = "colHabitacion";
-            this.colHabitacion.ReadOnly = true;
-            this.colHabitacion.Width = 125;
-            // 
-            // colAcciones
-            // 
-            this.colAcciones.HeaderText = "Acción";
-            this.colAcciones.MinimumWidth = 6;
-            this.colAcciones.Name = "colAcciones";
-            this.colAcciones.ReadOnly = true;
-            this.colAcciones.Text = "Ver";
-            this.colAcciones.UseColumnTextForButtonValue = true;
-            this.colAcciones.Width = 125;
             // 
             // label4
             // 
@@ -513,6 +461,58 @@
             this.panel9.Size = new System.Drawing.Size(1291, 40);
             this.panel9.TabIndex = 5;
             // 
+            // colPaciente
+            // 
+            this.colPaciente.HeaderText = "Paciente";
+            this.colPaciente.MinimumWidth = 6;
+            this.colPaciente.Name = "colPaciente";
+            this.colPaciente.ReadOnly = true;
+            this.colPaciente.Width = 125;
+            // 
+            // colDni
+            // 
+            this.colDni.HeaderText = "DNI";
+            this.colDni.MinimumWidth = 6;
+            this.colDni.Name = "colDni";
+            this.colDni.ReadOnly = true;
+            this.colDni.Width = 125;
+            // 
+            // colEdad
+            // 
+            this.colEdad.HeaderText = "Edad";
+            this.colEdad.MinimumWidth = 6;
+            this.colEdad.Name = "colEdad";
+            this.colEdad.ReadOnly = true;
+            this.colEdad.Width = 125;
+            // 
+            // colEstado
+            // 
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 6;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            this.colEstado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colEstado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colEstado.Width = 125;
+            // 
+            // colHabitacion
+            // 
+            this.colHabitacion.HeaderText = "Habitación";
+            this.colHabitacion.MinimumWidth = 6;
+            this.colHabitacion.Name = "colHabitacion";
+            this.colHabitacion.ReadOnly = true;
+            this.colHabitacion.Width = 125;
+            // 
+            // colAccion
+            // 
+            this.colAccion.HeaderText = "Acción";
+            this.colAccion.MinimumWidth = 6;
+            this.colAccion.Name = "colAccion";
+            this.colAccion.ReadOnly = true;
+            this.colAccion.Text = "Ver";
+            this.colAccion.UseColumnTextForButtonValue = true;
+            this.colAccion.Width = 125;
+            // 
             // UC_Pacientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -581,6 +581,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colEdad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHabitacion;
-        private System.Windows.Forms.DataGridViewButtonColumn colAcciones;
+        private System.Windows.Forms.DataGridViewButtonColumn colAccion;
     }
 }
