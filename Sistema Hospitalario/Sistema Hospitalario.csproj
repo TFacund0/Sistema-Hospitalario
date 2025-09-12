@@ -244,7 +244,9 @@
   <ItemGroup>
     <Folder Include="CapaDatos\" />
     <Folder Include="CapaNegocio\" />
+    <Folder Include="CapaPresentacion\Administrador\" />
     <Folder Include="CapaPresentacion\Enfermero\" />
+    <Folder Include="CapaPresentacion\Gerente\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Clinicks-Logo-Small.png" />

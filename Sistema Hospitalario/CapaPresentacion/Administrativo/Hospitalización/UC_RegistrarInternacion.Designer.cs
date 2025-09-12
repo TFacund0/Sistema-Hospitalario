@@ -274,9 +274,9 @@
             this.label14.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(3, 4);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(147, 20);
+            this.label14.Size = new System.Drawing.Size(235, 20);
             this.label14.TabIndex = 0;
-            this.label14.Text = "Observaciones";
+            this.label14.Text = "Motivo y Observaciones";
             // 
             // panel18
             // 
