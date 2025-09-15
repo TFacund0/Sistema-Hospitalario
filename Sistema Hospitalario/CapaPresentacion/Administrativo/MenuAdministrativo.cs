@@ -35,7 +35,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ======================= HOME =======================
         private void btn_home_Click(object sender, EventArgs e)
         {
-            AbrirUserControl(new UC_Home());
+            AbrirUserControl(new UC_HomeGerente());
         }
 
         // ======================= PACIENTES =======================

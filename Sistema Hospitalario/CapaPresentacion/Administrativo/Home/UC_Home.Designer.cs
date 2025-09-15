@@ -1,6 +1,6 @@
 ﻿namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
-    partial class UC_Home
+    partial class UC_HomeGerente
     {
         /// <summary> 
         /// Variable del diseñador necesaria.

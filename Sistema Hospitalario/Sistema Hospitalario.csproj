@@ -126,6 +126,36 @@
     <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.Designer.cs">
       <DependentUpon>UC_Turnos.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Gerente\MenuGerente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\MenuGerente.Designer.cs">
+      <DependentUpon>MenuGerente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_HomeGerente.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_HomeGerente.Designer.cs">
+      <DependentUpon>UC_HomeGerente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_InformesGerente.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_InformesGerente.Designer.cs">
+      <DependentUpon>UC_InformesGerente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_PacientesGerente.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_PacientesGerente.Designer.cs">
+      <DependentUpon>UC_PacientesGerente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_TurnosGerente.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Gerente\UC_TurnosGerente.Designer.cs">
+      <DependentUpon>UC_TurnosGerente.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Login\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +230,9 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.resx">
       <DependentUpon>UC_Turnos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Gerente\MenuGerente.resx">
+      <DependentUpon>MenuGerente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Login\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -246,7 +279,6 @@
     <Folder Include="CapaNegocio\" />
     <Folder Include="CapaPresentacion\Administrador\" />
     <Folder Include="CapaPresentacion\Enfermero\" />
-    <Folder Include="CapaPresentacion\Gerente\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Clinicks-Logo-Small.png" />

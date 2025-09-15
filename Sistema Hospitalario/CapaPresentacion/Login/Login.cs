@@ -1,6 +1,4 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrativo;
-using Sistema_Hospitalario.CapaPresentacion.Medico;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Sistema_Hospitalario.CapaPresentacion.Administrativo;
+using Sistema_Hospitalario.CapaPresentacion.Medico;
+using Sistema_Hospitalario.CapaPresentacion.Gerente;
 
 namespace WindowsFormsInicio_de_sesion
 {
@@ -42,6 +44,13 @@ namespace WindowsFormsInicio_de_sesion
                 MenuMedicos ventanaPrincipal = new MenuMedicos();
                 ventanaPrincipal.ShowDialog();
 
+                this.Close();
+            }
+            else if (usuario == "gerente" && contraseña == "1234")
+            {
+                this.Hide();
+                MenuGerente ventanaPrincipal = new MenuGerente();
+                ventanaPrincipal.ShowDialog();
                 this.Close();
             }
             else

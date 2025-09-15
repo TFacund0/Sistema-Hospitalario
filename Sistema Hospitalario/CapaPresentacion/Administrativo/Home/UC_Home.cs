@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
-    public partial class UC_Home : UserControl
+    public partial class UC_HomeGerente : UserControl
     {
-        public UC_Home()
+        public UC_HomeGerente()
         {
             InitializeComponent();
 
