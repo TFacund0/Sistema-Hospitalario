@@ -56,12 +56,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             AbrirUserControl(new UC_TurnosGerente());
         }
 
-        // ======================= INFORMES =======================
-        private void btn_informes_Click(object sender, EventArgs e)
-        {
-            AbrirUserControl(new UC_InformesGerente());
-        }
-
         // ======================= SALIR =======================
         private void btn_salir_Click(object sender, EventArgs e)
         {

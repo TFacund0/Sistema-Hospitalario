@@ -47,7 +47,6 @@
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
@@ -116,6 +115,7 @@
             this.btnNuevoPaciente.TabIndex = 18;
             this.btnNuevoPaciente.Text = "Nuevo Paciente";
             this.btnNuevoPaciente.UseVisualStyleBackColor = false;
+            this.btnNuevoPaciente.Click += new System.EventHandler(this.btnNuevoPaciente_Click);
             // 
             // panel13
             // 
@@ -172,7 +172,6 @@
             this.panel8.Controls.Add(this.txtBuscar);
             this.panel8.Controls.Add(this.cboCampo);
             this.panel8.Controls.Add(this.dgvPacientes);
-            this.panel8.Controls.Add(this.label4);
             this.panel8.Controls.Add(this.label3);
             this.panel8.Location = new System.Drawing.Point(43, 267);
             this.panel8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -187,7 +186,7 @@
             this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(973, 81);
+            this.btnLimpiar.Location = new System.Drawing.Point(973, 44);
             this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(124, 28);
@@ -202,7 +201,7 @@
             this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
             this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscar.ForeColor = System.Drawing.Color.White;
-            this.btnBuscar.Location = new System.Drawing.Point(831, 81);
+            this.btnBuscar.Location = new System.Drawing.Point(833, 44);
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(124, 28);
@@ -213,7 +212,7 @@
             // txtBuscar
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscar.Location = new System.Drawing.Point(170, 85);
+            this.txtBuscar.Location = new System.Drawing.Point(166, 48);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(154, 24);
             this.txtBuscar.TabIndex = 11;
@@ -221,7 +220,7 @@
             // cboCampo
             // 
             this.cboCampo.FormattingEnabled = true;
-            this.cboCampo.Location = new System.Drawing.Point(21, 85);
+            this.cboCampo.Location = new System.Drawing.Point(21, 48);
             this.cboCampo.Name = "cboCampo";
             this.cboCampo.Size = new System.Drawing.Size(121, 24);
             this.cboCampo.TabIndex = 10;
@@ -241,13 +240,13 @@
             this.colEstado,
             this.colHabitacion,
             this.colAccion});
-            this.dgvPacientes.Location = new System.Drawing.Point(21, 116);
+            this.dgvPacientes.Location = new System.Drawing.Point(21, 80);
             this.dgvPacientes.Margin = new System.Windows.Forms.Padding(4);
             this.dgvPacientes.Name = "dgvPacientes";
             this.dgvPacientes.ReadOnly = true;
             this.dgvPacientes.RowHeadersWidth = 51;
             this.dgvPacientes.RowTemplate.Height = 24;
-            this.dgvPacientes.Size = new System.Drawing.Size(1076, 226);
+            this.dgvPacientes.Size = new System.Drawing.Size(1076, 262);
             this.dgvPacientes.TabIndex = 9;
             // 
             // colPaciente
@@ -301,15 +300,6 @@
             this.colAccion.Text = "Ver";
             this.colAccion.UseColumnTextForButtonValue = true;
             this.colAccion.Width = 125;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 52);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(264, 16);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Gestión completa de pacientes registrados";
             // 
             // label3
             // 
@@ -504,7 +494,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHabitacion;
         private System.Windows.Forms.DataGridViewButtonColumn colAccion;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label19;

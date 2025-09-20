@@ -16,7 +16,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private List<PacienteDTO> pacienteDTOs = new List<PacienteDTO>();
         private readonly BindingSource _bs = new BindingSource();
 
-        public event EventHandler ExportarDatosSolicitado;
         public event EventHandler RegistrarPacienteSolicitado;
         public event EventHandler<PacienteDTO> VerPacienteSolicitado;
 
@@ -30,12 +29,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             CargarFilasEjemplo();
 
             dgvPacientes.CellContentClick += dgvPacientes_CellContentClick;
-        }
-        
-
-        private void btnExportar_Click(object sender, EventArgs e)
-        {
-            ExportarDatosSolicitado?.Invoke(this, EventArgs.Empty);
         }
 
         private void btnNuevoPaciente_Click(object sender, EventArgs e)

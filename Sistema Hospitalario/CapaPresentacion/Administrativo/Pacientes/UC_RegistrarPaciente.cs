@@ -59,19 +59,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 
         private void txtApellido_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtApellido.Text))
+            if (string.IsNullOrWhiteSpace(txtDireccion.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtApellido, "El apellido es obligatorio.");
+                errorProvider1.SetError(txtDireccion, "El apellido es obligatorio.");
             }
-            else if (txtApellido.Text.Length > 50)
+            else if (txtDireccion.Text.Length > 50)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtApellido, "Máximo 50 caracteres.");
+                errorProvider1.SetError(txtDireccion, "Máximo 50 caracteres.");
             }
             else
             {
-                errorProvider1.SetError(txtApellido, "");
+                errorProvider1.SetError(txtDireccion, "");
             }
         }
 
@@ -190,19 +190,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 
         private void txtHabitacion_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtHabitacion.Text) && int.TryParse(txtHabitacion.Text, out int _))
+            if (string.IsNullOrWhiteSpace(txtDni.Text) && int.TryParse(txtDni.Text, out int _))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtHabitacion, "El número de habitación es obligatorio y númerico.");
+                errorProvider1.SetError(txtDni, "El número de habitación es obligatorio y númerico.");
             }
-            else if (txtHabitacion.Text.Length > 10)
+            else if (txtDni.Text.Length > 10)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtHabitacion, "Máximo 10 caracteres.");
+                errorProvider1.SetError(txtDni, "Máximo 10 caracteres.");
             }
             else
             {
-                errorProvider1.SetError(txtHabitacion, "");
+                errorProvider1.SetError(txtDni, "");
             }
         }
 
@@ -293,13 +293,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             // Limpia todos los campos del formulario
             txtNombre.Clear();
-            txtApellido.Clear();
+            txtDireccion.Clear();
             txtTelefono.Clear();
             txtDni.Clear();
             txtDireccion.Clear();
             txtObraSocial.Clear();
             txtAfiliado.Clear();
-            txtHabitacion.Clear();
+            txtDni.Clear();
             txtInicial.Clear();
             txtObservaciones.Clear();
             dtpNacimiento.Value = DateTime.Today;

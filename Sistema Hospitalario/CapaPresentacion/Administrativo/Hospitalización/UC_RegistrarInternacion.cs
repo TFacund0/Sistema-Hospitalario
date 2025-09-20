@@ -71,25 +71,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ========== ENFERMERO ==========
-        private void txtEnfermero_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtEnfermero.Text))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtEnfermero, "El enfermero/a asignado es obligatorio.");
-            }
-            else if (txtEnfermero.Text.Length > 60)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtEnfermero, "Máximo 60 caracteres.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtEnfermero, "");
-            }
-        }
-
         // ========== FECHAS ==========
         private void dtpFechaInicio_Validating(object sender, CancelEventArgs e)
         {
@@ -236,7 +217,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         {
             // Limpia todos los campos del formulario
             txtNombre.Clear();
-            txtEnfermero.Clear();
             txtHabitacion.Clear();
             txtApellido.Clear();
             txtMedico.Clear();

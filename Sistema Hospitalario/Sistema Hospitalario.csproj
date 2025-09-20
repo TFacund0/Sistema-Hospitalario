@@ -139,12 +139,6 @@
     <Compile Include="CapaPresentacion\Gerente\UC_HomeGerente.Designer.cs">
       <DependentUpon>UC_HomeGerente.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Gerente\UC_InformesGerente.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Gerente\UC_InformesGerente.Designer.cs">
-      <DependentUpon>UC_InformesGerente.cs</DependentUpon>
-    </Compile>
     <Compile Include="CapaPresentacion\Gerente\UC_PacientesGerente.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -239,6 +233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Gerente\UC_PacientesGerente.resx">
       <DependentUpon>UC_PacientesGerente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Gerente\UC_TurnosGerente.resx">
+      <DependentUpon>UC_TurnosGerente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Login\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
