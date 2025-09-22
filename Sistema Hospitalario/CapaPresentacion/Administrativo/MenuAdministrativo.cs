@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
+using Sistema_Hospitalario.CapaNegocio.DTOs;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -49,6 +50,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             var ucPacientes = new UC_Pacientes();
 
             ucPacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
+            // AHORA el evento envía PacienteDetalleDto (lo recibe sin cambios en esta lambda)
             ucPacientes.VerPacienteSolicitado += (_, p) => AbrirVisualizarPaciente(p);
             // ucPacientes.ExportarDatosSolicitado  += ...
 
@@ -59,15 +61,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             var ucRegistrar = new UC_RegistrarPaciente();
 
-            // ⬅️ ANTES: AbrirUserControl(new UC_Pacientes());
+            // Volver a la lista (instanciada por el factory) al cancelar
             ucRegistrar.CancelarRegistroSolicitado += (_, __) => AbrirUserControl(CrearUCPaciente());
 
             AbrirUserControl(ucRegistrar);
         }
 
-        private void AbrirVisualizarPaciente(PacienteDTO paciente)
+        // CAMBIO: ahora recibe PacienteDetalleDto (antes PacienteListadoDto)
+        private void AbrirVisualizarPaciente(PacienteDetalleDto pacienteDetalle)
         {
-            var ucVisualizar = new UC_VisualizarPaciente(paciente);
+            var ucVisualizar = new UC_VisualizarPaciente(pacienteDetalle);
 
             ucVisualizar.CancelarVisualizacionSolicitada += (_, __) =>
                 AbrirUserControl(CrearUCPaciente());
@@ -75,52 +78,36 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AbrirUserControl(ucVisualizar);
         }
 
-
         // ======================= TURNOS =======================
-        // Botón del menú: abre SIEMPRE un UC_Turnos “cableado” con sus eventos.
-        // Usamos un “factory” para NO olvidar suscribir eventos cada vez que volvemos.
         private void btnTurnos_Click(object sender, EventArgs e)
         {
             AbrirUserControl(CrearUCTurnos());
         }
 
-        // “Factory centralizado” que crea un UC_Turnos y suscribe todos sus eventos.
-        // Esto evita el problema de “funciona sólo la primera vez” cuando volvés a la lista.
         private UC_Turnos CrearUCTurnos()
         {
             var ucTurnos = new UC_Turnos();
 
-            // El UC de Turnos avisa que quiere registrar un nuevo turno → abrimos la pantalla de registro
             ucTurnos.RegistrarTurnoSolicitado += (_, __) => AbrirRegistrarTurno();
-
-            // El UC de Turnos avisa que el usuario quiere “ver” un turno → abrimos la pantalla de detalle
             ucTurnos.VerTurnoSolicitado += (_, t) => AbrirVisualizarTurnos(t);
 
             return ucTurnos;
         }
 
-        // Abre la vista de registrar turno.
-        // Importante: al “volver”, volvemos a la lista INSTANCIADA POR EL FACTORY (para no perder eventos).
         private void AbrirRegistrarTurno()
         {
             var ucRegistrar = new Turnos.UC_RegistrarTurno();
 
-            // Cancelar → volvemos a la lista de turnos con el factory (eventos garantizados)
             ucRegistrar.CancelarTurnoSolicitado += (_, __) => AbrirUserControl(CrearUCTurnos());
 
             AbrirUserControl(ucRegistrar);
         }
 
-        // Abre la vista de visualizar/modificar turno, en base a un TurnoDTO (el objeto seleccionado).
         private void AbrirVisualizarTurnos(TurnoDTO turno)
         {
             var ucVisualizar = new Turnos.UC_VisualizarTurno(turno);
 
-            // Al cancelar visualización → volvemos a la lista con factory
             ucVisualizar.CancelarVisualizacionSolicitada += (_, __) => AbrirUserControl(CrearUCTurnos());
-
-            // También podrías escuchar eventos como “TurnoActualizado” o “TurnoEliminado”
-            // para persistir en DB y refrescar la lista al volver.
 
             AbrirUserControl(ucVisualizar);
         }
@@ -142,13 +129,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             var ucRegistrar = new UC_RegistrarInternacion();
 
-            // ⬅️ ANTES: AbrirUserControl(new UC_Hospitalizacion());
             ucRegistrar.CancelarInternacionSolicitada += (_, __) =>
                 AbrirUserControl(CrearUCHospitalizacion());
 
             AbrirUserControl(ucRegistrar);
         }
-
 
         // ======================= PROCEDIMIENTOS =======================
         private void btnProcedimientos_Click(object sender, EventArgs e)

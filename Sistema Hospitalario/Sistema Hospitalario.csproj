@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,11 +39,21 @@
     <StartupObject>Sistema_Hospitalario.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +68,28 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapaDatos\paciente.cs">
+      <DependentUpon>Sistema_Hospitalario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CapaDatos\Sistema_Hospitalario.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sistema_Hospitalario.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CapaDatos\Sistema_Hospitalario.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sistema_Hospitalario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CapaDatos\Sistema_Hospitalario.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sistema_Hospitalario.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CapaNegocio\DTOs\PacienteAltaDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\PacienteEdicionDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\PacienteViewDto.cs" />
+    <Compile Include="CapaNegocio\Servicios\PacienteService.cs" />
     <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -66,12 +101,6 @@
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\MenuAdministrativo.Designer.cs">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Exportar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Exportar.Designer.cs">
-      <DependentUpon>UC_Exportar.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.cs">
       <SubType>UserControl</SubType>
@@ -195,9 +224,6 @@
     <EmbeddedResource Include="CapaPresentacion\Administrativo\MenuAdministrativo.resx">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_Exportar.resx">
-      <DependentUpon>UC_Exportar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_RegistrarPaciente.resx">
       <DependentUpon>UC_RegistrarPaciente.cs</DependentUpon>
     </EmbeddedResource>
@@ -265,6 +291,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EntityDeploy Include="CapaDatos\Sistema_Hospitalario.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Sistema_Hospitalario.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="CapaDatos\Sistema_Hospitalario.edmx.diagram">
+      <DependentUpon>Sistema_Hospitalario.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -279,8 +313,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CapaDatos\" />
-    <Folder Include="CapaNegocio\" />
     <Folder Include="CapaPresentacion\Administrador\" />
     <Folder Include="CapaPresentacion\Enfermero\" />
   </ItemGroup>
@@ -302,5 +334,28 @@
   <ItemGroup>
     <None Include="Resources\ChatGPT Image 1 sept 2025, 03_00_36 p.m..png" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CapaDatos\Sistema_Hospitalario.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Sistema_Hospitalario.edmx</DependentUpon>
+      <LastGenOutput>Sistema_Hospitalario.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="CapaDatos\Sistema_Hospitalario.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Sistema_Hospitalario.edmx</DependentUpon>
+      <LastGenOutput>Sistema_Hospitalario.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
 </Project>

@@ -9,15 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
 
+using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_Pacientes : UserControl
     {
-        private List<PacienteDTO> pacienteDTOs = new List<PacienteDTO>();
         private readonly BindingSource _bs = new BindingSource();
+        private readonly PacienteService _pacienteService = new PacienteService();
+        private List<PacienteListadoDto> _items = new List<PacienteListadoDto>(); // datos para el grid
 
         public event EventHandler RegistrarPacienteSolicitado;
-        public event EventHandler<PacienteDTO> VerPacienteSolicitado;
+        // CAMBIO: ahora el evento expone el detalle listo para mostrar
+        public event EventHandler<PacienteDetalleDto> VerPacienteSolicitado;
 
         public UC_Pacientes()
         {
@@ -26,7 +31,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             ConfigurarActividad();
             CargarOpcionesDeFiltro();
             ConfigurarEnlazadoDeColumnas();
-            CargarFilasEjemplo();
+            CargarDesdeServicio();
 
             dgvPacientes.CellContentClick += dgvPacientes_CellContentClick;
         }
@@ -53,91 +58,45 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
         }
 
-        public class PacienteDTO
+        private void CargarDesdeServicio()
         {
-            public DateTime FechaNacimiento { get; set; }
-            public string nombre { get; set; }
-            public string apellido { get; set; }
-            public string direccion { get; set; }
-            public string obraSocial { get; set; }
-            public int nroAfiliado { get; set; }
-            public int dni { get; set; }
-            public int habitacion { get; set; }
-            public int telefono { get; set; }
-            public string observaciones { get; set; }
-            public string Estado { get; set; }
-
-            public string Paciente => $"{nombre} {apellido}";
-            public int Edad
-            {
-                get
-                {
-                    var today = DateTime.Today;
-                    var age = today.Year - FechaNacimiento.Year;
-                    if (FechaNacimiento.Date > today.AddYears(-age)) age--;
-                    return age;
-                }
-            }            
+            // Trae la lista “plana” para el grid desde la capa de negocio (BD)
+            _items = _pacienteService.ListarPacientes(); // List<PacienteListadoDto>
+            _bs.DataSource = _items;
+            dgvPacientes.DataSource = _bs;
         }
 
         private void ConfigurarEnlazadoDeColumnas()
         {
             dgvPacientes.AutoGenerateColumns = false;
 
-            dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente";   // string calculado: nombre + apellido
-            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";        // string (dni.ToString())
-            dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";       // int calculado por fecha nac.
-            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
-            dgvPacientes.Columns["colHabitacion"].DataPropertyName = "Habitacion"; // string ("" si 0)
+            dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente"; // "Nombre Apellido"
+            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";      // string
+            dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";     // int
+            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";   // string
         }
 
         private void dgvPacientes_CellContentClick(object s, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
+
             if (dgvPacientes.Columns[e.ColumnIndex].Name == "colAccion")
             {
-                var paciente = _bs[e.RowIndex] as PacienteDTO;
-                if (paciente != null) VerPacienteSolicitado?.Invoke(this, paciente);
-            }
-        }
+                var item = _bs[e.RowIndex] as PacienteListadoDto;
+                if (item == null) return;
 
-        private void CargarFilasEjemplo()
-        {
-            pacienteDTOs = new List<PacienteDTO>
-            {
-                new PacienteDTO()
+                // Traer el detalle desde negocio/datos
+                var detalle = _pacienteService.ObtenerDetalle(item.Id);
+                if (detalle == null)
                 {
-                    nombre = "Juan",
-                    apellido = "Pérez",
-                    direccion = "Calle Falsa 123",
-                    obraSocial = "OSDE",
-                    nroAfiliado = 123456,
-                    dni = 12345678,
-                    habitacion = 101,
-                    telefono = 123456789,
-                    observaciones = "Ninguna",
-                    Estado = "Internado",
-                    FechaNacimiento = new DateTime(1980, 5, 15)
-                },
-                new PacienteDTO()
-                {
-                    nombre = "María",
-                    apellido = "Gómez",
-                    direccion = "Avenida Siempre Viva 742",
-                    obraSocial = "Swiss Medical",
-                    nroAfiliado = 654321,
-                    dni = 87654321,
-                    habitacion = 202,
-                    telefono = 987654321,
-                    observaciones = "Alergia a la penicilina",
-                    Estado = "Consulta",
-                    FechaNacimiento = new DateTime(1990, 8, 22)
-                },
-            }
-            ;
+                    MessageBox.Show("No se encontró el paciente seleccionado.", "Atención",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            _bs.DataSource = pacienteDTOs;
-            dgvPacientes.DataSource = _bs;
+                // Disparar el evento hacia el contenedor (Form/Padre) para que lo muestre
+                VerPacienteSolicitado?.Invoke(this, detalle);
+            }
         }
 
         private void CargarOpcionesDeFiltro()
@@ -153,33 +112,33 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private void AplicarFiltro(string campo, string texto)
         {
             string q = (texto ?? "").Trim().ToLowerInvariant();
-            IEnumerable<PacienteDTO> query = pacienteDTOs;
+            IEnumerable<PacienteListadoDto> query = _items;
 
             if (!string.IsNullOrEmpty(q))
             {
                 switch (campo)
                 {
                     case "Paciente":
-                        query = query.Where(t => ($"{t.nombre} {t.apellido}".ToLower()).Contains(q));
+                        query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(q));
                         break;
                     case "DNI":
-                        query = query.Where(t => t.dni.ToString().Contains(q));
-                        break;
+                        int dniBuscado = int.Parse(q);
+                        query = query.Where(t => t.DNI == dniBuscado);
+                        break;  
                     case "Estado":
                         query = query.Where(t => (t.Estado ?? "").ToLower().Contains(q));
                         break;
                     default:
                         query = query.Where(t =>
-                            ($"{t.nombre} {t.apellido}".ToLower()).Contains(q) ||
-                            t.dni.ToString().Contains(q) ||
-                            (t.Estado ?? "").ToLower().Contains(q) ||
-                            (t.direccion ?? "").ToLower().Contains(q));
+                            (t.Paciente ?? "").ToLower().Contains(q) ||
+                            t.DNI.ToString().Contains(q) ||
+                            (t.Estado ?? "").ToLower().Contains(q));
                         break;
                 }
             }
 
-            _bs.DataSource = query.OrderBy(t => t.apellido).ThenBy(t => t.nombre).ToList();
-            _bs.ResetBindings(false);     // <<--- refresca el DGV
+            _bs.DataSource = query.OrderBy(t => t.Paciente).ToList();
+            _bs.ResetBindings(false);
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -187,10 +146,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             txtBuscar.Clear();
             if (cboCampo != null) cboCampo.SelectedIndex = 0;
 
-            _bs.DataSource = pacienteDTOs.OrderBy(t => t.FechaNacimiento).ToList();
-            _bs.ResetBindings(false);     // <<--- refresca
+            _bs.DataSource = _items.OrderBy(t => t.Paciente).ToList();
+            _bs.ResetBindings(false);
         }
-
 
         private void btnBuscar_Click_1(object sender, EventArgs e)
         {

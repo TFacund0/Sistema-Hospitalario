@@ -1,48 +1,70 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
-
-// Permite acceder a la clase PacienteDTO
-using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
+using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_VisualizarPaciente : UserControl
     {
-        private PacienteDTO _paciente;          // paciente mostrado
+        // DTO de detalle mostrado/ editado en pantalla
+        private PacienteDetalleDto _paciente;
         private bool _modoEdicion = false;
-        
-        // Eventos para comunicar acciones al contenedor
-        public event EventHandler CancelarVisualizacionSolicitada;
-        public event EventHandler<PacienteDTO> PacienteActualizado;
 
-        public UC_VisualizarPaciente(PacienteDTO paciente)
+        // Servicio de negocio (debe exponer Editar(PacienteDetalleDto))
+        private readonly PacienteService _pacienteService = new PacienteService();
+
+        // Eventos para que el contenedor reaccione
+        public event EventHandler CancelarVisualizacionSolicitada;
+        public event EventHandler<PacienteDetalleDto> PacienteActualizado;
+
+        public UC_VisualizarPaciente(PacienteDetalleDto paciente)
         {
             InitializeComponent();
             _paciente = paciente ?? throw new ArgumentNullException(nameof(paciente));
+
+            ConfigurarUiSoloLectura();
             CargarDatos(_paciente);
-            ToggleEdicion(false);   // Arranca solo lectura
+
+            // Aseguro que el botón Editar exista (en el diseñador) y esté visible
+            if (btnEditar != null)
+            {
+                btnEditar.Visible = true;
+                btnEditar.Enabled = true;
+                btnEditar.Text = "Editar";
+                btnEditar.Click -= btnEditar_Click; // evitar doble suscripción si el diseñador ya lo hizo
+                btnEditar.Click += btnEditar_Click;
+            }
+
+            if (btnCancelar != null)
+            {
+                btnCancelar.Click -= btnCancelar_Click;
+                btnCancelar.Click += btnCancelar_Click;
+            }
         }
 
-        private void CargarDatos(PacienteDTO p_paciente)
+        // ========================= CARGA / UI =========================
+
+        private void CargarDatos(PacienteDetalleDto p)
         {
-            txtNombre.Text = p_paciente.nombre;
-            txtApellido.Text = p_paciente.apellido;
-            txtDni.Text = p_paciente.dni.ToString();
-            txtObraSocial.Text = p_paciente.obraSocial;
-            txtAfiliado.Text = p_paciente.nroAfiliado.ToString();
-            txtDireccion.Text = p_paciente.direccion;
-            txtTelefono.Text = p_paciente.telefono.ToString();
-            dtpNacimiento.Value = p_paciente.FechaNacimiento == default ? DateTime.Now : p_paciente.FechaNacimiento;
-            txtObservaciones.Text = p_paciente.observaciones;
-            txtHabitacion.Text = p_paciente.habitacion.ToString();
-            txtEstado.Text = p_paciente.Estado;
+            txtNombre.Text = p.Nombre ?? string.Empty;
+            txtApellido.Text = p.Apellido ?? string.Empty;
+            txtObraSocial.Text = p.ObraSocial ?? string.Empty;
+            txtDni.Text = p.DNI.ToString() ?? string.Empty;
+            txtAfiliado.Text = p.NumeroAfiliado?.ToString() ?? string.Empty;
+            txtDireccion.Text = p.Direccion ?? string.Empty;
+            txtTelefono.Text = p.Telefono ?? string.Empty;
+            txtObservaciones.Text = p.Observaciones ?? string.Empty;
+            txtEstado.Text = p.Estado ?? string.Empty;
+
+            var fecha = (p.FechaNacimiento == DateTime.MinValue) ? DateTime.Today : p.FechaNacimiento;
+            dtpNacimiento.Value = fecha;
+        }
+
+        private void ConfigurarUiSoloLectura()
+        {
+            ToggleEdicion(false);
         }
 
         private void ToggleEdicion(bool habilitar)
@@ -56,85 +78,119 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             txtAfiliado.ReadOnly = !habilitar;
             txtDireccion.ReadOnly = !habilitar;
             txtTelefono.ReadOnly = !habilitar;
-            dtpNacimiento.Enabled = habilitar;
             txtObservaciones.ReadOnly = !habilitar;
-            txtHabitacion.ReadOnly = !habilitar;
             txtEstado.ReadOnly = !habilitar;
 
-            btnEditar.Text = habilitar ? "Guardar" : "Editar";
+            dtpNacimiento.Enabled = habilitar;
+
+            if (btnEditar != null)
+                btnEditar.Text = habilitar ? "Guardar" : "Editar";
         }
 
+        // ========================= VALIDACIÓN =========================
+
+        private bool ValidarDatos(out string error)
+        {
+            error = null;
+
+            // Reglas básicas alineadas con tus otros formularios
+            if (string.IsNullOrWhiteSpace(txtNombre.Text) || txtNombre.Text.Length > 50)
+            { error = "Nombre es obligatorio (máx. 50)."; return false; }
+
+            if (string.IsNullOrWhiteSpace(txtApellido.Text) || txtApellido.Text.Length > 50)
+            { error = "Apellido es obligatorio (máx. 50)."; return false; }
+
+            // DNI y Afiliado: los tratas como string pero deben ser numéricos
+            if (string.IsNullOrWhiteSpace(txtDni.Text) || txtDni.Text.Length > 15 || !Regex.IsMatch(txtDni.Text, @"^\d+$"))
+            { error = "DNI es obligatorio, numérico y de hasta 15 dígitos."; return false; }
+
+            if (!string.IsNullOrWhiteSpace(txtTelefono.Text))
+            {
+                if (txtTelefono.Text.Length > 15 || !Regex.IsMatch(txtTelefono.Text, @"^\d+$"))
+                { error = "Teléfono debe ser numérico y de hasta 15 dígitos."; return false; }
+            }
+
+            if (!string.IsNullOrWhiteSpace(txtDireccion.Text) && txtDireccion.Text.Length > 50)
+            { error = "Dirección no puede superar 50 caracteres."; return false; }
+
+            if (!string.IsNullOrWhiteSpace(txtObservaciones.Text) && txtObservaciones.Text.Length > 200)
+            { error = "Observaciones no puede superar 200 caracteres."; return false; }
+
+            if (!string.IsNullOrWhiteSpace(txtAfiliado.Text))
+            {
+                if (txtAfiliado.Text.Length > 20 || !Regex.IsMatch(txtAfiliado.Text, @"^\d+$"))
+                { error = "N° de afiliado debe ser numérico y de hasta 20 dígitos."; return false; }
+            }
+
+            if (dtpNacimiento.Value > DateTime.Today)
+            { error = "La fecha de nacimiento no puede ser futura."; return false; }
+
+            return true;
+        }
+
+        // ========================= ACCIONES =========================
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (!_modoEdicion)
             {
-                // Paso de solo lectura → edición
+                // Pasar a modo edición
                 ToggleEdicion(true);
+                return;
             }
-            else
+
+            // Guardar
+            if (!ValidarDatos(out var msg))
             {
-                // Paso de edición → guardar
-                if (ValidarDatos())
+                MessageBox.Show(msg, "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Volcar desde UI al DTO local
+            _paciente.Nombre = txtNombre.Text.Trim();
+            _paciente.Apellido = txtApellido.Text.Trim();
+            _paciente.DNI = int.TryParse(txtDni.Text.Trim(), out var dni) ? dni : 0;
+            _paciente.ObraSocial = txtObraSocial.Text.Trim();
+            _paciente.NumeroAfiliado = int.TryParse(txtAfiliado.Text.Trim(), out var nro) ? nro : (int?)null;
+            _paciente.Direccion = txtDireccion.Text.Trim();
+            _paciente.Telefono = txtTelefono.Text.Trim();
+            _paciente.Observaciones = txtObservaciones.Text.Trim();
+            _paciente.Estado = txtEstado.Text.Trim();
+            _paciente.FechaNacimiento = dtpNacimiento.Value;
+
+            try
+            {
+                // Llamada a NEGOCIO para actualizar en BD
+                // Firma sugerida en el service:
+                // public (bool Ok, string Error) Editar(PacienteDetalleDto dto)
+                var r = _pacienteService.Editar(_paciente);
+
+                if (!r.Ok)
                 {
-                    _paciente.nombre = txtNombre.Text;
-                    _paciente.apellido = txtApellido.Text;
-                    _paciente.dni = int.Parse(txtDni.Text);
-                    _paciente.obraSocial = txtObraSocial.Text;
-                    _paciente.nroAfiliado = int.Parse(txtAfiliado.Text);
-                    _paciente.direccion = txtDireccion.Text;
-                    _paciente.telefono = int.Parse(txtTelefono.Text);
-                    _paciente.FechaNacimiento = dtpNacimiento.Value;
-                    _paciente.observaciones = txtObservaciones.Text;
-                    _paciente.habitacion = int.Parse(txtHabitacion.Text);
-                    _paciente.Estado = txtEstado.Text;
-
-                    // Notificamos al contenedor
-                    PacienteActualizado?.Invoke(this, _paciente);
-
-                    // Vuelve a modo solo lectura
-                    ToggleEdicion(false);
-
-                    // Mensaje de éxito
-                    MessageBox.Show("Paciente editado con éxito.",
-                                    "Éxito",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
+                    MessageBox.Show(r.Error ?? "No se pudo actualizar el paciente.",
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                else
-                {
-                    MessageBox.Show("Por favor, corrija los errores en el formulario.",
-                                    "Error de validación",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                }
+
+                // OK → volver a solo lectura
+                ToggleEdicion(false);
+
+                // Disparar evento hacia el contenedor para refrescos externos si quiere
+                PacienteActualizado?.Invoke(this, _paciente);
+
+                MessageBox.Show("Paciente actualizado correctamente.",
+                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al actualizar: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private bool ValidarDatos()
-        {
-            // Validaciones básicas
-            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
-                string.IsNullOrWhiteSpace(txtApellido.Text) ||
-                !int.TryParse(txtDni.Text, out _) ||
-                !int.TryParse(txtAfiliado.Text, out _) ||
-                !int.TryParse(txtTelefono.Text, out _) ||
-                !int.TryParse(txtHabitacion.Text, out _))
-            {
-                return false;
-            }
-            // Validación de fecha de nacimiento
-            if (dtpNacimiento.Value > DateTime.Now)
-            {
-                return false;
-            }
-            return true;
-        }
-
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            // Revertir cambios y salir del modo edición
+            // Revertir cambios visibles volviendo a cargar el DTO local
             CargarDatos(_paciente);
             ToggleEdicion(false);
 

@@ -33,14 +33,13 @@
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel18 = new System.Windows.Forms.Panel();
             this.panel19 = new System.Windows.Forms.Panel();
             this.txtInicial = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
             this.txtTelefono = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -65,7 +64,7 @@
             this.txtObraSocial = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.txtEnfermero = new System.Windows.Forms.TextBox();
+            this.txtApellido = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
@@ -74,8 +73,6 @@
             this.panel11 = new System.Windows.Forms.Panel();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.Paciente = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -83,7 +80,6 @@
             this.panel7.SuspendLayout();
             this.panel18.SuspendLayout();
             this.panel19.SuspendLayout();
-            this.panel20.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel24.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -135,6 +131,26 @@
             this.panel2.Size = new System.Drawing.Size(1181, 665);
             this.panel2.TabIndex = 8;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(52, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(570, 20);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Complete la información para registrar un paciente en el sistema";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Verdana", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(51, 26);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(277, 28);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Registro de Paciente";
+            // 
             // panel7
             // 
             this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -160,7 +176,6 @@
             this.panel18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel18.Controls.Add(this.panel19);
-            this.panel18.Controls.Add(this.panel20);
             this.panel18.Controls.Add(this.panel21);
             this.panel18.Location = new System.Drawing.Point(22, 258);
             this.panel18.Name = "panel18";
@@ -174,7 +189,7 @@
             this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel19.Location = new System.Drawing.Point(511, 0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(250, 60);
+            this.panel19.Size = new System.Drawing.Size(517, 60);
             this.panel19.TabIndex = 4;
             // 
             // txtInicial
@@ -185,7 +200,7 @@
             this.txtInicial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtInicial.Location = new System.Drawing.Point(7, 28);
             this.txtInicial.Name = "txtInicial";
-            this.txtInicial.Size = new System.Drawing.Size(210, 22);
+            this.txtInicial.Size = new System.Drawing.Size(477, 22);
             this.txtInicial.TabIndex = 5;
             this.txtInicial.Validating += new System.ComponentModel.CancelEventHandler(this.txtInicial_Validating);
             // 
@@ -198,38 +213,6 @@
             this.label10.Size = new System.Drawing.Size(140, 20);
             this.label10.TabIndex = 4;
             this.label10.Text = "Estado Inicial";
-            // 
-            // panel20
-            // 
-            this.panel20.Controls.Add(this.textBox1);
-            this.panel20.Controls.Add(this.label3);
-            this.panel20.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel20.Location = new System.Drawing.Point(761, 0);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(267, 60);
-            this.panel20.TabIndex = 2;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(7, 28);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(221, 22);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Validating += new System.ComponentModel.CancelEventHandler(this.txtHabitacion_Validating);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 4);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 20);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Habitación";
             // 
             // panel21
             // 
@@ -251,6 +234,7 @@
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(469, 22);
             this.txtTelefono.TabIndex = 1;
+            this.txtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTelefono_KeyPress);
             this.txtTelefono.Validating += new System.ComponentModel.CancelEventHandler(this.txtTelefono_Validating);
             // 
             // label12
@@ -345,7 +329,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.84367F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.15633F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 308F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 311F));
             this.tableLayoutPanel2.Controls.Add(this.panel17, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel15, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel16, 0, 0);
@@ -361,7 +345,7 @@
             this.panel17.Controls.Add(this.txtAfiliado);
             this.panel17.Controls.Add(this.label9);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel17.Location = new System.Drawing.Point(513, 3);
+            this.panel17.Location = new System.Drawing.Point(510, 3);
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(203, 57);
             this.panel17.TabIndex = 4;
@@ -376,6 +360,7 @@
             this.txtAfiliado.Name = "txtAfiliado";
             this.txtAfiliado.Size = new System.Drawing.Size(161, 22);
             this.txtAfiliado.TabIndex = 5;
+            this.txtAfiliado.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAfiliado_KeyPress);
             this.txtAfiliado.Validating += new System.ComponentModel.CancelEventHandler(this.txtAfiliado_Validating);
             // 
             // label9
@@ -393,9 +378,9 @@
             this.panel15.Controls.Add(this.label11);
             this.panel15.Controls.Add(this.txtDni);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel15.Location = new System.Drawing.Point(722, 3);
+            this.panel15.Location = new System.Drawing.Point(719, 3);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(303, 57);
+            this.panel15.Size = new System.Drawing.Size(306, 57);
             this.panel15.TabIndex = 2;
             // 
             // label11
@@ -416,8 +401,9 @@
             this.txtDni.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDni.Location = new System.Drawing.Point(7, 27);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(260, 22);
+            this.txtDni.Size = new System.Drawing.Size(263, 22);
             this.txtDni.TabIndex = 3;
+            this.txtDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDni_KeyPress);
             this.txtDni.Validating += new System.ComponentModel.CancelEventHandler(this.txtDni_Validating);
             // 
             // panel16
@@ -427,7 +413,7 @@
             this.panel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel16.Location = new System.Drawing.Point(3, 3);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(504, 57);
+            this.panel16.Size = new System.Drawing.Size(501, 57);
             this.panel16.TabIndex = 3;
             // 
             // dtpNacimiento
@@ -436,7 +422,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtpNacimiento.Location = new System.Drawing.Point(7, 28);
             this.dtpNacimiento.Name = "dtpNacimiento";
-            this.dtpNacimiento.Size = new System.Drawing.Size(466, 22);
+            this.dtpNacimiento.Size = new System.Drawing.Size(463, 22);
             this.dtpNacimiento.TabIndex = 2;
             this.dtpNacimiento.Validating += new System.ComponentModel.CancelEventHandler(this.dtpNacimiento_Validating);
             // 
@@ -495,7 +481,7 @@
             // 
             // panel13
             // 
-            this.panel13.Controls.Add(this.txtEnfermero);
+            this.panel13.Controls.Add(this.txtApellido);
             this.panel13.Controls.Add(this.label6);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel13.Location = new System.Drawing.Point(0, 0);
@@ -503,17 +489,18 @@
             this.panel13.Size = new System.Drawing.Size(511, 63);
             this.panel13.TabIndex = 3;
             // 
-            // txtEnfermero
+            // txtApellido
             // 
-            this.txtEnfermero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtApellido.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEnfermero.BackColor = System.Drawing.Color.White;
-            this.txtEnfermero.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtEnfermero.Location = new System.Drawing.Point(7, 28);
-            this.txtEnfermero.Name = "txtEnfermero";
-            this.txtEnfermero.Size = new System.Drawing.Size(469, 22);
-            this.txtEnfermero.TabIndex = 1;
-            this.txtEnfermero.Validating += new System.ComponentModel.CancelEventHandler(this.txtApellido_Validating);
+            this.txtApellido.BackColor = System.Drawing.Color.White;
+            this.txtApellido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtApellido.Location = new System.Drawing.Point(7, 28);
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(469, 22);
+            this.txtApellido.TabIndex = 1;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
+            this.txtApellido.Validating += new System.ComponentModel.CancelEventHandler(this.txtApellido_Validating);
             // 
             // label6
             // 
@@ -588,6 +575,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(469, 22);
             this.txtNombre.TabIndex = 1;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             this.txtNombre.Validating += new System.ComponentModel.CancelEventHandler(this.txtNombre_Validating);
             // 
             // Paciente
@@ -599,26 +587,6 @@
             this.Paciente.Size = new System.Drawing.Size(84, 20);
             this.Paciente.TabIndex = 0;
             this.Paciente.Text = "Nombre";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Verdana", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(51, 26);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(277, 28);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "Registro de Paciente";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(52, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(570, 20);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Complete la información para registrar un paciente en el sistema";
             // 
             // UC_RegistrarPaciente
             // 
@@ -636,8 +604,6 @@
             this.panel18.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel19.PerformLayout();
-            this.panel20.ResumeLayout(false);
-            this.panel20.PerformLayout();
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
             this.panel24.ResumeLayout(false);
@@ -673,9 +639,6 @@
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.TextBox txtInicial;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Panel panel20;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label label12;
@@ -700,7 +663,7 @@
         private System.Windows.Forms.TextBox txtObraSocial;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.TextBox txtEnfermero;
+        private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;

@@ -35,7 +35,6 @@
             this.panel30 = new System.Windows.Forms.Panel();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.panel23 = new System.Windows.Forms.Panel();
-            this.btnEditar = new System.Windows.Forms.Button();
             this.panel22 = new System.Windows.Forms.Panel();
             this.panel24 = new System.Windows.Forms.Panel();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
@@ -44,9 +43,6 @@
             this.panel19 = new System.Windows.Forms.Panel();
             this.txtEstado = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.txtHabitacion = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
             this.txtTelefono = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -80,6 +76,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnEditar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -90,7 +87,6 @@
             this.panel24.SuspendLayout();
             this.panel18.SuspendLayout();
             this.panel19.SuspendLayout();
-            this.panel20.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel17.SuspendLayout();
@@ -182,20 +178,6 @@
             this.panel23.Size = new System.Drawing.Size(264, 55);
             this.panel23.TabIndex = 10;
             // 
-            // btnEditar
-            // 
-            this.btnEditar.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.ForeColor = System.Drawing.Color.White;
-            this.btnEditar.Location = new System.Drawing.Point(4, 3);
-            this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(120, 49);
-            this.btnEditar.TabIndex = 7;
-            this.btnEditar.Text = "Editar";
-            this.btnEditar.UseVisualStyleBackColor = false;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
-            // 
             // panel22
             // 
             this.panel22.Controls.Add(this.panel24);
@@ -237,7 +219,6 @@
             // panel18
             // 
             this.panel18.Controls.Add(this.panel19);
-            this.panel18.Controls.Add(this.panel20);
             this.panel18.Controls.Add(this.panel21);
             this.panel18.Location = new System.Drawing.Point(52, 287);
             this.panel18.Name = "panel18";
@@ -251,7 +232,7 @@
             this.panel19.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel19.Location = new System.Drawing.Point(570, 0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(266, 60);
+            this.panel19.Size = new System.Drawing.Size(516, 60);
             this.panel19.TabIndex = 4;
             // 
             // txtEstado
@@ -260,7 +241,7 @@
             this.txtEstado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEstado.Location = new System.Drawing.Point(7, 28);
             this.txtEstado.Name = "txtEstado";
-            this.txtEstado.Size = new System.Drawing.Size(217, 22);
+            this.txtEstado.Size = new System.Drawing.Size(486, 22);
             this.txtEstado.TabIndex = 5;
             // 
             // label10
@@ -272,35 +253,6 @@
             this.label10.Size = new System.Drawing.Size(140, 20);
             this.label10.TabIndex = 4;
             this.label10.Text = "Estado Inicial";
-            // 
-            // panel20
-            // 
-            this.panel20.Controls.Add(this.txtHabitacion);
-            this.panel20.Controls.Add(this.label11);
-            this.panel20.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel20.Location = new System.Drawing.Point(836, 0);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(250, 60);
-            this.panel20.TabIndex = 2;
-            // 
-            // txtHabitacion
-            // 
-            this.txtHabitacion.BackColor = System.Drawing.Color.White;
-            this.txtHabitacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHabitacion.Location = new System.Drawing.Point(7, 28);
-            this.txtHabitacion.Name = "txtHabitacion";
-            this.txtHabitacion.Size = new System.Drawing.Size(217, 22);
-            this.txtHabitacion.TabIndex = 3;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(3, 4);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(111, 20);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "Habitación";
             // 
             // panel21
             // 
@@ -386,7 +338,7 @@
             this.txtDni.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDni.Location = new System.Drawing.Point(7, 28);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(217, 22);
+            this.txtDni.Size = new System.Drawing.Size(220, 22);
             this.txtDni.TabIndex = 3;
             // 
             // label7
@@ -614,6 +566,19 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Visualización de los datos del paciente y opción para modificación";
             // 
+            // btnEditar
+            // 
+            this.btnEditar.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEditar.ForeColor = System.Drawing.Color.White;
+            this.btnEditar.Location = new System.Drawing.Point(4, 3);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(120, 49);
+            this.btnEditar.TabIndex = 7;
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.UseVisualStyleBackColor = false;
+            // 
             // UC_VisualizarPaciente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -633,8 +598,6 @@
             this.panel18.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel19.PerformLayout();
-            this.panel20.ResumeLayout(false);
-            this.panel20.PerformLayout();
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
             this.panel14.ResumeLayout(false);
@@ -669,7 +632,6 @@
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Panel panel23;
-        private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.TextBox txtObservaciones;
@@ -678,9 +640,6 @@
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.TextBox txtEstado;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Panel panel20;
-        private System.Windows.Forms.TextBox txtHabitacion;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label label12;
@@ -714,5 +673,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnEditar;
     }
 }
