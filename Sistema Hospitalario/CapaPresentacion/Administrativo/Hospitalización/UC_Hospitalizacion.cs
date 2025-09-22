@@ -12,7 +12,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_Hospitalizacion : UserControl
     {
-        // Lista master + BindingSource para el grid de habitaciones
         private List<HabitacionDTO> _habitaciones = new List<HabitacionDTO>();
         private readonly BindingSource _bsHab = new BindingSource();
 
@@ -53,14 +52,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         public class HabitacionDTO
         {
-            public string Piso { get; set; }          // "1", "2", ...
-            public string Habitacion { get; set; }    // "101"
-            public string Internado { get; set; }     // "" si disponible
+            public string Piso { get; set; }         
+            public string Habitacion { get; set; }
+            public string Internado { get; set; } 
             public DateTime? FechaIngreso { get; set; }
-            public string Tipo { get; set; }          // "Clínica", "UCI", "Privada", ...
-            public string Estado { get; set; }        // "Disponible", "Ocupada", "Reservada", "Limpieza", "Mantenimiento"
+            public string Tipo { get; set; }      
+            public string Estado { get; set; }    
 
-            // Helpers para el grid
             public string Fecha_Ingreso => FechaIngreso?.ToString("yyyy-MM-dd HH:mm") ?? "";
         }
 
@@ -138,14 +136,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                     case "Estado":
                         query = query.Where(h => (h.Estado ?? "").ToLower().Contains(q)); break;
 
-                    case "Fecha": // busca por “yyyy-MM-dd” u “HH:mm”
+                    case "Fecha":
                         query = query.Where(h =>
                             (h.FechaIngreso?.ToString("yyyy-MM-dd HH:mm") ?? "").ToLower().Contains(q) ||
                             (h.FechaIngreso?.ToString("yyyy-MM-dd") ?? "").ToLower().Contains(q) ||
                             (h.FechaIngreso?.ToString("HH:mm") ?? "").Contains(q));
                         break;
 
-                    default: // "Todos"
+                    default:
                         query = query.Where(h =>
                             (h.Piso ?? "").ToLower().Contains(q) ||
                             (h.Habitacion ?? "").ToLower().Contains(q) ||

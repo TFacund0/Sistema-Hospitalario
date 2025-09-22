@@ -12,6 +12,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
     public partial class UC_RegistrarInternacion : UserControl
     {
+        // Evento para notificar al formulario padre que se solicitó cancelar el registro
+        public event EventHandler CancelarInternacionSolicitada;
+
         public UC_RegistrarInternacion()
         {
             InitializeComponent();
@@ -38,7 +41,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // (Opcional) Apellido del paciente
         private void txtApellido_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtApellido.Text))
@@ -86,11 +88,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // Si tenés dtpFechaFin en el formulario (opcional)
-        // Requiere que dtpFechaFin sea igual o posterior a inicio y no futura
         private void dtpFechaFin_Validating(object sender, CancelEventArgs e)
         {
-            if (dtpFechaFin.Checked) // si usás ShowCheckBox=true
+            if (dtpFechaFin.Checked)
             {
                 if (dtpFechaFin.Value < dtpFechaInicio.Value)
                 {
@@ -184,7 +184,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
         // ============================= VALIDACIONES DE TECLAS =============================
-        // Solo letras, espacio y teclas de control (para nombres)
         private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
@@ -228,9 +227,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             dtpFechaFin.Value = DateTime.Today;
             errorProvider1.Clear();
         }
-
-        // Evento para notificar al formulario padre que se solicitó cancelar el registro
-        public event EventHandler CancelarInternacionSolicitada;
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {

@@ -15,17 +15,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         public MenuAdministrativo()
         {
             InitializeComponent();
-            this.Text = "Sistema Hospitalario"; // título del formulario
+            this.Text = "Sistema Hospitalario";
         }
 
         // ======================= NAVEGACIÓN CENTRAL =======================
         // Método común para mostrar un UserControl en el panel contenedor.
-        // Se hace Dispose() del control anterior para evitar:
-        // - Fugas de memoria
-        // - Suscripciones de eventos “colgando” (handlers duplicados)
         private void AbrirUserControl(UserControl uc)
         {
-            foreach (Control c in panelContenedor.Controls) c.Dispose(); // elimina correctamente lo anterior
+            foreach (Control c in panelContenedor.Controls) c.Dispose(); // elimina el panel anterior
             panelContenedor.Controls.Clear();
 
             uc.Dock = DockStyle.Fill;    // ocupar todo el contenedor
@@ -50,9 +47,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             var ucPacientes = new UC_Pacientes();
 
             ucPacientes.RegistrarPacienteSolicitado += (_, __) => AbrirRegistrarPaciente();
-            // AHORA el evento envía PacienteDetalleDto (lo recibe sin cambios en esta lambda)
             ucPacientes.VerPacienteSolicitado += (_, p) => AbrirVisualizarPaciente(p);
-            // ucPacientes.ExportarDatosSolicitado  += ...
 
             return ucPacientes;
         }
@@ -61,13 +56,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             var ucRegistrar = new UC_RegistrarPaciente();
 
-            // Volver a la lista (instanciada por el factory) al cancelar
             ucRegistrar.CancelarRegistroSolicitado += (_, __) => AbrirUserControl(CrearUCPaciente());
 
             AbrirUserControl(ucRegistrar);
         }
 
-        // CAMBIO: ahora recibe PacienteDetalleDto (antes PacienteListadoDto)
         private void AbrirVisualizarPaciente(PacienteDetalleDto pacienteDetalle)
         {
             var ucVisualizar = new UC_VisualizarPaciente(pacienteDetalle);

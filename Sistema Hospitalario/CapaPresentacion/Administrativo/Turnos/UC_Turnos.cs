@@ -58,7 +58,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             if (dgvTurnos.Columns.Contains("colHora"))
             {
-                dgvTurnos.Columns["colHora"].DataPropertyName = "Fecha"; // <- sigue igual
+                dgvTurnos.Columns["colHora"].DataPropertyName = "Fecha";
                 dgvTurnos.Columns["colHora"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm";
                 dgvTurnos.Columns["colHora"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
@@ -98,8 +98,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             public string Observaciones { get; set; }
             public string Estado { get; set; }
-
-            // Para mantener tu DGV que liga colHora -> "Fecha"
             public DateTime Fecha => FechaTurno;
         }
 

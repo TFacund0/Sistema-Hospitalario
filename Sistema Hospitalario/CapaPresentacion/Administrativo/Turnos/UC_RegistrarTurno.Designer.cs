@@ -173,6 +173,7 @@
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(486, 22);
             this.txtTelefono.TabIndex = 3;
+            this.txtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTelefono_KeyPress);
             this.txtTelefono.Validating += new System.ComponentModel.CancelEventHandler(this.txtTelefono_Validating);
             // 
             // label11
@@ -370,6 +371,7 @@
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(486, 22);
             this.txtDni.TabIndex = 3;
+            this.txtDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDni_KeyPress);
             this.txtDni.Validating += new System.ComponentModel.CancelEventHandler(this.txtDni_Validating);
             // 
             // label7
@@ -506,6 +508,7 @@
             this.txtMedico.Name = "txtMedico";
             this.txtMedico.Size = new System.Drawing.Size(486, 22);
             this.txtMedico.TabIndex = 3;
+            this.txtMedico.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMedico_KeyPress);
             this.txtMedico.Validating += new System.ComponentModel.CancelEventHandler(this.txtMedico_Validating);
             // 
             // label4
@@ -536,6 +539,7 @@
             this.txtPaciente.Name = "txtPaciente";
             this.txtPaciente.Size = new System.Drawing.Size(486, 22);
             this.txtPaciente.TabIndex = 1;
+            this.txtPaciente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPaciente_KeyPress);
             this.txtPaciente.Validating += new System.ComponentModel.CancelEventHandler(this.txtPaciente_Validating);
             // 
             // label3

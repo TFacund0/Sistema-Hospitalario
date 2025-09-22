@@ -19,7 +19,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
 
-        // ========================= VALIDACIONES (Validating) =========================
+        // ========================= VALIDACIONES =========================
 
         private void txtPaciente_Validating(object sender, CancelEventArgs e)
         {
@@ -137,10 +137,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
         private void dtpFechaTurno_Validating(object sender, CancelEventArgs e)
         {
-            // Configuración visual/ límites
+            // Configuración visual
             dtpFechaTurno.Format = DateTimePickerFormat.Custom;
             dtpFechaTurno.CustomFormat = "dd/MM/yyyy HH:mm";
-            dtpFechaTurno.MinDate = DateTime.Today; // no turnos en pasado
+            dtpFechaTurno.MinDate = DateTime.Today;
             dtpFechaTurno.MaxDate = DateTime.Today.AddYears(2);
 
             // Validación
@@ -158,7 +158,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         private void dtpFechaRegistro_Validating(object sender, CancelEventArgs e)
         {
             dtpFechaRegistro.Format = DateTimePickerFormat.Short;
-            dtpFechaRegistro.MaxDate = DateTime.Today;                 // registro no futuro
+            dtpFechaRegistro.MaxDate = DateTime.Today;                
             dtpFechaRegistro.MinDate = DateTime.Today.AddYears(-5);
 
             if (dtpFechaRegistro.Value.Date > DateTime.Today)
@@ -168,7 +168,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
             else if (dtpFechaRegistro.Value.Date > dtpFechaTurno.Value.Date)
             {
-                // opcional: el registro no debería ser posterior al turno
                 e.Cancel = true;
                 errorProvider1.SetError(dtpFechaRegistro, "La fecha de registro no puede ser posterior al turno.");
             }
@@ -233,7 +232,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             if (this.ValidateChildren())
             {
                 MessageBox.Show("Turno registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // Aquí armarías el objeto Turno y lo guardarías (cuando conectes BD)
             }
             else
             {

@@ -12,13 +12,12 @@ using System.Windows.Forms;
 
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
 using Sistema_Hospitalario.CapaNegocio.Servicios;
-//using Sistema_Hospitalario.CapaNegocio.DTOs;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_RegistrarPaciente : UserControl
     {
-        private readonly PacienteService _pacienteService = new PacienteService(); // NUEVO
+        private readonly PacienteService _pacienteService = new PacienteService();
         public event EventHandler CancelarRegistroSolicitado;
 
         public UC_RegistrarPaciente()
@@ -89,7 +88,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 e.Cancel = true;
                 errorProvider1.SetError(txtInicial, "El valor inicial es obligatorio.");
             }
-            else if (txtInicial.Text.Length > 10) // CAMBIO: 10 en lugar de 20
+            else if (txtInicial.Text.Length > 10)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtInicial, "Máximo 10 caracteres.");
@@ -303,8 +302,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 MessageBox.Show(r.Error, "No se pudo guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {

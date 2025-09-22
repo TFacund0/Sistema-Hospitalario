@@ -8,11 +8,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_VisualizarPaciente : UserControl
     {
-        // DTO de detalle mostrado/ editado en pantalla
+        // DTO de detalle mostrado / editado en pantalla
         private PacienteDetalleDto _paciente;
         private bool _modoEdicion = false;
 
-        // Servicio de negocio (debe exponer Editar(PacienteDetalleDto))
+        // Servicio de negocio
         private readonly PacienteService _pacienteService = new PacienteService();
 
         // Eventos para que el contenedor reaccione
@@ -27,7 +27,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             ConfigurarUiSoloLectura();
             CargarDatos(_paciente);
 
-            // Aseguro que el botón Editar exista (en el diseñador) y esté visible
             if (btnEditar != null)
             {
                 btnEditar.Visible = true;
@@ -93,14 +92,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             error = null;
 
-            // Reglas básicas alineadas con tus otros formularios
+            // Validaciones básicas
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || txtNombre.Text.Length > 50)
             { error = "Nombre es obligatorio (máx. 50)."; return false; }
 
             if (string.IsNullOrWhiteSpace(txtApellido.Text) || txtApellido.Text.Length > 50)
             { error = "Apellido es obligatorio (máx. 50)."; return false; }
 
-            // DNI y Afiliado: los tratas como string pero deben ser numéricos
             if (string.IsNullOrWhiteSpace(txtDni.Text) || txtDni.Text.Length > 15 || !Regex.IsMatch(txtDni.Text, @"^\d+$"))
             { error = "DNI es obligatorio, numérico y de hasta 15 dígitos."; return false; }
 
@@ -146,7 +144,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 return;
             }
 
-            // Volcar desde UI al DTO local
+            // Asignar cambios al DTO local
             _paciente.Nombre = txtNombre.Text.Trim();
             _paciente.Apellido = txtApellido.Text.Trim();
             _paciente.DNI = int.TryParse(txtDni.Text.Trim(), out var dni) ? dni : 0;
@@ -161,8 +159,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             try
             {
                 // Llamada a NEGOCIO para actualizar en BD
-                // Firma sugerida en el service:
-                // public (bool Ok, string Error) Editar(PacienteDetalleDto dto)
                 var r = _pacienteService.Editar(_paciente);
 
                 if (!r.Ok)

@@ -13,7 +13,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_VisualizarTurno : UserControl
     {
-        private TurnoDTO _turno;          // turno mostrado
+        private TurnoDTO _turno;        
         private bool _modoEdicion = false;
 
         public event EventHandler CancelarVisualizacionSolicitada;
@@ -26,7 +26,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             _turno = turno ?? throw new ArgumentNullException(nameof(turno));
 
             CargarDatos(_turno);
-            ToggleEdicion(false);   // Arranca solo lectura
+            ToggleEdicion(false);   
         }
 
         private void CargarDatos(TurnoDTO t)
@@ -58,8 +58,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         private void ToggleEdicion(bool habilitar)
         {
             _modoEdicion = habilitar;
-
-            // TextBox → usar ReadOnly (mejor UX: mantiene el look)
+            
             txtPaciente.ReadOnly = !habilitar;
             txtMedico.ReadOnly = !habilitar;
             txtProcedimiento.ReadOnly = !habilitar;
@@ -68,7 +67,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             txtTelefono.ReadOnly = !habilitar;
             txtObservaciones.ReadOnly = !habilitar;
 
-            // DateTimePicker → Enabled
             dtpFechaTurno.Enabled = habilitar;
             dtpFechaRegistro.Enabled = habilitar;
 
@@ -86,7 +84,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
             else
             {
-                // Guardar cambios (validaciones mínimas de ejemplo)
+                // Guardar cambios
                 if (string.IsNullOrWhiteSpace(txtPaciente.Text) ||
                     string.IsNullOrWhiteSpace(txtMedico.Text))
                 {
@@ -122,7 +120,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            // si estabas editando y querés confirmar/cancelar podrías preguntar aquí
             CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
         }
     }

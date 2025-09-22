@@ -21,7 +21,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private List<PacienteListadoDto> _items = new List<PacienteListadoDto>(); // datos para el grid
 
         public event EventHandler RegistrarPacienteSolicitado;
-        // CAMBIO: ahora el evento expone el detalle listo para mostrar
         public event EventHandler<PacienteDetalleDto> VerPacienteSolicitado;
 
         public UC_Pacientes()
@@ -70,10 +69,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             dgvPacientes.AutoGenerateColumns = false;
 
-            dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente"; // "Nombre Apellido"
-            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";      // string
-            dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";     // int
-            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";   // string
+            dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente"; 
+            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";      
+            dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";    
+            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
         }
 
         private void dgvPacientes_CellContentClick(object s, DataGridViewCellEventArgs e)

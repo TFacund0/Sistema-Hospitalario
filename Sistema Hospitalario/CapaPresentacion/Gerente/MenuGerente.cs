@@ -25,15 +25,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 
         // ======================= NAVEGACIÓN CENTRAL =======================
         // Método común para mostrar un UserControl en el panel contenedor.
-        // Se hace Dispose() del control anterior para evitar:
-        // - Fugas de memoria
-        // - Suscripciones de eventos “colgando” (handlers duplicados)
         private void AbrirUserControl(UserControl uc)
         {
-            foreach (Control c in panelContenedor.Controls) c.Dispose(); // elimina correctamente lo anterior
+            foreach (Control c in panelContenedor.Controls) c.Dispose();
             panelContenedor.Controls.Clear();
 
-            uc.Dock = DockStyle.Fill;    // ocupar todo el contenedor
+            uc.Dock = DockStyle.Fill;   
             panelContenedor.Controls.Add(uc);
             uc.BringToFront();
         }

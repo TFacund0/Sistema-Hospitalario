@@ -11,7 +11,7 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs
     public class PacienteListadoDto
     {
         public int Id { get; set; }
-        public string Paciente { get; set; }     // "Nombre Apellido"
+        public string Paciente { get; set; }     
         public int DNI { get; set; }
         public int Edad { get; set; }
         public string Estado { get; set; }
@@ -25,8 +25,8 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs
         public DateTime FechaNacimiento { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
-        public string Estado { get; set; }        // nombre legible
-        public string ObraSocial { get; set; }    // nombre legible
+        public string Estado { get; set; }       
+        public string ObraSocial { get; set; }   
         public int? NumeroAfiliado { get; set; }
         public string Observaciones { get; set; }
     }
