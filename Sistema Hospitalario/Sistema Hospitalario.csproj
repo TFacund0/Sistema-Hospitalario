@@ -367,9 +367,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CapaPresentacion\Administrador\home\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\Clinicks-Logo-Small.png" />
   </ItemGroup>
