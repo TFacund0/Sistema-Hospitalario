@@ -1,6 +1,6 @@
-﻿namespace Sistema_Hospitalario.CapaPresentacion.Medico
+﻿namespace Sistema_Hospitalario.CapaPresentacion.Medico.home
 {
-    partial class UC_HomeM
+    partial class UC_Home_M
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -66,6 +66,9 @@
             // 
             // panel2
             // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.LightGray;
             this.panel2.Controls.Add(this.panel7);
             this.panel2.Controls.Add(this.panel6);
@@ -77,10 +80,13 @@
             this.panel2.Location = new System.Drawing.Point(32, 31);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(900, 552);
-            this.panel2.TabIndex = 1;
+            this.panel2.TabIndex = 2;
             // 
             // panel7
             // 
+            this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.Controls.Add(this.dgvActividad);
             this.panel7.Controls.Add(this.label4);
@@ -95,6 +101,9 @@
             // 
             this.dgvActividad.AllowUserToAddRows = false;
             this.dgvActividad.AllowUserToDeleteRows = false;
+            this.dgvActividad.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvActividad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvActividad.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNombre,
@@ -110,7 +119,6 @@
             this.dgvActividad.RowTemplate.Height = 24;
             this.dgvActividad.Size = new System.Drawing.Size(810, 245);
             this.dgvActividad.TabIndex = 6;
-            this.dgvActividad.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvActividad_CellContentClick);
             // 
             // colNombre
             // 
@@ -176,6 +184,7 @@
             // 
             // panel6
             // 
+            this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel6.BackColor = System.Drawing.Color.White;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.lblEmergencias);
@@ -216,6 +225,7 @@
             // 
             // panel5
             // 
+            this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.label13);
@@ -401,12 +411,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Dashboard";
             // 
-            // UC_HomeM
+            // UC_Home_M
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel2);
-            this.Name = "UC_HomeM";
+            this.Name = "UC_Home_M";
             this.Size = new System.Drawing.Size(968, 618);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
