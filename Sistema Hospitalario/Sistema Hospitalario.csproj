@@ -90,6 +90,24 @@
     <Compile Include="CapaNegocio\DTOs\PacienteEdicionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteViewDto.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteService.cs" />
+    <Compile Include="CapaPresentacion\Administrador\MenuModer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\MenuModer.Designer.cs">
+      <DependentUpon>MenuModer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_registrarUsuario.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_registrarUsuario.Designer.cs">
+      <DependentUpon>UC_registrarUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_usuarios.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_usuarios.Designer.cs">
+      <DependentUpon>UC_usuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,38 +204,66 @@
     <Compile Include="CapaPresentacion\Login\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.Designer.cs">
+      <DependentUpon>ConsultaMedica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\home\UC_HomeM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\home\UC_HomeM.Designer.cs">
+      <DependentUpon>UC_HomeM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\home\UC_Home_M.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Medico\home\UC_Home_M.Designer.cs">
+      <DependentUpon>UC_Home_M.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Medico\MenuMedicos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Medico\MenuMedicos.Designer.cs">
       <DependentUpon>MenuMedicos.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_HomeM.cs">
+    <Compile Include="CapaPresentacion\Medico\Paciente.cs" />
+    <Compile Include="CapaPresentacion\Medico\Pacientes\UC_DetallePaciente.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_HomeM.Designer.cs">
-      <DependentUpon>UC_HomeM.cs</DependentUpon>
+    <Compile Include="CapaPresentacion\Medico\Pacientes\UC_DetallePaciente.Designer.cs">
+      <DependentUpon>UC_DetallePaciente.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_PacientesM.cs">
+    <Compile Include="CapaPresentacion\Medico\Pacientes\UC_PacientesM.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_PacientesM.Designer.cs">
+    <Compile Include="CapaPresentacion\Medico\Pacientes\UC_PacientesM.Designer.cs">
       <DependentUpon>UC_PacientesM.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_ProcedimientosM.cs">
+    <Compile Include="CapaPresentacion\Medico\procedimientos\UC_Procedimiento.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_ProcedimientosM.Designer.cs">
-      <DependentUpon>UC_ProcedimientosM.cs</DependentUpon>
+    <Compile Include="CapaPresentacion\Medico\procedimientos\UC_Procedimiento.Designer.cs">
+      <DependentUpon>UC_Procedimiento.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_TurnosM.cs">
+    <Compile Include="CapaPresentacion\Medico\Turnos\UC_TurnosM.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\UC_TurnosM.Designer.cs">
+    <Compile Include="CapaPresentacion\Medico\Turnos\UC_TurnosM.Designer.cs">
       <DependentUpon>UC_TurnosM.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CapaPresentacion\Administrador\MenuModer.resx">
+      <DependentUpon>MenuModer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrador\usuarios\UC_registrarUsuario.resx">
+      <DependentUpon>UC_registrarUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrador\usuarios\UC_usuarios.resx">
+      <DependentUpon>UC_usuarios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.resx">
       <DependentUpon>UC_RegistrarInternacion.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,19 +312,28 @@
     <EmbeddedResource Include="CapaPresentacion\Login\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.resx">
+      <DependentUpon>ConsultaMedica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\home\UC_HomeM.resx">
+      <DependentUpon>UC_HomeM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Medico\home\UC_Home_M.resx">
+      <DependentUpon>UC_Home_M.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Medico\MenuMedicos.resx">
       <DependentUpon>MenuMedicos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\UC_HomeM.resx">
-      <DependentUpon>UC_HomeM.cs</DependentUpon>
+    <EmbeddedResource Include="CapaPresentacion\Medico\Pacientes\UC_DetallePaciente.resx">
+      <DependentUpon>UC_DetallePaciente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\UC_PacientesM.resx">
+    <EmbeddedResource Include="CapaPresentacion\Medico\Pacientes\UC_PacientesM.resx">
       <DependentUpon>UC_PacientesM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\UC_ProcedimientosM.resx">
-      <DependentUpon>UC_ProcedimientosM.cs</DependentUpon>
+    <EmbeddedResource Include="CapaPresentacion\Medico\procedimientos\UC_Procedimiento.resx">
+      <DependentUpon>UC_Procedimiento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\UC_TurnosM.resx">
+    <EmbeddedResource Include="CapaPresentacion\Medico\Turnos\UC_TurnosM.resx">
       <DependentUpon>UC_TurnosM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -313,8 +368,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CapaPresentacion\Administrador\" />
-    <Folder Include="CapaPresentacion\Enfermero\" />
+    <Folder Include="CapaPresentacion\Administrador\home\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Clinicks-Logo-Small.png" />
