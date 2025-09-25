@@ -343,7 +343,6 @@
             this.Controls.Add(this.panel1);
             this.Name = "UC_PacientesM";
             this.Size = new System.Drawing.Size(968, 618);
-            this.Load += new System.EventHandler(this.UC_PacientesM_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

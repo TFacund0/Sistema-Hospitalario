@@ -125,7 +125,6 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(931, 512);
             this.panel7.TabIndex = 9;
-            this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel7_Paint);
             // 
             // panel25
             // 
@@ -298,7 +297,6 @@
             this.TBObservaciones.Name = "TBObservaciones";
             this.TBObservaciones.Size = new System.Drawing.Size(847, 64);
             this.TBObservaciones.TabIndex = 12;
-            this.TBObservaciones.TextChanged += new System.EventHandler(this.TBDX_TextChanged);
             // 
             // TBAFILIADO
             // 

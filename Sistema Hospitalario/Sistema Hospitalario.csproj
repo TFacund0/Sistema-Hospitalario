@@ -210,12 +210,6 @@
     <Compile Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.Designer.cs">
       <DependentUpon>ConsultaMedica.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\home\UC_HomeM.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Medico\home\UC_HomeM.Designer.cs">
-      <DependentUpon>UC_HomeM.cs</DependentUpon>
-    </Compile>
     <Compile Include="CapaPresentacion\Medico\home\UC_Home_M.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -314,9 +308,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.resx">
       <DependentUpon>ConsultaMedica.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\home\UC_HomeM.resx">
-      <DependentUpon>UC_HomeM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Medico\home\UC_Home_M.resx">
       <DependentUpon>UC_Home_M.cs</DependentUpon>

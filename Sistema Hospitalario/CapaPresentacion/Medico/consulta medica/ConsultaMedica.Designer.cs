@@ -37,9 +37,6 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel25 = new System.Windows.Forms.Panel();
-            this.panel30 = new System.Windows.Forms.Panel();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.panel29 = new System.Windows.Forms.Panel();
             this.panel28 = new System.Windows.Forms.Panel();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.panel26 = new System.Windows.Forms.Panel();
@@ -62,7 +59,6 @@
             this.panel3.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel25.SuspendLayout();
-            this.panel30.SuspendLayout();
             this.panel28.SuspendLayout();
             this.panel23.SuspendLayout();
             this.panelform.SuspendLayout();
@@ -149,47 +145,14 @@
             // panel25
             // 
             this.panel25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel25.Controls.Add(this.panel30);
-            this.panel25.Controls.Add(this.panel29);
             this.panel25.Controls.Add(this.panel28);
             this.panel25.Controls.Add(this.panel26);
             this.panel25.Controls.Add(this.panel23);
-            this.panel25.Location = new System.Drawing.Point(538, 396);
+            this.panel25.Location = new System.Drawing.Point(651, 396);
             this.panel25.Margin = new System.Windows.Forms.Padding(2);
             this.panel25.Name = "panel25";
-            this.panel25.Size = new System.Drawing.Size(316, 45);
+            this.panel25.Size = new System.Drawing.Size(202, 45);
             this.panel25.TabIndex = 9;
-            // 
-            // panel30
-            // 
-            this.panel30.Controls.Add(this.btnCancelar);
-            this.panel30.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel30.Location = new System.Drawing.Point(226, 0);
-            this.panel30.Margin = new System.Windows.Forms.Padding(2);
-            this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(90, 45);
-            this.panel30.TabIndex = 11;
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(3, 6);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(82, 33);
-            this.btnCancelar.TabIndex = 9;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // panel29
-            // 
-            this.panel29.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel29.Location = new System.Drawing.Point(202, 0);
-            this.panel29.Margin = new System.Windows.Forms.Padding(2);
-            this.panel29.Name = "panel29";
-            this.panel29.Size = new System.Drawing.Size(22, 45);
-            this.panel29.TabIndex = 11;
             // 
             // panel28
             // 
@@ -430,7 +393,6 @@
             this.panel3.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel25.ResumeLayout(false);
-            this.panel30.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
             this.panel23.ResumeLayout(false);
             this.panelform.ResumeLayout(false);
@@ -450,9 +412,6 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel25;
-        private System.Windows.Forms.Panel panel30;
-        private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Panel panel26;

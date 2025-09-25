@@ -19,16 +19,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         private void TBNOMBRE_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBNOMBRE.Text))
-            {
+            {  // Validar que no esté vacío o solo espacios
                 e.Cancel = true;
                 errorProvider1.SetError(TBNOMBRE, "El nombre es obligatorio.");
             }
             else if (TBNOMBRE.Text.Length > 50)
-            {
+            { // Validar longitud máxima
                 e.Cancel = true;
                 errorProvider1.SetError(TBNOMBRE, "Máximo 50 caracteres.");
             }
-            else
+            else // Si todo está bien, limpiar el error
             {
                 errorProvider1.SetError(TBNOMBRE, "");
             }
@@ -37,16 +37,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         private void TBAPELLIDO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBAPELLIDO.Text))
-            {
+            { // Validar que no esté vacío o solo espacios
                 e.Cancel = true;
                 errorProvider1.SetError(TBAPELLIDO, "El apellido es obligatorio.");
             }
             else if (TBAPELLIDO.Text.Length > 50)
-            {
+            { // Validar longitud máxima
                 e.Cancel = true;
                 errorProvider1.SetError(TBAPELLIDO, "Máximo 50 caracteres.");
             }
-            else
+            else    // Si todo está bien, limpiar el error
             {
                 errorProvider1.SetError(TBAPELLIDO, "");
             }
@@ -55,16 +55,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         private void TBDNI_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBDNI.Text) || !int.TryParse(TBDNI.Text, out _))
-            {
+            { // Validar que no esté vacío y sea numérico
                 e.Cancel = true;
                 errorProvider1.SetError(TBDNI, "El DNI es obligatorio y numérico.");
             }
             else if (TBDNI.Text.Length > 15)
-            {
+            { // Validar longitud máxima
                 e.Cancel = true;
                 errorProvider1.SetError(TBDNI, "Máximo 15 caracteres.");
             }
-            else
+            else   // Si todo está bien, limpiar el error
             {
                 errorProvider1.SetError(TBDNI, "");
             }
@@ -77,16 +77,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             dtpNacimiento.MinDate = DateTime.Today.AddYears(-120);
 
             if (dtpNacimiento.Value.Date > DateTime.Today)
-            {
+            { // Validar que no sea futura
                 e.Cancel = true;
                 errorProvider1.SetError(dtpNacimiento, "La fecha de nacimiento no puede ser futura.");
             }
             else if (dtpNacimiento.Value.Date < DateTime.Today.AddYears(-120))
-            {
+            { // Validar que no sea mayor a 120 años atrás
                 e.Cancel = true;
                 errorProvider1.SetError(dtpNacimiento, "La fecha no puede ser mayor a 120 años atrás.");
             }
-            else
+            else // Si todo está bien, limpiar el error
             {
                 errorProvider1.SetError(dtpNacimiento, "");
             }
@@ -95,16 +95,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         private void TBTELEFONO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBTELEFONO.Text) || !long.TryParse(TBTELEFONO.Text, out _))
-            {
+            { // Validar que no esté vacío y sea numérico
                 e.Cancel = true;
                 errorProvider1.SetError(TBTELEFONO, "El teléfono es obligatorio y numérico.");
             }
             else if (TBTELEFONO.Text.Length > 15)
-            {
+            { // Validar longitud máxima
                 e.Cancel = true;
                 errorProvider1.SetError(TBTELEFONO, "Máximo 15 caracteres.");
             }
-            else
+            else // Si todo está bien, limpiar el error
             {
                 errorProvider1.SetError(TBTELEFONO, "");
             }
@@ -113,23 +113,23 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         private void TBCORREO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBCORREO.Text))
-            {
+            { // Validar que no esté vacío
                 e.Cancel = true;
                 errorProvider1.SetError(TBCORREO, "El correo electrónico es obligatorio.");
             }
             else if (!System.Text.RegularExpressions.Regex.IsMatch(
                          TBCORREO.Text,
                          @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-            {
+            { // Validar formato básico de correo
                 e.Cancel = true;
                 errorProvider1.SetError(TBCORREO, "Formato de correo inválido.");
             }
             else if (TBCORREO.Text.Length > 100)
-            {
+            { // Validar longitud máxima
                 e.Cancel = true;
                 errorProvider1.SetError(TBCORREO, "Máximo 100 caracteres.");
             }
-            else
+            else // Si todo está bien, limpiar el error
             {
                 errorProvider1.SetError(TBCORREO, "");
             }
@@ -140,12 +140,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
-            {
+            { // Si todas las validaciones pasan
                 MessageBox.Show("Usuario registrado con éxito.", "Éxito",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // Aquí la lógica para guardar en la base de datos
             }
-            else
+            else  // Si alguna validación falla
             {
                 MessageBox.Show("Corrija los errores antes de guardar.", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -153,7 +152,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
-        {
+        { // Limpiar todos los campos y errores
             TBNOMBRE.Clear();
             TBAPELLIDO.Clear();
             TBDNI.Clear();
@@ -161,13 +160,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             TBCORREO.Clear();
             dtpNacimiento.Value = DateTime.Today;
             errorProvider1.Clear();
-        }
-
-        public event EventHandler CancelarRegistroSolicitado;
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            CancelarRegistroSolicitado?.Invoke(this, EventArgs.Empty);
         }
     }
 }

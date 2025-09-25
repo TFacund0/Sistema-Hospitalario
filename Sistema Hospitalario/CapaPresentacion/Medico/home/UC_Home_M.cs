@@ -21,7 +21,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.home
             CargarFilasEjemplo();
         }
 
-        private void InformacionPaneles()
+        private void InformacionPaneles() // Simula la carga de datos en los paneles (estos datos deberían venir de la base de datos)
         {
             string cantPacientes = "350";
             string cantCamasOcupadas = "50";
@@ -45,6 +45,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.home
             }
             else
             {
+                // Validación fallida, manejar el error adecuadamente
                 MessageBox.Show("Error: Los valores de los paneles deben ser números enteros no negativos y dentro del rango permitido.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -70,6 +71,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.home
 
         private void CargarFilasEjemplo()
         {
+            // Ejemplo de datos, en la práctica estos vendrían de la base de datos
             dgvActividad.Rows.Add("María", "González", "Ingreso a emergencias", "10:30", "Urgencia");
             dgvActividad.Rows.Add("Carlos", "Rodríguez", "Alta médica", "09:05", "Info");
             dgvActividad.Rows.Add("Susana", "Pérez", "Consulta programada", "08:45", "Consulta");

@@ -25,24 +25,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             CargarFilasEjemplo();
             ConfigurarActividad();
         }
-        
-        private void ConfigurarEnlazadoDeColumnas()
-        {
-            dgvPacientes.AutoGenerateColumns = false;
 
-            dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente";   // string calculado: nombre + apellido
-            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";        // string (dni.ToString())
-            dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";       // int calculado por fecha nac.
-            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
-            dgvPacientes.Columns["colHabitacion"].DataPropertyName = "Habitacion"; // string ("" si 0)
-        }
-
-        private void CargarFilasEjemplo()
+        private void CargarFilasEjemplo() // Carga datos de ejemplo en el DataGridView
         {
             pacienteDTOs = new List<PacienteDTO>
             {
                 new PacienteDTO()
-                {
+                { // Ejemplo 1
                     nombre = "Juan",
                     apellido = "Pérez",
                     direccion = "Calle Falsa 123",
@@ -56,7 +45,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                     FechaNacimiento = new DateTime(1980, 5, 15)
                 },
                 new PacienteDTO()
-                {
+                { // Ejemplo 2
                     nombre = "María",
                     apellido = "Gómez",
                     direccion = "Avenida Siempre Viva 742",
@@ -71,7 +60,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 },
             }
             ;
-
+            // Enlazar la lista al BindingSource y luego al DataGridView
             _bs.DataSource = pacienteDTOs;
             dgvPacientes.DataSource = _bs;
         }
@@ -91,11 +80,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             dgvPacientes.ColumnHeadersHeight = 35;
             dgvPacientes.EnableHeadersVisualStyles = false;
             dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
-        }
-
-        private void UC_PacientesM_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void DgvPacientes_CellContentClick(object sender, DataGridViewCellEventArgs e)

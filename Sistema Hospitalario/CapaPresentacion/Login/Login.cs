@@ -27,7 +27,7 @@ namespace WindowsFormsInicio_de_sesion
             string usuario = txtUsuario.Text;
             string contraseña = txtContraseña.Text;
 
-            // Validación básica
+            // Validación básica de credenciales (para demostración)
             if (usuario == "admin" && contraseña == "1234")
             {
                 this.Hide();
@@ -65,6 +65,7 @@ namespace WindowsFormsInicio_de_sesion
             {
                 MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Mensaje de error si las credenciales son incorrectas
             }
         }
     }

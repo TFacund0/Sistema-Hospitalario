@@ -30,41 +30,41 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuMedicos));
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.Btn_procedimiento = new System.Windows.Forms.Button();
+            this.Btn_consulta = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btn_pacientes = new System.Windows.Forms.Button();
+            this.Btn_turnos = new System.Windows.Forms.Button();
+            this.Btn_pacientes = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_salir = new System.Windows.Forms.Button();
-            this.btn_home = new System.Windows.Forms.Button();
+            this.Btn_home = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.panelContenedor = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Panel_contenedor = new System.Windows.Forms.Panel();
             this.panelMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panelContenedor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Panel_contenedor.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(163)))), ((int)(((byte)(166)))));
-            this.panelMenu.Controls.Add(this.button3);
-            this.panelMenu.Controls.Add(this.button1);
+            this.panelMenu.Controls.Add(this.Btn_procedimiento);
+            this.panelMenu.Controls.Add(this.Btn_consulta);
             this.panelMenu.Controls.Add(this.panel1);
-            this.panelMenu.Controls.Add(this.button2);
-            this.panelMenu.Controls.Add(this.btn_pacientes);
+            this.panelMenu.Controls.Add(this.Btn_turnos);
+            this.panelMenu.Controls.Add(this.Btn_pacientes);
             this.panelMenu.Controls.Add(this.label2);
             this.panelMenu.Controls.Add(this.btn_salir);
-            this.panelMenu.Controls.Add(this.btn_home);
+            this.panelMenu.Controls.Add(this.Btn_home);
             this.panelMenu.Controls.Add(this.panel2);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
@@ -72,6 +72,36 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(188, 609);
             this.panelMenu.TabIndex = 0;
+            // 
+            // Btn_procedimiento
+            // 
+            this.Btn_procedimiento.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Btn_procedimiento.FlatAppearance.BorderSize = 0;
+            this.Btn_procedimiento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_procedimiento.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_procedimiento.Location = new System.Drawing.Point(0, 287);
+            this.Btn_procedimiento.Margin = new System.Windows.Forms.Padding(2);
+            this.Btn_procedimiento.Name = "Btn_procedimiento";
+            this.Btn_procedimiento.Size = new System.Drawing.Size(188, 46);
+            this.Btn_procedimiento.TabIndex = 16;
+            this.Btn_procedimiento.Text = "Nuevo procedimiento";
+            this.Btn_procedimiento.UseVisualStyleBackColor = true;
+            this.Btn_procedimiento.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // Btn_consulta
+            // 
+            this.Btn_consulta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Btn_consulta.FlatAppearance.BorderSize = 0;
+            this.Btn_consulta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_consulta.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_consulta.Location = new System.Drawing.Point(0, 241);
+            this.Btn_consulta.Margin = new System.Windows.Forms.Padding(2);
+            this.Btn_consulta.Name = "Btn_consulta";
+            this.Btn_consulta.Size = new System.Drawing.Size(188, 46);
+            this.Btn_consulta.TabIndex = 15;
+            this.Btn_consulta.Text = "Nueva consulta";
+            this.Btn_consulta.UseVisualStyleBackColor = true;
+            this.Btn_consulta.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -108,7 +138,6 @@
             this.label1.Size = new System.Drawing.Size(50, 14);
             this.label1.TabIndex = 5;
             this.label1.Text = "Medico";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label3
             // 
@@ -122,35 +151,35 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Rol:";
             // 
-            // button2
+            // Btn_turnos
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(0, 195);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 46);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Turnos";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.Btn_turnos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Btn_turnos.FlatAppearance.BorderSize = 0;
+            this.Btn_turnos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_turnos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_turnos.Location = new System.Drawing.Point(0, 195);
+            this.Btn_turnos.Margin = new System.Windows.Forms.Padding(2);
+            this.Btn_turnos.Name = "Btn_turnos";
+            this.Btn_turnos.Size = new System.Drawing.Size(188, 46);
+            this.Btn_turnos.TabIndex = 8;
+            this.Btn_turnos.Text = "Turnos";
+            this.Btn_turnos.UseVisualStyleBackColor = true;
+            this.Btn_turnos.Click += new System.EventHandler(this.button2_Click);
             // 
-            // btn_pacientes
+            // Btn_pacientes
             // 
-            this.btn_pacientes.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_pacientes.FlatAppearance.BorderSize = 0;
-            this.btn_pacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_pacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_pacientes.Location = new System.Drawing.Point(0, 149);
-            this.btn_pacientes.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_pacientes.Name = "btn_pacientes";
-            this.btn_pacientes.Size = new System.Drawing.Size(188, 46);
-            this.btn_pacientes.TabIndex = 7;
-            this.btn_pacientes.Text = "Pacientes";
-            this.btn_pacientes.UseVisualStyleBackColor = true;
-            this.btn_pacientes.Click += new System.EventHandler(this.btn_pacientes_Click);
+            this.Btn_pacientes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Btn_pacientes.FlatAppearance.BorderSize = 0;
+            this.Btn_pacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_pacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_pacientes.Location = new System.Drawing.Point(0, 149);
+            this.Btn_pacientes.Margin = new System.Windows.Forms.Padding(2);
+            this.Btn_pacientes.Name = "Btn_pacientes";
+            this.Btn_pacientes.Size = new System.Drawing.Size(188, 46);
+            this.Btn_pacientes.TabIndex = 7;
+            this.Btn_pacientes.Text = "Pacientes";
+            this.Btn_pacientes.UseVisualStyleBackColor = true;
+            this.Btn_pacientes.Click += new System.EventHandler(this.btn_pacientes_Click);
             // 
             // label2
             // 
@@ -180,22 +209,22 @@
             this.btn_salir.UseVisualStyleBackColor = false;
             this.btn_salir.Click += new System.EventHandler(this.btn_salir_Click);
             // 
-            // btn_home
+            // Btn_home
             // 
-            this.btn_home.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolTip;
-            this.btn_home.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_home.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.btn_home.FlatAppearance.BorderSize = 0;
-            this.btn_home.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_home.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_home.Location = new System.Drawing.Point(0, 103);
-            this.btn_home.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_home.Name = "btn_home";
-            this.btn_home.Size = new System.Drawing.Size(188, 46);
-            this.btn_home.TabIndex = 1;
-            this.btn_home.Text = "Home";
-            this.btn_home.UseVisualStyleBackColor = true;
-            this.btn_home.Click += new System.EventHandler(this.btn_home_Click);
+            this.Btn_home.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolTip;
+            this.Btn_home.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Btn_home.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.Btn_home.FlatAppearance.BorderSize = 0;
+            this.Btn_home.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_home.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_home.Location = new System.Drawing.Point(0, 103);
+            this.Btn_home.Margin = new System.Windows.Forms.Padding(2);
+            this.Btn_home.Name = "Btn_home";
+            this.Btn_home.Size = new System.Drawing.Size(188, 46);
+            this.Btn_home.TabIndex = 1;
+            this.Btn_home.Text = "Home";
+            this.Btn_home.UseVisualStyleBackColor = true;
+            this.Btn_home.Click += new System.EventHandler(this.btn_home_Click);
             // 
             // panel2
             // 
@@ -208,6 +237,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(188, 103);
             this.panel2.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Sistema_Hospitalario.Properties.Resources.Clinicks_Logo_Titulo;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(188, 101);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
             // 
             // label5
             // 
@@ -234,56 +274,15 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "BIENVENIDO!!";
             // 
-            // panelContenedor
+            // Panel_contenedor
             // 
-            this.panelContenedor.Controls.Add(this.label4);
-            this.panelContenedor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContenedor.Location = new System.Drawing.Point(188, 0);
-            this.panelContenedor.Margin = new System.Windows.Forms.Padding(2);
-            this.panelContenedor.Name = "panelContenedor";
-            this.panelContenedor.Size = new System.Drawing.Size(840, 609);
-            this.panelContenedor.TabIndex = 5;
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(0, 241);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(188, 46);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Nueva consulta";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button3
-            // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(0, 287);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(188, 46);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "Nuevo procedimiento";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Sistema_Hospitalario.Properties.Resources.Clinicks_Logo_Titulo;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(188, 101);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
+            this.Panel_contenedor.Controls.Add(this.label4);
+            this.Panel_contenedor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Panel_contenedor.Location = new System.Drawing.Point(188, 0);
+            this.Panel_contenedor.Margin = new System.Windows.Forms.Padding(2);
+            this.Panel_contenedor.Name = "Panel_contenedor";
+            this.Panel_contenedor.Size = new System.Drawing.Size(840, 609);
+            this.Panel_contenedor.TabIndex = 5;
             // 
             // MenuMedicos
             // 
@@ -292,7 +291,7 @@
             this.BackColor = System.Drawing.Color.GhostWhite;
             this.ClientSize = new System.Drawing.Size(1028, 609);
             this.ControlBox = false;
-            this.Controls.Add(this.panelContenedor);
+            this.Controls.Add(this.Panel_contenedor);
             this.Controls.Add(this.panelMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -309,9 +308,9 @@
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panelContenedor.ResumeLayout(false);
-            this.panelContenedor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Panel_contenedor.ResumeLayout(false);
+            this.Panel_contenedor.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -320,20 +319,20 @@
 
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Button btn_salir;
-        private System.Windows.Forms.Button btn_home;
+        private System.Windows.Forms.Button Btn_home;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panelContenedor;
+        private System.Windows.Forms.Panel Panel_contenedor;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btn_pacientes;
+        private System.Windows.Forms.Button Btn_turnos;
+        private System.Windows.Forms.Button Btn_pacientes;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button Btn_consulta;
+        private System.Windows.Forms.Button Btn_procedimiento;
     }
 }

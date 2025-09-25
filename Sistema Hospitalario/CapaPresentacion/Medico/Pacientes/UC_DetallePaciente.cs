@@ -15,62 +15,22 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
     {
 
         private PacienteDTO paciente;
-        public UC_DetallePaciente(PacienteDTO paciente)
+        public UC_DetallePaciente(PacienteDTO paciente) // crea el user control con los datos del paciente
         {
             InitializeComponent();
-            this.paciente = paciente;
+            this.paciente = paciente; 
             this.TBNombre.Text = paciente.nombre + " " + paciente.apellido;
             this.TBDNI.Text = paciente.dni.ToString();
             this.TBDireccion.Text = paciente.direccion;
             this.TBObraSocial.Text = paciente.obraSocial;
             int diasNacimiento = ((DateTime.Now - paciente.FechaNacimiento).Days);
+            // Calcula la edad en años o meses según corresponda
             if (diasNacimiento < 365) this.TBEdad.Text = (diasNacimiento / 30).ToString() + " " + "meses";
             else this.TBEdad.Text = (diasNacimiento / 365).ToString() + " " + "años";
             this.TBContacton.Text = paciente.telefono.ToString();
             this.TBHabitacion.Text = paciente.habitacion.ToString();
             this.TBAfiliado.Text = paciente.nroAfiliado.ToString();
             this.TBEstado.Text = paciente.Estado;
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-                
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel9_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MenuMedicos menu = this.FindForm() as MenuMedicos;
-            menu.AbrirUserControl(new ConsultaMedica());
         }
     }
 }

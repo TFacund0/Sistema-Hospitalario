@@ -19,18 +19,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         public MenuMedicos()
         {
             InitializeComponent();
-            this.AutoSize = true;
-            this.AutoSizeMode = AutoSizeMode.GrowOnly;
-            this.Size = new Size(1220, 700);
-            this.StartPosition = FormStartPosition.CenterScreen;
-
         }
 
         public void AbrirUserControl(UserControl uc)
         {
-            panelContenedor.Controls.Clear();   // Limpia el panel
+            Panel_contenedor.Controls.Clear();   // Limpia el panel
             uc.Dock = DockStyle.Fill;           // Que ocupe todo el espacio disponible
-            panelContenedor.Controls.Add(uc);   // Lo agrega al panel
+            Panel_contenedor.Controls.Add(uc);   // Lo agrega al panel
             uc.BringToFront();                  // Lo trae al frente
         }
 
@@ -52,50 +47,49 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         private void btn_home_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
-            AbrirUserControl(new UC_Home_M());
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            AbrirUserControl(new UC_Home_M()); // Poner el UserControl de Home
         }
 
         private void btn_pacientes_Click(object sender, EventArgs e)
         {
+            
             Boton_Click(sender, e);
-            AbrirUserControl(new UC_PacientesM());
-        }
-
-        private void btn_salir_Click(object sender, EventArgs e)
-        {
-            DialogResult dr = MessageBox.Show("¿Seguro que desea salir?",
-                                      "Confirmación",
-                                      MessageBoxButtons.YesNo,
-                                      MessageBoxIcon.Question);
-
-            if (dr == DialogResult.Yes)
-            {
-                Application.Exit();
-            }
+            AbrirUserControl(new UC_PacientesM()); // Poner el UserControl de Pacientes
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
             Boton_Click(sender, e);
-            AbrirUserControl(new UC_TurnosM());
+            AbrirUserControl(new UC_TurnosM()); // Poner el UserControl de Turnos
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
-            AbrirUserControl(new ConsultaMedica());
+            AbrirUserControl(new ConsultaMedica()); // Poner el UserControl de Consultas
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
-            AbrirUserControl(new UC_Procedimiento());
+            AbrirUserControl(new UC_Procedimiento()); // Poner el UserControl de Procedimientos
+        }
+
+        private void btn_salir_Click(object sender, EventArgs e)
+        {
+            // Confirmación para salir
+
+            DialogResult dr = MessageBox.Show("¿Seguro que desea salir?",
+                                      "Confirmación",
+                                      MessageBoxButtons.YesNo
+                                    );
+
+            if (dr == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }
