@@ -11,7 +11,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class MenuAdministrativo : Form
     {
-        // ======================= CONSTRUCTOR DEL FORM =======================
+        // ======================= CONSTRUCTOR DEL MENÚ ADMINISTRATIVO =======================
         public MenuAdministrativo()
         {
             InitializeComponent();
@@ -19,6 +19,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ======================= NAVEGACIÓN CENTRAL =======================
+        
         // Método común para mostrar un UserControl en el panel contenedor.
         private void AbrirUserControl(UserControl uc)
         {
@@ -31,17 +32,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ======================= HOME =======================
-        private void btn_home_Click(object sender, EventArgs e)
+        private void btnHome_Click(object sender, EventArgs e)
         {
             AbrirUserControl(new UC_HomeGerente());
         }
 
         // ======================= PACIENTES =======================
-        private void btn_pacientes_Click(object sender, EventArgs e)
+        private void btnPacientes_Click(object sender, EventArgs e)
         {
             AbrirUserControl(CrearUCPaciente());
         }
 
+        // Manejador de eventos para crear y configurar el UserControl de Pacientes
         private UC_Pacientes CrearUCPaciente()
         {
             var ucPacientes = new UC_Pacientes();
@@ -52,6 +54,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             return ucPacientes;
         }
 
+        // Abrir el UserControl para registrar un nuevo paciente
         private void AbrirRegistrarPaciente()
         {
             var ucRegistrar = new UC_RegistrarPaciente();
@@ -61,6 +64,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AbrirUserControl(ucRegistrar);
         }
 
+        // Abrir el UserControl para ver los detalles de un paciente
         private void AbrirVisualizarPaciente(PacienteDetalleDto pacienteDetalle)
         {
             var ucVisualizar = new UC_VisualizarPaciente(pacienteDetalle);
@@ -77,16 +81,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AbrirUserControl(CrearUCTurnos());
         }
 
+        // Manejador de eventos para crear y configurar el UserControl de Turnos
         private UC_Turnos CrearUCTurnos()
         {
             var ucTurnos = new UC_Turnos();
 
             ucTurnos.RegistrarTurnoSolicitado += (_, __) => AbrirRegistrarTurno();
-            ucTurnos.VerTurnoSolicitado += (_, t) => AbrirVisualizarTurnos(t);
+            //ucTurnos.VerTurnoSolicitado += (_, t) => AbrirVisualizarTurnos(t);
 
             return ucTurnos;
         }
 
+        // Abrir el UserControl para registrar un nuevo turno
         private void AbrirRegistrarTurno()
         {
             var ucRegistrar = new Turnos.UC_RegistrarTurno();
@@ -96,6 +102,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AbrirUserControl(ucRegistrar);
         }
 
+        // Abrir el UserControl para ver los detalles de un turno
         private void AbrirVisualizarTurnos(TurnoDTO turno)
         {
             var ucVisualizar = new Turnos.UC_VisualizarTurno(turno);
@@ -111,6 +118,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AbrirUserControl(CrearUCHospitalizacion());
         }
 
+        // Manejador de eventos para crear y configurar el UserControl de Hospitalización
         private UC_Hospitalizacion CrearUCHospitalizacion()
         {
             var uc = new UC_Hospitalizacion();
@@ -118,6 +126,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             return uc;
         }
 
+        // Abrir el UserControl para registrar una nueva internación
         private void AbrirRegistrarInternacion()
         {
             var ucRegistrar = new UC_RegistrarInternacion();
@@ -135,7 +144,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ======================= SALIR =======================
-        private void btn_salir_Click(object sender, EventArgs e)
+        private void btnSalir_Click(object sender, EventArgs e)
         {
             DialogResult dr = MessageBox.Show("¿Seguro que desea salir?",
                                               "Confirmación",

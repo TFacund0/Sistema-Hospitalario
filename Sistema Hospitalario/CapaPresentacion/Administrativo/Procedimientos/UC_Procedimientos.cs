@@ -12,26 +12,23 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_Procedimientos : UserControl
     {
+        // ======================== CONSTRUCTOR UC PROCEDIMIENTOS ========================
         public UC_Procedimientos()
         {
             InitializeComponent();
             ConfigurarActividad();
         }
 
+        // ======================== CONFIGURAR ACTIVIDAD ========================
         private void ConfigurarActividad()
         {
-            dgvProcedimientos.AutoGenerateColumns = false;
-            dgvProcedimientos.ReadOnly = true;
             dgvProcedimientos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProcedimientos.RowHeadersVisible = false;
-            dgvProcedimientos.AllowUserToResizeRows = false;
 
             dgvProcedimientos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProcedimientos.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
             dgvProcedimientos.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
             dgvProcedimientos.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             dgvProcedimientos.ColumnHeadersHeight = 35;
-            dgvProcedimientos.EnableHeadersVisualStyles = false;
             dgvProcedimientos.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
         }
     }

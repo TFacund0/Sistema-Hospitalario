@@ -8,20 +8,27 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_VisualizarPaciente : UserControl
     {
-        // DTO de detalle mostrado / editado en pantalla
+        // DTO local para mantener el estado actual del paciente
         private PacienteDetalleDto _paciente;
+
+        // Modo edición
         private bool _modoEdicion = false;
 
         // Servicio de negocio
         private readonly PacienteService _pacienteService = new PacienteService();
 
-        // Eventos para que el contenedor reaccione
+        // Evento para notificar que se canceló la visualización (volver al listado)
         public event EventHandler CancelarVisualizacionSolicitada;
+
+        // Evento para notificar que el paciente fue actualizado
         public event EventHandler<PacienteDetalleDto> PacienteActualizado;
 
+        // ========================= CONSTRUCTOR UC VISUALIZAR PACIENTE =========================
         public UC_VisualizarPaciente(PacienteDetalleDto paciente)
         {
             InitializeComponent();
+            
+            // Asignar y validar el DTO recibido
             _paciente = paciente ?? throw new ArgumentNullException(nameof(paciente));
 
             ConfigurarUiSoloLectura();
@@ -43,8 +50,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
-        // ========================= CARGA / UI =========================
-
+        // ========================= CARGA DE DATOS =========================
         private void CargarDatos(PacienteDetalleDto p)
         {
             txtNombre.Text = p.Nombre ?? string.Empty;
@@ -61,11 +67,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             dtpNacimiento.Value = fecha;
         }
 
+        // ========================= CONFIGURACIÓN UI =========================
         private void ConfigurarUiSoloLectura()
         {
             ToggleEdicion(false);
         }
 
+        // Alternar entre modo edición y solo lectura
         private void ToggleEdicion(bool habilitar)
         {
             _modoEdicion = habilitar;
@@ -86,8 +94,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 btnEditar.Text = habilitar ? "Guardar" : "Editar";
         }
 
-        // ========================= VALIDACIÓN =========================
-
+        // ========================= VALIDACIONES =========================
         private bool ValidarDatos(out string error)
         {
             error = null;
@@ -126,8 +133,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             return true;
         }
 
-        // ========================= ACCIONES =========================
+        // ========================= EVENTOS BOTONES =========================
 
+        // Alternar entre modo edición y guardar cambios
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (!_modoEdicion)
@@ -184,6 +192,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // Cancelar edición y volver a cargar datos originales
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             // Revertir cambios visibles volviendo a cargar el DTO local

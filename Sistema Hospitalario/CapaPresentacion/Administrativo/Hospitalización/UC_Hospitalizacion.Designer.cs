@@ -236,7 +236,6 @@
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnBuscar
             // 
@@ -252,7 +251,6 @@
             this.btnBuscar.TabIndex = 19;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtBuscar
             // 
@@ -274,9 +272,11 @@
             // 
             this.dgvHabitaciones.AllowUserToAddRows = false;
             this.dgvHabitaciones.AllowUserToDeleteRows = false;
+            this.dgvHabitaciones.AllowUserToResizeRows = false;
             this.dgvHabitaciones.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHabitaciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colPiso,
@@ -285,9 +285,11 @@
             this.colFechaIngreso,
             this.colTipo,
             this.colEstado});
+            this.dgvHabitaciones.EnableHeadersVisualStyles = false;
             this.dgvHabitaciones.Location = new System.Drawing.Point(19, 89);
             this.dgvHabitaciones.Name = "dgvHabitaciones";
             this.dgvHabitaciones.ReadOnly = true;
+            this.dgvHabitaciones.RowHeadersVisible = false;
             this.dgvHabitaciones.RowHeadersWidth = 51;
             this.dgvHabitaciones.RowTemplate.Height = 24;
             this.dgvHabitaciones.Size = new System.Drawing.Size(1071, 266);
@@ -299,7 +301,6 @@
             this.colPiso.MinimumWidth = 6;
             this.colPiso.Name = "colPiso";
             this.colPiso.ReadOnly = true;
-            this.colPiso.Width = 125;
             // 
             // colHabitacion
             // 
@@ -307,7 +308,6 @@
             this.colHabitacion.MinimumWidth = 6;
             this.colHabitacion.Name = "colHabitacion";
             this.colHabitacion.ReadOnly = true;
-            this.colHabitacion.Width = 125;
             // 
             // colInternado
             // 
@@ -315,7 +315,6 @@
             this.colInternado.MinimumWidth = 6;
             this.colInternado.Name = "colInternado";
             this.colInternado.ReadOnly = true;
-            this.colInternado.Width = 125;
             // 
             // colFechaIngreso
             // 
@@ -323,7 +322,6 @@
             this.colFechaIngreso.MinimumWidth = 6;
             this.colFechaIngreso.Name = "colFechaIngreso";
             this.colFechaIngreso.ReadOnly = true;
-            this.colFechaIngreso.Width = 125;
             // 
             // colTipo
             // 
@@ -331,7 +329,6 @@
             this.colTipo.MinimumWidth = 6;
             this.colTipo.Name = "colTipo";
             this.colTipo.ReadOnly = true;
-            this.colTipo.Width = 125;
             // 
             // colEstado
             // 
@@ -339,7 +336,6 @@
             this.colEstado.MinimumWidth = 6;
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
-            this.colEstado.Width = 125;
             // 
             // label3
             // 

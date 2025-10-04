@@ -13,14 +13,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_RegistrarTurno : UserControl
     {
+        // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
+        public event EventHandler CancelarTurnoSolicitado;
+
+
+        // ======================== CONSTRUCTOR UC REGISTRAR TURNO ========================
         public UC_RegistrarTurno()
         {
             InitializeComponent();
         }
 
-
         // ========================= VALIDACIONES =========================
 
+        // ====================== Validacion Paciente ========================= 
         private void txtPaciente_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPaciente.Text))
@@ -39,6 +44,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion Medico =========================
         private void txtMedico_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtMedico.Text))
@@ -57,6 +63,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion Procedimiento =========================
         private void txtProcedimiento_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtProcedimiento.Text))
@@ -75,6 +82,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion Correo =========================
         private void txtCorreo_Validating(object sender, CancelEventArgs e)
         {
             string correo = txtCorreo.Text.Trim();
@@ -99,6 +107,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion DNI =========================
         private void txtDni_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtDni.Text) || !long.TryParse(txtDni.Text, out _))
@@ -117,6 +126,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion Telefono =========================
         private void txtTelefono_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTelefono.Text) || !long.TryParse(txtTelefono.Text, out _))
@@ -135,6 +145,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion Fecha Turno =========================
         private void dtpFechaTurno_Validating(object sender, CancelEventArgs e)
         {
             // Configuración visual
@@ -155,6 +166,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion Fecha Registro =========================
         private void dtpFechaRegistro_Validating(object sender, CancelEventArgs e)
         {
             dtpFechaRegistro.Format = DateTimePickerFormat.Short;
@@ -177,6 +189,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ====================== Validacion Observaciones =========================
         private void txtObservaciones_Validating(object sender, CancelEventArgs e)
         {
             if (txtObservaciones.Text.Length > 300)
@@ -190,42 +203,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
-        // ========================= RESTRICCIONES DE TECLAS (KeyPress) =========================
+        // ========================= BOTONES =========================
 
-        private void txtPaciente_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
-                e.Handled = true;
-        }
-
-        private void txtMedico_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
-                e.Handled = true;
-        }
-
-        private void txtDni_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-                e.Handled = true;
-        }
-
-        private void txtTelefono_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-                e.Handled = true;
-        }
-
-        // ================================ BOTONES ================================
-
-        // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
-        public event EventHandler CancelarTurnoSolicitado;
-
+        // ======================== Boton Cancelar ========================
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
             CancelarTurnoSolicitado?.Invoke(this, EventArgs.Empty);
         }
 
+        // ======================== Boton Guardar ========================
         private void btnGuardar_Click_1(object sender, EventArgs e)
         {
             // Ejecuta todas las validaciones de Validating
@@ -239,6 +225,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ======================== Boton Limpiar ========================
         private void btnLimpiar_Click_1(object sender, EventArgs e)
         {
             txtPaciente.Clear();

@@ -12,26 +12,29 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_HomeGerente : UserControl
     {
+        // ============================ CONSTRUCTOR DEL UC HOME ADMINISTRATIVO ============================
         public UC_HomeGerente()
         {
             InitializeComponent();
 
-            InformacionPaneles();
-            ConfigurarActividad();
-            CargarFilasEjemplo();
+            CargarInformacionPaneles();
+            ConfigurarTablaActividad();
         }
 
-        private void InformacionPaneles()
+        // Método que configuran la información de las estadísticas en el UC Home Gerente
+        private void CargarInformacionPaneles()
         {
             string cantPacientes = "350";
             string cantCamasOcupadas = "50";
             string totalCamas = "100";
             string cantConsultas = "115";
 
-            if (int.TryParse(cantPacientes, out int valorPaciente) && valorPaciente >= 0 && valorPaciente < 1000 &&
+            if (
+                int.TryParse(cantPacientes, out int valorPaciente) && valorPaciente >= 0 && valorPaciente < 1000 &&
                 int.TryParse(cantCamasOcupadas, out int valorCamasOcupadas) && valorCamasOcupadas >= 0 && valorCamasOcupadas < 1000 &&
                 int.TryParse(totalCamas, out int valorCamas) && valorCamas >= 0 && valorCamas < 1000 && valorCamasOcupadas <= valorCamas &&
-                int.TryParse(cantConsultas, out int valorConsultas) && valorConsultas >= 0 && valorConsultas < 1000)
+                int.TryParse(cantConsultas, out int valorConsultas) && valorConsultas >= 0 && valorConsultas < 1000
+                )
             {
                 string porcentajeCamas = (((float)valorCamasOcupadas / (float)valorCamas) * 100).ToString() + "%";
 
@@ -46,30 +49,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             }
         }
 
-        private void ConfigurarActividad()
+        // Método que configura el DataGridView de Actividad Reciente en el UC Home Gerente
+        private void ConfigurarTablaActividad()
         {
-            // Estilos generales
-            dgvActividad.ReadOnly = true;
-            dgvActividad.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvActividad.RowHeadersVisible = false;
-            dgvActividad.AllowUserToResizeRows = false;
+            dgvActividad.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selección de fila completa
 
-            dgvActividad.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvActividad.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvActividad.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            dgvActividad.DefaultCellStyle.Font = new Font("Segoe UI", 10F); // Establece la fuente predeterminada para las celdas
+            dgvActividad.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248); // Color de fondo para filas alternas
 
-            dgvActividad.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvActividad.ColumnHeadersHeight = 35;
-            dgvActividad.EnableHeadersVisualStyles = false;
-            dgvActividad.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
-        }
-
-
-        private void CargarFilasEjemplo()
-        {
-            dgvActividad.Rows.Add("María", "González", "Ingreso a emergencias", "10:30", "Urgencia");
-            dgvActividad.Rows.Add("Carlos", "Rodríguez", "Alta médica", "09:05", "Info");
-            dgvActividad.Rows.Add("Susana", "Pérez", "Consulta programada", "08:45", "Consulta");
+            dgvActividad.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold); // Fuente en negrita para los encabezados de columna
+            dgvActividad.ColumnHeadersHeight = 35; // Altura de los encabezados de columna
+            dgvActividad.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo para los encabezados de columna
         }
     }
 }

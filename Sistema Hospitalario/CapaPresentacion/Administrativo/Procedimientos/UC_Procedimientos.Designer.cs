@@ -268,9 +268,11 @@
             // 
             this.dgvProcedimientos.AllowUserToAddRows = false;
             this.dgvProcedimientos.AllowUserToDeleteRows = false;
+            this.dgvProcedimientos.AllowUserToResizeRows = false;
             this.dgvProcedimientos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvProcedimientos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProcedimientos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProcedimientos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colPaciente,
@@ -279,9 +281,11 @@
             this.colHora,
             this.colMédico,
             this.colEstado});
+            this.dgvProcedimientos.EnableHeadersVisualStyles = false;
             this.dgvProcedimientos.Location = new System.Drawing.Point(23, 89);
             this.dgvProcedimientos.Name = "dgvProcedimientos";
             this.dgvProcedimientos.ReadOnly = true;
+            this.dgvProcedimientos.RowHeadersVisible = false;
             this.dgvProcedimientos.RowHeadersWidth = 51;
             this.dgvProcedimientos.RowTemplate.Height = 24;
             this.dgvProcedimientos.Size = new System.Drawing.Size(1071, 266);
@@ -293,7 +297,6 @@
             this.colPaciente.MinimumWidth = 6;
             this.colPaciente.Name = "colPaciente";
             this.colPaciente.ReadOnly = true;
-            this.colPaciente.Width = 125;
             // 
             // colTipo
             // 
@@ -301,7 +304,6 @@
             this.colTipo.MinimumWidth = 6;
             this.colTipo.Name = "colTipo";
             this.colTipo.ReadOnly = true;
-            this.colTipo.Width = 125;
             // 
             // colFecha
             // 
@@ -309,7 +311,6 @@
             this.colFecha.MinimumWidth = 6;
             this.colFecha.Name = "colFecha";
             this.colFecha.ReadOnly = true;
-            this.colFecha.Width = 125;
             // 
             // colHora
             // 
@@ -317,7 +318,6 @@
             this.colHora.MinimumWidth = 6;
             this.colHora.Name = "colHora";
             this.colHora.ReadOnly = true;
-            this.colHora.Width = 125;
             // 
             // colMédico
             // 
@@ -325,7 +325,6 @@
             this.colMédico.MinimumWidth = 6;
             this.colMédico.Name = "colMédico";
             this.colMédico.ReadOnly = true;
-            this.colMédico.Width = 125;
             // 
             // colEstado
             // 
@@ -333,7 +332,6 @@
             this.colEstado.MinimumWidth = 6;
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
-            this.colEstado.Width = 125;
             // 
             // label3
             // 

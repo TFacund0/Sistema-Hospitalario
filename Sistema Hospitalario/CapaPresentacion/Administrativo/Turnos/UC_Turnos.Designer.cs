@@ -322,7 +322,6 @@
             this.btnLimpiar.TabIndex = 19;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnBuscar
             // 
@@ -338,7 +337,6 @@
             this.btnBuscar.TabIndex = 18;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
             // 
             // txtBuscar
             // 
@@ -360,9 +358,11 @@
             // 
             this.dgvTurnos.AllowUserToAddRows = false;
             this.dgvTurnos.AllowUserToDeleteRows = false;
+            this.dgvTurnos.AllowUserToResizeRows = false;
             this.dgvTurnos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvTurnos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTurnos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTurnos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colHora,
@@ -370,9 +370,11 @@
             this.colMedico,
             this.colEstado,
             this.colAccion});
+            this.dgvTurnos.EnableHeadersVisualStyles = false;
             this.dgvTurnos.Location = new System.Drawing.Point(35, 112);
             this.dgvTurnos.Name = "dgvTurnos";
             this.dgvTurnos.ReadOnly = true;
+            this.dgvTurnos.RowHeadersVisible = false;
             this.dgvTurnos.RowHeadersWidth = 51;
             this.dgvTurnos.RowTemplate.Height = 24;
             this.dgvTurnos.Size = new System.Drawing.Size(1035, 253);
@@ -384,7 +386,6 @@
             this.colHora.MinimumWidth = 6;
             this.colHora.Name = "colHora";
             this.colHora.ReadOnly = true;
-            this.colHora.Width = 125;
             // 
             // colPaciente
             // 
@@ -392,7 +393,6 @@
             this.colPaciente.MinimumWidth = 6;
             this.colPaciente.Name = "colPaciente";
             this.colPaciente.ReadOnly = true;
-            this.colPaciente.Width = 125;
             // 
             // colMedico
             // 
@@ -400,7 +400,6 @@
             this.colMedico.MinimumWidth = 6;
             this.colMedico.Name = "colMedico";
             this.colMedico.ReadOnly = true;
-            this.colMedico.Width = 125;
             // 
             // colEstado
             // 
@@ -408,7 +407,6 @@
             this.colEstado.MinimumWidth = 6;
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
-            this.colEstado.Width = 125;
             // 
             // colAccion
             // 
@@ -420,7 +418,6 @@
             this.colAccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.colAccion.Text = "Ver";
             this.colAccion.UseColumnTextForButtonValue = true;
-            this.colAccion.Width = 125;
             // 
             // label8
             // 

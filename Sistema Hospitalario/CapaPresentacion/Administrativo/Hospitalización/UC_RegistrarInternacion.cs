@@ -12,17 +12,23 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
     public partial class UC_RegistrarInternacion : UserControl
     {
-        // Evento para notificar al formulario padre que se solicitó cancelar el registro
+        // Evento para notificar al menuAdministrativo que se solicitó cancelar el registro
         public event EventHandler CancelarInternacionSolicitada;
 
+        // Listado de estados válidos para la habitación
+        private static readonly string[] ESTADOS_VALIDOS =
+            { "Ocupada", "Disponible", "Reservada", "Limpieza", "Mantenimiento" };
+
+
+        // ============================= CONSTRUCTOR DEL UC REGISTRAR INTERNACIÓN =============================
         public UC_RegistrarInternacion()
         {
             InitializeComponent();
         }
 
-        // ============================= VALIDACIONES DE CAMPOS =============================
+        // ============================= VALIDACIONES DE CAMPOS INTERNACION =============================
 
-        // ========== PACIENTE ==========
+        // ========== VALIDACIÓN NOMBRE ==========
         private void txtNombre_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
@@ -41,6 +47,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
+        // ========== VALIDACIÓN APELLIDO ==========
         private void txtApellido_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtApellido.Text))
@@ -59,7 +66,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ========== MÉDICO ==========
+        // ========== VALIDACIÓN MÉDICO ==========
         private void txtMedico_Validating(object sender, CancelEventArgs e)
         {   
             if (txtMedico.Text.Length > 60)
@@ -73,7 +80,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ========== FECHAS ==========
+        // ========== VALIDACIÓN FECHA INICIO ==========
         private void dtpFechaInicio_Validating(object sender, CancelEventArgs e)
         {
             // La internación no puede iniciar en el futuro
@@ -88,6 +95,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
+        // ========== VALIDACIÓN FECHA FIN ==========
         private void dtpFechaFin_Validating(object sender, CancelEventArgs e)
         {
             if (dtpFechaFin.Checked)
@@ -108,7 +116,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             errorProvider1.SetError(dtpFechaFin, "");
         }
 
-        // ========== UBICACIÓN ==========
+        // ========== VALIDACIÓN PISO ==========
         private void txtPiso_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPiso.Text) || !int.TryParse(txtPiso.Text, out int piso) || piso <= 0)
@@ -127,6 +135,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
+        // ========== VALIDACIÓN HABITACIÓN ==========
         private void txtHabitacion_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtHabitacion.Text) || !int.TryParse(txtHabitacion.Text, out int hab) || hab <= 0)
@@ -145,10 +154,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ========== ESTADO ==========
-        private static readonly string[] ESTADOS_VALIDOS =
-            { "Ocupada", "Disponible", "Reservada", "Limpieza", "Mantenimiento" };
-
+        // ========== VALIDACIÓN ESTADO ==========
         private void txtEstado_Validating(object sender, CancelEventArgs e)
         {
             string val = (txtEstado.Text ?? "").Trim();
@@ -168,8 +174,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-
-        // ========== OBSERVACIONES ==========
+        // ========== VALIDACIÓN OBSERVACIONES ==========
         private void txtObservaciones_Validating(object sender, CancelEventArgs e)
         {
             if (txtObservaciones.Text.Length > 300)
@@ -184,6 +189,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
         // ============================= VALIDACIONES DE TECLAS =============================
+
+        // Solo letras (para nombre/apellido/médico/estado/observaciones)
         private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
@@ -199,6 +206,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
 
         //============================= BOTONES =============================
+
+        // ========== BOTÓN GUARDAR ==========
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             //Guarda toda la información del paciente
@@ -212,6 +221,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
+        // ========== BOTÓN LIMPIAR ==========
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             // Limpia todos los campos del formulario
@@ -228,6 +238,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             errorProvider1.Clear();
         }
 
+        // ========== BOTÓN CANCELAR ==========
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CancelarInternacionSolicitada?.Invoke(this, EventArgs.Empty);

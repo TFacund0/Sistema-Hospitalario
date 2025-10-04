@@ -123,7 +123,7 @@
             this.button9.TabIndex = 8;
             this.button9.Text = "Turnos";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.btn_turnos_Click);
+            this.button9.Click += new System.EventHandler(this.btnTurnos_Click);
             // 
             // button10
             // 
@@ -138,7 +138,7 @@
             this.button10.TabIndex = 7;
             this.button10.Text = "Pacientes";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.btn_pacientes_Click);
+            this.button10.Click += new System.EventHandler(this.btnPacientes_Click);
             // 
             // label2
             // 
@@ -166,7 +166,7 @@
             this.button11.TabIndex = 6;
             this.button11.Text = "Salir";
             this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.btn_salir_Click);
+            this.button11.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // button12
             // 
@@ -181,7 +181,7 @@
             this.button12.TabIndex = 1;
             this.button12.Text = "Home";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.btn_home_Click);
+            this.button12.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // panelContenedor
             // 

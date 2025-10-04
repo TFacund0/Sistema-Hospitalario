@@ -110,22 +110,23 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.548038F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.45197F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.264099F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.7359F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1290, 760);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel2
             // 
+            this.panel2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel2.BackColor = System.Drawing.Color.LightGray;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.panel7);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(56, 42);
+            this.panel2.Location = new System.Drawing.Point(56, 34);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1181, 665);
+            this.panel2.Size = new System.Drawing.Size(1181, 689);
             this.panel2.TabIndex = 8;
             // 
             // panel7
@@ -145,14 +146,14 @@
             this.panel7.Controls.Add(this.panel8);
             this.panel7.Location = new System.Drawing.Point(56, 97);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1073, 550);
+            this.panel7.Size = new System.Drawing.Size(1071, 556);
             this.panel7.TabIndex = 7;
             // 
             // btnCancelar
             // 
             this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancelar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(940, 494);
+            this.btnCancelar.Location = new System.Drawing.Point(938, 500);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(110, 41);
             this.btnCancelar.TabIndex = 16;
@@ -164,7 +165,7 @@
             // 
             this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(824, 494);
+            this.btnLimpiar.Location = new System.Drawing.Point(822, 500);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(110, 41);
             this.btnLimpiar.TabIndex = 15;
@@ -179,7 +180,7 @@
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.Location = new System.Drawing.Point(698, 489);
+            this.btnGuardar.Location = new System.Drawing.Point(696, 495);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(120, 49);
             this.btnGuardar.TabIndex = 14;
@@ -196,7 +197,7 @@
             this.panel24.Controls.Add(this.label14);
             this.panel24.Location = new System.Drawing.Point(22, 369);
             this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(1028, 110);
+            this.panel24.Size = new System.Drawing.Size(1026, 116);
             this.panel24.TabIndex = 13;
             // 
             // txtObservaciones
@@ -209,7 +210,7 @@
             this.txtObservaciones.Location = new System.Drawing.Point(7, 28);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(1018, 71);
+            this.txtObservaciones.Size = new System.Drawing.Size(1016, 77);
             this.txtObservaciones.TabIndex = 1;
             this.txtObservaciones.Validating += new System.ComponentModel.CancelEventHandler(this.txtObservaciones_Validating);
             // 
@@ -232,7 +233,7 @@
             this.panel18.Controls.Add(this.panel21);
             this.panel18.Location = new System.Drawing.Point(22, 285);
             this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(1028, 63);
+            this.panel18.Size = new System.Drawing.Size(1026, 69);
             this.panel18.TabIndex = 12;
             // 
             // panel19
@@ -242,7 +243,7 @@
             this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel19.Location = new System.Drawing.Point(511, 0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(517, 63);
+            this.panel19.Size = new System.Drawing.Size(515, 69);
             this.panel19.TabIndex = 4;
             // 
             // txtEstado
@@ -253,7 +254,7 @@
             this.txtEstado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEstado.Location = new System.Drawing.Point(7, 28);
             this.txtEstado.Name = "txtEstado";
-            this.txtEstado.Size = new System.Drawing.Size(466, 22);
+            this.txtEstado.Size = new System.Drawing.Size(464, 22);
             this.txtEstado.TabIndex = 5;
             this.txtEstado.Validating += new System.ComponentModel.CancelEventHandler(this.txtEstado_Validating);
             // 
@@ -274,7 +275,7 @@
             this.panel21.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel21.Location = new System.Drawing.Point(0, 0);
             this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(511, 63);
+            this.panel21.Size = new System.Drawing.Size(511, 69);
             this.panel21.TabIndex = 3;
             // 
             // label3
@@ -304,7 +305,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.84367F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.15633F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 270F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 272F));
             this.tableLayoutPanel2.Controls.Add(this.panel17, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel15, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel16, 0, 0);
@@ -312,7 +313,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1028, 63);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1026, 63);
             this.tableLayoutPanel2.TabIndex = 11;
             // 
             // panel17
@@ -320,9 +321,9 @@
             this.panel17.Controls.Add(this.txtPiso);
             this.panel17.Controls.Add(this.label9);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel17.Location = new System.Drawing.Point(539, 3);
+            this.panel17.Location = new System.Drawing.Point(537, 3);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(215, 57);
+            this.panel17.Size = new System.Drawing.Size(213, 57);
             this.panel17.TabIndex = 4;
             // 
             // txtPiso
@@ -333,7 +334,7 @@
             this.txtPiso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPiso.Location = new System.Drawing.Point(7, 28);
             this.txtPiso.Name = "txtPiso";
-            this.txtPiso.Size = new System.Drawing.Size(173, 22);
+            this.txtPiso.Size = new System.Drawing.Size(171, 22);
             this.txtPiso.TabIndex = 5;
             this.txtPiso.Validating += new System.ComponentModel.CancelEventHandler(this.txtPiso_Validating);
             // 
@@ -352,9 +353,9 @@
             this.panel15.Controls.Add(this.txtHabitacion);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel15.Location = new System.Drawing.Point(760, 3);
+            this.panel15.Location = new System.Drawing.Point(756, 3);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(265, 57);
+            this.panel15.Size = new System.Drawing.Size(267, 57);
             this.panel15.TabIndex = 2;
             // 
             // txtHabitacion
@@ -365,7 +366,7 @@
             this.txtHabitacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtHabitacion.Location = new System.Drawing.Point(15, 27);
             this.txtHabitacion.Name = "txtHabitacion";
-            this.txtHabitacion.Size = new System.Drawing.Size(209, 22);
+            this.txtHabitacion.Size = new System.Drawing.Size(211, 22);
             this.txtHabitacion.TabIndex = 3;
             this.txtHabitacion.Validating += new System.ComponentModel.CancelEventHandler(this.txtHabitacion_Validating);
             // 
@@ -386,7 +387,7 @@
             this.panel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel16.Location = new System.Drawing.Point(3, 3);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(530, 57);
+            this.panel16.Size = new System.Drawing.Size(528, 57);
             this.panel16.TabIndex = 3;
             // 
             // dtpFechaInicio
@@ -395,7 +396,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtpFechaInicio.Location = new System.Drawing.Point(7, 28);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
-            this.dtpFechaInicio.Size = new System.Drawing.Size(484, 22);
+            this.dtpFechaInicio.Size = new System.Drawing.Size(482, 22);
             this.dtpFechaInicio.TabIndex = 2;
             this.dtpFechaInicio.Validating += new System.ComponentModel.CancelEventHandler(this.dtpFechaInicio_Validating);
             // 
@@ -417,7 +418,7 @@
             this.panel10.Controls.Add(this.panel12);
             this.panel10.Location = new System.Drawing.Point(22, 114);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(1028, 60);
+            this.panel10.Size = new System.Drawing.Size(1026, 66);
             this.panel10.TabIndex = 5;
             // 
             // panel12
@@ -427,7 +428,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(1028, 60);
+            this.panel12.Size = new System.Drawing.Size(1026, 66);
             this.panel12.TabIndex = 2;
             // 
             // txtMedico
@@ -438,7 +439,7 @@
             this.txtMedico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMedico.Location = new System.Drawing.Point(7, 28);
             this.txtMedico.Name = "txtMedico";
-            this.txtMedico.Size = new System.Drawing.Size(977, 22);
+            this.txtMedico.Size = new System.Drawing.Size(975, 22);
             this.txtMedico.TabIndex = 3;
             this.txtMedico.Validating += new System.ComponentModel.CancelEventHandler(this.txtMedico_Validating);
             // 
@@ -461,7 +462,7 @@
             this.panel8.Controls.Add(this.panel11);
             this.panel8.Location = new System.Drawing.Point(22, 17);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(1028, 66);
+            this.panel8.Size = new System.Drawing.Size(1026, 72);
             this.panel8.TabIndex = 2;
             // 
             // panel9
@@ -471,7 +472,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(510, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(518, 66);
+            this.panel9.Size = new System.Drawing.Size(516, 72);
             this.panel9.TabIndex = 2;
             // 
             // txtApellido
@@ -482,7 +483,7 @@
             this.txtApellido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtApellido.Location = new System.Drawing.Point(7, 28);
             this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(467, 22);
+            this.txtApellido.Size = new System.Drawing.Size(465, 22);
             this.txtApellido.TabIndex = 3;
             this.txtApellido.Validating += new System.ComponentModel.CancelEventHandler(this.txtApellido_Validating);
             // 
@@ -503,7 +504,7 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(510, 66);
+            this.panel11.Size = new System.Drawing.Size(510, 72);
             this.panel11.TabIndex = 3;
             // 
             // txtNombre

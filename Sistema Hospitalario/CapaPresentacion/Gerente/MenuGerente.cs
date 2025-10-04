@@ -17,6 +17,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
     public partial class MenuGerente : Form
     {
+        // ======================= CONSTRUCTOR DEL MENÚ GERENTE =======================
         public MenuGerente()
         {
             InitializeComponent();
@@ -24,6 +25,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
         }
 
         // ======================= NAVEGACIÓN CENTRAL =======================
+
         // Método común para mostrar un UserControl en el panel contenedor.
         private void AbrirUserControl(UserControl uc)
         {
@@ -36,25 +38,25 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
         }
 
         // ======================= HOME =======================
-        private void btn_home_Click(object sender, EventArgs e)
+        private void btnHome_Click(object sender, EventArgs e)
         {
             AbrirUserControl(new UC_HomeGerente());
         }
 
         // ======================= PACIENTES =======================
-        private void btn_pacientes_Click(object sender, EventArgs e)
+        private void btnPacientes_Click(object sender, EventArgs e)
         {
             AbrirUserControl(new UC_PacientesGerente());
         }
 
         // ======================= TURNOS =======================
-        private void btn_turnos_Click(object sender, EventArgs e)
+        private void btnTurnos_Click(object sender, EventArgs e)
         {
             AbrirUserControl(new UC_TurnosGerente());
         }
 
         // ======================= SALIR =======================
-        private void btn_salir_Click(object sender, EventArgs e)
+        private void btnSalir_Click(object sender, EventArgs e)
         {
             DialogResult dr = MessageBox.Show("¿Seguro que desea salir?",
                                               "Confirmación",

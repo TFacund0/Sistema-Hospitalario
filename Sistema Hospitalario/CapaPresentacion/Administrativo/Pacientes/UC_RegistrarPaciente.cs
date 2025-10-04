@@ -17,17 +17,22 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_RegistrarPaciente : UserControl
     {
+        // Servicio para interactuar con la capa de negocio
         private readonly PacienteService _pacienteService = new PacienteService();
+
+        // Evento para notificar al menuAdministrativo que se solicitó cancelar el registro
         public event EventHandler CancelarRegistroSolicitado;
 
+        // ============================= CONSTRUCTOR DEL UC REGISTRAR PACIENTE =============================
         public UC_RegistrarPaciente()
         {
             InitializeComponent();
         }
 
-    // ============================= VALIDACIONES DE CAMPOS =============================
-
-    private void txtNombre_Validating(object sender, CancelEventArgs e)
+        // ============================= VALIDACIONES DE CAMPOS PACIENTE =============================
+        
+        // ========== VALIDACIÓN NOMBRE ==========
+        private void txtNombre_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
@@ -45,6 +50,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========== VALIDACIÓN DIRECCIÓN ==========
         private void txtDireccion_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtDireccion.Text))
@@ -63,6 +69,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========== VALIDACIÓN APELLIDO ==========
         private void txtApellido_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtApellido.Text))
@@ -81,6 +88,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========== VALIDACIÓN ESTADO INICIAL ==========
         private void txtInicial_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtInicial.Text))
@@ -100,24 +108,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
 
-        private void txtObraSocial_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtObraSocial.Text))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtObraSocial, "La obra social es obligatoria.");
-            }
-            else if (txtObraSocial.Text.Length > 50)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtObraSocial, "Máximo 50 caracteres.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtObraSocial, "");
-            }
-        }
-
+        // ========== VALIDACIÓN FECHA DE NACIMIENTO ==========
         private void dtpNacimiento_Validating(object sender, CancelEventArgs e)
         {
             dtpNacimiento.Format = DateTimePickerFormat.Short; 
@@ -140,29 +131,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
-        private void txtAfiliado_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtAfiliado.Text) || !int.TryParse(txtAfiliado.Text, out int _))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtAfiliado, "El número de afiliado es obligatorio.");
-            }
-            else if (txtAfiliado.Text.Length > 20)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtAfiliado, "Máximo 20 caracteres.");
-            }
-            else if (int.TryParse(txtAfiliado.Text, out int nro) && nro <= 0)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtAfiliado, "El número de afiliado debe ser un número positivo.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtAfiliado, "");
-            }
-        }
-
+        // ========== VALIDACIÓN DNI ==========
         private void txtDni_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtDni.Text) || !int.TryParse(txtDni.Text, out int _))
@@ -186,6 +155,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========== VALIDACIÓN TELÉFONO ==========
         private void txtTelefono_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTelefono.Text) || !int.TryParse(txtTelefono.Text, out int _))
@@ -204,6 +174,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========== VALIDACIÓN OBSERVACIONES ==========
         private void txtObservaciones_Validating(object sender, CancelEventArgs e)
         {
             if (txtObservaciones.Text.Length > 200)
@@ -218,63 +189,25 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         //============================= RESTRICCIONES DE TECLADO =============================
+
+        // Permitir solo letras, espacios y teclas de control
         private void SoloLetras(object s, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
                 e.Handled = true;
         }
 
+        // Permitir solo números y teclas de control
         private void SoloNumeros(object s, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
                 e.Handled = true;
         }
 
-        private void txtNombre_KeyPress(object s, KeyPressEventArgs e) => SoloLetras(s, e);
-        private void txtApellido_KeyPress(object s, KeyPressEventArgs e) => SoloLetras(s, e);
-        private void txtTelefono_KeyPress(object s, KeyPressEventArgs e) => SoloNumeros(s, e);
-        private void txtAfiliado_KeyPress(object s, KeyPressEventArgs e) => SoloNumeros(s, e);
-        private void txtDni_KeyPress(object s, KeyPressEventArgs e) => SoloNumeros(s, e);
 
-
-        //============================= BOTONES =============================
-        private bool ValidarFormulario()
-        {
-            errorProvider1.Clear();
-            bool ok = this.ValidateChildren(ValidationConstraints.Enabled);
-
-            if (!string.IsNullOrWhiteSpace(txtObraSocial.Text) && string.IsNullOrWhiteSpace(txtAfiliado.Text))
-            {
-                errorProvider1.SetError(txtAfiliado, "Si cargás Obra Social, el N° de afiliado es obligatorio.");
-                ok = false;
-            }
-
-            if (dtpNacimiento.Value > DateTime.Today)
-            {
-                errorProvider1.SetError(dtpNacimiento, "La fecha de nacimiento no puede ser futura.");
-                ok = false;
-            }
-
-            if (!ok)
-            {
-                foreach (Control c in this.Controls)
-                {
-                    if (!string.IsNullOrEmpty(errorProvider1.GetError(c)))
-                    { c.Focus(); break; }
-                }
-            }
-            return ok;
-        }
-
+        // ============================ BOTÓN GUARDAR =============================
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (!ValidarFormulario())
-            {
-                MessageBox.Show("Por favor, corregí los errores antes de guardar.", "Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             var dto = new CapaNegocio.DTOs.PacienteAltaDto
             {
                 Nombre = txtNombre.Text.Trim(),
@@ -282,8 +215,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 Dni = int.TryParse(txtDni.Text.Trim(), out int dni) ? dni : 0,
                 Telefono = txtTelefono.Text.Trim(),
                 Direccion = txtDireccion.Text.Trim(),
-                ObraSocial = txtObraSocial.Text.Trim(),
-                NumeroAfiliado = int.TryParse(txtAfiliado.Text.Trim(), out int nro) ? nro : 0,
                 FechaNacimiento = dtpNacimiento.Value,
                 Observaciones = txtObservaciones.Text.Trim(),
                 EstadoInicial = txtInicial.Text.Trim()
@@ -303,15 +234,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ============================ BOTÓN LIMPIAR =============================
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtNombre.Clear();
             txtDireccion.Clear();
             txtTelefono.Clear();
             txtDni.Clear();
-            txtDireccion.Clear();
-            txtObraSocial.Clear();
-            txtAfiliado.Clear();
+            txtDireccion.Clear();            
             txtDni.Clear();
             txtInicial.Clear();
             txtObservaciones.Clear();
@@ -319,6 +249,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             errorProvider1.Clear();
         }
 
+        // ============================ BOTÓN CANCELAR =============================
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CancelarRegistroSolicitado?.Invoke(this, EventArgs.Empty);
