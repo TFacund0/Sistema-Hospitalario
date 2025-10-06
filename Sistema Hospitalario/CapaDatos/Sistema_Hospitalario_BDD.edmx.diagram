@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9182086f8f814c41a192f17beb280bfe" Name="Diagram1">
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.cama" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.especialidad" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.estado_cama" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.estado_paciente" Width="1.5" PointX="0.75" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.estado_turno" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.estado_usuario" Width="1.5" PointX="5.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.habitacion" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.internacion" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.medico" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.paciente" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.procedimiento" Width="1.5" PointX="3" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.rol" Width="1.5" PointX="5.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.subespecialidad" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.telefono" Width="1.5" PointX="5.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.tipo_habitacion" Width="1.5" PointX="1.5" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.turno" Width="1.5" PointX="8.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sistema_HospitalarioModel.usuario" Width="1.5" PointX="8" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_cama_estado_cama" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_cama_habitacion" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_internacion_cama" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_medico_especialidad" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_subespecialidad_especialidad" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_paciente_estado_paciente" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_turno_estado_turno" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_usuario_estado_usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_habitacion_tipo_habitacion" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_internacion_medico" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_internacion_paciente" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_internacion_procedimiento" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_turno_medico" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_telefono_paciente" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_turno_paciente" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_turno_procedimiento" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.fk_usuario_rol" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -48,9 +48,6 @@
             this.txtTelefono = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.panel17 = new System.Windows.Forms.Panel();
-            this.txtAfiliado = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -59,7 +56,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.txtObraSocial = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.txtApellido = new System.Windows.Forms.TextBox();
@@ -89,7 +86,6 @@
             this.panel19.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel14.SuspendLayout();
-            this.panel17.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel16.SuspendLayout();
             this.panel10.SuspendLayout();
@@ -299,7 +295,6 @@
             // 
             // panel14
             // 
-            this.panel14.Controls.Add(this.panel17);
             this.panel14.Controls.Add(this.panel15);
             this.panel14.Controls.Add(this.panel16);
             this.panel14.Location = new System.Drawing.Point(52, 203);
@@ -307,43 +302,14 @@
             this.panel14.Size = new System.Drawing.Size(1086, 60);
             this.panel14.TabIndex = 5;
             // 
-            // panel17
-            // 
-            this.panel17.Controls.Add(this.txtAfiliado);
-            this.panel17.Controls.Add(this.label9);
-            this.panel17.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel17.Location = new System.Drawing.Point(570, 0);
-            this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(266, 60);
-            this.panel17.TabIndex = 4;
-            // 
-            // txtAfiliado
-            // 
-            this.txtAfiliado.BackColor = System.Drawing.Color.White;
-            this.txtAfiliado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAfiliado.Location = new System.Drawing.Point(7, 28);
-            this.txtAfiliado.Name = "txtAfiliado";
-            this.txtAfiliado.Size = new System.Drawing.Size(217, 22);
-            this.txtAfiliado.TabIndex = 5;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(3, 4);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(106, 20);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "N°Afiliado";
-            // 
             // panel15
             // 
             this.panel15.Controls.Add(this.txtDni);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel15.Location = new System.Drawing.Point(836, 0);
+            this.panel15.Location = new System.Drawing.Point(570, 0);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(250, 60);
+            this.panel15.Size = new System.Drawing.Size(516, 60);
             this.panel15.TabIndex = 2;
             // 
             // txtDni
@@ -352,7 +318,7 @@
             this.txtDni.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDni.Location = new System.Drawing.Point(7, 28);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(220, 22);
+            this.txtDni.Size = new System.Drawing.Size(486, 22);
             this.txtDni.TabIndex = 3;
             // 
             // label7
@@ -403,7 +369,7 @@
             // 
             // panel12
             // 
-            this.panel12.Controls.Add(this.txtObraSocial);
+            this.panel12.Controls.Add(this.txtEmail);
             this.panel12.Controls.Add(this.label5);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel12.Location = new System.Drawing.Point(570, 0);
@@ -411,14 +377,14 @@
             this.panel12.Size = new System.Drawing.Size(516, 60);
             this.panel12.TabIndex = 2;
             // 
-            // txtObraSocial
+            // txtEmail
             // 
-            this.txtObraSocial.BackColor = System.Drawing.Color.White;
-            this.txtObraSocial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtObraSocial.Location = new System.Drawing.Point(7, 28);
-            this.txtObraSocial.Name = "txtObraSocial";
-            this.txtObraSocial.Size = new System.Drawing.Size(486, 22);
-            this.txtObraSocial.TabIndex = 3;
+            this.txtEmail.BackColor = System.Drawing.Color.White;
+            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtEmail.Location = new System.Drawing.Point(7, 28);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(486, 22);
+            this.txtEmail.TabIndex = 3;
             // 
             // label5
             // 
@@ -426,9 +392,9 @@
             this.label5.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(3, 4);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(117, 20);
+            this.label5.Size = new System.Drawing.Size(185, 20);
             this.label5.TabIndex = 2;
-            this.label5.Text = "Obra Social";
+            this.label5.Text = "Correo Electrónico";
             // 
             // panel13
             // 
@@ -602,8 +568,6 @@
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
             this.panel14.ResumeLayout(false);
-            this.panel17.ResumeLayout(false);
-            this.panel17.PerformLayout();
             this.panel15.ResumeLayout(false);
             this.panel15.PerformLayout();
             this.panel16.ResumeLayout(false);
@@ -645,9 +609,6 @@
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.TextBox txtAfiliado;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.TextBox txtDni;
         private System.Windows.Forms.Label label7;
@@ -656,7 +617,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.TextBox txtObraSocial;
+        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.TextBox txtApellido;

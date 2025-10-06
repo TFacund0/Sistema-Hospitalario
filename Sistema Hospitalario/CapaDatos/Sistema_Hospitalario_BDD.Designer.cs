@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\arcef\source\repos\Sistema-HospitalarioLAVENGANZADEVISUALBASICS\Sistema Hospitalario\CapaDatos\Sistema_Hospitalario.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\USUARIO\Desktop\LSI\TERCER AÑO\Segundo cuatrimestre\Taller de Programación II\Proyecto\Sistema Hospitalario\Sistema Hospitalario\CapaDatos\Sistema_Hospitalario_BDD.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

@@ -55,9 +55,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             txtNombre.Text = p.Nombre ?? string.Empty;
             txtApellido.Text = p.Apellido ?? string.Empty;
-            txtObraSocial.Text = p.ObraSocial ?? string.Empty;
-            txtDni.Text = p.DNI.ToString() ?? string.Empty;
-            txtAfiliado.Text = p.NumeroAfiliado?.ToString() ?? string.Empty;
+            txtDni.Text = p.DNI.ToString() ?? string.Empty;            
+            txtEmail.Text = p.Email ?? string.Empty;
             txtDireccion.Text = p.Direccion ?? string.Empty;
             txtTelefono.Text = p.Telefono ?? string.Empty;
             txtObservaciones.Text = p.Observaciones ?? string.Empty;
@@ -81,12 +80,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             txtNombre.ReadOnly = !habilitar;
             txtApellido.ReadOnly = !habilitar;
             txtDni.ReadOnly = !habilitar;
-            txtObraSocial.ReadOnly = !habilitar;
-            txtAfiliado.ReadOnly = !habilitar;
+            txtEmail.ReadOnly = !habilitar;
             txtDireccion.ReadOnly = !habilitar;
             txtTelefono.ReadOnly = !habilitar;
             txtObservaciones.ReadOnly = !habilitar;
             txtEstado.ReadOnly = !habilitar;
+            txtEmail.ReadOnly = !habilitar;
 
             dtpNacimiento.Enabled = habilitar;
 
@@ -99,7 +98,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             error = null;
 
-            // Validaciones básicas
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || txtNombre.Text.Length > 50)
             { error = "Nombre es obligatorio (máx. 50)."; return false; }
 
@@ -120,11 +118,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 
             if (!string.IsNullOrWhiteSpace(txtObservaciones.Text) && txtObservaciones.Text.Length > 200)
             { error = "Observaciones no puede superar 200 caracteres."; return false; }
+            
+            if (!string.IsNullOrWhiteSpace(txtEstado.Text) && txtEstado.Text.Length > 20)
+            { error = "Estado no puede superar 20 caracteres."; return false; }
 
-            if (!string.IsNullOrWhiteSpace(txtAfiliado.Text))
+            if (!string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                if (txtAfiliado.Text.Length > 20 || !Regex.IsMatch(txtAfiliado.Text, @"^\d+$"))
-                { error = "N° de afiliado debe ser numérico y de hasta 20 dígitos."; return false; }
+                if (txtEmail.Text.Length > 100 || !Regex.IsMatch(txtEmail.Text,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
+                { error = "Email debe ser válido y de hasta 100 caracteres."; return false; }
             }
 
             if (dtpNacimiento.Value > DateTime.Today)
@@ -145,7 +147,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 return;
             }
 
-            // Guardar
             if (!ValidarDatos(out var msg))
             {
                 MessageBox.Show(msg, "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -156,12 +157,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             _paciente.Nombre = txtNombre.Text.Trim();
             _paciente.Apellido = txtApellido.Text.Trim();
             _paciente.DNI = int.TryParse(txtDni.Text.Trim(), out var dni) ? dni : 0;
-            _paciente.ObraSocial = txtObraSocial.Text.Trim();
-            _paciente.NumeroAfiliado = int.TryParse(txtAfiliado.Text.Trim(), out var nro) ? nro : (int?)null;
             _paciente.Direccion = txtDireccion.Text.Trim();
             _paciente.Telefono = txtTelefono.Text.Trim();
             _paciente.Observaciones = txtObservaciones.Text.Trim();
             _paciente.Estado = txtEstado.Text.Trim();
+            _paciente.Email = txtEmail.Text.Trim();
             _paciente.FechaNacimiento = dtpNacimiento.Value;
 
             try

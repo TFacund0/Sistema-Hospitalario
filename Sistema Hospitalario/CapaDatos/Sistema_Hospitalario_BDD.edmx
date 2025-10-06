@@ -1,0 +1,1177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Sistema_HospitalarioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cama">
+          <Key>
+            <PropertyRef Name="id_cama" />
+            <PropertyRef Name="nro_habitacion" />
+          </Key>
+          <Property Name="id_cama" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nro_habitacion" Type="int" Nullable="false" />
+          <Property Name="id_estado_cama" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="especialidad">
+          <Key>
+            <PropertyRef Name="id_especialidad" />
+          </Key>
+          <Property Name="id_especialidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estado_cama">
+          <Key>
+            <PropertyRef Name="id_estado_cama" />
+          </Key>
+          <Property Name="id_estado_cama" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="disponibilidad" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estado_paciente">
+          <Key>
+            <PropertyRef Name="id_estado_paciente" />
+          </Key>
+          <Property Name="id_estado_paciente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estado_turno">
+          <Key>
+            <PropertyRef Name="id_estado_turno" />
+          </Key>
+          <Property Name="id_estado_turno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estado_usuario">
+          <Key>
+            <PropertyRef Name="id_estado_usuario" />
+          </Key>
+          <Property Name="id_estado_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="habitacion">
+          <Key>
+            <PropertyRef Name="nro_habitacion" />
+          </Key>
+          <Property Name="nro_habitacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nro_piso" Type="int" Nullable="false" />
+          <Property Name="id_tipo_habitacion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="internacion">
+          <Key>
+            <PropertyRef Name="id_internacion" />
+          </Key>
+          <Property Name="id_internacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_inicio" Type="date" Nullable="false" />
+          <Property Name="fecha_fin" Type="date" />
+          <Property Name="motivo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="id_cama" Type="int" Nullable="false" />
+          <Property Name="nro_habitacion" Type="int" Nullable="false" />
+          <Property Name="id_paciente" Type="int" Nullable="false" />
+          <Property Name="id_medico" Type="int" Nullable="false" />
+          <Property Name="id_procedimiento" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="medico">
+          <Key>
+            <PropertyRef Name="id_medico" />
+          </Key>
+          <Property Name="id_medico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="matricula" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="correo_electronico" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="id_especialidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="paciente">
+          <Key>
+            <PropertyRef Name="id_paciente" />
+          </Key>
+          <Property Name="id_paciente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dni" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="date" Nullable="false" />
+          <Property Name="observaciones" Type="varchar" MaxLength="200" />
+          <Property Name="direccion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="correo_electronico" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="id_estado_paciente" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="procedimiento">
+          <Key>
+            <PropertyRef Name="id_procedimiento" />
+          </Key>
+          <Property Name="id_procedimiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="subespecialidad">
+          <Key>
+            <PropertyRef Name="id_subespecialidad" />
+            <PropertyRef Name="id_especialidad" />
+          </Key>
+          <Property Name="id_subespecialidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="id_especialidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="telefono">
+          <Key>
+            <PropertyRef Name="id_nroTelefono" />
+            <PropertyRef Name="id_paciente" />
+          </Key>
+          <Property Name="numero_telefono" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="id_nroTelefono" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_paciente" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipo_habitacion">
+          <Key>
+            <PropertyRef Name="id_tipo_habitacion" />
+          </Key>
+          <Property Name="id_tipo_habitacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="turno">
+          <Key>
+            <PropertyRef Name="id_turno" />
+          </Key>
+          <Property Name="id_turno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_turno" Type="date" Nullable="false" />
+          <Property Name="fecha_registracion" Type="date" Nullable="false" />
+          <Property Name="id_procedimiento" Type="int" Nullable="false" />
+          <Property Name="id_paciente" Type="int" Nullable="false" />
+          <Property Name="id_medico" Type="int" Nullable="false" />
+          <Property Name="id_estado_turno" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_estado_usuario" Type="int" Nullable="false" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_cama_estado_cama">
+          <End Role="estado_cama" Type="Self.estado_cama" Multiplicity="1" />
+          <End Role="cama" Type="Self.cama" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_cama">
+              <PropertyRef Name="id_estado_cama" />
+            </Principal>
+            <Dependent Role="cama">
+              <PropertyRef Name="id_estado_cama" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cama_habitacion">
+          <End Role="habitacion" Type="Self.habitacion" Multiplicity="1" />
+          <End Role="cama" Type="Self.cama" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="habitacion">
+              <PropertyRef Name="nro_habitacion" />
+            </Principal>
+            <Dependent Role="cama">
+              <PropertyRef Name="nro_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_habitacion_tipo_habitacion">
+          <End Role="tipo_habitacion" Type="Self.tipo_habitacion" Multiplicity="1" />
+          <End Role="habitacion" Type="Self.habitacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_habitacion">
+              <PropertyRef Name="id_tipo_habitacion" />
+            </Principal>
+            <Dependent Role="habitacion">
+              <PropertyRef Name="id_tipo_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_cama">
+          <End Role="cama" Type="Self.cama" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cama">
+              <PropertyRef Name="id_cama" />
+              <PropertyRef Name="nro_habitacion" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_cama" />
+              <PropertyRef Name="nro_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_procedimiento">
+          <End Role="procedimiento" Type="Self.procedimiento" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="procedimiento">
+              <PropertyRef Name="id_procedimiento" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_procedimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_medico_especialidad">
+          <End Role="especialidad" Type="Self.especialidad" Multiplicity="1" />
+          <End Role="medico" Type="Self.medico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="especialidad">
+              <PropertyRef Name="id_especialidad" />
+            </Principal>
+            <Dependent Role="medico">
+              <PropertyRef Name="id_especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_paciente_estado_paciente">
+          <End Role="estado_paciente" Type="Self.estado_paciente" Multiplicity="1" />
+          <End Role="paciente" Type="Self.paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_paciente">
+              <PropertyRef Name="id_estado_paciente" />
+            </Principal>
+            <Dependent Role="paciente">
+              <PropertyRef Name="id_estado_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subespecialidad_especialidad">
+          <End Role="especialidad" Type="Self.especialidad" Multiplicity="1" />
+          <End Role="subespecialidad" Type="Self.subespecialidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="especialidad">
+              <PropertyRef Name="id_especialidad" />
+            </Principal>
+            <Dependent Role="subespecialidad">
+              <PropertyRef Name="id_especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_telefono_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="telefono" Type="Self.telefono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="telefono">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_estado_turno">
+          <End Role="estado_turno" Type="Self.estado_turno" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_turno">
+              <PropertyRef Name="id_estado_turno" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_estado_turno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_procedimiento">
+          <End Role="procedimiento" Type="Self.procedimiento" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="procedimiento">
+              <PropertyRef Name="id_procedimiento" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_procedimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_estado_usuario">
+          <End Role="estado_usuario" Type="Self.estado_usuario" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_usuario">
+              <PropertyRef Name="id_estado_usuario" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_estado_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_rol">
+          <End Role="rol" Type="Self.rol" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sistema_HospitalarioModelStoreContainer">
+          <EntitySet Name="cama" EntityType="Self.cama" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="especialidad" EntityType="Self.especialidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estado_cama" EntityType="Self.estado_cama" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estado_paciente" EntityType="Self.estado_paciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estado_turno" EntityType="Self.estado_turno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estado_usuario" EntityType="Self.estado_usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="habitacion" EntityType="Self.habitacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="internacion" EntityType="Self.internacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="medico" EntityType="Self.medico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="paciente" EntityType="Self.paciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="procedimiento" EntityType="Self.procedimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rol" EntityType="Self.rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subespecialidad" EntityType="Self.subespecialidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="telefono" EntityType="Self.telefono" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_habitacion" EntityType="Self.tipo_habitacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="turno" EntityType="Self.turno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_cama_estado_cama" Association="Self.fk_cama_estado_cama">
+            <End Role="estado_cama" EntitySet="estado_cama" />
+            <End Role="cama" EntitySet="cama" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cama_habitacion" Association="Self.fk_cama_habitacion">
+            <End Role="habitacion" EntitySet="habitacion" />
+            <End Role="cama" EntitySet="cama" />
+          </AssociationSet>
+          <AssociationSet Name="fk_habitacion_tipo_habitacion" Association="Self.fk_habitacion_tipo_habitacion">
+            <End Role="tipo_habitacion" EntitySet="tipo_habitacion" />
+            <End Role="habitacion" EntitySet="habitacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_cama" Association="Self.fk_internacion_cama">
+            <End Role="cama" EntitySet="cama" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_medico" Association="Self.fk_internacion_medico">
+            <End Role="medico" EntitySet="medico" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_paciente" Association="Self.fk_internacion_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_procedimiento" Association="Self.fk_internacion_procedimiento">
+            <End Role="procedimiento" EntitySet="procedimiento" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_medico_especialidad" Association="Self.fk_medico_especialidad">
+            <End Role="especialidad" EntitySet="especialidad" />
+            <End Role="medico" EntitySet="medico" />
+          </AssociationSet>
+          <AssociationSet Name="fk_paciente_estado_paciente" Association="Self.fk_paciente_estado_paciente">
+            <End Role="estado_paciente" EntitySet="estado_paciente" />
+            <End Role="paciente" EntitySet="paciente" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subespecialidad_especialidad" Association="Self.fk_subespecialidad_especialidad">
+            <End Role="especialidad" EntitySet="especialidad" />
+            <End Role="subespecialidad" EntitySet="subespecialidad" />
+          </AssociationSet>
+          <AssociationSet Name="fk_telefono_paciente" Association="Self.fk_telefono_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="telefono" EntitySet="telefono" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_estado_turno" Association="Self.fk_turno_estado_turno">
+            <End Role="estado_turno" EntitySet="estado_turno" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_medico" Association="Self.fk_turno_medico">
+            <End Role="medico" EntitySet="medico" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_paciente" Association="Self.fk_turno_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_procedimiento" Association="Self.fk_turno_procedimiento">
+            <End Role="procedimiento" EntitySet="procedimiento" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_estado_usuario" Association="Self.fk_usuario_estado_usuario">
+            <End Role="estado_usuario" EntitySet="estado_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_rol" Association="Self.fk_usuario_rol">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Sistema_HospitalarioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cama">
+          <Key>
+            <PropertyRef Name="id_cama" />
+            <PropertyRef Name="nro_habitacion" />
+          </Key>
+          <Property Name="id_cama" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nro_habitacion" Type="Int32" Nullable="false" />
+          <Property Name="id_estado_cama" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="estado_cama" Relationship="Self.fk_cama_estado_cama" FromRole="cama" ToRole="estado_cama" />
+          <NavigationProperty Name="habitacion" Relationship="Self.fk_cama_habitacion" FromRole="cama" ToRole="habitacion" />
+          <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_cama" FromRole="cama" ToRole="internacion" />
+        </EntityType>
+        <EntityType Name="especialidad">
+          <Key>
+            <PropertyRef Name="id_especialidad" />
+          </Key>
+          <Property Name="id_especialidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="medico" Relationship="Self.fk_medico_especialidad" FromRole="especialidad" ToRole="medico" />
+          <NavigationProperty Name="subespecialidad" Relationship="Self.fk_subespecialidad_especialidad" FromRole="especialidad" ToRole="subespecialidad" />
+        </EntityType>
+        <EntityType Name="estado_cama">
+          <Key>
+            <PropertyRef Name="id_estado_cama" />
+          </Key>
+          <Property Name="id_estado_cama" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="disponibilidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cama" Relationship="Self.fk_cama_estado_cama" FromRole="estado_cama" ToRole="cama" />
+        </EntityType>
+        <EntityType Name="estado_paciente">
+          <Key>
+            <PropertyRef Name="id_estado_paciente" />
+          </Key>
+          <Property Name="id_estado_paciente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="paciente" Relationship="Self.fk_paciente_estado_paciente" FromRole="estado_paciente" ToRole="paciente" />
+        </EntityType>
+        <EntityType Name="estado_turno">
+          <Key>
+            <PropertyRef Name="id_estado_turno" />
+          </Key>
+          <Property Name="id_estado_turno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="turno" Relationship="Self.fk_turno_estado_turno" FromRole="estado_turno" ToRole="turno" />
+        </EntityType>
+        <EntityType Name="estado_usuario">
+          <Key>
+            <PropertyRef Name="id_estado_usuario" />
+          </Key>
+          <Property Name="id_estado_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_usuario_estado_usuario" FromRole="estado_usuario" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="habitacion">
+          <Key>
+            <PropertyRef Name="nro_habitacion" />
+          </Key>
+          <Property Name="nro_habitacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nro_piso" Type="Int32" Nullable="false" />
+          <Property Name="id_tipo_habitacion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cama" Relationship="Self.fk_cama_habitacion" FromRole="habitacion" ToRole="cama" />
+          <NavigationProperty Name="tipo_habitacion" Relationship="Self.fk_habitacion_tipo_habitacion" FromRole="habitacion" ToRole="tipo_habitacion" />
+        </EntityType>
+        <EntityType Name="internacion">
+          <Key>
+            <PropertyRef Name="id_internacion" />
+          </Key>
+          <Property Name="id_internacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_fin" Type="DateTime" Precision="0" />
+          <Property Name="motivo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_cama" Type="Int32" Nullable="false" />
+          <Property Name="nro_habitacion" Type="Int32" Nullable="false" />
+          <Property Name="id_paciente" Type="Int32" Nullable="false" />
+          <Property Name="id_medico" Type="Int32" Nullable="false" />
+          <Property Name="id_procedimiento" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cama" Relationship="Self.fk_internacion_cama" FromRole="internacion" ToRole="cama" />
+          <NavigationProperty Name="medico" Relationship="Self.fk_internacion_medico" FromRole="internacion" ToRole="medico" />
+          <NavigationProperty Name="paciente" Relationship="Self.fk_internacion_paciente" FromRole="internacion" ToRole="paciente" />
+          <NavigationProperty Name="procedimiento" Relationship="Self.fk_internacion_procedimiento" FromRole="internacion" ToRole="procedimiento" />
+        </EntityType>
+        <EntityType Name="medico">
+          <Key>
+            <PropertyRef Name="id_medico" />
+          </Key>
+          <Property Name="id_medico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="matricula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo_electronico" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_especialidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="especialidad" Relationship="Self.fk_medico_especialidad" FromRole="medico" ToRole="especialidad" />
+          <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_medico" FromRole="medico" ToRole="internacion" />
+          <NavigationProperty Name="turno" Relationship="Self.fk_turno_medico" FromRole="medico" ToRole="turno" />
+        </EntityType>
+        <EntityType Name="paciente">
+          <Key>
+            <PropertyRef Name="id_paciente" />
+          </Key>
+          <Property Name="id_paciente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dni" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo_electronico" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_estado_paciente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="estado_paciente" Relationship="Self.fk_paciente_estado_paciente" FromRole="paciente" ToRole="estado_paciente" />
+          <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_paciente" FromRole="paciente" ToRole="internacion" />
+          <NavigationProperty Name="telefono" Relationship="Self.fk_telefono_paciente" FromRole="paciente" ToRole="telefono" />
+          <NavigationProperty Name="turno" Relationship="Self.fk_turno_paciente" FromRole="paciente" ToRole="turno" />
+        </EntityType>
+        <EntityType Name="procedimiento">
+          <Key>
+            <PropertyRef Name="id_procedimiento" />
+          </Key>
+          <Property Name="id_procedimiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_procedimiento" FromRole="procedimiento" ToRole="internacion" />
+          <NavigationProperty Name="turno" Relationship="Self.fk_turno_procedimiento" FromRole="procedimiento" ToRole="turno" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_usuario_rol" FromRole="rol" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="subespecialidad">
+          <Key>
+            <PropertyRef Name="id_subespecialidad" />
+            <PropertyRef Name="id_especialidad" />
+          </Key>
+          <Property Name="id_subespecialidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_especialidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="especialidad" Relationship="Self.fk_subespecialidad_especialidad" FromRole="subespecialidad" ToRole="especialidad" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="telefono">
+          <Key>
+            <PropertyRef Name="id_nroTelefono" />
+            <PropertyRef Name="id_paciente" />
+          </Key>
+          <Property Name="numero_telefono" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_nroTelefono" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_paciente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="paciente" Relationship="Self.fk_telefono_paciente" FromRole="telefono" ToRole="paciente" />
+        </EntityType>
+        <EntityType Name="tipo_habitacion">
+          <Key>
+            <PropertyRef Name="id_tipo_habitacion" />
+          </Key>
+          <Property Name="id_tipo_habitacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="habitacion" Relationship="Self.fk_habitacion_tipo_habitacion" FromRole="tipo_habitacion" ToRole="habitacion" />
+        </EntityType>
+        <EntityType Name="turno">
+          <Key>
+            <PropertyRef Name="id_turno" />
+          </Key>
+          <Property Name="id_turno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_turno" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_procedimiento" Type="Int32" Nullable="false" />
+          <Property Name="id_paciente" Type="Int32" Nullable="false" />
+          <Property Name="id_medico" Type="Int32" Nullable="false" />
+          <Property Name="id_estado_turno" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="estado_turno" Relationship="Self.fk_turno_estado_turno" FromRole="turno" ToRole="estado_turno" />
+          <NavigationProperty Name="medico" Relationship="Self.fk_turno_medico" FromRole="turno" ToRole="medico" />
+          <NavigationProperty Name="paciente" Relationship="Self.fk_turno_paciente" FromRole="turno" ToRole="paciente" />
+          <NavigationProperty Name="procedimiento" Relationship="Self.fk_turno_procedimiento" FromRole="turno" ToRole="procedimiento" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_estado_usuario" Type="Int32" Nullable="false" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="estado_usuario" Relationship="Self.fk_usuario_estado_usuario" FromRole="usuario" ToRole="estado_usuario" />
+          <NavigationProperty Name="rol" Relationship="Self.fk_usuario_rol" FromRole="usuario" ToRole="rol" />
+        </EntityType>
+        <Association Name="fk_cama_estado_cama">
+          <End Role="estado_cama" Type="Self.estado_cama" Multiplicity="1" />
+          <End Role="cama" Type="Self.cama" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_cama">
+              <PropertyRef Name="id_estado_cama" />
+            </Principal>
+            <Dependent Role="cama">
+              <PropertyRef Name="id_estado_cama" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cama_habitacion">
+          <End Role="habitacion" Type="Self.habitacion" Multiplicity="1" />
+          <End Role="cama" Type="Self.cama" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="habitacion">
+              <PropertyRef Name="nro_habitacion" />
+            </Principal>
+            <Dependent Role="cama">
+              <PropertyRef Name="nro_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_cama">
+          <End Role="cama" Type="Self.cama" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cama">
+              <PropertyRef Name="id_cama" />
+              <PropertyRef Name="nro_habitacion" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_cama" />
+              <PropertyRef Name="nro_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_medico_especialidad">
+          <End Role="especialidad" Type="Self.especialidad" Multiplicity="1" />
+          <End Role="medico" Type="Self.medico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="especialidad">
+              <PropertyRef Name="id_especialidad" />
+            </Principal>
+            <Dependent Role="medico">
+              <PropertyRef Name="id_especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_subespecialidad_especialidad">
+          <End Role="especialidad" Type="Self.especialidad" Multiplicity="1" />
+          <End Role="subespecialidad" Type="Self.subespecialidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="especialidad">
+              <PropertyRef Name="id_especialidad" />
+            </Principal>
+            <Dependent Role="subespecialidad">
+              <PropertyRef Name="id_especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_paciente_estado_paciente">
+          <End Role="estado_paciente" Type="Self.estado_paciente" Multiplicity="1" />
+          <End Role="paciente" Type="Self.paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_paciente">
+              <PropertyRef Name="id_estado_paciente" />
+            </Principal>
+            <Dependent Role="paciente">
+              <PropertyRef Name="id_estado_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_estado_turno">
+          <End Role="estado_turno" Type="Self.estado_turno" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_turno">
+              <PropertyRef Name="id_estado_turno" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_estado_turno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_estado_usuario">
+          <End Role="estado_usuario" Type="Self.estado_usuario" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_usuario">
+              <PropertyRef Name="id_estado_usuario" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_estado_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_habitacion_tipo_habitacion">
+          <End Role="tipo_habitacion" Type="Self.tipo_habitacion" Multiplicity="1" />
+          <End Role="habitacion" Type="Self.habitacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_habitacion">
+              <PropertyRef Name="id_tipo_habitacion" />
+            </Principal>
+            <Dependent Role="habitacion">
+              <PropertyRef Name="id_tipo_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_internacion_procedimiento">
+          <End Role="procedimiento" Type="Self.procedimiento" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="procedimiento">
+              <PropertyRef Name="id_procedimiento" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="id_procedimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_telefono_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="telefono" Type="Self.telefono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="telefono">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_turno_procedimiento">
+          <End Role="procedimiento" Type="Self.procedimiento" Multiplicity="1" />
+          <End Role="turno" Type="Self.turno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="procedimiento">
+              <PropertyRef Name="id_procedimiento" />
+            </Principal>
+            <Dependent Role="turno">
+              <PropertyRef Name="id_procedimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_rol">
+          <End Role="rol" Type="Self.rol" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sistema_HospitalarioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cama" EntityType="Self.cama" />
+          <EntitySet Name="especialidad" EntityType="Self.especialidad" />
+          <EntitySet Name="estado_cama" EntityType="Self.estado_cama" />
+          <EntitySet Name="estado_paciente" EntityType="Self.estado_paciente" />
+          <EntitySet Name="estado_turno" EntityType="Self.estado_turno" />
+          <EntitySet Name="estado_usuario" EntityType="Self.estado_usuario" />
+          <EntitySet Name="habitacion" EntityType="Self.habitacion" />
+          <EntitySet Name="internacion" EntityType="Self.internacion" />
+          <EntitySet Name="medico" EntityType="Self.medico" />
+          <EntitySet Name="paciente" EntityType="Self.paciente" />
+          <EntitySet Name="procedimiento" EntityType="Self.procedimiento" />
+          <EntitySet Name="rol" EntityType="Self.rol" />
+          <EntitySet Name="subespecialidad" EntityType="Self.subespecialidad" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="telefono" EntityType="Self.telefono" />
+          <EntitySet Name="tipo_habitacion" EntityType="Self.tipo_habitacion" />
+          <EntitySet Name="turno" EntityType="Self.turno" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="fk_cama_estado_cama" Association="Self.fk_cama_estado_cama">
+            <End Role="estado_cama" EntitySet="estado_cama" />
+            <End Role="cama" EntitySet="cama" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cama_habitacion" Association="Self.fk_cama_habitacion">
+            <End Role="habitacion" EntitySet="habitacion" />
+            <End Role="cama" EntitySet="cama" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_cama" Association="Self.fk_internacion_cama">
+            <End Role="cama" EntitySet="cama" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_medico_especialidad" Association="Self.fk_medico_especialidad">
+            <End Role="especialidad" EntitySet="especialidad" />
+            <End Role="medico" EntitySet="medico" />
+          </AssociationSet>
+          <AssociationSet Name="fk_subespecialidad_especialidad" Association="Self.fk_subespecialidad_especialidad">
+            <End Role="especialidad" EntitySet="especialidad" />
+            <End Role="subespecialidad" EntitySet="subespecialidad" />
+          </AssociationSet>
+          <AssociationSet Name="fk_paciente_estado_paciente" Association="Self.fk_paciente_estado_paciente">
+            <End Role="estado_paciente" EntitySet="estado_paciente" />
+            <End Role="paciente" EntitySet="paciente" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_estado_turno" Association="Self.fk_turno_estado_turno">
+            <End Role="estado_turno" EntitySet="estado_turno" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_estado_usuario" Association="Self.fk_usuario_estado_usuario">
+            <End Role="estado_usuario" EntitySet="estado_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_habitacion_tipo_habitacion" Association="Self.fk_habitacion_tipo_habitacion">
+            <End Role="tipo_habitacion" EntitySet="tipo_habitacion" />
+            <End Role="habitacion" EntitySet="habitacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_medico" Association="Self.fk_internacion_medico">
+            <End Role="medico" EntitySet="medico" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_paciente" Association="Self.fk_internacion_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_internacion_procedimiento" Association="Self.fk_internacion_procedimiento">
+            <End Role="procedimiento" EntitySet="procedimiento" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_medico" Association="Self.fk_turno_medico">
+            <End Role="medico" EntitySet="medico" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_telefono_paciente" Association="Self.fk_telefono_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="telefono" EntitySet="telefono" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_paciente" Association="Self.fk_turno_paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_turno_procedimiento" Association="Self.fk_turno_procedimiento">
+            <End Role="procedimiento" EntitySet="procedimiento" />
+            <End Role="turno" EntitySet="turno" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_rol" Association="Self.fk_usuario_rol">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Sistema_HospitalarioModelStoreContainer" CdmEntityContainer="Sistema_HospitalarioEntities">
+          <EntitySetMapping Name="cama">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.cama">
+              <MappingFragment StoreEntitySet="cama">
+                <ScalarProperty Name="id_cama" ColumnName="id_cama" />
+                <ScalarProperty Name="nro_habitacion" ColumnName="nro_habitacion" />
+                <ScalarProperty Name="id_estado_cama" ColumnName="id_estado_cama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="especialidad">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.especialidad">
+              <MappingFragment StoreEntitySet="especialidad">
+                <ScalarProperty Name="id_especialidad" ColumnName="id_especialidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estado_cama">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.estado_cama">
+              <MappingFragment StoreEntitySet="estado_cama">
+                <ScalarProperty Name="id_estado_cama" ColumnName="id_estado_cama" />
+                <ScalarProperty Name="disponibilidad" ColumnName="disponibilidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estado_paciente">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.estado_paciente">
+              <MappingFragment StoreEntitySet="estado_paciente">
+                <ScalarProperty Name="id_estado_paciente" ColumnName="id_estado_paciente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estado_turno">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.estado_turno">
+              <MappingFragment StoreEntitySet="estado_turno">
+                <ScalarProperty Name="id_estado_turno" ColumnName="id_estado_turno" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estado_usuario">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.estado_usuario">
+              <MappingFragment StoreEntitySet="estado_usuario">
+                <ScalarProperty Name="id_estado_usuario" ColumnName="id_estado_usuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="habitacion">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.habitacion">
+              <MappingFragment StoreEntitySet="habitacion">
+                <ScalarProperty Name="nro_habitacion" ColumnName="nro_habitacion" />
+                <ScalarProperty Name="nro_piso" ColumnName="nro_piso" />
+                <ScalarProperty Name="id_tipo_habitacion" ColumnName="id_tipo_habitacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="internacion">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.internacion">
+              <MappingFragment StoreEntitySet="internacion">
+                <ScalarProperty Name="id_internacion" ColumnName="id_internacion" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+                <ScalarProperty Name="motivo" ColumnName="motivo" />
+                <ScalarProperty Name="id_cama" ColumnName="id_cama" />
+                <ScalarProperty Name="nro_habitacion" ColumnName="nro_habitacion" />
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+                <ScalarProperty Name="id_medico" ColumnName="id_medico" />
+                <ScalarProperty Name="id_procedimiento" ColumnName="id_procedimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medico">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.medico">
+              <MappingFragment StoreEntitySet="medico">
+                <ScalarProperty Name="id_medico" ColumnName="id_medico" />
+                <ScalarProperty Name="matricula" ColumnName="matricula" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="correo_electronico" ColumnName="correo_electronico" />
+                <ScalarProperty Name="id_especialidad" ColumnName="id_especialidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="paciente">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.paciente">
+              <MappingFragment StoreEntitySet="paciente">
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="correo_electronico" ColumnName="correo_electronico" />
+                <ScalarProperty Name="id_estado_paciente" ColumnName="id_estado_paciente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="procedimiento">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.procedimiento">
+              <MappingFragment StoreEntitySet="procedimiento">
+                <ScalarProperty Name="id_procedimiento" ColumnName="id_procedimiento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rol">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.rol">
+              <MappingFragment StoreEntitySet="rol">
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subespecialidad">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.subespecialidad">
+              <MappingFragment StoreEntitySet="subespecialidad">
+                <ScalarProperty Name="id_subespecialidad" ColumnName="id_subespecialidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_especialidad" ColumnName="id_especialidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="telefono">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.telefono">
+              <MappingFragment StoreEntitySet="telefono">
+                <ScalarProperty Name="numero_telefono" ColumnName="numero_telefono" />
+                <ScalarProperty Name="id_nroTelefono" ColumnName="id_nroTelefono" />
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_habitacion">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.tipo_habitacion">
+              <MappingFragment StoreEntitySet="tipo_habitacion">
+                <ScalarProperty Name="id_tipo_habitacion" ColumnName="id_tipo_habitacion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="turno">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.turno">
+              <MappingFragment StoreEntitySet="turno">
+                <ScalarProperty Name="id_turno" ColumnName="id_turno" />
+                <ScalarProperty Name="fecha_turno" ColumnName="fecha_turno" />
+                <ScalarProperty Name="fecha_registracion" ColumnName="fecha_registracion" />
+                <ScalarProperty Name="id_procedimiento" ColumnName="id_procedimiento" />
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+                <ScalarProperty Name="id_medico" ColumnName="id_medico" />
+                <ScalarProperty Name="id_estado_turno" ColumnName="id_estado_turno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_estado_usuario" ColumnName="id_estado_usuario" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

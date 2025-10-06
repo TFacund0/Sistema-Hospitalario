@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO.EstadoPacienteDTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,15 +13,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_RegistrarPaciente : UserControl
     {
         // Servicio para interactuar con la capa de negocio
         private readonly PacienteService _pacienteService = new PacienteService();
+        private readonly EstadoPacienteService _estadoService = new EstadoPacienteService();
+
 
         // Evento para notificar al menuAdministrativo que se solicitó cancelar el registro
         public event EventHandler CancelarRegistroSolicitado;
@@ -27,6 +29,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         public UC_RegistrarPaciente()
         {
             InitializeComponent();
+
+            SelectEventosPaciente();
+            CargarEstadosEnCombo();
         }
 
         // ============================= VALIDACIONES DE CAMPOS PACIENTE =============================
@@ -87,27 +92,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 errorProvider1.SetError(txtApellido, "");
             }
         }
-
-        // ========== VALIDACIÓN ESTADO INICIAL ==========
-        private void txtInicial_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtInicial.Text))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtInicial, "El valor inicial es obligatorio.");
-            }
-            else if (txtInicial.Text.Length > 10)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtInicial, "Máximo 10 caracteres.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtInicial, "");
-            }
-        }
-
-
+    
         // ========== VALIDACIÓN FECHA DE NACIMIENTO ==========
         private void dtpNacimiento_Validating(object sender, CancelEventArgs e)
         {
@@ -174,6 +159,31 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========= VALIDACIÓN CORREO ==========
+        private void txtEmail_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtEmail, "El correo es obligatorio.");
+            }
+            else if (txtEmail.Text.Length > 100)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtEmail, "Máximo 100 caracteres.");
+            }
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(txtEmail.Text,
+                     @"^[^@\s]+@[^@\s]+\.[^@\s]+$", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtEmail, "Formato de correo inválido.");
+            }
+            else
+            {
+                errorProvider1.SetError(txtEmail, "");
+            }
+        }
+
         // ========== VALIDACIÓN OBSERVACIONES ==========
         private void txtObservaciones_Validating(object sender, CancelEventArgs e)
         {
@@ -187,6 +197,31 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 errorProvider1.SetError(txtObservaciones, "");
             }
         }
+
+        // ============================= COMBOBOX ESTADO INICIAL =============================
+        private void SelectEventosPaciente()
+        {
+            // Abrir automáticamente al ganar foco o click
+            cbEstadoInicial.Enter += (s, e) => cbEstadoInicial.DroppedDown = true;
+            cbEstadoInicial.MouseDown += (s, e) => cbEstadoInicial.DroppedDown = true;
+        }
+
+        private void CargarEstadosEnCombo()
+        {
+            var estados = _estadoService.ListarEstados();
+
+            var lista = new List<EstadoPacienteDto>
+        {
+            new EstadoPacienteDto { Id = 0, Nombre = "— Seleccioná —" }
+        };
+            lista.AddRange(estados);
+
+            cbEstadoInicial.DataSource = lista;
+            cbEstadoInicial.DisplayMember = nameof(EstadoPacienteDto.Nombre);
+            cbEstadoInicial.ValueMember = nameof(EstadoPacienteDto.Id);
+            cbEstadoInicial.SelectedIndex = 0;
+        }
+
 
         //============================= RESTRICCIONES DE TECLADO =============================
 
@@ -216,8 +251,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 Telefono = txtTelefono.Text.Trim(),
                 Direccion = txtDireccion.Text.Trim(),
                 FechaNacimiento = dtpNacimiento.Value,
+                Email = txtEmail.Text.Trim(),
                 Observaciones = txtObservaciones.Text.Trim(),
-                EstadoInicial = txtInicial.Text.Trim()
+                EstadoInicial = cbEstadoInicial.Text.Trim()
             };
 
             var r = _pacienteService.Alta(dto);
@@ -243,9 +279,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             txtDni.Clear();
             txtDireccion.Clear();            
             txtDni.Clear();
-            txtInicial.Clear();
+            txtEmail.Clear();
             txtObservaciones.Clear();
             dtpNacimiento.Value = DateTime.Today;
+            cbEstadoInicial.SelectedIndex = 0;
             errorProvider1.Clear();
         }
 

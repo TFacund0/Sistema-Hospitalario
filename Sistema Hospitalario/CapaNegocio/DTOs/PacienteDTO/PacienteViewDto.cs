@@ -26,8 +26,8 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs
         public string Telefono { get; set; }
         public string Direccion { get; set; }
         public string Estado { get; set; }       
-        public string ObraSocial { get; set; }   
-        public int? NumeroAfiliado { get; set; }
+
+        public string Email { get; set; }
         public string Observaciones { get; set; }
     }
 }
