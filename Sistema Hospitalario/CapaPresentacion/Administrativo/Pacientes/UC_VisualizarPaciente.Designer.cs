@@ -42,6 +42,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
             this.panel19 = new System.Windows.Forms.Panel();
+            this.cbEstadoInicial = new System.Windows.Forms.ComboBox();
             this.txtEstado = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
@@ -239,11 +240,21 @@
             // 
             this.panel19.Controls.Add(this.txtEstado);
             this.panel19.Controls.Add(this.label10);
+            this.panel19.Controls.Add(this.cbEstadoInicial);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel19.Location = new System.Drawing.Point(570, 0);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(516, 60);
             this.panel19.TabIndex = 4;
+            // 
+            // cbEstadoInicial
+            // 
+            this.cbEstadoInicial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEstadoInicial.FormattingEnabled = true;
+            this.cbEstadoInicial.Location = new System.Drawing.Point(7, 27);
+            this.cbEstadoInicial.Name = "cbEstadoInicial";
+            this.cbEstadoInicial.Size = new System.Drawing.Size(486, 24);
+            this.cbEstadoInicial.TabIndex = 7;
             // 
             // txtEstado
             // 
@@ -251,6 +262,7 @@
             this.txtEstado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEstado.Location = new System.Drawing.Point(7, 28);
             this.txtEstado.Name = "txtEstado";
+            this.txtEstado.ReadOnly = true;
             this.txtEstado.Size = new System.Drawing.Size(486, 22);
             this.txtEstado.TabIndex = 5;
             // 
@@ -603,7 +615,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.TextBox txtEstado;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.TextBox txtTelefono;
@@ -636,5 +647,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnEditar;
+        private System.Windows.Forms.TextBox txtEstado;
+        private System.Windows.Forms.ComboBox cbEstadoInicial;
     }
 }

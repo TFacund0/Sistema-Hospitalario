@@ -48,6 +48,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
             this.panel19 = new System.Windows.Forms.Panel();
+            this.cbEstadoInicial = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
             this.txtTelefono = new System.Windows.Forms.TextBox();
@@ -68,7 +69,6 @@
             this.Paciente = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbEstadoInicial = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -310,6 +310,15 @@
             this.panel19.Size = new System.Drawing.Size(515, 62);
             this.panel19.TabIndex = 4;
             // 
+            // cbEstadoInicial
+            // 
+            this.cbEstadoInicial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEstadoInicial.FormattingEnabled = true;
+            this.cbEstadoInicial.Location = new System.Drawing.Point(6, 28);
+            this.cbEstadoInicial.Name = "cbEstadoInicial";
+            this.cbEstadoInicial.Size = new System.Drawing.Size(465, 24);
+            this.cbEstadoInicial.TabIndex = 6;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -526,16 +535,6 @@
             this.label2.Size = new System.Drawing.Size(570, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Complete la información para registrar un paciente en el sistema";
-            // 
-            // cbEstadoInicial
-            // 
-            this.cbEstadoInicial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEstadoInicial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbEstadoInicial.FormattingEnabled = true;
-            this.cbEstadoInicial.Location = new System.Drawing.Point(6, 28);
-            this.cbEstadoInicial.Name = "cbEstadoInicial";
-            this.cbEstadoInicial.Size = new System.Drawing.Size(465, 24);
-            this.cbEstadoInicial.TabIndex = 6;
             // 
             // UC_RegistrarPaciente
             // 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios
 {
@@ -188,5 +189,16 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                 return (false, $"Error al actualizar el paciente: {ex.Message}");
             }
         }
+
+        public async Task<int> ContarPorEstadoIdAsync(int estadoId)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+            {
+                return await db.paciente
+                    .Where(p => p.id_estado_paciente == estadoId)
+                    .CountAsync();
+            }
+        }
+
     }
 }

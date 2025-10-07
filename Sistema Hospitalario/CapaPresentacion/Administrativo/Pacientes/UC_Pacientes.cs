@@ -35,6 +35,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             InitializeComponent();
 
             ConfigurarTablaActividad();
+            ConfigurarLabelsInformacion();
+
             CargarOpcionesDeFiltro();
             ConfigurarEnlazadoDeColumnas();
             CargarDesdeServicio();
@@ -61,6 +63,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.ColumnHeadersHeight = 35; // Altura de encabezado
             dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo del encabezado
         }
+
+        private async void ConfigurarLabelsInformacion()
+        {
+            lblTotalPacientes.Text = (await pacienteService.ContarPorEstadoIdAsync(1)).ToString();
+            lblTotalInternados.Text = (await pacienteService.ContarPorEstadoIdAsync(2)).ToString();
+            lblTotalEgresados.Text = (await pacienteService.ContarPorEstadoIdAsync(3)).ToString();
+        }
+
 
         // Metodo para cargar la lista de pacientes desde el servicio
         private void CargarDesdeServicio()
