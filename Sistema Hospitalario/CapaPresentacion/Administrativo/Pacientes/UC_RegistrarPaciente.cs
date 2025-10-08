@@ -17,10 +17,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_RegistrarPaciente : UserControl
     {
-        // Servicio para interactuar con la capa de negocio
+        // Servicio para interactuar con la capa de negocio de paciente y estado
         private readonly PacienteService _pacienteService = new PacienteService();
         private readonly EstadoPacienteService _estadoService = new EstadoPacienteService();
-
 
         // Evento para notificar al menuAdministrativo que se solicitó cancelar el registro
         public event EventHandler CancelarRegistroSolicitado;
@@ -34,8 +33,35 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             CargarEstadosEnCombo();
         }
 
+        // ============================= COMBOBOX ESTADO INICIAL =============================
+        // Seleccionar el ComboBox al hacer foco o click
+        private void SelectEventosPaciente()
+        {
+            // Abrir automáticamente al ganar foco o click
+            cbEstadoInicial.Enter += (s, e) => cbEstadoInicial.DroppedDown = true;
+            cbEstadoInicial.MouseDown += (s, e) => cbEstadoInicial.DroppedDown = true;
+        }
+
+        // Cargar los estados de paciente en el ComboBox
+        private void CargarEstadosEnCombo()
+        {
+            var estados = _estadoService.ListarEstados();
+
+            var lista = new List<EstadoPacienteDto>
+        {
+            new EstadoPacienteDto { Id = 0, Nombre = "— Seleccioná —" }
+        };
+            lista.AddRange(estados);
+
+            cbEstadoInicial.DataSource = lista;
+            cbEstadoInicial.DisplayMember = nameof(EstadoPacienteDto.Nombre);
+            cbEstadoInicial.ValueMember = nameof(EstadoPacienteDto.Id);
+            cbEstadoInicial.SelectedIndex = 0;
+        }
+
+
         // ============================= VALIDACIONES DE CAMPOS PACIENTE =============================
-        
+
         // ========== VALIDACIÓN NOMBRE ==========
         private void txtNombre_Validating(object sender, CancelEventArgs e)
         {
@@ -52,6 +78,25 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             else
             {
                 errorProvider1.SetError(txtNombre, "");
+            }
+        }
+
+        // ========== VALIDACIÓN APELLIDO ==========
+        private void txtApellido_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtApellido.Text))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtApellido, "El apellido es obligatorio.");
+            }
+            else if (txtApellido.Text.Length > 50)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtApellido, "Máximo 50 caracteres.");
+            }
+            else
+            {
+                errorProvider1.SetError(txtApellido, "");
             }
         }
 
@@ -74,25 +119,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
-        // ========== VALIDACIÓN APELLIDO ==========
-        private void txtApellido_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtApellido.Text))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtApellido, "El apellido es obligatorio.");
-            }
-            else if (txtApellido.Text.Length > 50)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtApellido, "Máximo 50 caracteres.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtApellido, "");
-            }
-        }
-    
         // ========== VALIDACIÓN FECHA DE NACIMIENTO ==========
         private void dtpNacimiento_Validating(object sender, CancelEventArgs e)
         {
@@ -197,31 +223,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 errorProvider1.SetError(txtObservaciones, "");
             }
         }
-
-        // ============================= COMBOBOX ESTADO INICIAL =============================
-        private void SelectEventosPaciente()
-        {
-            // Abrir automáticamente al ganar foco o click
-            cbEstadoInicial.Enter += (s, e) => cbEstadoInicial.DroppedDown = true;
-            cbEstadoInicial.MouseDown += (s, e) => cbEstadoInicial.DroppedDown = true;
-        }
-
-        private void CargarEstadosEnCombo()
-        {
-            var estados = _estadoService.ListarEstados();
-
-            var lista = new List<EstadoPacienteDto>
-        {
-            new EstadoPacienteDto { Id = 0, Nombre = "— Seleccioná —" }
-        };
-            lista.AddRange(estados);
-
-            cbEstadoInicial.DataSource = lista;
-            cbEstadoInicial.DisplayMember = nameof(EstadoPacienteDto.Nombre);
-            cbEstadoInicial.ValueMember = nameof(EstadoPacienteDto.Id);
-            cbEstadoInicial.SelectedIndex = 0;
-        }
-
 
         //============================= RESTRICCIONES DE TECLADO =============================
 

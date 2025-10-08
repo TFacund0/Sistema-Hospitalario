@@ -7,6 +7,7 @@ namespace Sistema_Hospitalario.CapaNegocio
 {
     public class EstadoPacienteService
     {
+        // Listar todos los estados de paciente disponibles
         public List<EstadoPacienteDto> ListarEstados()
         {
             using (var db = new Sistema_HospitalarioEntities())

@@ -20,7 +20,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Servicio para interactuar con la capa de negocio
         private readonly PacienteService pacienteService = new PacienteService();
 
-        // Lista maestra de pacientes cargada desde el servicio
+        // Lista completa de pacientes cargada desde el servicio
         private List<PacienteListadoDto> listaPacientes = new List<PacienteListadoDto>();
 
         // Evento que notifica al formulario padre que se solicitó registrar un nuevo paciente
@@ -38,19 +38,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             ConfigurarLabelsInformacion();
 
             CargarOpcionesDeFiltro();
-            ConfigurarEnlazadoDeColumnas();
-            CargarDesdeServicio();
+            ConfigurarEnlazadoDatosPacienteColumnas();
+            CargarPacientesDatagridview();
 
             dgvPacientes.CellContentClick += dgvPacientes_CellContentClick;
         }
 
-        // ===================== BOTÓN NUEVO PACIENTE =====================
-        private void btnNuevoPaciente_Click(object sender, EventArgs e)
-        {
-            RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
-        }
-
-        // Metodo para configurar el DataGridView de pacientes
+        // ===================== CONFIGURACIONES DEL DATAGRIDVIEW EN DISEÑO =====================
         private void ConfigurarTablaActividad()
         {
             dgvPacientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selección de fila completa
@@ -64,6 +58,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo del encabezado
         }
 
+        // ===================== CONFIGURACIÓN DE LABELS DE INFORMACIÓN =====================
         private async void ConfigurarLabelsInformacion()
         {
             lblTotalPacientes.Text = (await pacienteService.ContarPorEstadoIdAsync(1)).ToString();
@@ -72,8 +67,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
 
-        // Metodo para cargar la lista de pacientes desde el servicio
-        private void CargarDesdeServicio()
+        // ===================== CARGA Y ENLAZADO DE DATOS =====================
+        
+        // Carga la lista de pacientes desde el servicio y la enlaza al DataGridView
+        private void CargarPacientesDatagridview()
         {
             // Trae la lista “plana” para el grid desde la capa de negocio (BD)
             listaPacientes = pacienteService.ListarPacientes(); // List<PacienteListadoDto>
@@ -82,7 +79,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // Configura el enlace entre las columnas del DataGridView y las propiedades del DTO
-        private void ConfigurarEnlazadoDeColumnas()
+        private void ConfigurarEnlazadoDatosPacienteColumnas()
         {
             dgvPacientes.AutoGenerateColumns = false;
 
@@ -92,35 +89,33 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
         }
 
-        // Maneja el evento de clic en el contenido de una celda del DataGridView
-        private void dgvPacientes_CellContentClick(object s, DataGridViewCellEventArgs evento)
+
+        // ===================== BOTÓN NUEVO PACIENTE =====================
+        private void btnNuevoPaciente_Click(object sender, EventArgs e)
         {
-            // Ignorar clics en encabezados o fuera de filas válidas
-            if (evento.RowIndex < 0) return;
-
-            // Si se hizo clic en el botón "Ver" de la columna de acción
-            if (dgvPacientes.Columns[evento.ColumnIndex].Name == "colAccion")
-            {
-                // Obtener el paciente seleccionado
-                var paciente = enlacePacientes[evento.RowIndex] as PacienteListadoDto;
-                if (paciente == null) return;
-
-                // Traer el detalle desde negocio/datos
-                var detalle = pacienteService.ObtenerDetalle(paciente.Id);
-                
-                if (detalle == null)
-                {
-                    MessageBox.Show("No se encontró el paciente seleccionado.", "Atención",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Disparar el evento hacia el contenedor (Form/Padre) para que lo muestre
-                VerPacienteSolicitado?.Invoke(this, detalle);
-            }
+            RegistrarPacienteSolicitado?.Invoke(this, EventArgs.Empty);
         }
 
-        // ===================== FILTRADO =====================
+        // ===================== BOTÓN BUSCAR PACIENTE =====================
+        private void btnBuscar_Click_1(object sender, EventArgs e)
+        {
+            var campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
+            var texto = txtBuscar.Text;
+            AplicarFiltro(campo, texto);
+        }
+
+
+        // ===================== BOTÓN LIMPIAR BUSCADOR PACIENTE =====================
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Clear();
+            if (cboCampo != null) cboCampo.SelectedIndex = 0;
+
+            enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Paciente).ToList();
+            enlacePacientes.ResetBindings(false);
+        }
+
+        // ===================== BUSQUEDA DE PACIENTE POR FILTRADO =====================
 
         // Carga las opciones de filtro en el ComboBox
         private void CargarOpcionesDeFiltro()
@@ -151,7 +146,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                     case "DNI":
                         int dniBuscado = int.Parse(busqueda);
                         query = query.Where(t => t.DNI == dniBuscado);
-                        break;  
+                        break;
                     case "Estado":
                         query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
                         break;
@@ -164,26 +159,38 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 }
             }
 
+            // Actualiza el BindingSource con los resultados filtrados
             enlacePacientes.DataSource = query.OrderBy(t => t.Paciente).ToList();
             enlacePacientes.ResetBindings(false);
         }
 
-        // Limpia el filtro cuando se hace clic en el botón Limpiar
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        // ===================== VER DETALLE DE PACIENTE =====================
+        // Maneja el evento de clic en el DataGridView para ver el detalle del paciente
+        private void dgvPacientes_CellContentClick(object s, DataGridViewCellEventArgs evento)
         {
-            txtBuscar.Clear();
-            if (cboCampo != null) cboCampo.SelectedIndex = 0;
+            // Ignorar clics en encabezados o fuera de filas válidas
+            if (evento.RowIndex < 0) return;
 
-            enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Paciente).ToList();
-            enlacePacientes.ResetBindings(false);
-        }
+            // Si se hizo clic en el botón "Ver" de la columna de acción
+            if (dgvPacientes.Columns[evento.ColumnIndex].Name == "colAccion")
+            {
+                // Obtener el paciente seleccionado
+                var paciente = enlacePacientes[evento.RowIndex] as PacienteListadoDto;
+                if (paciente == null) return;
 
-        // Aplica el filtro cuando se hace clic en el botón Buscar
-        private void btnBuscar_Click_1(object sender, EventArgs e)
-        {
-            var campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
-            var texto = txtBuscar.Text;
-            AplicarFiltro(campo, texto);
+                // Traer el detalle desde negocio/datos
+                var detalle = pacienteService.ObtenerDetalle(paciente.Id);
+
+                if (detalle == null)
+                {
+                    MessageBox.Show("No se encontró el paciente seleccionado.", "Atención",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Disparar el evento hacia el contenedor (Form/Padre) para que lo muestre
+                VerPacienteSolicitado?.Invoke(this, detalle);
+            }
         }
     }
 }

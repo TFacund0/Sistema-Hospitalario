@@ -11,15 +11,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
     public partial class UC_VisualizarPaciente : UserControl
     {
+        // Servicios de negocio
+        private readonly PacienteService _pacienteService = new PacienteService();
+        private readonly EstadoPacienteService _estadoService = new EstadoPacienteService();
+
         // DTO local para mantener el estado actual del paciente
-        private PacienteDetalleDto _paciente;
+        private PacienteDetalleDto _pacienteDto;
 
         // Modo edición
         private bool _modoEdicion = false;
-
-        // Servicio de negocio
-        private readonly PacienteService _pacienteService = new PacienteService();
-        private readonly EstadoPacienteService _estadoService = new EstadoPacienteService();
 
         // Evento para notificar que se canceló la visualización (volver al listado)
         public event EventHandler CancelarVisualizacionSolicitada;
@@ -32,15 +32,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             InitializeComponent();
 
-            _paciente = paciente ?? throw new ArgumentNullException(nameof(paciente));
+            _pacienteDto = paciente ?? throw new ArgumentNullException(nameof(paciente));
 
-            // 1) Cargar lista de estados
-            CargarEstadosEnCombo();
 
-            // 2) Configurar UI inicial
             ConfigurarUiSoloLectura();
-            CargarDatos(_paciente);
+            CargarDatos(_pacienteDto);
+            
             SelectEventosPaciente();
+            CargarEstadosEnCombo();
 
             if (btnEditar != null)
             {
@@ -58,6 +57,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========================= CARGA DE DATOS DEL PACIENTE =========================
         private void CargarDatos(PacienteDetalleDto p)
         {
             txtNombre.Text = p.Nombre ?? string.Empty;
@@ -68,10 +68,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             txtTelefono.Text = p.Telefono ?? string.Empty;
             txtObservaciones.Text = p.Observaciones ?? string.Empty;
 
-            // ✅ Mostrar en TextBox (modo lectura)
+            // Mostrar en TextBox (modo lectura)
             txtEstado.Text = (p.Estado ?? string.Empty).Trim();
 
-            // ✅ Preseleccionar en el Combo (para cuando entres en edición)
+            // Preseleccionar en el Combo (modo edicion)
             SeleccionarEstadoPorNombre(txtEstado.Text);
 
             var fecha = (p.FechaNacimiento == DateTime.MinValue) ? DateTime.Today : p.FechaNacimiento;
@@ -79,7 +79,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
 
+        // ========================= COMBOBOX ESTADO PACIENTE =========================
 
+        // Eventos para abrir el combo automáticamente
         private void SelectEventosPaciente()
         {
             // Abrir automáticamente al ganar foco o click
@@ -87,6 +89,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             cbEstadoInicial.MouseDown += (s, e) => cbEstadoInicial.DroppedDown = true;
         }
 
+        // Cargar estados desde BD y configurar combo
         private void CargarEstadosEnCombo()
         {
             var estados = _estadoService.ListarEstados(); // List<EstadoPacienteDto> { Id, Nombre }
@@ -97,17 +100,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             };
             lista.AddRange(estados);
 
-            // ✅ Primero Display/Value, después DataSource
             cbEstadoInicial.DisplayMember = nameof(EstadoPacienteDto.Nombre);
             cbEstadoInicial.ValueMember = nameof(EstadoPacienteDto.Id);
             cbEstadoInicial.DataSource = lista;
 
             cbEstadoInicial.SelectedIndex = 0;
-
-            // Recomendado en el diseñador o acá:
+ 
             cbEstadoInicial.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
+        // Seleccionar en el combo el estado que coincide con el nombre dado
         private void SeleccionarEstadoPorNombre(string nombreEstado)
         {
             if (string.IsNullOrWhiteSpace(nombreEstado))
@@ -131,7 +133,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
 
-
         // ========================= CONFIGURACIÓN UI =========================
         private void ConfigurarUiSoloLectura()
         {
@@ -153,7 +154,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             txtObservaciones.ReadOnly = !habilitar;
             dtpNacimiento.Enabled = habilitar;
 
-            // Estado: en solo lectura mostramos txtEstado, en edición usamos el combo
+            // Estado: en solo lectura mostramos txtEstado
             txtEstado.Visible = !habilitar;
 
             cbEstadoInicial.Visible = habilitar;
@@ -221,6 +222,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 
         // ========================= EVENTOS BOTONES =========================
 
+        // ========================= BOTÓN EDITAR / GUARDAR =========================
         // Alternar entre modo edición y guardar cambios
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -237,24 +239,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
 
             // Mapear cambios al DTO local
-            _paciente.Nombre = txtNombre.Text.Trim();
-            _paciente.Apellido = txtApellido.Text.Trim();
-            _paciente.DNI = int.TryParse(txtDni.Text.Trim(), out var dni) ? dni : 0;
-            _paciente.Direccion = txtDireccion.Text.Trim();
-            _paciente.Telefono = txtTelefono.Text.Trim();
-            _paciente.Observaciones = txtObservaciones.Text.Trim();
-            _paciente.Email = txtEmail.Text.Trim();
-            _paciente.FechaNacimiento = dtpNacimiento.Value;
+            _pacienteDto.Nombre = txtNombre.Text.Trim();
+            _pacienteDto.Apellido = txtApellido.Text.Trim();
+            _pacienteDto.DNI = int.TryParse(txtDni.Text.Trim(), out var dni) ? dni : 0;
+            _pacienteDto.Direccion = txtDireccion.Text.Trim();
+            _pacienteDto.Telefono = txtTelefono.Text.Trim();
+            _pacienteDto.Observaciones = txtObservaciones.Text.Trim();
+            _pacienteDto.Email = txtEmail.Text.Trim();
+            _pacienteDto.FechaNacimiento = dtpNacimiento.Value;
 
-            // Estado: ahora viene del combo
+            // Estado desde el combo
             var estadoSel = cbEstadoInicial.SelectedItem as EstadoPacienteDto;
             if (estadoSel != null && estadoSel.Id > 0)
             {
-                // Si tu PacienteDetalleDto tiene sólo el nombre:
-                _paciente.Estado = estadoSel.Nombre;
-
-                // Si además tenés Id de estado en el DTO, setéalo también:
-                // _paciente.IdEstado = estadoSel.Id;
+                _pacienteDto.Estado = estadoSel.Nombre;
             }
             else
             {
@@ -262,9 +260,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 return;
             }
 
+            // Intentar guardar cambios via servicio
             try
             {
-                var r = _pacienteService.Editar(_paciente);
+                var r = _pacienteService.Editar(_pacienteDto);
                 if (!r.Ok)
                 {
                     MessageBox.Show(r.Error ?? "No se pudo actualizar el paciente.",
@@ -274,9 +273,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 
                 // Volver a solo lectura y refrescar controles visibles
                 ToggleEdicion(false);
-                CargarDatos(_paciente); // aseguro que txtEstado muestre el estado nuevo
+                CargarDatos(_pacienteDto);
 
-                PacienteActualizado?.Invoke(this, _paciente);
+                PacienteActualizado?.Invoke(this, _pacienteDto);
 
                 MessageBox.Show("Paciente actualizado correctamente.",
                                 "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -288,11 +287,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
-
-        // Cancelar edición y volver a cargar datos originales
+        // ========================= BOTÓN CANCELAR EDICIÓN =========================
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            CargarDatos(_paciente); // vuelve a poner el estado viejo en txt y combo
+            CargarDatos(_pacienteDto);
             ToggleEdicion(false);
             CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
         }

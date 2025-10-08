@@ -10,6 +10,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
 {
     public class PacienteService
     {
+        // ===================== ALTA (guardar en BD) =====================
         public (bool Ok, int IdGenerado, string Error) Alta(PacienteAltaDto dtoPaciente)
         { 
             try
@@ -24,14 +25,16 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                     if (existeDni)
                         return (false, 0, "Ya existe un paciente registrado con ese DNI.");
 
+                    // Obtener el estado inicial del paciente o usar "Activo" por defecto
                     var nombreEstado = (dtoPaciente.EstadoInicial ?? "Activo").Trim();
-                    
 
+                    // Buscar el estado en la base de datos
                     var estado = bdd.estado_paciente.SingleOrDefault(unEstado => unEstado.nombre == nombreEstado);
 
                     if (estado == null)
                         return (false, 0, $"El estado '{nombreEstado}' no existe en estado_paciente.");
 
+                    // Crear el nuevo registro del paciente
                     var paciente = new paciente
                     {
                         nombre = dtoPaciente.Nombre.Trim(),
@@ -44,6 +47,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                         id_estado_paciente = estado.id_estado_paciente   
                     };
 
+                    // Teléfono (si se proporcionó)
                     if (!string.IsNullOrWhiteSpace(dtoPaciente.Telefono))
                     {
                         paciente.telefono.Add(new telefono
@@ -52,6 +56,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                         });
                     }
 
+                    // Guardar en la base de datos
                     bdd.paciente.Add(paciente);
                     bdd.SaveChanges();
 
@@ -69,6 +74,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
             {
+
                 return db.paciente
                    .Select(aux_paciente => new PacienteListadoDto
                    {
@@ -83,12 +89,12 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         }
 
         // ===================== DETALLE (para ver/editar) =====================
-        public PacienteDetalleDto ObtenerDetalle(int id)
+        public PacienteDetalleDto ObtenerDetalle(int p_id_paciente)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
             {
                 return db.paciente
-                         .Where(aux_paciente => aux_paciente.id_paciente == id)
+                         .Where(aux_paciente => aux_paciente.id_paciente == p_id_paciente)
                          .Select(aux_paciente => new PacienteDetalleDto
                          {
                              Id = aux_paciente.id_paciente,
@@ -113,7 +119,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
             {
                 using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
                 {
-                    // 1) Traer paciente + teléfonos
+                    // 1) Paciente existente
                     var pacienteEdit = db.paciente
                                          .Include("telefono")
                                          .SingleOrDefault(p => p.id_paciente == dto.Id);
@@ -145,7 +151,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                         return (false, $"Estado '{dto.Estado}' no encontrado.");
                     pacienteEdit.id_estado_paciente = estadoId;
 
-                    // 5) Teléfono principal (editar el "primero" que mostrás en el detalle)
+                    // 5) Teléfono principal (editar el "primero" que mostramos en el detalle)
                     string nuevoTelefono = dto.Telefono?.Trim();
 
                     // Tomamos el "primero" de forma estable (por id)
@@ -153,9 +159,9 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
 
                     if (string.IsNullOrWhiteSpace(nuevoTelefono))
                     {
-                        // Si querés permitir vaciar/eliminar el teléfono principal:
-                        // if (telPrincipal != null) db.telefono.Remove(telPrincipal);
-                        // En este ejemplo: si está vacío, no tocamos teléfonos.
+                        
+                        if (telPrincipal != null) db.telefono.Remove(telPrincipal);
+                        //En este ejemplo: si está vacío, no tocamos teléfonos.
                     }
                     else
                     {
@@ -166,7 +172,6 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                             {
                                 id_paciente = pacienteEdit.id_paciente,
                                 numero_telefono = nuevoTelefono
-                                // es_principal = true; // si tenés este campo, marcálo
                             };
                             db.telefono.Add(nuevo);
                         }
@@ -174,9 +179,6 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                         {
                             // Actualizar el existente
                             telPrincipal.numero_telefono = nuevoTelefono;
-
-                            // Si existe columna es_principal, garantizá que sea el principal:
-                            // telPrincipal.es_principal = true;
                         }
                     }
 
@@ -190,6 +192,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
             }
         }
 
+        // ===================== CONTAR CANTIDAD PACIENTES (por estado) =====================
         public async Task<int> ContarPorEstadoIdAsync(int estadoId)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
