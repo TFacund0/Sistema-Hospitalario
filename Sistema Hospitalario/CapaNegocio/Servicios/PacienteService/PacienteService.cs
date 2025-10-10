@@ -1,5 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaPresentacion.Medico;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -195,11 +196,34 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         // ===================== CONTAR CANTIDAD PACIENTES (por estado) =====================
         public async Task<int> ContarPorEstadoIdAsync(int estadoId)
         {
-            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities())
             {
                 return await db.paciente
                     .Where(p => p.id_estado_paciente == estadoId)
                     .CountAsync();
+            }
+        }
+
+        // ===================== Listar todos los datos del Paciente ======================
+        public List<PacienteDto> ListarAllDatosPaciente()
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                return db.paciente
+                    .Where(p => p.estado_paciente.nombre != "Internado" && p.estado_paciente.nombre == "Activo")
+                    .Select(p => new PacienteDto
+                    {
+                        Id = p.id_paciente,
+                        Nombre = p.nombre,
+                        Apellido = p.apellido,
+                        Fecha_nacimiento = p.fecha_nacimiento,
+                        Observaciones = p.observaciones,
+                        Dni = p.dni,
+                        Direccion = p.direccion,
+                        Email = p.correo_electronico,
+                        Estado_paciente = p.estado_paciente.nombre
+                    })         
+                    .ToList();
             }
         }
 

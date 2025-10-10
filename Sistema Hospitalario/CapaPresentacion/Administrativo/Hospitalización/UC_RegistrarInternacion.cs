@@ -1,4 +1,10 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaPresentacion.Medico;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,78 +18,246 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
     public partial class UC_RegistrarInternacion : UserControl
     {
+        // Servicios para manejar la lógica de negocio
+        private readonly PacienteService _servicioPaciente = new PacienteService();
+        private readonly HabitacionService _servicioHabitacion = new HabitacionService();
+        private readonly CamaService _servicioCama = new CamaService();
+        //private readonly MedicoService _servicioMedico = new MedicoService();
+
+        // Atributos que almacenan la informacion de la base de datos a traves de los DTOs
+        private List<PacienteDto> listaPacientes = new List<PacienteDto>();
+        private List<HabitacionDto> listaHabitaciones = new List<HabitacionDto>();
+        private List<CamaDto> listaCamas = new List<CamaDto>();
+
+        // Listas de texto (lo que se muestra en los combos)
+        private readonly List<string> _maestroPaciente = new List<string>();
+        private readonly List<string> _maestroHabitacion = new List<string>();
+        private readonly List<string> _maestroCama = new List<string>();
+
+        // Bandera para evitar reentrancia en eventos de texto
+        private bool _actualizandoInterno = false;
+
         // Evento para notificar al menuAdministrativo que se solicitó cancelar el registro
         public event EventHandler CancelarInternacionSolicitada;
 
-        // Listado de estados válidos para la habitación
-        private static readonly string[] ESTADOS_VALIDOS =
-            { "Ocupada", "Disponible", "Reservada", "Limpieza", "Mantenimiento" };
-
-
-        // ============================= CONSTRUCTOR DEL UC REGISTRAR INTERNACIÓN =============================
+        // ============================= CONSTRUCTOR =============================
         public UC_RegistrarInternacion()
         {
             InitializeComponent();
+
+            // Inputs
+            txtPiso.TextChanged += txtPiso_TextChanged;
+
+            // FIX: engancho también filtros de Habitación (si no los pusiste en el Designer)
+            cbHabitacion.TextUpdate -= cbHabitacion_TextUpdate; // evitar suscripciones duplicadas
+            cbHabitacion.TextUpdate += cbHabitacion_TextUpdate;
+
+            // UX opcional para abrir listas
+            cbHabitacion.Enter += (s, ev) => cbHabitacion.DroppedDown = true;
+            cbHabitacion.MouseDown += (s, ev) => cbHabitacion.DroppedDown = true;
+
+            cbCama.Enter += (s, ev) => cbCama.DroppedDown = true;
+            cbCama.MouseDown += (s, ev) => cbCama.DroppedDown = true;
+
+            DatosComboBoxPaciente();
         }
 
-        // ============================= VALIDACIONES DE CAMPOS INTERNACION =============================
-
-        // ========== VALIDACIÓN NOMBRE ==========
-        private void txtNombre_Validating(object sender, CancelEventArgs e)
+        // ============================= COMBO PACIENTE =============================
+        private void DatosComboBoxPaciente()
         {
-            if (string.IsNullOrWhiteSpace(txtNombre.Text))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtNombre, "El nombre del paciente es obligatorio.");
-            }
-            else if (txtNombre.Text.Length > 60)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtNombre, "Máximo 60 caracteres.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtNombre, "");
-            }
+            listaPacientes = _servicioPaciente.ListarAllDatosPaciente() ?? new List<PacienteDto>();
+
+            _maestroPaciente.Clear();
+            foreach (var unPaciente in listaPacientes)
+                _maestroPaciente.Add($"{unPaciente.Apellido} {unPaciente.Nombre}");
+
+            // Config del ComboBox
+            cbPaciente.DropDownStyle = ComboBoxStyle.DropDown;   // editable
+            cbPaciente.AutoCompleteMode = AutoCompleteMode.None; // evitamos pelea con nuestro filtro
+            cbPaciente.AutoCompleteSource = AutoCompleteSource.None;
+
+            // Carga inicial
+            cbPaciente.DataSource = new BindingList<string>(_maestroPaciente);
+
+            // FIX: evitar doble suscripción si este método se llama más de una vez
+            cbPaciente.TextUpdate -= cbPaciente_TextUpdate;
+            cbPaciente.TextUpdate += cbPaciente_TextUpdate;
+
+            // UX: abrir al enfocar/click
+            cbPaciente.Enter -= CbPaciente_Enter;    // FIX: evitar duplicados
+            cbPaciente.Enter += CbPaciente_Enter;
+            cbPaciente.MouseDown -= CbPaciente_MouseDown; // FIX
+            cbPaciente.MouseDown += CbPaciente_MouseDown;
         }
 
-        // ========== VALIDACIÓN APELLIDO ==========
-        private void txtApellido_Validating(object sender, CancelEventArgs e)
+        private void CbPaciente_Enter(object sender, EventArgs e) => cbPaciente.DroppedDown = true;
+        private void CbPaciente_MouseDown(object sender, MouseEventArgs e) => cbPaciente.DroppedDown = true;
+
+        // ============================= COMBO HABITACIÓN =============================
+        private void CargarHabitacionesPorPiso(string pisoTexto)
         {
-            if (string.IsNullOrWhiteSpace(txtApellido.Text))
+            _maestroHabitacion.Clear(); // FIX: limpiamos en todos los casos
+
+            if (!string.IsNullOrWhiteSpace(pisoTexto) && int.TryParse(pisoTexto, out var piso) && piso > 0)
             {
-                e.Cancel = true;
-                errorProvider1.SetError(txtApellido, "El apellido del paciente es obligatorio.");
+                // 1) Traer datos desde negocio
+                listaHabitaciones = _servicioHabitacion.ListarHabitacionesXPiso(pisoTexto) ?? new List<HabitacionDto>();
+
+                foreach (var unaHabitacion in listaHabitaciones)
+                    _maestroHabitacion.Add(unaHabitacion.Nro_habitacion.ToString());
             }
-            else if (txtApellido.Text.Length > 60)
+
+            var seleccionadoAntes = cbHabitacion.Text; // FIX: conservamos por texto (porque trabajamos con string)
+
+            try
             {
-                e.Cancel = true;
-                errorProvider1.SetError(txtApellido, "Máximo 60 caracteres.");
+                _actualizandoInterno = true;
+                cbHabitacion.BeginUpdate();
+
+                // 3) Refrescar lista sin provocar loops
+                cbHabitacion.DataSource = null;
+                cbHabitacion.DataSource = new BindingList<string>(_maestroHabitacion);
+
+                // 4) Reset de selección
+                cbHabitacion.SelectedIndex = -1;
+                cbHabitacion.Text = string.Empty;
+
+                // 5) Restaurar (si tiene sentido)
+                if (!string.IsNullOrEmpty(seleccionadoAntes) && _maestroHabitacion.Contains(seleccionadoAntes))
+                    cbHabitacion.Text = seleccionadoAntes;
+
+                if (cbHabitacion.Focused) cbHabitacion.DroppedDown = true;
             }
-            else
+            finally
             {
-                errorProvider1.SetError(txtApellido, "");
+                cbHabitacion.EndUpdate();
+                _actualizandoInterno = false;
             }
         }
 
-        // ========== VALIDACIÓN MÉDICO ==========
-        private void txtMedico_Validating(object sender, CancelEventArgs e)
-        {   
-            if (txtMedico.Text.Length > 60)
+        // ============================= COMBO CAMA =============================
+        private void CargarCamaPorHabitacion(string habitacionText)
+        {
+            _maestroCama.Clear(); // FIX
+
+            if (!string.IsNullOrWhiteSpace(habitacionText) &&
+                int.TryParse(habitacionText, out var habitacion) && habitacion > 0)
             {
-                e.Cancel = true;
-                errorProvider1.SetError(txtMedico, "Máximo 60 caracteres.");
+                listaCamas = _servicioCama.ListarCamasXHabitacion(habitacionText) ?? new List<CamaDto>();
+
+                foreach (var unaCama in listaCamas)
+                    _maestroCama.Add(unaCama.NroCama.ToString());
             }
-            else
+
+            try
             {
-                errorProvider1.SetError(txtMedico, "");
+                _actualizandoInterno = true;
+                cbCama.BeginUpdate();
+
+                cbCama.DataSource = null;
+                cbCama.DataSource = new BindingList<string>(_maestroCama);
+                cbCama.SelectedIndex = -1;
+                cbCama.Text = string.Empty;
+
+                if (cbCama.Focused) cbCama.DroppedDown = true;
+            }
+            finally
+            {
+                cbCama.EndUpdate();
+                _actualizandoInterno = false;
             }
         }
 
-        // ========== VALIDACIÓN FECHA INICIO ==========
+        // ============================= FILTROS =============================
+        private void cbPaciente_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbPaciente.Text?.Trim() ?? "";
+            int caret = cbPaciente.SelectionStart;
+
+            var filtrados = string.IsNullOrEmpty(texto)
+                ? _maestroPaciente
+                : _maestroPaciente
+                    .Where(p => p.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+
+            if (filtrados.Count == 0)
+                filtrados.Add("— sin coincidencias —");
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbPaciente.BeginUpdate();
+
+                cbPaciente.DataSource = null;
+                cbPaciente.DataSource = new BindingList<string>(filtrados);
+
+                cbPaciente.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbPaciente.EndUpdate();
+                cbPaciente.Text = texto;
+                cbPaciente.SelectionStart = Math.Min(caret, cbPaciente.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        private void cbHabitacion_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbHabitacion.Text?.Trim() ?? "";
+            int caret = cbHabitacion.SelectionStart;
+
+            var filtrados = string.IsNullOrEmpty(texto)
+                ? _maestroHabitacion
+                : _maestroHabitacion
+                    .Where(p => p.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbHabitacion.BeginUpdate();
+
+                cbHabitacion.DataSource = null;
+                cbHabitacion.DataSource = new BindingList<string>(filtrados);
+
+                cbHabitacion.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbHabitacion.EndUpdate();
+                cbHabitacion.Text = texto;
+                cbHabitacion.SelectionStart = Math.Min(caret, cbHabitacion.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        // ============================= REACCIONES A CAMBIOS =============================
+        private void txtPiso_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtPiso.Text, out var piso) && piso > 0)
+                CargarHabitacionesPorPiso(txtPiso.Text);
+            else
+                CargarHabitacionesPorPiso("");
+        }
+
+        private void cbHabitacion_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(cbHabitacion.Text, out var habitacion) && habitacion > 0)
+                CargarCamaPorHabitacion(cbHabitacion.Text);
+            else
+                CargarCamaPorHabitacion("");
+        }
+
+        // ============================= VALIDACIONES =============================
         private void dtpFechaInicio_Validating(object sender, CancelEventArgs e)
         {
-            // La internación no puede iniciar en el futuro
             if (dtpFechaInicio.Value > DateTime.Now)
             {
                 e.Cancel = true;
@@ -95,7 +269,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ========== VALIDACIÓN FECHA FIN ==========
         private void dtpFechaFin_Validating(object sender, CancelEventArgs e)
         {
             if (dtpFechaFin.Checked)
@@ -116,7 +289,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             errorProvider1.SetError(dtpFechaFin, "");
         }
 
-        // ========== VALIDACIÓN PISO ==========
         private void txtPiso_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPiso.Text) || !int.TryParse(txtPiso.Text, out int piso) || piso <= 0)
@@ -135,46 +307,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ========== VALIDACIÓN HABITACIÓN ==========
-        private void txtHabitacion_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtHabitacion.Text) || !int.TryParse(txtHabitacion.Text, out int hab) || hab <= 0)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtHabitacion, "Habitación obligatoria y numérica (>0).");
-            }
-            else if (txtHabitacion.Text.Length > 5)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtHabitacion, "Máximo 5 dígitos.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtHabitacion, "");
-            }
-        }
-
-        // ========== VALIDACIÓN ESTADO ==========
-        private void txtEstado_Validating(object sender, CancelEventArgs e)
-        {
-            string val = (txtEstado.Text ?? "").Trim();
-            if (string.IsNullOrWhiteSpace(val))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtEstado, "El estado es obligatorio.");
-            }
-            else if (!ESTADOS_VALIDOS.Any(s => s.Equals(val, StringComparison.OrdinalIgnoreCase)))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtEstado, $"Estado inválido. Valores: {string.Join(", ", ESTADOS_VALIDOS)}.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtEstado, "");
-            }
-        }
-
-        // ========== VALIDACIÓN OBSERVACIONES ==========
         private void txtObservaciones_Validating(object sender, CancelEventArgs e)
         {
             if (txtObservaciones.Text.Length > 300)
@@ -188,29 +320,21 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ============================= VALIDACIONES DE TECLAS =============================
-
-        // Solo letras (para nombre/apellido/médico/estado/observaciones)
         private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
                 e.Handled = true;
         }
 
-        // Solo dígitos (para piso/habitación/teléfono)
         private void SoloNumeros_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
                 e.Handled = true;
         }
 
-
-        //============================= BOTONES =============================
-
-        // ========== BOTÓN GUARDAR ==========
+        // ============================= BOTONES =============================
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            //Guarda toda la información del paciente
             if (this.ValidateChildren())
             {
                 MessageBox.Show("Paciente registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -221,24 +345,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ========== BOTÓN LIMPIAR ==========
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            // Limpia todos los campos del formulario
-            txtNombre.Clear();
-            txtHabitacion.Clear();
-            txtApellido.Clear();
-            txtMedico.Clear();
             txtPiso.Clear();
-            txtHabitacion.Clear();
-            txtEstado.Clear();
             txtObservaciones.Clear();
             dtpFechaInicio.Value = DateTime.Today;
             dtpFechaFin.Value = DateTime.Today;
             errorProvider1.Clear();
         }
 
-        // ========== BOTÓN CANCELAR ==========
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CancelarInternacionSolicitada?.Invoke(this, EventArgs.Empty);

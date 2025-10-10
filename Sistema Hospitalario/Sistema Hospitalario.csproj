@@ -137,12 +137,19 @@
     <Compile Include="CapaDatos\usuario.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
+    <Compile Include="CapaNegocio\DTOs\HabitacionDTO\CamaDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\HabitacionDTO\HabitacionDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\InternacionDTO\InternacionDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\MedicoDTO\MedicoDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\EstadoPacienteDTO\EstadoPacienteDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteAltaDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteEdicionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteViewDto.cs" />
-    <Compile Include="CapaNegocio\Servicios\PacienteServicio\EstadoPacienteService\EstadoPacienteService.cs" />
-    <Compile Include="CapaNegocio\Servicios\PacienteServicio\PacienteService.cs" />
+    <Compile Include="CapaNegocio\Servicios\HabitacionService\CamaService\CamaService.cs" />
+    <Compile Include="CapaNegocio\Servicios\HabitacionService\HabitacionService.cs" />
+    <Compile Include="CapaNegocio\Servicios\InternacionService\InternacionService.cs" />
+    <Compile Include="CapaNegocio\Servicios\PacienteService\EstadoPacienteService\EstadoPacienteService.cs" />
+    <Compile Include="CapaNegocio\Servicios\PacienteService\PacienteService.cs" />
     <Compile Include="CapaPresentacion\Administrador\MenuModer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -443,6 +450,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CapaNegocio\Servicios\MedicoService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

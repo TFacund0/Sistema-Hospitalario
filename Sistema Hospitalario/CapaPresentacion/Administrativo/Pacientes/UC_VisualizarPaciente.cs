@@ -127,9 +127,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                     return;
                 }
             }
-
-            // Si no se encontró, dejar en “Seleccioná”
-            cbEstadoInicial.SelectedIndex = 0;
         }
 
 
