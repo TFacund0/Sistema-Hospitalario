@@ -1,10 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
-using Sistema_Hospitalario.CapaPresentacion.Medico;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
     public partial class UC_RegistrarInternacion : UserControl
@@ -22,17 +25,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private readonly PacienteService _servicioPaciente = new PacienteService();
         private readonly HabitacionService _servicioHabitacion = new HabitacionService();
         private readonly CamaService _servicioCama = new CamaService();
-        //private readonly MedicoService _servicioMedico = new MedicoService();
+        private readonly MedicoService _servicioMedico = new MedicoService();
 
         // Atributos que almacenan la informacion de la base de datos a traves de los DTOs
         private List<PacienteDto> listaPacientes = new List<PacienteDto>();
         private List<HabitacionDto> listaHabitaciones = new List<HabitacionDto>();
         private List<CamaDto> listaCamas = new List<CamaDto>();
+        private List<MedicoDto> listaMedicos = new List<MedicoDto>();
 
         // Listas de texto (lo que se muestra en los combos)
         private readonly List<string> _maestroPaciente = new List<string>();
         private readonly List<string> _maestroHabitacion = new List<string>();
         private readonly List<string> _maestroCama = new List<string>();
+        private readonly List<string> _maestroMedico = new List<string>();
 
         // Bandera para evitar reentrancia en eventos de texto
         private bool _actualizandoInterno = false;
@@ -60,6 +65,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             cbCama.MouseDown += (s, ev) => cbCama.DroppedDown = true;
 
             DatosComboBoxPaciente();
+            DatosComboBoxMedico();
         }
 
         // ============================= COMBO PACIENTE =============================
@@ -90,8 +96,41 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             cbPaciente.MouseDown += CbPaciente_MouseDown;
         }
 
+        // ============================= UX COMBO PACIENTE =============================
         private void CbPaciente_Enter(object sender, EventArgs e) => cbPaciente.DroppedDown = true;
         private void CbPaciente_MouseDown(object sender, MouseEventArgs e) => cbPaciente.DroppedDown = true;
+
+        // ============================= COMBO MEDICO =============================
+        private void DatosComboBoxMedico()
+        {
+            listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
+            
+            _maestroMedico.Clear();
+            foreach (MedicoDto unMedico in listaMedicos)
+                _maestroMedico.Add($"{unMedico.Apellido} {unMedico.Nombre} - {unMedico.Especialidad}");
+
+            // Config del ComboBox
+            cbMedico.DropDownStyle = ComboBoxStyle.DropDown;   // editable
+            cbMedico.AutoCompleteMode = AutoCompleteMode.None; // evitamos pelea con nuestro filtro
+            cbMedico.AutoCompleteSource = AutoCompleteSource.None;
+
+            // Carga inicial
+            cbMedico.DataSource = new BindingList<string>(_maestroMedico);
+
+            // FIX: evitar doble suscripción si este método se llama más de una vez
+            cbMedico.TextUpdate -= CbMedico_TextUpdate;
+            cbMedico.TextUpdate += CbMedico_TextUpdate;
+
+            // UX: abrir al enfocar/click
+            cbMedico.Enter -= CbMedico_Enter;
+            cbMedico.Enter += CbMedico_Enter;
+            cbMedico.MouseDown -= CbMedico_MouseDown; 
+            cbMedico.MouseDown += CbMedico_MouseDown;
+        }
+
+        // ============================= UX COMBO MEDICO =============================
+        private void CbMedico_Enter(object sender, EventArgs e) => cbMedico.DroppedDown = true;
+        private void CbMedico_MouseDown(object sender, MouseEventArgs e) => cbMedico.DroppedDown = true;
 
         // ============================= COMBO HABITACIÓN =============================
         private void CargarHabitacionesPorPiso(string pisoTexto)
@@ -169,6 +208,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
         // ============================= FILTROS =============================
+
+        // ============================= FILTRO PACIENTE =============================
         private void cbPaciente_TextUpdate(object sender, EventArgs e)
         {
             if (_actualizandoInterno) return;
@@ -205,6 +246,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
+        // ============================= FILTRO HABITACIÓN =============================
         private void cbHabitacion_TextUpdate(object sender, EventArgs e)
         {
             if (_actualizandoInterno) return;
@@ -234,6 +276,37 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 cbHabitacion.EndUpdate();
                 cbHabitacion.Text = texto;
                 cbHabitacion.SelectionStart = Math.Min(caret, cbHabitacion.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        // ============================= FILTRO MÉDICO =============================
+        private void CbMedico_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+            string texto = cbMedico.Text?.Trim() ?? "";
+            int caret = cbMedico.SelectionStart;
+            var filtrados = string.IsNullOrEmpty(texto)
+                ? _maestroMedico
+                : _maestroMedico
+                    .Where(p => p.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+            if (filtrados.Count == 0)
+                filtrados.Add("— sin coincidencias —");
+            try
+            {
+                _actualizandoInterno = true;
+                cbMedico.BeginUpdate();
+                cbMedico.DataSource = null;
+                cbMedico.DataSource = new BindingList<string>(filtrados);
+                cbMedico.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbMedico.EndUpdate();
+                cbMedico.Text = texto;
+                cbMedico.SelectionStart = Math.Min(caret, cbMedico.Text.Length);
                 _actualizandoInterno = false;
             }
         }
@@ -320,6 +393,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
+        // ============================= REESTRICCIONES DE ENTRADA DE DATOS =============================
         private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
