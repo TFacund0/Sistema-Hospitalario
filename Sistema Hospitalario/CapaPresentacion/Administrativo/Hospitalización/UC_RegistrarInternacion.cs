@@ -11,11 +11,13 @@ using System.Windows.Forms;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 
 using Sistema_Hospitalario.CapaNegocio.Servicios;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
@@ -26,18 +28,21 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private readonly HabitacionService _servicioHabitacion = new HabitacionService();
         private readonly CamaService _servicioCama = new CamaService();
         private readonly MedicoService _servicioMedico = new MedicoService();
+        private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
         // Atributos que almacenan la informacion de la base de datos a traves de los DTOs
         private List<PacienteDto> listaPacientes = new List<PacienteDto>();
         private List<HabitacionDto> listaHabitaciones = new List<HabitacionDto>();
         private List<CamaDto> listaCamas = new List<CamaDto>();
         private List<MedicoDto> listaMedicos = new List<MedicoDto>();
+        private List<ProcedimientoDto> listaProcedimientos = new List<ProcedimientoDto>();
 
         // Listas de texto (lo que se muestra en los combos)
         private readonly List<string> _maestroPaciente = new List<string>();
         private readonly List<string> _maestroHabitacion = new List<string>();
         private readonly List<string> _maestroCama = new List<string>();
         private readonly List<string> _maestroMedico = new List<string>();
+        private readonly List<string> _maestroProcedimiento = new List<string>();
 
         // Bandera para evitar reentrancia en eventos de texto
         private bool _actualizandoInterno = false;
@@ -66,6 +71,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
             DatosComboBoxPaciente();
             DatosComboBoxMedico();
+            DatosComboBoxProcedimiento();
         }
 
         // ============================= COMBO PACIENTE =============================
@@ -131,6 +137,39 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         // ============================= UX COMBO MEDICO =============================
         private void CbMedico_Enter(object sender, EventArgs e) => cbMedico.DroppedDown = true;
         private void CbMedico_MouseDown(object sender, MouseEventArgs e) => cbMedico.DroppedDown = true;
+
+        // ============================= COMBO PROCEDIMIENTO =============================
+        private void DatosComboBoxProcedimiento()
+        {
+            listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
+            _maestroProcedimiento.Clear();
+            
+            foreach (var unProcedimiento in listaProcedimientos)
+                _maestroProcedimiento.Add(unProcedimiento.Name);
+            
+            // Config del ComboBox
+            cbProcedimiento.DropDownStyle = ComboBoxStyle.DropDown;   // editable
+            cbProcedimiento.AutoCompleteMode = AutoCompleteMode.None; // evitamos pelea con nuestro filtro
+            cbProcedimiento.AutoCompleteSource = AutoCompleteSource.None;
+            
+            // Carga inicial
+            cbProcedimiento.DataSource = new BindingList<string>(_maestroProcedimiento);
+            
+            // FIX: evitar doble suscripción si este método se llama más de una vez
+            cbProcedimiento.TextUpdate -= CbProcedimiento_TextUpdate;
+            cbProcedimiento.TextUpdate += CbProcedimiento_TextUpdate;
+            
+            // UX: abrir al enfocar/click
+            cbProcedimiento.Enter -= CbProcedimiento_Enter;
+            cbProcedimiento.Enter += CbProcedimiento_Enter;
+            cbProcedimiento.MouseDown -= CbProcedimiento_MouseDown;
+            cbProcedimiento.MouseDown += CbProcedimiento_MouseDown;
+        }
+
+        // ============================= UX COMBO MEDICO =============================
+        private void CbProcedimiento_Enter(object sender, EventArgs e) => cbProcedimiento.DroppedDown = true;
+        private void CbProcedimiento_MouseDown(object sender, MouseEventArgs e) => cbProcedimiento.DroppedDown = true;
+
 
         // ============================= COMBO HABITACIÓN =============================
         private void CargarHabitacionesPorPiso(string pisoTexto)
@@ -307,6 +346,41 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 cbMedico.EndUpdate();
                 cbMedico.Text = texto;
                 cbMedico.SelectionStart = Math.Min(caret, cbMedico.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        // ============================= FILTRO PROCEDIMIENTO =============================
+        private void CbProcedimiento_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+            
+            string texto = cbProcedimiento.Text?.Trim() ?? "";
+            int caret = cbProcedimiento.SelectionStart;
+            
+            var filtrados = string.IsNullOrEmpty(texto)
+                ? _maestroProcedimiento
+                : _maestroProcedimiento
+                    .Where(p => p.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+            
+            if (filtrados.Count == 0)
+                filtrados.Add("— sin coincidencias —");
+            
+            try
+            {
+                _actualizandoInterno = true;
+                cbProcedimiento.BeginUpdate();
+                cbProcedimiento.DataSource = null;
+                cbProcedimiento.DataSource = new BindingList<string>(filtrados);
+                cbProcedimiento.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbProcedimiento.EndUpdate();
+                cbProcedimiento.Text = texto;
+                cbProcedimiento.SelectionStart = Math.Min(caret, cbProcedimiento.Text.Length);
                 _actualizandoInterno = false;
             }
         }

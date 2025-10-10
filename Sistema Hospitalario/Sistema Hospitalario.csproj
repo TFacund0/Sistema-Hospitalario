@@ -145,12 +145,14 @@
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteAltaDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteEdicionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteViewDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\ProcedimientoDTO\ProcedimientoDto.cs" />
     <Compile Include="CapaNegocio\Servicios\HabitacionService\CamaService\CamaService.cs" />
     <Compile Include="CapaNegocio\Servicios\HabitacionService\HabitacionService.cs" />
     <Compile Include="CapaNegocio\Servicios\InternacionService\InternacionService.cs" />
     <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteService\EstadoPacienteService\EstadoPacienteService.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteService\PacienteService.cs" />
+    <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />
     <Compile Include="CapaPresentacion\Administrador\MenuModer.cs">
       <SubType>Form</SubType>
     </Compile>
