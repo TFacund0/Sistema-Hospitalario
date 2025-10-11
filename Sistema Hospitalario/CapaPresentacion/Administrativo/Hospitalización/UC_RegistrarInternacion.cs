@@ -72,6 +72,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             DatosComboBoxPaciente();
             DatosComboBoxMedico();
             DatosComboBoxProcedimiento();
+            SincronizarHabilitacionControles();
+
+            ConfigurarFechaInicioConHora();
+            ConfigurarFechaFinNull();
         }
 
         // ============================= COMBO PACIENTE =============================
@@ -385,13 +389,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ============================= REACCIONES A CAMBIOS =============================
+        // ============================= EVENTOS DE TEXTO QUE AFECTAN A OTROS CONTROLES =============================
         private void txtPiso_TextChanged(object sender, EventArgs e)
         {
             if (int.TryParse(txtPiso.Text, out var piso) && piso > 0)
                 CargarHabitacionesPorPiso(txtPiso.Text);
             else
                 CargarHabitacionesPorPiso("");
+
+            SincronizarHabilitacionControles(); // ← agregar
         }
 
         private void cbHabitacion_TextChanged(object sender, EventArgs e)
@@ -400,72 +406,184 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 CargarCamaPorHabitacion(cbHabitacion.Text);
             else
                 CargarCamaPorHabitacion("");
+
+            SincronizarHabilitacionControles(); // ← agregar
         }
 
-        // ============================= VALIDACIONES =============================
-        private void dtpFechaInicio_Validating(object sender, CancelEventArgs e)
+        // ============================= HELPERS (opcionales, pero útiles) =============================
+        private bool TextoCoincideConLista(ComboBox cb, List<string> maestro)
+            => !string.IsNullOrWhiteSpace(cb.Text)
+               && maestro.Any(x => string.Equals(x, cb.Text.Trim(), StringComparison.OrdinalIgnoreCase))
+               && cb.Text.Trim() != "— sin coincidencias —";
+
+        private bool TextoEsEnteroPositivo(string s, out int valor)
+            => int.TryParse(s, out valor) && valor > 0;
+
+
+        // ============================= PACIENTE =============================
+        private void cbPaciente_Validating(object sender, CancelEventArgs e)
         {
-            if (dtpFechaInicio.Value > DateTime.Now)
+            if (!TextoCoincideConLista(cbPaciente, _maestroPaciente))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(dtpFechaInicio, "La fecha/hora de inicio no puede ser futura.");
+                errorProvider1.SetError(cbPaciente, "Seleccioná un paciente válido de la lista.");
             }
             else
             {
-                errorProvider1.SetError(dtpFechaInicio, "");
+                errorProvider1.SetError(cbPaciente, "");
             }
         }
 
-        private void dtpFechaFin_Validating(object sender, CancelEventArgs e)
+
+        // ============================= MÉDICO =============================
+        private void cbMedico_Validating(object sender, CancelEventArgs e)
         {
-            if (dtpFechaFin.Checked)
+            if (!TextoCoincideConLista(cbMedico, _maestroMedico))
             {
-                if (dtpFechaFin.Value < dtpFechaInicio.Value)
-                {
-                    e.Cancel = true;
-                    errorProvider1.SetError(dtpFechaFin, "La fecha de egreso debe ser posterior al inicio.");
-                    return;
-                }
-                if (dtpFechaFin.Value > DateTime.Now)
-                {
-                    e.Cancel = true;
-                    errorProvider1.SetError(dtpFechaFin, "La fecha/hora de egreso no puede ser futura.");
-                    return;
-                }
+                e.Cancel = true;
+                errorProvider1.SetError(cbMedico, "Seleccioná un médico válido (coincidencia exacta con la lista).");
             }
-            errorProvider1.SetError(dtpFechaFin, "");
+            else
+            {
+                errorProvider1.SetError(cbMedico, "");
+            }
         }
 
+
+        // ============================= PROCEDIMIENTO =============================
+        private void cbProcedimiento_Validating(object sender, CancelEventArgs e)
+        {
+            if (!TextoCoincideConLista(cbProcedimiento, _maestroProcedimiento))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(cbProcedimiento, "Seleccioná un procedimiento válido de la lista.");
+            }
+            else
+            {
+                errorProvider1.SetError(cbProcedimiento, "");
+            }
+        }
+
+
+        // ============================= PISO =============================
         private void txtPiso_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPiso.Text) || !int.TryParse(txtPiso.Text, out int piso) || piso <= 0)
+            if (!TextoEsEnteroPositivo(txtPiso.Text, out var piso))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtPiso, "Piso obligatorio y numérico (>0).");
+                return;
             }
-            else if (txtPiso.Text.Length > 3)
+
+            if (txtPiso.Text.Length > 3)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtPiso, "Máximo 3 dígitos.");
+                errorProvider1.SetError(txtPiso, "Máximo 3 dígitos para el piso.");
+                return;
+            }
+
+            errorProvider1.SetError(txtPiso, "");
+        }
+
+
+        // ============================= HABITACIÓN =============================
+        private void cbHabitacion_Validating(object sender, CancelEventArgs e)
+        {
+            // Debe existir en la lista filtrada actual y ser número positivo
+            if (!TextoCoincideConLista(cbHabitacion, _maestroHabitacion)
+                || !TextoEsEnteroPositivo(cbHabitacion.Text, out var nroHabitacion))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(cbHabitacion, "Seleccioná una habitación válida (número > 0 de la lista).");
             }
             else
             {
-                errorProvider1.SetError(txtPiso, "");
+                errorProvider1.SetError(cbHabitacion, "");
             }
         }
 
-        private void txtObservaciones_Validating(object sender, CancelEventArgs e)
+
+        // ============================= CAMA =============================
+        private void cbCama_Validating(object sender, CancelEventArgs e)
         {
-            if (txtObservaciones.Text.Length > 300)
+            if (!TextoCoincideConLista(cbCama, _maestroCama)
+                || !TextoEsEnteroPositivo(cbCama.Text, out var nroCama))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtObservaciones, "Máximo 300 caracteres.");
+                errorProvider1.SetError(cbCama, "Seleccioná una cama válida (número > 0 de la lista).");
             }
             else
             {
-                errorProvider1.SetError(txtObservaciones, "");
+                errorProvider1.SetError(cbCama, "");
             }
         }
+
+
+        // ============================= FECHA INICIO =============================
+        private void dtpFechaInicio_Validating(object sender, CancelEventArgs e)
+        {
+            // No futuro y opcionalmente no muy “antigua” (ejemplo: 10 años atrás)
+            var ahora = DateTime.Now;
+            if (dtpFechaInicio.Value > ahora)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(dtpFechaInicio, "La fecha/hora de inicio no puede ser futura.");
+                return;
+            }
+
+            var limiteAntiguedad = ahora.AddYears(-10);
+            if (dtpFechaInicio.Value < limiteAntiguedad)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(dtpFechaInicio, "La fecha de inicio es demasiado antigua (máx. 10 años).");
+                return;
+            }
+
+            errorProvider1.SetError(dtpFechaInicio, "");
+        }
+
+
+        // ============================= FECHA FIN (opcional/checkeada) =============================
+        private void dtpFechaFin_Validating(object sender, CancelEventArgs e)
+        {
+            // Si NO está tildado => no hay fecha de fin y es totalmente válido
+            if (!dtpFechaFin.Checked)
+            {
+                errorProvider1.SetError(dtpFechaFin, "");
+                return;
+            }
+
+            var ahora = DateTime.Now;
+
+            if (dtpFechaFin.Value < dtpFechaInicio.Value)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(dtpFechaFin, "La fecha de egreso debe ser posterior al inicio.");
+                return;
+            }
+
+            errorProvider1.SetError(dtpFechaFin, "");
+        }
+
+
+
+        // ============================= OBSERVACIONES =============================
+        private void txtObservaciones_Validating(object sender, CancelEventArgs e)
+        {
+            var texto = txtObservaciones.Text?.Trim() ?? "";
+            if (texto.Length > 300)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtObservaciones, "Máximo 300 caracteres.");
+                return;
+            }
+
+            // (opcional) Validar que no sea todo espacios o texto repetido sin valor:
+            // if (texto.Length > 0 && texto.All(ch => ch == '-')) { ... }
+
+            errorProvider1.SetError(txtObservaciones, "");
+        }
+
 
         // ============================= REESTRICCIONES DE ENTRADA DE DATOS =============================
         private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
@@ -481,6 +599,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
         // ============================= BOTONES =============================
+        // Valida todo el formulario y simula guardar (aquí iría la lógica real)
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
@@ -493,18 +612,132 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
+        // Limpia todos los campos del formulario
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            txtPiso.Clear();
-            txtObservaciones.Clear();
-            dtpFechaInicio.Value = DateTime.Today;
-            dtpFechaFin.Value = DateTime.Today;
-            errorProvider1.Clear();
+            ResetFormulario();
         }
 
+        // Notifica al menú administrativo que se solicitó cancelar
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CancelarInternacionSolicitada?.Invoke(this, EventArgs.Empty);
         }
+
+        // ============================= RESETEA TODA LA INFORMACION DEL FORMULARIO =============================
+        private void ResetFormulario()
+        {
+            _actualizandoInterno = true;
+            try
+            {
+                // Textos
+                txtPiso.Clear();
+                txtObservaciones.Clear();
+
+                // Fechas
+                dtpFechaInicio.Value = DateTime.Now; 
+                dtpFechaFin.Value = DateTime.Today;
+                dtpFechaFin.Checked = false;
+                dtpFechaFin.CustomFormat = " "; // que quede visualmente vacío
+
+                // Paciente / Médico / Procedimiento (solo limpiar selección)
+                LimpiarSeleccionCombo(cbPaciente);
+                LimpiarSeleccionCombo(cbMedico);
+                LimpiarSeleccionCombo(cbProcedimiento);
+
+                // Habitación y Cama (vaciar, limpiar y deshabilitar en cascada)
+                VaciarCombo(cbHabitacion);
+                VaciarCombo(cbCama);
+
+                errorProvider1.Clear();
+
+                // Refrescar habilitación por dependencias
+                SincronizarHabilitacionControles();
+            }
+            finally
+            {
+                _actualizandoInterno = false;
+            }
+        }
+
+        // ============================= HELPERS DE COMBOBOX =============================
+        // Limpia la selección de un combo (sin tocar el maestro)
+        private void LimpiarSeleccionCombo(ComboBox cb)
+        {
+            cb.SelectedIndex = -1;
+            cb.Text = string.Empty;
+        }
+
+        // Vacía un combo (sin tocar el maestro)
+        private void VaciarCombo(ComboBox cb)
+        {
+            cb.DataSource = null;
+            cb.Items.Clear();
+            cb.SelectedIndex = -1;
+            cb.Text = string.Empty;
+        }
+
+        // ============================= SINCRONIZACIÓN DE HABILITACIÓN DE CONTROLES =============================
+        // Habilita/inhabilita combos según las reglas:
+        // - Sin piso válido => Habitación deshabilitada (y vacía)
+        // - Sin habitación válida => Cama deshabilitada (y vacía)
+        private void SincronizarHabilitacionControles()
+        {
+            bool pisoValido = !string.IsNullOrWhiteSpace(txtPiso.Text)
+                              && int.TryParse(txtPiso.Text, out var p) && p > 0;
+
+            cbHabitacion.Enabled = pisoValido;
+
+            bool habitacionValida = pisoValido
+                                    && !string.IsNullOrWhiteSpace(cbHabitacion.Text)
+                                    && int.TryParse(cbHabitacion.Text, out var h) && h > 0;
+
+            cbCama.Enabled = habitacionValida;
+
+            // Si no hay piso válido, limpiar habitación y cama
+            if (!pisoValido)
+            {
+                VaciarCombo(cbHabitacion);
+                VaciarCombo(cbCama);
+            }
+            // Si no hay habitación válida, limpiar cama
+            else if (!habitacionValida)
+            {
+                VaciarCombo(cbCama);
+            }
+        }
+
+        // ============================= CONFIGURACIONES ESPECIALES DE CONTROLES DE FECHA =============================
+        // Fecha inicio con hora (sin calendario desplegable)
+        private void ConfigurarFechaInicioConHora()
+        {
+            dtpFechaInicio.Format = DateTimePickerFormat.Custom;
+            dtpFechaInicio.CustomFormat = "dd/MM/yyyy HH:mm"; // fecha + hora
+            dtpFechaInicio.ShowUpDown = true;                 // spinner para la hora (sin calendario desplegable)
+                                                              // opcional: inicializar al momento actual (con minutos redondeados si querés)
+                                                              // dtpFechaInicio.Value = DateTime.Now;
+        }
+
+        // Fecha fin opcional (check para "sin fecha")
+        private void ConfigurarFechaFinNull()
+        {
+            // === Fecha Fin: permitir "sin fecha" ===
+            dtpFechaFin.ShowCheckBox = true;                 // Muestra el check
+            dtpFechaFin.Checked = false;                     // Arranca sin fecha
+            dtpFechaFin.Format = DateTimePickerFormat.Custom;
+            dtpFechaFin.CustomFormat = " ";                  // En blanco cuando no hay fecha
+            dtpFechaFin.ValueChanged -= dtpFechaFin_ValueChanged;
+            dtpFechaFin.ValueChanged += dtpFechaFin_ValueChanged;
+        }
+        
+        // Evento para actualizar el formato cuando se tilda/desmarca el check
+        private void dtpFechaFin_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtpFechaFin.Checked)
+                dtpFechaFin.CustomFormat = "dd/MM/yyyy HH:mm"; // o el formato que uses
+            else
+                dtpFechaFin.CustomFormat = " ";                // sin fecha visible
+        }
+
     }
 }

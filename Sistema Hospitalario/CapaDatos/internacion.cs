@@ -16,7 +16,7 @@ namespace Sistema_Hospitalario.CapaDatos
     {
         public int id_internacion { get; set; }
         public System.DateTime fecha_inicio { get; set; }
-        public Nullable<System.DateTime> fecha_fin { get; set; }
+        public Nullable<System.DateTime> fecha_fin { get; set; } = default(Nullable<System.DateTime>);
         public string motivo { get; set; }
         public int id_cama { get; set; }
         public int nro_habitacion { get; set; }

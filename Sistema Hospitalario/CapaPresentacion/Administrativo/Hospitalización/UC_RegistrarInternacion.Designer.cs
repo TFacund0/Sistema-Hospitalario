@@ -58,9 +58,11 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.cbMedico = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.cbProcedimiento = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.cbPaciente = new System.Windows.Forms.ComboBox();
@@ -68,8 +70,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.cbProcedimiento = new System.Windows.Forms.ComboBox();
-            this.cbMedico = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -253,6 +253,7 @@
             this.cbCama.Name = "cbCama";
             this.cbCama.Size = new System.Drawing.Size(235, 24);
             this.cbCama.TabIndex = 3;
+            this.cbCama.Validating += new System.ComponentModel.CancelEventHandler(this.cbCama_Validating);
             // 
             // label10
             // 
@@ -290,6 +291,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtpFechaFin.Location = new System.Drawing.Point(7, 28);
             this.dtpFechaFin.Name = "dtpFechaFin";
+            this.dtpFechaFin.ShowCheckBox = true;
             this.dtpFechaFin.Size = new System.Drawing.Size(706, 22);
             this.dtpFechaFin.TabIndex = 3;
             this.dtpFechaFin.Validating += new System.ComponentModel.CancelEventHandler(this.dtpFechaFin_Validating);
@@ -301,7 +303,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.17577F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.82423F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 281F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 283F));
             this.tableLayoutPanel2.Controls.Add(this.panel17, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel15, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel16, 0, 0);
@@ -317,9 +319,9 @@
             this.panel17.Controls.Add(this.txtPiso);
             this.panel17.Controls.Add(this.label9);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel17.Location = new System.Drawing.Point(510, 3);
+            this.panel17.Location = new System.Drawing.Point(509, 3);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(231, 57);
+            this.panel17.Size = new System.Drawing.Size(230, 57);
             this.panel17.TabIndex = 4;
             // 
             // txtPiso
@@ -330,7 +332,7 @@
             this.txtPiso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPiso.Location = new System.Drawing.Point(7, 28);
             this.txtPiso.Name = "txtPiso";
-            this.txtPiso.Size = new System.Drawing.Size(189, 22);
+            this.txtPiso.Size = new System.Drawing.Size(188, 22);
             this.txtPiso.TabIndex = 5;
             this.txtPiso.TextChanged += new System.EventHandler(this.txtPiso_TextChanged);
             this.txtPiso.Validating += new System.ComponentModel.CancelEventHandler(this.txtPiso_Validating);
@@ -350,9 +352,9 @@
             this.panel15.Controls.Add(this.cbHabitacion);
             this.panel15.Controls.Add(this.label7);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel15.Location = new System.Drawing.Point(747, 3);
+            this.panel15.Location = new System.Drawing.Point(745, 3);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(276, 57);
+            this.panel15.Size = new System.Drawing.Size(278, 57);
             this.panel15.TabIndex = 2;
             // 
             // cbHabitacion
@@ -364,6 +366,7 @@
             this.cbHabitacion.TabIndex = 2;
             this.cbHabitacion.TextUpdate += new System.EventHandler(this.cbHabitacion_TextUpdate);
             this.cbHabitacion.TextChanged += new System.EventHandler(this.cbHabitacion_TextChanged);
+            this.cbHabitacion.Validating += new System.ComponentModel.CancelEventHandler(this.cbHabitacion_Validating);
             // 
             // label7
             // 
@@ -382,7 +385,7 @@
             this.panel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel16.Location = new System.Drawing.Point(3, 3);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(501, 57);
+            this.panel16.Size = new System.Drawing.Size(500, 57);
             this.panel16.TabIndex = 3;
             // 
             // dtpFechaInicio
@@ -391,7 +394,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtpFechaInicio.Location = new System.Drawing.Point(7, 28);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
-            this.dtpFechaInicio.Size = new System.Drawing.Size(455, 22);
+            this.dtpFechaInicio.Size = new System.Drawing.Size(454, 22);
             this.dtpFechaInicio.TabIndex = 2;
             this.dtpFechaInicio.Validating += new System.ComponentModel.CancelEventHandler(this.dtpFechaInicio_Validating);
             // 
@@ -426,6 +429,15 @@
             this.panel12.Size = new System.Drawing.Size(1026, 66);
             this.panel12.TabIndex = 2;
             // 
+            // cbMedico
+            // 
+            this.cbMedico.FormattingEnabled = true;
+            this.cbMedico.Location = new System.Drawing.Point(10, 27);
+            this.cbMedico.Name = "cbMedico";
+            this.cbMedico.Size = new System.Drawing.Size(987, 24);
+            this.cbMedico.TabIndex = 2;
+            this.cbMedico.Validating += new System.ComponentModel.CancelEventHandler(this.cbMedico_Validating);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -458,6 +470,15 @@
             this.panel9.Size = new System.Drawing.Size(516, 72);
             this.panel9.TabIndex = 2;
             // 
+            // cbProcedimiento
+            // 
+            this.cbProcedimiento.FormattingEnabled = true;
+            this.cbProcedimiento.Location = new System.Drawing.Point(7, 27);
+            this.cbProcedimiento.Name = "cbProcedimiento";
+            this.cbProcedimiento.Size = new System.Drawing.Size(480, 24);
+            this.cbProcedimiento.TabIndex = 2;
+            this.cbProcedimiento.Validating += new System.ComponentModel.CancelEventHandler(this.cbProcedimiento_Validating);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -486,6 +507,7 @@
             this.cbPaciente.Size = new System.Drawing.Size(463, 24);
             this.cbPaciente.TabIndex = 1;
             this.cbPaciente.TextUpdate += new System.EventHandler(this.cbPaciente_TextUpdate);
+            this.cbPaciente.Validating += new System.ComponentModel.CancelEventHandler(this.cbPaciente_Validating);
             // 
             // Paciente
             // 
@@ -520,22 +542,6 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // cbProcedimiento
-            // 
-            this.cbProcedimiento.FormattingEnabled = true;
-            this.cbProcedimiento.Location = new System.Drawing.Point(7, 27);
-            this.cbProcedimiento.Name = "cbProcedimiento";
-            this.cbProcedimiento.Size = new System.Drawing.Size(480, 24);
-            this.cbProcedimiento.TabIndex = 2;
-            // 
-            // cbMedico
-            // 
-            this.cbMedico.FormattingEnabled = true;
-            this.cbMedico.Location = new System.Drawing.Point(10, 27);
-            this.cbMedico.Name = "cbMedico";
-            this.cbMedico.Size = new System.Drawing.Size(987, 24);
-            this.cbMedico.TabIndex = 2;
             // 
             // UC_RegistrarInternacion
             // 
