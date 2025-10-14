@@ -45,7 +45,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.lblTurnosPendientes = new System.Windows.Forms.Label();
+            this.lblTurnosHoy = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnLimpiarFiltro = new System.Windows.Forms.Button();
@@ -254,7 +254,7 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.Controls.Add(this.label11);
-            this.panel5.Controls.Add(this.lblTurnosPendientes);
+            this.panel5.Controls.Add(this.lblTurnosHoy);
             this.panel5.Controls.Add(this.label9);
             this.panel5.Location = new System.Drawing.Point(48, 518);
             this.panel5.Name = "panel5";
@@ -270,15 +270,15 @@
             this.label11.TabIndex = 2;
             this.label11.Text = "Pendientes";
             // 
-            // lblTurnosPendientes
+            // lblTurnosHoy
             // 
-            this.lblTurnosPendientes.AutoSize = true;
-            this.lblTurnosPendientes.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosPendientes.Location = new System.Drawing.Point(88, 36);
-            this.lblTurnosPendientes.Name = "lblTurnosPendientes";
-            this.lblTurnosPendientes.Size = new System.Drawing.Size(33, 20);
-            this.lblTurnosPendientes.TabIndex = 1;
-            this.lblTurnosPendientes.Text = "15";
+            this.lblTurnosHoy.AutoSize = true;
+            this.lblTurnosHoy.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosHoy.Location = new System.Drawing.Point(88, 36);
+            this.lblTurnosHoy.Name = "lblTurnosHoy";
+            this.lblTurnosHoy.Size = new System.Drawing.Size(33, 20);
+            this.lblTurnosHoy.TabIndex = 1;
+            this.lblTurnosHoy.Text = "15";
             // 
             // label9
             // 
@@ -549,7 +549,7 @@
         private System.Windows.Forms.Label lblTurnosCurso;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label lblTurnosPendientes;
+        private System.Windows.Forms.Label lblTurnosHoy;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label8;

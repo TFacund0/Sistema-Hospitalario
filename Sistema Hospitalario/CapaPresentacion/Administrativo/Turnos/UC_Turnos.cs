@@ -34,11 +34,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         public UC_Turnos()
         {
             InitializeComponent();     
-            ConfigurarActividad();    
+
+            ConfigurarActividad();
+            ConfigurarLabelsDatosTurno();
+
             ConfigurarEnlazadoDatosTurnoColumnas();
             CargarTurnosDGV();
-
             CargarOpcionesDeFiltro();
+            
         }
 
         // ============== BOTÓN NUEVO TURNO ==============
@@ -62,6 +65,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvTurnos.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
         }
 
+        // ===================== CONFIGURAR DATOS CAJAS DE TEXTO =====================
+        private void ConfigurarLabelsDatosTurno()
+        {
+            lblTurnosCancelados.Text = _turnoService.CantidadTurnosPorEstado("Cancelado").ToString();
+            lblTurnosCompletados.Text = _turnoService.CantidadTurnosPorEstado("Atendido").ToString();
+            lblTurnosCurso.Text = _turnoService.CantidadTurnosPorEstado("En Curso").ToString();
+            lblTurnosHoy.Text = _turnoService.CantidadTurnosPorEstado("Pendiente").ToString();
+        }
+        
+
+        // ===================== ENLAZADO DE DATOS =====================
+        // Configura el enlace de datos entre las columnas del DataGridView y las propiedades del objeto ListadoTurno
         private void ConfigurarEnlazadoDatosTurnoColumnas()
         {
             dgvTurnos.AutoGenerateColumns = false;
@@ -72,6 +87,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvTurnos.Columns["colEstado"].DataPropertyName = "Estado";
         }
 
+        // ===================== CARGA DE DATOS =====================
+        // Carga los turnos en el DataGridView
         public void CargarTurnosDGV()
         {
             _listadoTurnos = _turnoService.ListarTurnos();

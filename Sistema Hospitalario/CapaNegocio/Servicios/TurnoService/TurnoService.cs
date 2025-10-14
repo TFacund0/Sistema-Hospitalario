@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks;   
+using System.Data.Entity;
 
 using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
@@ -30,6 +31,30 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
                                  Estado = e.nombre
                              };
                 return turnos.ToList();
+            }
+        }
+
+        public int CantidadTurnosPorEstado(string estado)
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                var count = 0;
+
+                if (estado.Equals("Pendiente"))
+                {
+                    count = (from t in db.turno
+                             join e in db.estado_turno on t.id_estado_turno equals e.id_estado_turno
+                             where e.nombre == estado && DbFunctions.TruncateTime(t.fecha_turno) == DbFunctions.TruncateTime(DateTime.Now)
+                             select t).Count();
+                    return count;
+                }
+
+                count = (from t in db.turno
+                             join e in db.estado_turno on t.id_estado_turno equals e.id_estado_turno
+                             where e.nombre == estado
+                             select t).Count();
+
+                return count;
             }
         }
     }
