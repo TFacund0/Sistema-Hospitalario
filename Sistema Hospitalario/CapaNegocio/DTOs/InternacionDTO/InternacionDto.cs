@@ -8,14 +8,14 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO
 {
     public class InternacionDto
     {
-        public string Paciente { get; set; }
-        public string Medico { get; set; }
-        public string Procedimiento { get; set; }
+        public int Id_paciente { get; set; }
+        public int Id_medico{ get; set; }
+        public int  Id_procedimiento { get; set; }
         public DateTime Fecha_ingreso { get; set; }
         public DateTime? Fecha_egreso { get; set; }
         public string Diagnostico { get; set; }
         public int Nro_habitacion { get; set; }
-        public int Cama { get; set; }
+        public int Id_cama { get; set; }
         public int Nro_piso { get; set; }
 
     }

@@ -26,5 +26,37 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
                     }).ToList();
             }
         }
+
+        public void altaInternacion(InternacionDto dto)
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                var paciente = db.paciente.Find(dto.Id_paciente);
+                // Actualizar estado del paciente a "Internado"
+                paciente.id_estado_paciente = 2;
+                db.Entry(paciente).State = System.Data.Entity.EntityState.Modified;
+
+                // Cama es clave compuesta
+                var cama = db.cama.Find(dto.Id_cama, dto.Nro_habitacion);
+                // Actualizar estado de la cama a "Ocupada"
+                cama.id_estado_cama = 9;
+                db.Entry(cama).State = System.Data.Entity.EntityState.Modified;
+
+                var internacion = new internacion
+                {
+                    id_paciente = dto.Id_paciente,
+                    id_medico = dto.Id_medico,
+                    id_procedimiento = dto.Id_procedimiento,
+                    id_cama = dto.Id_cama,
+                    nro_habitacion = dto.Nro_habitacion,
+                    fecha_inicio = dto.Fecha_ingreso,
+                    fecha_fin = dto.Fecha_egreso,
+                    motivo = dto.Diagnostico,
+                };
+
+                db.internacion.Add(internacion);
+                db.SaveChanges();
+            }
+        }
     }
 }

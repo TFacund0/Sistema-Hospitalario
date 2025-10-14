@@ -1,23 +1,25 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
-
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
@@ -58,16 +60,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             // Inputs
             txtPiso.TextChanged += txtPiso_TextChanged;
 
-            // FIX: engancho también filtros de Habitación (si no los pusiste en el Designer)
-            cbHabitacion.TextUpdate -= cbHabitacion_TextUpdate; // evitar suscripciones duplicadas
+            cbHabitacion.TextUpdate -= cbHabitacion_TextUpdate;
             cbHabitacion.TextUpdate += cbHabitacion_TextUpdate;
 
-            // UX opcional para abrir listas
             cbHabitacion.Enter += (s, ev) => cbHabitacion.DroppedDown = true;
             cbHabitacion.MouseDown += (s, ev) => cbHabitacion.DroppedDown = true;
 
             cbCama.Enter += (s, ev) => cbCama.DroppedDown = true;
             cbCama.MouseDown += (s, ev) => cbCama.DroppedDown = true;
+
+            cbPaciente.TextUpdate += cbPaciente_TextUpdate;
+            cbMedico.TextUpdate += CbMedico_TextUpdate;
+            cbProcedimiento.TextUpdate += CbProcedimiento_TextUpdate;
 
             DatosComboBoxPaciente();
             DatosComboBoxMedico();
@@ -83,97 +87,63 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         {
             listaPacientes = _servicioPaciente.ListarAllDatosPaciente() ?? new List<PacienteDto>();
 
+            var fuente = listaPacientes
+                .Where(p => p.Estado_paciente == "Activo")
+                .Select(p => new {
+                    Id = p.Id,
+                    Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"
+                })
+                .ToList();
+
             _maestroPaciente.Clear();
-            foreach (var unPaciente in listaPacientes)
-                _maestroPaciente.Add($"{unPaciente.Apellido} {unPaciente.Nombre}");
+            _maestroPaciente.AddRange(fuente.Select(x => x.Display));
 
-            // Config del ComboBox
-            cbPaciente.DropDownStyle = ComboBoxStyle.DropDown;   // editable
-            cbPaciente.AutoCompleteMode = AutoCompleteMode.None; // evitamos pelea con nuestro filtro
-            cbPaciente.AutoCompleteSource = AutoCompleteSource.None;
-
-            // Carga inicial
-            cbPaciente.DataSource = new BindingList<string>(_maestroPaciente);
-
-            // FIX: evitar doble suscripción si este método se llama más de una vez
-            cbPaciente.TextUpdate -= cbPaciente_TextUpdate;
-            cbPaciente.TextUpdate += cbPaciente_TextUpdate;
-
-            // UX: abrir al enfocar/click
-            cbPaciente.Enter -= CbPaciente_Enter;    // FIX: evitar duplicados
-            cbPaciente.Enter += CbPaciente_Enter;
-            cbPaciente.MouseDown -= CbPaciente_MouseDown; // FIX
-            cbPaciente.MouseDown += CbPaciente_MouseDown;
+            cbPaciente.DropDownStyle = ComboBoxStyle.DropDown;
+            cbPaciente.DataSource = fuente;
+            cbPaciente.DisplayMember = "Display";
+            cbPaciente.ValueMember = "Id";
         }
-
-        // ============================= UX COMBO PACIENTE =============================
-        private void CbPaciente_Enter(object sender, EventArgs e) => cbPaciente.DroppedDown = true;
-        private void CbPaciente_MouseDown(object sender, MouseEventArgs e) => cbPaciente.DroppedDown = true;
 
         // ============================= COMBO MEDICO =============================
         private void DatosComboBoxMedico()
         {
             listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
+            var fuente = listaMedicos
+                .Select(m => new {
+                    Id = m.Id,
+                    Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                })
+                .ToList();
             
             _maestroMedico.Clear();
-            foreach (MedicoDto unMedico in listaMedicos)
-                _maestroMedico.Add($"{unMedico.Apellido} {unMedico.Nombre} - {unMedico.Especialidad}");
-
-            // Config del ComboBox
-            cbMedico.DropDownStyle = ComboBoxStyle.DropDown;   // editable
-            cbMedico.AutoCompleteMode = AutoCompleteMode.None; // evitamos pelea con nuestro filtro
-            cbMedico.AutoCompleteSource = AutoCompleteSource.None;
-
-            // Carga inicial
-            cbMedico.DataSource = new BindingList<string>(_maestroMedico);
-
-            // FIX: evitar doble suscripción si este método se llama más de una vez
-            cbMedico.TextUpdate -= CbMedico_TextUpdate;
-            cbMedico.TextUpdate += CbMedico_TextUpdate;
-
-            // UX: abrir al enfocar/click
-            cbMedico.Enter -= CbMedico_Enter;
-            cbMedico.Enter += CbMedico_Enter;
-            cbMedico.MouseDown -= CbMedico_MouseDown; 
-            cbMedico.MouseDown += CbMedico_MouseDown;
+            _maestroMedico.AddRange(fuente.Select(x => x.Display));
+            
+            cbMedico.DropDownStyle = ComboBoxStyle.DropDown;
+            cbMedico.DataSource = fuente;
+            cbMedico.DisplayMember = "Display";
+            cbMedico.ValueMember = "Id";
         }
-
-        // ============================= UX COMBO MEDICO =============================
-        private void CbMedico_Enter(object sender, EventArgs e) => cbMedico.DroppedDown = true;
-        private void CbMedico_MouseDown(object sender, MouseEventArgs e) => cbMedico.DroppedDown = true;
 
         // ============================= COMBO PROCEDIMIENTO =============================
         private void DatosComboBoxProcedimiento()
         {
             listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
+
+            var fuente = listaProcedimientos
+                .Select(p => new {
+                    Id = p.Id,
+                    Display = p.Name
+                })
+                .ToList();
+
             _maestroProcedimiento.Clear();
-            
-            foreach (var unProcedimiento in listaProcedimientos)
-                _maestroProcedimiento.Add(unProcedimiento.Name);
-            
-            // Config del ComboBox
-            cbProcedimiento.DropDownStyle = ComboBoxStyle.DropDown;   // editable
-            cbProcedimiento.AutoCompleteMode = AutoCompleteMode.None; // evitamos pelea con nuestro filtro
-            cbProcedimiento.AutoCompleteSource = AutoCompleteSource.None;
-            
-            // Carga inicial
-            cbProcedimiento.DataSource = new BindingList<string>(_maestroProcedimiento);
-            
-            // FIX: evitar doble suscripción si este método se llama más de una vez
-            cbProcedimiento.TextUpdate -= CbProcedimiento_TextUpdate;
-            cbProcedimiento.TextUpdate += CbProcedimiento_TextUpdate;
-            
-            // UX: abrir al enfocar/click
-            cbProcedimiento.Enter -= CbProcedimiento_Enter;
-            cbProcedimiento.Enter += CbProcedimiento_Enter;
-            cbProcedimiento.MouseDown -= CbProcedimiento_MouseDown;
-            cbProcedimiento.MouseDown += CbProcedimiento_MouseDown;
+            _maestroProcedimiento.AddRange(fuente.Select(x => x.Display));
+
+            cbProcedimiento.DropDownStyle = ComboBoxStyle.DropDown;
+            cbProcedimiento.DataSource = fuente;
+            cbProcedimiento.DisplayMember = "Display";
+            cbProcedimiento.ValueMember = "Id";
         }
-
-        // ============================= UX COMBO MEDICO =============================
-        private void CbProcedimiento_Enter(object sender, EventArgs e) => cbProcedimiento.DroppedDown = true;
-        private void CbProcedimiento_MouseDown(object sender, MouseEventArgs e) => cbProcedimiento.DroppedDown = true;
-
 
         // ============================= COMBO HABITACIÓN =============================
         private void CargarHabitacionesPorPiso(string pisoTexto)
@@ -182,7 +152,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
             if (!string.IsNullOrWhiteSpace(pisoTexto) && int.TryParse(pisoTexto, out var piso) && piso > 0)
             {
-                // 1) Traer datos desde negocio
                 listaHabitaciones = _servicioHabitacion.ListarHabitacionesXPiso(pisoTexto) ?? new List<HabitacionDto>();
 
                 foreach (var unaHabitacion in listaHabitaciones)
@@ -196,15 +165,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 _actualizandoInterno = true;
                 cbHabitacion.BeginUpdate();
 
-                // 3) Refrescar lista sin provocar loops
                 cbHabitacion.DataSource = null;
                 cbHabitacion.DataSource = new BindingList<string>(_maestroHabitacion);
 
-                // 4) Reset de selección
                 cbHabitacion.SelectedIndex = -1;
                 cbHabitacion.Text = string.Empty;
 
-                // 5) Restaurar (si tiene sentido)
                 if (!string.IsNullOrEmpty(seleccionadoAntes) && _maestroHabitacion.Contains(seleccionadoAntes))
                     cbHabitacion.Text = seleccionadoAntes;
 
@@ -220,7 +186,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         // ============================= COMBO CAMA =============================
         private void CargarCamaPorHabitacion(string habitacionText)
         {
-            _maestroCama.Clear(); // FIX
+            _maestroCama.Clear();
 
             if (!string.IsNullOrWhiteSpace(habitacionText) &&
                 int.TryParse(habitacionText, out var habitacion) && habitacion > 0)
@@ -252,7 +218,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
         // ============================= FILTROS =============================
 
-        // ============================= FILTRO PACIENTE =============================
+        // ============== FILTRO PACIENTE ==============
         private void cbPaciente_TextUpdate(object sender, EventArgs e)
         {
             if (_actualizandoInterno) return;
@@ -289,7 +255,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ============================= FILTRO HABITACIÓN =============================
+        // ============== FILTRO HABITACION ===============
         private void cbHabitacion_TextUpdate(object sender, EventArgs e)
         {
             if (_actualizandoInterno) return;
@@ -323,7 +289,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ============================= FILTRO MÉDICO =============================
+        // ================= FILTRO MÉDICO ===================
         private void CbMedico_TextUpdate(object sender, EventArgs e)
         {
             if (_actualizandoInterno) return;
@@ -354,7 +320,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-        // ============================= FILTRO PROCEDIMIENTO =============================
+        // ================= FILTRO PROCEDIMIENTO ===================
         private void CbProcedimiento_TextUpdate(object sender, EventArgs e)
         {
             if (_actualizandoInterno) return;
@@ -397,7 +363,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             else
                 CargarHabitacionesPorPiso("");
 
-            SincronizarHabilitacionControles(); // ← agregar
+            SincronizarHabilitacionControles();
         }
 
         private void cbHabitacion_TextChanged(object sender, EventArgs e)
@@ -412,15 +378,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
         // ============================= HELPERS (opcionales, pero útiles) =============================
         private bool TextoCoincideConLista(ComboBox cb, List<string> maestro)
-            => !string.IsNullOrWhiteSpace(cb.Text)
-               && maestro.Any(x => string.Equals(x, cb.Text.Trim(), StringComparison.OrdinalIgnoreCase))
-               && cb.Text.Trim() != "— sin coincidencias —";
+        {
+            var t = cb.Text?.Trim();
+            if (string.IsNullOrEmpty(t) || t == "— sin coincidencias —") return false;
+
+            return maestro.Any(x => string.Equals(x?.Trim(), t, StringComparison.OrdinalIgnoreCase));
+        }
 
         private bool TextoEsEnteroPositivo(string s, out int valor)
             => int.TryParse(s, out valor) && valor > 0;
 
 
-        // ============================= PACIENTE =============================
+        // ============================= VALIDACION PACIENTE =============================
         private void cbPaciente_Validating(object sender, CancelEventArgs e)
         {
             if (!TextoCoincideConLista(cbPaciente, _maestroPaciente))
@@ -434,14 +403,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-
-        // ============================= MÉDICO =============================
+        // ============================= VALIDACION MÉDICO =============================
         private void cbMedico_Validating(object sender, CancelEventArgs e)
         {
             if (!TextoCoincideConLista(cbMedico, _maestroMedico))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(cbMedico, "Seleccioná un médico válido (coincidencia exacta con la lista).");
+                errorProvider1.SetError(cbMedico, "Seleccioná un médico válido de la lista.");
             }
             else
             {
@@ -449,23 +417,49 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             }
         }
 
-
-        // ============================= PROCEDIMIENTO =============================
+        // ============================= VALIDACION PROCEDIMIENTO =============================
         private void cbProcedimiento_Validating(object sender, CancelEventArgs e)
         {
-            if (!TextoCoincideConLista(cbProcedimiento, _maestroProcedimiento))
+            var texto = cbProcedimiento.Text?.Trim() ?? "";
+
+            // 3.1 primero: validar contra el maestro cargado
+            bool coincide = _maestroProcedimiento.Any(x =>
+                string.Equals(x?.Trim(), texto, StringComparison.OrdinalIgnoreCase));
+
+            if (!coincide)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(cbProcedimiento, "Seleccioná un procedimiento válido de la lista.");
+                return;
             }
-            else
+
+            if (cbProcedimiento.SelectedValue == null)
             {
-                errorProvider1.SetError(cbProcedimiento, "");
+                var proc = listaProcedimientos.FirstOrDefault(p =>
+                    string.Equals(p.Name?.Trim(), texto, StringComparison.OrdinalIgnoreCase));
+
+                if (proc != null)
+                {
+                    var fuente = listaProcedimientos.Select(p => new { Id = p.Id, Display = p.Name }).ToList();
+                    cbProcedimiento.BeginUpdate();
+                    try
+                    {
+                        cbProcedimiento.DataSource = fuente;
+                        cbProcedimiento.DisplayMember = "Display";
+                        cbProcedimiento.ValueMember = "Id";
+                        cbProcedimiento.SelectedValue = proc.Id; // ← ahora sí queda vinculado
+                    }
+                    finally
+                    {
+                        cbProcedimiento.EndUpdate();
+                    }
+                }
             }
+
+            errorProvider1.SetError(cbProcedimiento, "");
         }
 
-
-        // ============================= PISO =============================
+        // ============================= VALIDACION PISO =============================
         private void txtPiso_Validating(object sender, CancelEventArgs e)
         {
             if (!TextoEsEnteroPositivo(txtPiso.Text, out var piso))
@@ -486,10 +480,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
 
-        // ============================= HABITACIÓN =============================
+        // ============================= VALIDACION HABITACIÓN =============================
         private void cbHabitacion_Validating(object sender, CancelEventArgs e)
         {
-            // Debe existir en la lista filtrada actual y ser número positivo
             if (!TextoCoincideConLista(cbHabitacion, _maestroHabitacion)
                 || !TextoEsEnteroPositivo(cbHabitacion.Text, out var nroHabitacion))
             {
@@ -503,7 +496,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
 
-        // ============================= CAMA =============================
+        // ============================= VALIDACION CAMA =============================
         private void cbCama_Validating(object sender, CancelEventArgs e)
         {
             if (!TextoCoincideConLista(cbCama, _maestroCama)
@@ -519,10 +512,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
 
-        // ============================= FECHA INICIO =============================
+        // ============================= VALIDACION FECHA INICIO =============================
         private void dtpFechaInicio_Validating(object sender, CancelEventArgs e)
         {
-            // No futuro y opcionalmente no muy “antigua” (ejemplo: 10 años atrás)
             var ahora = DateTime.Now;
             if (dtpFechaInicio.Value > ahora)
             {
@@ -543,10 +535,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
 
-        // ============================= FECHA FIN (opcional/checkeada) =============================
+        // ============================= VALIDACION FECHA FIN =============================
         private void dtpFechaFin_Validating(object sender, CancelEventArgs e)
         {
-            // Si NO está tildado => no hay fecha de fin y es totalmente válido
             if (!dtpFechaFin.Checked)
             {
                 errorProvider1.SetError(dtpFechaFin, "");
@@ -565,9 +556,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             errorProvider1.SetError(dtpFechaFin, "");
         }
 
-
-
-        // ============================= OBSERVACIONES =============================
+        // ============================= VALIDACION OBSERVACIONES =============================
         private void txtObservaciones_Validating(object sender, CancelEventArgs e)
         {
             var texto = txtObservaciones.Text?.Trim() ?? "";
@@ -577,9 +566,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 errorProvider1.SetError(txtObservaciones, "Máximo 300 caracteres.");
                 return;
             }
-
-            // (opcional) Validar que no sea todo espacios o texto repetido sin valor:
-            // if (texto.Length > 0 && texto.All(ch => ch == '-')) { ... }
 
             errorProvider1.SetError(txtObservaciones, "");
         }
@@ -602,15 +588,48 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         // Valida todo el formulario y simula guardar (aquí iría la lógica real)
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (this.ValidateChildren())
+            if (!this.ValidateChildren())
             {
-                MessageBox.Show("Paciente registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Por favor, corrija los errores antes de guardar.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+
+            // Validaciones básicas: que haya selección
+            if (cbPaciente.SelectedValue == null || cbMedico.SelectedValue == null || cbProcedimiento.SelectedValue == null)
             {
-                MessageBox.Show("Por favor, corrija los errores antes de guardar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Falta seleccionar Paciente, Médico o Procedimiento.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            int idPaciente = (int)cbPaciente.SelectedValue;
+            int idMedico = (int)cbMedico.SelectedValue;
+            int idProcedimiento = (int)cbProcedimiento.SelectedValue;
+
+            int nroHabitacion = int.Parse(cbHabitacion.Text);
+            int nroCama = int.Parse(cbCama.Text);
+
+            var dto = new InternacionDto
+            {
+                Id_paciente = idPaciente,
+                Id_medico = idMedico,          
+                Id_procedimiento = idProcedimiento,
+                Nro_habitacion = nroHabitacion,
+                Id_cama = nroCama,
+                Fecha_ingreso = dtpFechaInicio.Value,
+                Fecha_egreso = dtpFechaFin.Checked ? (DateTime?)dtpFechaFin.Value : null,
+                Diagnostico = txtObservaciones.Text?.Trim()
+            };
+
+            // Llamá a tu capa de negocio
+            var servicio = new InternacionService(); // o el que uses
+            servicio.altaInternacion(dto);
+
+            MessageBox.Show("Internación registrada con éxito.", "Éxito",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         // Limpia todos los campos del formulario
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -640,7 +659,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 dtpFechaFin.Checked = false;
                 dtpFechaFin.CustomFormat = " "; // que quede visualmente vacío
 
-                // Paciente / Médico / Procedimiento (solo limpiar selección)
+                // Paciente / Médico / Procedimiento
                 LimpiarSeleccionCombo(cbPaciente);
                 LimpiarSeleccionCombo(cbMedico);
                 LimpiarSeleccionCombo(cbProcedimiento);
@@ -661,7 +680,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
         // ============================= HELPERS DE COMBOBOX =============================
-        // Limpia la selección de un combo (sin tocar el maestro)
+        // Limpia la selección de un combo
         private void LimpiarSeleccionCombo(ComboBox cb)
         {
             cb.SelectedIndex = -1;
@@ -678,9 +697,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
         // ============================= SINCRONIZACIÓN DE HABILITACIÓN DE CONTROLES =============================
-        // Habilita/inhabilita combos según las reglas:
-        // - Sin piso válido => Habitación deshabilitada (y vacía)
-        // - Sin habitación válida => Cama deshabilitada (y vacía)
         private void SincronizarHabilitacionControles()
         {
             bool pisoValido = !string.IsNullOrWhiteSpace(txtPiso.Text)
@@ -694,13 +710,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
             cbCama.Enabled = habitacionValida;
 
-            // Si no hay piso válido, limpiar habitación y cama
             if (!pisoValido)
             {
                 VaciarCombo(cbHabitacion);
                 VaciarCombo(cbCama);
             }
-            // Si no hay habitación válida, limpiar cama
             else if (!habitacionValida)
             {
                 VaciarCombo(cbCama);
@@ -712,20 +726,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private void ConfigurarFechaInicioConHora()
         {
             dtpFechaInicio.Format = DateTimePickerFormat.Custom;
-            dtpFechaInicio.CustomFormat = "dd/MM/yyyy HH:mm"; // fecha + hora
-            dtpFechaInicio.ShowUpDown = true;                 // spinner para la hora (sin calendario desplegable)
-                                                              // opcional: inicializar al momento actual (con minutos redondeados si querés)
-                                                              // dtpFechaInicio.Value = DateTime.Now;
+            dtpFechaInicio.CustomFormat = "dd/MM/yyyy HH:mm"; 
+            dtpFechaInicio.ShowUpDown = true;                 
         }
 
         // Fecha fin opcional (check para "sin fecha")
         private void ConfigurarFechaFinNull()
         {
-            // === Fecha Fin: permitir "sin fecha" ===
-            dtpFechaFin.ShowCheckBox = true;                 // Muestra el check
-            dtpFechaFin.Checked = false;                     // Arranca sin fecha
+            dtpFechaFin.ShowCheckBox = true;                 
+            dtpFechaFin.Checked = false;                     
             dtpFechaFin.Format = DateTimePickerFormat.Custom;
-            dtpFechaFin.CustomFormat = " ";                  // En blanco cuando no hay fecha
+            dtpFechaFin.CustomFormat = " ";                  
             dtpFechaFin.ValueChanged -= dtpFechaFin_ValueChanged;
             dtpFechaFin.ValueChanged += dtpFechaFin_ValueChanged;
         }
