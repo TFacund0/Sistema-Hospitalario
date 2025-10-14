@@ -146,6 +146,7 @@
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteEdicionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteViewDto.cs" />
     <Compile Include="CapaNegocio\DTOs\ProcedimientoDTO\ProcedimientoDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\TurnoDTO\TurnoDto.cs" />
     <Compile Include="CapaNegocio\Servicios\HabitacionService\CamaService\CamaService.cs" />
     <Compile Include="CapaNegocio\Servicios\HabitacionService\HabitacionService.cs" />
     <Compile Include="CapaNegocio\Servicios\InternacionService\InternacionService.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="CapaNegocio\Servicios\PacienteService\EstadoPacienteService\EstadoPacienteService.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteService\PacienteService.cs" />
     <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />
+    <Compile Include="CapaNegocio\Servicios\TurnoService\TurnoService.cs" />
     <Compile Include="CapaPresentacion\Administrador\MenuModer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,12 +226,6 @@
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.Designer.cs">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\Procedimientos\UC_Procedimientos.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\Procedimientos\UC_Procedimientos.Designer.cs">
-      <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.cs">
       <SubType>UserControl</SubType>
@@ -347,9 +343,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.resx">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrativo\Procedimientos\UC_Procedimientos.resx">
-      <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.resx">
       <DependentUpon>UC_Turnos.cs</DependentUpon>

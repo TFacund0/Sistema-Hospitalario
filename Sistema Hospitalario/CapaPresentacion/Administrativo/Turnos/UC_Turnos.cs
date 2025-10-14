@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
+using Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,12 +13,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos;
-
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_Turnos : UserControl
     {
+        // Acceso a los servicios de Turnos
+        TurnoService _turnoService = new TurnoService();
+
+        // Listado de turnos
+        List<ListadoTurno> _listadoTurnos = new List<ListadoTurno>();
+
+        // Enlace de datos para el DataGridView
+        BindingSource enlaceTurnos = new BindingSource();
+
         // ============== EVENTOS ==============
         //public event EventHandler<TurnoDTO> VerTurnoSolicitado;
         public event EventHandler RegistrarTurnoSolicitado;
@@ -23,6 +35,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             InitializeComponent();     
             ConfigurarActividad();    
+            ConfigurarEnlazadoDatosTurnoColumnas();
+            CargarTurnosDGV();
+
+            CargarOpcionesDeFiltro();
         }
 
         // ============== BOTÓN NUEVO TURNO ==============
@@ -36,6 +52,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             dgvTurnos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
+            dgvTurnos.DataSource = null;
+
             dgvTurnos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvTurnos.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
             dgvTurnos.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
@@ -44,21 +62,88 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvTurnos.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
         }
 
-        public class TurnoDTO
+        private void ConfigurarEnlazadoDatosTurnoColumnas()
         {
-            public string Paciente { get; set; }
-            public string Medico { get; set; }
-            public string Procedimiento { get; set; }
-            public string Correo { get; set; }
-            public string DNI { get; set; }
-            public string Telefono { get; set; }
+            dgvTurnos.AutoGenerateColumns = false;
 
-            public DateTime FechaTurno { get; set; }
-            public DateTime FechaRegistro { get; set; }
+            dgvTurnos.Columns["colPaciente"].DataPropertyName = "Paciente";
+            dgvTurnos.Columns["colMedico"].DataPropertyName = "Medico";
+            dgvTurnos.Columns["colHora"].DataPropertyName = "FechaTurno";
+            dgvTurnos.Columns["colEstado"].DataPropertyName = "Estado";
+        }
 
-            public string Observaciones { get; set; }
-            public string Estado { get; set; }
-            public DateTime Fecha => FechaTurno;
+        public void CargarTurnosDGV()
+        {
+            _listadoTurnos = _turnoService.ListarTurnos();
+            enlaceTurnos.DataSource = _listadoTurnos;
+            dgvTurnos.DataSource = enlaceTurnos;
+        }
+
+        // ===================== BOTÓN BUSCAR TURNO =====================
+        // Filtra los turnos según el campo y el texto ingresado
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            var campo = cboCampoFiltroTurno.SelectedItem?.ToString() ?? "Todos";
+            var texto = txtBuscarTurno.Text;
+            AplicarFiltro(campo, texto);
+        }
+
+        // ===================== BOTÓN LIMPIAR FILTRO =====================
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscarTurno.Clear();
+            if (cboCampoFiltroTurno != null) cboCampoFiltroTurno.SelectedIndex = 0;
+
+            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.ResetBindings(false);
+        }
+
+
+        // ===================== MÉTODOS DE FILTRADO =====================
+        // Carga las opciones de filtro en el ComboBox
+        private void CargarOpcionesDeFiltro()
+        {
+            if (cboCampoFiltroTurno == null) return;
+
+            cboCampoFiltroTurno.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCampoFiltroTurno.Items.Clear();
+            cboCampoFiltroTurno.Items.AddRange(new string[] { "Todos", "Paciente", "Fecha", "Estado" });
+            cboCampoFiltroTurno.SelectedIndex = 0;
+        }
+
+        // Aplica el filtro basado en el campo y el texto ingresado
+        private void AplicarFiltro(string campo, string texto)
+        {
+            // Normaliza el texto para comparación
+            string busqueda = (texto ?? "").Trim().ToLowerInvariant();
+            IEnumerable<ListadoTurno> query = _listadoTurnos;
+
+            // Si hay texto, aplica el filtro según el campo seleccionado
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                switch (campo)
+                {
+                    case "Paciente":
+                        query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
+                        break;
+                    case "Hora":
+                        query = query.Where(t => t.FechaTurno.ToString("g").ToLower().Contains(busqueda));
+                        break;
+                    case "Estado":
+                        query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
+                        break;
+                    default:
+                        query = query.Where(t =>
+                            (t.Paciente ?? "").ToLower().Contains(busqueda) ||
+                            t.FechaTurno.ToString("g").ToLower().Contains(busqueda) ||
+                            (t.Estado ?? "").ToLower().Contains(busqueda));
+                        break;
+                }
+            }
+
+            // Actualiza el BindingSource con los resultados filtrados
+            enlaceTurnos.DataSource = query.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.ResetBindings(false);
         }
     }
 }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {

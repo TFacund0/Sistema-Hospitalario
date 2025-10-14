@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -135,12 +136,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 AbrirUserControl(CrearUCHospitalizacion());
 
             AbrirUserControl(ucRegistrar);
-        }
-
-        // ======================= PROCEDIMIENTOS =======================
-        private void btnProcedimientos_Click(object sender, EventArgs e)
-        {
-            AbrirUserControl(new UC_Procedimientos());
         }
 
         // ======================= SALIR =======================
