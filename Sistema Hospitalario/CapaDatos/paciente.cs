@@ -31,6 +31,7 @@ namespace Sistema_Hospitalario.CapaDatos
         public string direccion { get; set; }
         public string correo_electronico { get; set; }
         public int id_estado_paciente { get; set; }
+        public System.DateTime fecha_registracion { get; set; }
     
         public virtual estado_paciente estado_paciente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

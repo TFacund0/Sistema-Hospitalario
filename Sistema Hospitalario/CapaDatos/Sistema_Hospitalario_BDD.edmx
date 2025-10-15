@@ -96,6 +96,7 @@
           <Property Name="direccion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="correo_electronico" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="id_estado_paciente" Type="int" Nullable="false" />
+          <Property Name="fecha_registracion" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="procedimiento">
           <Key>
@@ -152,7 +153,7 @@
           </Key>
           <Property Name="id_turno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="fecha_turno" Type="date" Nullable="false" />
-          <Property Name="fecha_registracion" Type="date" Nullable="false" />
+          <Property Name="fecha_registracion" Type="datetime" Nullable="false" />
           <Property Name="id_procedimiento" Type="int" Nullable="false" />
           <Property Name="id_paciente" Type="int" Nullable="false" />
           <Property Name="id_medico" Type="int" Nullable="false" />
@@ -603,6 +604,7 @@
           <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_paciente" FromRole="paciente" ToRole="internacion" />
           <NavigationProperty Name="telefono" Relationship="Self.fk_telefono_paciente" FromRole="paciente" ToRole="telefono" />
           <NavigationProperty Name="turno" Relationship="Self.fk_turno_paciente" FromRole="paciente" ToRole="turno" />
+          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="procedimiento">
           <Key>
@@ -665,7 +667,7 @@
           </Key>
           <Property Name="id_turno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="fecha_turno" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="id_procedimiento" Type="Int32" Nullable="false" />
           <Property Name="id_paciente" Type="Int32" Nullable="false" />
           <Property Name="id_medico" Type="Int32" Nullable="false" />
@@ -1098,6 +1100,7 @@
           <EntitySetMapping Name="paciente">
             <EntityTypeMapping TypeName="Sistema_HospitalarioModel.paciente">
               <MappingFragment StoreEntitySet="paciente">
+                <ScalarProperty Name="fecha_registracion" ColumnName="fecha_registracion" />
                 <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />

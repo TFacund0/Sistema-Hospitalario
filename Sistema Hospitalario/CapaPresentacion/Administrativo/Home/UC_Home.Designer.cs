@@ -32,17 +32,12 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.dgvActividad = new System.Windows.Forms.DataGridView();
-            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Horario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.lblCantidadConsultas = new System.Windows.Forms.Label();
-            this.label = new System.Windows.Forms.Label();
+            this.lblInternaciones = new System.Windows.Forms.Label();
+            this.lblInterna = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.lblPorcentajeCamas = new System.Windows.Forms.Label();
             this.lblCamasOcupadas = new System.Windows.Forms.Label();
@@ -53,6 +48,15 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
+            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHorario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cboCampo = new System.Windows.Forms.ComboBox();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel9.SuspendLayout();
@@ -97,6 +101,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel9.BackColor = System.Drawing.Color.White;
+            this.panel9.Controls.Add(this.btnLimpiar);
+            this.panel9.Controls.Add(this.btnBuscar);
+            this.panel9.Controls.Add(this.txtBuscar);
+            this.panel9.Controls.Add(this.cboCampo);
             this.panel9.Controls.Add(this.dgvActividad);
             this.panel9.Controls.Add(this.label4);
             this.panel9.Controls.Add(this.label5);
@@ -118,55 +126,20 @@
             this.dgvActividad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvActividad.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNombre,
-            this.Apellido,
+            this.colApellido,
             this.colAccion,
-            this.Horario,
-            this.dataGridViewTextBoxColumn1});
+            this.colHorario,
+            this.colTipo});
             this.dgvActividad.EnableHeadersVisualStyles = false;
-            this.dgvActividad.Location = new System.Drawing.Point(21, 75);
+            this.dgvActividad.Location = new System.Drawing.Point(21, 109);
             this.dgvActividad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvActividad.Name = "dgvActividad";
             this.dgvActividad.ReadOnly = true;
             this.dgvActividad.RowHeadersVisible = false;
             this.dgvActividad.RowHeadersWidth = 51;
             this.dgvActividad.RowTemplate.Height = 24;
-            this.dgvActividad.Size = new System.Drawing.Size(1080, 302);
+            this.dgvActividad.Size = new System.Drawing.Size(1080, 268);
             this.dgvActividad.TabIndex = 6;
-            // 
-            // colNombre
-            // 
-            this.colNombre.HeaderText = "Nombre";
-            this.colNombre.MinimumWidth = 6;
-            this.colNombre.Name = "colNombre";
-            this.colNombre.ReadOnly = true;
-            // 
-            // Apellido
-            // 
-            this.Apellido.HeaderText = "Apellido";
-            this.Apellido.MinimumWidth = 6;
-            this.Apellido.Name = "Apellido";
-            this.Apellido.ReadOnly = true;
-            // 
-            // colAccion
-            // 
-            this.colAccion.HeaderText = "Accion";
-            this.colAccion.MinimumWidth = 6;
-            this.colAccion.Name = "colAccion";
-            this.colAccion.ReadOnly = true;
-            // 
-            // Horario
-            // 
-            this.Horario.HeaderText = "Horario";
-            this.Horario.MinimumWidth = 6;
-            this.Horario.Name = "Horario";
-            this.Horario.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Tipo";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // label4
             // 
@@ -194,8 +167,8 @@
             this.panel10.BackColor = System.Drawing.Color.White;
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel10.Controls.Add(this.label11);
-            this.panel10.Controls.Add(this.lblCantidadConsultas);
-            this.panel10.Controls.Add(this.label);
+            this.panel10.Controls.Add(this.lblInternaciones);
+            this.panel10.Controls.Add(this.lblInterna);
             this.panel10.Location = new System.Drawing.Point(919, 112);
             this.panel10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel10.Name = "panel10";
@@ -204,42 +177,41 @@
             // 
             // label11
             // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(67, 78);
+            this.label11.Location = new System.Drawing.Point(64, 78);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(91, 16);
             this.label11.TabIndex = 7;
             this.label11.Text = "Programadas";
             // 
-            // lblCantidadConsultas
+            // lblInternaciones
             // 
-            this.lblCantidadConsultas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblInternaciones.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCantidadConsultas.AutoSize = true;
-            this.lblCantidadConsultas.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCantidadConsultas.Location = new System.Drawing.Point(89, 46);
-            this.lblCantidadConsultas.Name = "lblCantidadConsultas";
-            this.lblCantidadConsultas.Size = new System.Drawing.Size(54, 25);
-            this.lblCantidadConsultas.TabIndex = 5;
-            this.lblCantidadConsultas.Text = "120";
+            this.lblInternaciones.AutoSize = true;
+            this.lblInternaciones.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInternaciones.Location = new System.Drawing.Point(89, 46);
+            this.lblInternaciones.Name = "lblInternaciones";
+            this.lblInternaciones.Size = new System.Drawing.Size(26, 25);
+            this.lblInternaciones.TabIndex = 5;
+            this.lblInternaciones.Text = "0";
             // 
-            // label
+            // lblInterna
             // 
-            this.label.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblInterna.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label.AutoSize = true;
-            this.label.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label.Location = new System.Drawing.Point(21, 23);
-            this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(190, 18);
-            this.label.TabIndex = 6;
-            this.label.Text = "Cantidad de Consultas";
+            this.lblInterna.AutoSize = true;
+            this.lblInterna.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInterna.Location = new System.Drawing.Point(3, 21);
+            this.lblInterna.Name = "lblInterna";
+            this.lblInterna.Size = new System.Drawing.Size(223, 18);
+            this.lblInterna.TabIndex = 6;
+            this.lblInterna.Text = "Cantidad de Internaciones";
             // 
             // panel11
             // 
@@ -257,16 +229,15 @@
             // 
             // lblPorcentajeCamas
             // 
-            this.lblPorcentajeCamas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblPorcentajeCamas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPorcentajeCamas.AutoSize = true;
             this.lblPorcentajeCamas.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPorcentajeCamas.Location = new System.Drawing.Point(53, 78);
+            this.lblPorcentajeCamas.Location = new System.Drawing.Point(52, 78);
             this.lblPorcentajeCamas.Name = "lblPorcentajeCamas";
-            this.lblPorcentajeCamas.Size = new System.Drawing.Size(129, 16);
+            this.lblPorcentajeCamas.Size = new System.Drawing.Size(121, 16);
             this.lblPorcentajeCamas.TabIndex = 4;
-            this.lblPorcentajeCamas.Text = "70% de ocupación";
+            this.lblPorcentajeCamas.Text = "0% de ocupación";
             // 
             // lblCamasOcupadas
             // 
@@ -277,9 +248,9 @@
             this.lblCamasOcupadas.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCamasOcupadas.Location = new System.Drawing.Point(69, 46);
             this.lblCamasOcupadas.Name = "lblCamasOcupadas";
-            this.lblCamasOcupadas.Size = new System.Drawing.Size(96, 25);
+            this.lblCamasOcupadas.Size = new System.Drawing.Size(54, 25);
             this.lblCamasOcupadas.TabIndex = 2;
-            this.lblCamasOcupadas.Text = "70/100";
+            this.lblCamasOcupadas.Text = "0/0";
             // 
             // label17
             // 
@@ -288,7 +259,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(45, 21);
+            this.label17.Location = new System.Drawing.Point(37, 21);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(149, 18);
             this.label17.TabIndex = 3;
@@ -309,12 +280,11 @@
             // 
             // label18
             // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(77, 78);
+            this.label18.Location = new System.Drawing.Point(63, 78);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(95, 16);
             this.label18.TabIndex = 1;
@@ -329,9 +299,9 @@
             this.lblPacientesActivos.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPacientesActivos.Location = new System.Drawing.Point(95, 46);
             this.lblPacientesActivos.Name = "lblPacientesActivos";
-            this.lblPacientesActivos.Size = new System.Drawing.Size(54, 25);
+            this.lblPacientesActivos.Size = new System.Drawing.Size(26, 25);
             this.lblPacientesActivos.TabIndex = 0;
-            this.lblPacientesActivos.Text = "247";
+            this.lblPacientesActivos.Text = "0";
             // 
             // label19
             // 
@@ -340,7 +310,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(49, 21);
+            this.label19.Location = new System.Drawing.Point(38, 21);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(152, 18);
             this.label19.TabIndex = 0;
@@ -366,6 +336,89 @@
             this.label21.TabIndex = 0;
             this.label21.Text = "Dashboard";
             // 
+            // colNombre
+            // 
+            this.colNombre.HeaderText = "Nombre";
+            this.colNombre.MinimumWidth = 6;
+            this.colNombre.Name = "colNombre";
+            this.colNombre.ReadOnly = true;
+            // 
+            // colApellido
+            // 
+            this.colApellido.HeaderText = "Apellido";
+            this.colApellido.MinimumWidth = 6;
+            this.colApellido.Name = "colApellido";
+            this.colApellido.ReadOnly = true;
+            // 
+            // colAccion
+            // 
+            this.colAccion.HeaderText = "Accion";
+            this.colAccion.MinimumWidth = 6;
+            this.colAccion.Name = "colAccion";
+            this.colAccion.ReadOnly = true;
+            // 
+            // colHorario
+            // 
+            this.colHorario.HeaderText = "Horario";
+            this.colHorario.MinimumWidth = 6;
+            this.colHorario.Name = "colHorario";
+            this.colHorario.ReadOnly = true;
+            // 
+            // colTipo
+            // 
+            this.colTipo.HeaderText = "Tipo";
+            this.colTipo.MinimumWidth = 6;
+            this.colTipo.Name = "colTipo";
+            this.colTipo.ReadOnly = true;
+            // 
+            // cboCampo
+            // 
+            this.cboCampo.FormattingEnabled = true;
+            this.cboCampo.Location = new System.Drawing.Point(20, 74);
+            this.cboCampo.Name = "cboCampo";
+            this.cboCampo.Size = new System.Drawing.Size(121, 24);
+            this.cboCampo.TabIndex = 11;
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscar.Location = new System.Drawing.Point(168, 74);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(154, 24);
+            this.txtBuscar.TabIndex = 12;
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBuscar.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
+            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscar.ForeColor = System.Drawing.Color.White;
+            this.btnBuscar.Location = new System.Drawing.Point(845, 71);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(124, 28);
+            this.btnBuscar.TabIndex = 20;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLimpiar.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiar.Location = new System.Drawing.Point(977, 70);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(124, 28);
+            this.btnLimpiar.TabIndex = 21;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
             // UC_HomeGerente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -374,6 +427,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UC_HomeGerente";
             this.Size = new System.Drawing.Size(1290, 759);
+            this.Load += new System.EventHandler(this.Home_Load);
             this.panel1.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
@@ -396,17 +450,12 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.DataGridView dgvActividad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Apellido;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAccion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Horario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label lblCantidadConsultas;
-        private System.Windows.Forms.Label label;
+        private System.Windows.Forms.Label lblInternaciones;
+        private System.Windows.Forms.Label lblInterna;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Label lblPorcentajeCamas;
         private System.Windows.Forms.Label lblCamasOcupadas;
@@ -417,5 +466,14 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colApellido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAccion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHorario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTipo;
+        private System.Windows.Forms.ComboBox cboCampo;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }
