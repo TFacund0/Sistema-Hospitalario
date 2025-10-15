@@ -24,6 +24,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
                              join e in db.estado_turno on t.id_estado_turno equals e.id_estado_turno
                              select new ListadoTurno
                              {
+                                 Id_turno = t.id_turno,
                                  Paciente = p.nombre + " " + p.apellido,
                                  Medico = m.nombre + " " + m.apellido,
                                  Procedimiento = pr.nombre,
@@ -88,6 +89,34 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
                 db.turno.Add(nuevoTurno);
                 db.SaveChanges();
             }
+        }
+
+        public TurnoDTO ObtenerDetalle(int p_id_turno)
+        {
+            TurnoDTO turno = null;
+
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                turno = (from t in db.turno
+                         where t.id_turno == p_id_turno
+                         select new TurnoDTO
+                         {
+                             Id_paciente = t.id_paciente,
+                             Paciente = t.paciente.nombre + " " + t.paciente.apellido,
+                             Id_medico = t.id_medico,
+                             Medico = t.medico.nombre + " " + t.medico.apellido,
+                             Id_procedimiento = t.id_procedimiento,
+                             Procedimiento = t.procedimiento.nombre,
+                             DNI = t.paciente.dni.ToString(),
+                             Telefono = t.telefono,
+                             Correo = t.correo_electronico,
+                             FechaTurno = t.fecha_turno,
+                             FechaRegistro = t.fecha_registracion,
+                             Observaciones = t.motivo
+                         }).FirstOrDefault();
+            }
+
+            return turno;
         }
     }
 }

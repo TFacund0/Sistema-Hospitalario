@@ -381,6 +381,7 @@
             this.dgvTurnos.RowTemplate.Height = 24;
             this.dgvTurnos.Size = new System.Drawing.Size(1035, 253);
             this.dgvTurnos.TabIndex = 3;
+            this.dgvTurnos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTurnos_CellContentClick);
             // 
             // colHora
             // 

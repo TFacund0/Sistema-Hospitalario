@@ -8,9 +8,13 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO
 {
     public class TurnoDTO
         {
+            public int Id_turno { get; set; }
             public string Paciente { get; set; }
+            public int Id_paciente { get; set; }
             public string Medico { get; set; }
+            public int Id_medico { get; set; }
             public string Procedimiento { get; set; }
+            public int Id_procedimiento { get; set; }
             public string Correo { get; set; }
             public string DNI { get; set; }
             public string Telefono { get; set; }
@@ -38,6 +42,7 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO
 
     public class ListadoTurno
     {
+        public int Id_turno { get; set; }
         public string Paciente { get; set; }
         public string Medico { get; set; }
         public string Procedimiento { get; set; }

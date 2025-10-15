@@ -88,7 +88,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             var ucTurnos = new UC_Turnos();
 
             ucTurnos.RegistrarTurnoSolicitado += (_, __) => AbrirRegistrarTurno();
-            //ucTurnos.VerTurnoSolicitado += (_, t) => AbrirVisualizarTurnos(t);
+            ucTurnos.VerTurnoSolicitado += (_, t) => AbrirVisualizarTurnos(t);
 
             return ucTurnos;
         }

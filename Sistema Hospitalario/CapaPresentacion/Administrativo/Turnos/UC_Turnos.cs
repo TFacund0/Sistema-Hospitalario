@@ -1,5 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos;
 using System;
@@ -7,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -27,8 +29,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         BindingSource enlaceTurnos = new BindingSource();
 
         // ============== EVENTOS ==============
-        //public event EventHandler<TurnoDTO> VerTurnoSolicitado;
+        public event EventHandler<TurnoDTO> VerTurnoSolicitado;
         public event EventHandler RegistrarTurnoSolicitado;
+
 
         // ============== CONSTRUCTOR UC TURNOS ==============
         public UC_Turnos()
@@ -41,7 +44,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             ConfigurarEnlazadoDatosTurnoColumnas();
             CargarTurnosDGV();
             CargarOpcionesDeFiltro();
-            
+
+            dgvTurnos.CellContentClick += dgvTurnos_CellContentClick;
         }
 
         // ============== BOTÓN NUEVO TURNO ==============
@@ -161,6 +165,32 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             // Actualiza el BindingSource con los resultados filtrados
             enlaceTurnos.DataSource = query.OrderBy(t => t.FechaTurno).ToList();
             enlaceTurnos.ResetBindings(false);
+        }
+
+        private void dgvTurnos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignorar clics en encabezados
+            if (e.RowIndex < 0) return;
+
+            // Si se hizo clic en el botón "Ver" de la columna de acción
+            if (e.RowIndex >= 0 && e.RowIndex < enlaceTurnos.Count)
+                {
+                var turno = enlaceTurnos[e.RowIndex] as ListadoTurno;
+                if (turno == null) return;
+
+                // Traer el detalle desde negocio/datos
+                var detalle = _turnoService.ObtenerDetalle(turno.Id_turno);
+
+                if (detalle == null)
+                {
+                    MessageBox.Show("No se encontró el paciente seleccionado.", "Atención",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Disparar el evento hacia el contenedor (Form/Padre) para que lo muestre
+                VerTurnoSolicitado?.Invoke(this, detalle);
+            }
         }
     }
 }
