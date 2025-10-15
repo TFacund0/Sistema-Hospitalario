@@ -24,12 +24,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_VisualizarTurno : UserControl
     {
-        private TurnoDTO _turno;        
+        // Estado del turno que se está visualizando
+        private TurnoDTO _turno;
+        
+        // Modo edición
         private bool _modoEdicion = false;
 
+        // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
         public event EventHandler CancelarVisualizacionSolicitada;
-        public event EventHandler<TurnoDTO> TurnoActualizado;
-        public event EventHandler<TurnoDTO> TurnoEliminado;
 
         public UC_VisualizarTurno(TurnoDTO turno)
         {
@@ -39,6 +41,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             ConfigurarUISoloLectura();
         }
 
+        // ======================== CONFIGURACION DEL FORMULARIO ========================
+        // Configura la UI para modo solo lectura
         private void ConfigurarUISoloLectura()
         {
             ToggleEdicion(false);
@@ -46,6 +50,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             CargarCombosBox(_turno);
         }
 
+        // Carga los datos del turno en los controles de solo lectura
         private void CargarDatosLectura(TurnoDTO p_turno)
         {
             txtPaciente.Text = p_turno.Paciente;
@@ -57,6 +62,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             txtObservaciones.Text = p_turno.Observaciones ?? string.Empty;
         }
 
+        // Carga los datos en los ComboBox
+        private void CargarCombosBox(TurnoDTO p_turno)
+        {
+            CargarComboPaciente(p_turno);
+            CargarComboMedico(p_turno);
+            CargarComboProcedimiento(p_turno);
+        }
+
+        // Habilita o deshabilita los controles para edición
         private void ToggleEdicion(bool habilitar)
         {
             _modoEdicion = habilitar;
@@ -84,13 +98,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             btnEliminar.Enabled = !habilitar;
         }
 
-        private void CargarCombosBox(TurnoDTO p_turno)
-        {
-            CargarComboPaciente(p_turno);
-            CargarComboMedico(p_turno);
-            CargarComboProcedimiento(p_turno);
-        }
-
+        // ======================== CARGA DE COMBOS ========================
+        // Carga los pacientes en el ComboBox
         private void CargarComboPaciente(TurnoDTO p_turno)
         {
             PacienteService _servicioPaciente = new PacienteService();
@@ -118,6 +127,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // Carga los médicos en el ComboBox
         private void CargarComboMedico(TurnoDTO p_turno)
         {
             MedicoService _servicioMedico = new MedicoService();
@@ -144,6 +154,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // Carga los procedimientos en el ComboBox
         private void CargarComboProcedimiento(TurnoDTO p_turno)
         {
             ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
@@ -169,6 +180,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // ======================== GUARDAR CAMBIOS ========================
+        // Actualiza el objeto turno con los datos de los controles
         private void ActualizarTurno()
         {
             _turno.Paciente = cbPaciente.Text.Trim();
@@ -183,12 +196,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             _turno.Observaciones = txtObservaciones.Text.Trim();
         }
 
+        // Guarda los cambios del turno en la base de datos
         private void GuardarCambios()
         {
             TurnoService turnoService = new TurnoService();
             turnoService.ActualizarTurno(_turno.Id_turno, _turno);
         }
 
+        // ======================== EVENTOS BOTONES ========================
+        // Botón Modificar/Guardar
         private void btnModificar_Click(object sender, EventArgs e)
         {
             if (!_modoEdicion)
@@ -227,6 +243,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // Botón Eliminar
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             TurnoService turnoService = new TurnoService();
@@ -242,6 +259,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }            
         }
 
+        // Botón Volver
         private void btnVolver_Click(object sender, EventArgs e)
         {
             CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);

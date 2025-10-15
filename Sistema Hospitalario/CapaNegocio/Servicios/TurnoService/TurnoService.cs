@@ -13,6 +13,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
 {
     public class TurnoService
     {
+        // Listar todos los turnos con detalles
         public List<ListadoTurno> ListarTurnos ()
         {
             using (var db = new Sistema_HospitalarioEntities())
@@ -35,6 +36,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        // Contar turnos por estado, con manejo especial para "Pendiente" (solo los de hoy)
         public int CantidadTurnosPorEstado(string estado)
         {
             using (var db = new Sistema_HospitalarioEntities())
@@ -59,6 +61,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        // Contar todos los turnos pendientes (sin importar la fecha)
         public int CantidadTurnosPendientes()
         {
             using (var db = new Sistema_HospitalarioEntities())
@@ -71,6 +74,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        // Registrar un nuevo turno
         public void RegistrarTurno(TurnoDto turnoDto)
         {
             using (var db = new Sistema_HospitalarioEntities())
@@ -91,6 +95,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        // Actualizar un turno existente
         public void ActualizarTurno(int id_turno, TurnoDTO turnoDto)
         {
             using (var db = new Sistema_HospitalarioEntities())
@@ -127,6 +132,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        // Eliminar un turno por ID
         public void EliminarTurno(int id_turno)
         {
             using (var db = new Sistema_HospitalarioEntities())
@@ -141,6 +147,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        // Obtener detalles de un turno por ID
         public TurnoDTO ObtenerDetalle(int p_id_turno)
         {
             TurnoDTO turno = null;

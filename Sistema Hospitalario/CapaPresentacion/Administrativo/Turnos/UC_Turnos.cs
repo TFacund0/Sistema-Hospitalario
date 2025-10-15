@@ -167,6 +167,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             enlaceTurnos.ResetBindings(false);
         }
 
+        // ===================== EVENTO CLIC EN CELDA DEL DATAGRIDVIEW =====================
         private void dgvTurnos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             // Ignorar clics en encabezados
