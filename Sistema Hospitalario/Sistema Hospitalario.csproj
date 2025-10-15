@@ -143,6 +143,18 @@
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteViewDto.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteServicio\EstadoPacienteService\EstadoPacienteService.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteServicio\PacienteService.cs" />
+    <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.Designer.cs">
+      <DependentUpon>UC_agregarMedico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\medicos\UC_Medicos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\medicos\UC_Medicos.Designer.cs">
+      <DependentUpon>UC_Medicos.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrador\MenuModer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -302,6 +314,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.resx">
+      <DependentUpon>UC_agregarMedico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrador\medicos\UC_Medicos.resx">
+      <DependentUpon>UC_Medicos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrador\MenuModer.resx">
       <DependentUpon>MenuModer.cs</DependentUpon>
     </EmbeddedResource>

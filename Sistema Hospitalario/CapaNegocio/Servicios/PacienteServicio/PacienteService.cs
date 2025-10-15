@@ -75,7 +75,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
             {
 
-                return db.paciente
+                var pacienteListadoDtos = db.paciente
                    .Select(aux_paciente => new PacienteListadoDto
                    {
                        Id = aux_paciente.id_paciente,
@@ -83,7 +83,8 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                        DNI = aux_paciente.dni,
                        Edad = DbFunctions.DiffYears(aux_paciente.fecha_nacimiento, DateTime.Now) ?? 0,
                        Estado = aux_paciente.estado_paciente.nombre
-                   })
+                   });
+                return pacienteListadoDtos
                    .ToList();
             }
         }
@@ -198,8 +199,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
             {
                 return await db.paciente
-                    .Where(p => p.id_estado_paciente == estadoId)
-                    .CountAsync();
+                    .Where(p => p.id_estado_paciente == estadoId).CountAsync();
             }
         }
 
