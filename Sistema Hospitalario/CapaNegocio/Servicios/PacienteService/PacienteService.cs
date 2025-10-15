@@ -80,6 +80,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
                    .Select(aux_paciente => new PacienteListadoDto
                    {
                        Id = aux_paciente.id_paciente,
+                       Id_paciente = aux_paciente.id_paciente,
                        Paciente = aux_paciente.nombre + " " + aux_paciente.apellido,
                        DNI = aux_paciente.dni,
                        Edad = DbFunctions.DiffYears(aux_paciente.fecha_nacimiento, DateTime.Now) ?? 0,

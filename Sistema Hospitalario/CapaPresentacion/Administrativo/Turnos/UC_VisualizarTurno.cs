@@ -1,12 +1,18 @@
 ﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO.EstadoPacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,6 +37,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
             ConfigurarUISoloLectura();
             CargarDatosLectura(_turno);
+
+            CargarCombosBox(_turno);
 
         }
 
@@ -77,45 +85,90 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             btnEliminar.Enabled = !habilitar;
         }
 
-        /*
-        private void CargarEstadosEnCombo()
+        private void CargarCombosBox(TurnoDTO p_turno)
         {
-            var estados = _turnoService.ListarEstados(); // List<EstadoPacienteDto> { Id, Nombre }
+            CargarComboPaciente(p_turno);
+            CargarComboMedico(p_turno);
+            CargarComboProcedimiento(p_turno);
+        }
 
-            var lista = new List<EstadoPacienteDto>
-            {
-                new EstadoPacienteDto { Id = 0, Nombre = "— Seleccioná —" }
-            };
-            lista.AddRange(estados);
-
-            cbEstadoInicial.DisplayMember = nameof(EstadoPacienteDto.Nombre);
-            cbEstadoInicial.ValueMember = nameof(EstadoPacienteDto.Id);
-            cbEstadoInicial.DataSource = lista;
-
-            cbEstadoInicial.SelectedIndex = 0;
-
-            cbEstadoInicial.DropDownStyle = ComboBoxStyle.DropDownList;
-        }*/
-
-        /*
-        private void SeleccionarEstadoPorNombre(string nombreEstado)
+        private void CargarComboPaciente(TurnoDTO p_turno)
         {
-            if (string.IsNullOrWhiteSpace(nombreEstado))
-            {
-                cbEstadoInicial.SelectedIndex = 0;
-                return;
-            }
+            PacienteService _servicioPaciente = new PacienteService();
+            
+            List<PacienteListadoDto> listaPacientes = _servicioPaciente.ListarPacientes();
 
-            for (int i = 0; i < cbEstadoInicial.Items.Count; i++)
+            var fuente = listaPacientes
+                .Where(p => p.Estado == "Activo" || p.Estado == "Internado")
+                .Select(p => new {
+                    Id = p.Id,
+                    Display = $"{p.Paciente} ({p.DNI})"
+                })
+                .ToList();
+
+            cbPaciente.DropDownStyle = ComboBoxStyle.DropDown;
+            cbPaciente.DataSource = fuente;
+            cbPaciente.DisplayMember = "Display";
+            cbPaciente.ValueMember = "Id";
+
+            if (p_turno != null && p_turno.Id_paciente > 0)
             {
-                var it = cbEstadoInicial.Items[i] as EstadoPacienteDto;
-                if (it != null && string.Equals(it.Nombre, nombreEstado, StringComparison.OrdinalIgnoreCase))
-                {
-                    cbEstadoInicial.SelectedIndex = i;
-                    return;
-                }
+                cbPaciente.SelectedValue = p_turno.Id_paciente;
+                
+                cbPaciente.Text = ((dynamic)cbPaciente.SelectedItem)?.Display ?? string.Empty;
             }
-        }*/
+        }
+
+        private void CargarComboMedico(TurnoDTO p_turno)
+        {
+            MedicoService _servicioMedico = new MedicoService();
+
+            List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
+            
+            var fuente = listaMedicos
+                .Select(m => new {
+                    Id = m.Id,
+                    Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                })
+                .ToList();
+            
+            cbMedico.DropDownStyle = ComboBoxStyle.DropDown;
+            cbMedico.DataSource = fuente;
+            cbMedico.DisplayMember = "Display";
+            cbMedico.ValueMember = "Id";
+
+            if (p_turno != null && p_turno.Id_medico > 0)
+            {
+                cbMedico.SelectedValue = p_turno.Id_medico;
+
+                cbMedico.Text = ((dynamic)cbMedico.SelectedItem)?.Display ?? string.Empty;
+            }
+        }
+
+        private void CargarComboProcedimiento(TurnoDTO p_turno)
+        {
+            ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
+            List<ProcedimientoDto> listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
+
+            var fuente = listaProcedimientos
+                .Select(p => new {
+                    Id = p.Id,
+                    Display = p.Name
+                })
+                .ToList();
+
+            cbProcedimiento.DropDownStyle = ComboBoxStyle.DropDown;
+            cbProcedimiento.DataSource = fuente;
+            cbProcedimiento.DisplayMember = "Display";
+            cbProcedimiento.ValueMember = "Id";
+
+            if (p_turno != null && p_turno.Id_procedimiento > 0)
+            {
+                cbProcedimiento.SelectedValue = p_turno.Id_procedimiento;
+
+                cbProcedimiento.Text = ((dynamic)cbProcedimiento.SelectedItem)?.Display ?? string.Empty;
+            }
+        }
 
         private void VolcarEnDTO()
         {
