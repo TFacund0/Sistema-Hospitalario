@@ -91,6 +91,42 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        public void ActualizarTurno(int id_turno, TurnoDTO turnoDto)
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                var turnoExistente = db.turno.Find(id_turno);
+                if (turnoExistente == null)
+                {
+                    throw new Exception("Turno no encontrado.");
+                }
+                turnoExistente.id_paciente = turnoDto.Id_paciente;
+                turnoExistente.id_medico = turnoDto.Id_medico;
+                turnoExistente.id_procedimiento = turnoDto.Id_procedimiento;
+                turnoExistente.fecha_turno = turnoDto.FechaTurno;
+                turnoExistente.motivo = turnoDto.Observaciones;
+
+                bool correoActivo = !string.IsNullOrEmpty(turnoDto.Correo);
+                bool telefonoActivo = !string.IsNullOrEmpty(turnoDto.Telefono);
+
+                if (correoActivo == true && telefonoActivo == true)
+                {
+                    turnoExistente.correo_electronico = turnoDto.Correo;
+                    turnoExistente.telefono = turnoDto.Telefono;
+                }
+                else if (correoActivo == true && telefonoActivo == false)
+                {
+                    turnoExistente.correo_electronico = turnoDto.Correo;
+                }
+                else if (correoActivo == false && telefonoActivo == true)
+                {
+                    turnoExistente.telefono = turnoDto.Telefono;
+                }
+                
+                db.SaveChanges();
+            }
+        }
+
         public TurnoDTO ObtenerDetalle(int p_id_turno)
         {
             TurnoDTO turno = null;

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO.EstadoPacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
-using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
@@ -27,22 +29,93 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             InitializeComponent();
             _turno = turno ?? throw new ArgumentNullException(nameof(turno));
 
-            CargarDatos(_turno);
-            ToggleEdicion(false);   
+            ConfigurarUISoloLectura();
+            CargarDatosLectura(_turno);
+
         }
 
-        private void CargarDatos(TurnoDTO t)
+        private void ConfigurarUISoloLectura()
         {
-            txtPaciente.Text = t.Paciente;
-            txtMedico.Text = t.Medico;
-            txtProcedimiento.Text = t.Procedimiento;
-            txtCorreo.Text = t.Correo;
-            txtDni.Text = t.DNI;
-            txtTelefono.Text = t.Telefono;
-            dtpFechaTurno.Value = t.FechaTurno == default ? DateTime.Now : t.FechaTurno;
-            dtpFechaRegistro.Value = t.FechaRegistro == default ? DateTime.Now : t.FechaRegistro;
-            txtObservaciones.Text = t.Observaciones;
+            ToggleEdicion(false);
         }
+
+        private void CargarDatosLectura(TurnoDTO p_turno)
+        {
+            txtPaciente.Text = p_turno.Paciente;
+            txtMedico.Text = p_turno.Medico;
+            txtProcedimiento.Text = p_turno.Procedimiento;
+            txtCorreo.Text = p_turno.Correo ?? string.Empty;
+            txtTelefono.Text = p_turno.Telefono ?? string.Empty;
+            dtpFechaTurno.Value = p_turno.FechaTurno;
+            txtObservaciones.Text = p_turno.Observaciones ?? string.Empty;
+        }
+
+        private void ToggleEdicion(bool habilitar)
+        {
+            _modoEdicion = habilitar;
+
+            txtPaciente.ReadOnly = !habilitar;
+            txtMedico.ReadOnly = !habilitar;
+            txtProcedimiento.ReadOnly = !habilitar;
+            txtCorreo.ReadOnly = !habilitar;
+            txtTelefono.ReadOnly = !habilitar;
+            txtObservaciones.ReadOnly = !habilitar;
+            dtpFechaTurno.Enabled = habilitar;
+
+            txtPaciente.Visible = !habilitar;
+            txtMedico.Visible = !habilitar;
+            txtProcedimiento.Visible = !habilitar;
+
+            cbPaciente.Visible = habilitar;
+            cbPaciente.Enabled = habilitar;
+            cbMedico.Visible = habilitar;
+            cbMedico.Enabled = habilitar;
+            cbProcedimiento.Visible = habilitar;
+            cbProcedimiento.Enabled = habilitar;
+
+            btnModificar.Text = habilitar ? "Guardar" : "Modificar";
+            btnEliminar.Enabled = !habilitar;
+        }
+
+        /*
+        private void CargarEstadosEnCombo()
+        {
+            var estados = _turnoService.ListarEstados(); // List<EstadoPacienteDto> { Id, Nombre }
+
+            var lista = new List<EstadoPacienteDto>
+            {
+                new EstadoPacienteDto { Id = 0, Nombre = "— Seleccioná —" }
+            };
+            lista.AddRange(estados);
+
+            cbEstadoInicial.DisplayMember = nameof(EstadoPacienteDto.Nombre);
+            cbEstadoInicial.ValueMember = nameof(EstadoPacienteDto.Id);
+            cbEstadoInicial.DataSource = lista;
+
+            cbEstadoInicial.SelectedIndex = 0;
+
+            cbEstadoInicial.DropDownStyle = ComboBoxStyle.DropDownList;
+        }*/
+
+        /*
+        private void SeleccionarEstadoPorNombre(string nombreEstado)
+        {
+            if (string.IsNullOrWhiteSpace(nombreEstado))
+            {
+                cbEstadoInicial.SelectedIndex = 0;
+                return;
+            }
+
+            for (int i = 0; i < cbEstadoInicial.Items.Count; i++)
+            {
+                var it = cbEstadoInicial.Items[i] as EstadoPacienteDto;
+                if (it != null && string.Equals(it.Nombre, nombreEstado, StringComparison.OrdinalIgnoreCase))
+                {
+                    cbEstadoInicial.SelectedIndex = i;
+                    return;
+                }
+            }
+        }*/
 
         private void VolcarEnDTO()
         {
@@ -50,31 +123,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             _turno.Medico = txtMedico.Text.Trim();
             _turno.Procedimiento = txtProcedimiento.Text.Trim();
             _turno.Correo = txtCorreo.Text.Trim();
-            _turno.DNI = txtDni.Text.Trim();
             _turno.Telefono = txtTelefono.Text.Trim();
             _turno.FechaTurno = dtpFechaTurno.Value;
-            _turno.FechaRegistro = dtpFechaRegistro.Value;
             _turno.Observaciones = txtObservaciones.Text.Trim();
-        }
-
-        private void ToggleEdicion(bool habilitar)
-        {
-            _modoEdicion = habilitar;
-            
-            txtPaciente.ReadOnly = !habilitar;
-            txtMedico.ReadOnly = !habilitar;
-            txtProcedimiento.ReadOnly = !habilitar;
-            txtCorreo.ReadOnly = !habilitar;
-            txtDni.ReadOnly = !habilitar;
-            txtTelefono.ReadOnly = !habilitar;
-            txtObservaciones.ReadOnly = !habilitar;
-
-            dtpFechaTurno.Enabled = habilitar;
-            dtpFechaRegistro.Enabled = habilitar;
-
-            // Botones
-            btnModificar.Text = habilitar ? "Guardar" : "Modificar";
-            btnEliminar.Enabled = !habilitar; // mientras edito, no dejo eliminar
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
