@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
+using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
@@ -36,15 +37,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             _turno = turno ?? throw new ArgumentNullException(nameof(turno));
 
             ConfigurarUISoloLectura();
-            CargarDatosLectura(_turno);
-
-            CargarCombosBox(_turno);
-
         }
 
         private void ConfigurarUISoloLectura()
         {
             ToggleEdicion(false);
+            CargarDatosLectura(_turno);
+            CargarCombosBox(_turno);
         }
 
         private void CargarDatosLectura(TurnoDTO p_turno)
@@ -170,15 +169,24 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
-        private void VolcarEnDTO()
+        private void ActualizarTurno()
         {
-            _turno.Paciente = txtPaciente.Text.Trim();
-            _turno.Medico = txtMedico.Text.Trim();
-            _turno.Procedimiento = txtProcedimiento.Text.Trim();
+            _turno.Paciente = cbPaciente.Text.Trim();
+            _turno.Medico = cbMedico.Text.Trim();
+            _turno.Procedimiento = cbProcedimiento.Text.Trim();
+            _turno.Id_paciente = (int)(cbPaciente.SelectedValue ?? 0);
+            _turno.Id_medico = (int)(cbMedico.SelectedValue ?? 0);
+            _turno.Id_procedimiento = (int)(cbProcedimiento.SelectedValue ?? 0);
             _turno.Correo = txtCorreo.Text.Trim();
             _turno.Telefono = txtTelefono.Text.Trim();
             _turno.FechaTurno = dtpFechaTurno.Value;
             _turno.Observaciones = txtObservaciones.Text.Trim();
+        }
+
+        private void GuardarCambios()
+        {
+            TurnoService turnoService = new TurnoService();
+            turnoService.ActualizarTurno(_turno.Id_turno, _turno);
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -190,6 +198,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
             else
             {
+                // Mensaje de confirmación
+                var confirmacion = MessageBox.Show(
+                    "¿Estás seguro de que deseas guardar este turno?",
+                    "Confirmar guardado",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (confirmacion != DialogResult.Yes)
+                    return;
+
                 // Guardar cambios
                 if (string.IsNullOrWhiteSpace(txtPaciente.Text) ||
                     string.IsNullOrWhiteSpace(txtMedico.Text))
@@ -199,11 +218,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                     return;
                 }
 
-                VolcarEnDTO();
-                ToggleEdicion(false);
-
-                // Notificar al contenedor (para persistir y/o refrescar lista)
-                TurnoActualizado?.Invoke(this, _turno);
+                ActualizarTurno();
+                GuardarCambios();
+                ConfigurarUISoloLectura();
 
                 MessageBox.Show("Cambios guardados.", "OK",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -216,10 +233,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                                      "Confirmación",
                                      MessageBoxButtons.YesNo,
                                      MessageBoxIcon.Question);
+
             if (dr == DialogResult.Yes)
             {
-                TurnoEliminado?.Invoke(this, _turno);
-                // volver automáticamente a la lista
+
                 CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
             }
         }

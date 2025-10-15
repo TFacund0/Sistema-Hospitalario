@@ -137,6 +137,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
                          where t.id_turno == p_id_turno
                          select new TurnoDTO
                          {
+                             Id_turno = t.id_turno,
                              Id_paciente = t.id_paciente,
                              Paciente = t.paciente.nombre + " " + t.paciente.apellido,
                              Id_medico = t.id_medico,

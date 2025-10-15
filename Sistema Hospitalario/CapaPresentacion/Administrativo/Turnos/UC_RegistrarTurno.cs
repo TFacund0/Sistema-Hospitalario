@@ -180,6 +180,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // ==== Boton Guardar ====
         private void btnGuardar_Click_1(object sender, EventArgs e)
         {
+            // Mensaje de confirmación
+            var confirmacion = MessageBox.Show(
+                "¿Estás seguro de que deseas guardar este turno?",
+                "Confirmar guardado",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (confirmacion != DialogResult.Yes)
+                return;
+
             // Ejecuta todas las validaciones de Validating
             if (this.ValidateChildren())
             {
