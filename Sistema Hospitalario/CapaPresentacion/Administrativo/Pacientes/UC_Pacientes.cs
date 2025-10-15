@@ -14,11 +14,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_Pacientes : UserControl
     {
-        // BindingSource para enlazar la lista de pacientes al DataGridView
-        private readonly BindingSource enlacePacientes = new BindingSource();
-
         // Servicio para interactuar con la capa de negocio
         private readonly PacienteService pacienteService = new PacienteService();
+
+        // BindingSource para enlazar la lista de pacientes al DataGridView
+        private readonly BindingSource enlacePacientes = new BindingSource();
 
         // Lista completa de pacientes cargada desde el servicio
         private List<PacienteListadoDto> listaPacientes = new List<PacienteListadoDto>();
@@ -72,8 +72,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Carga la lista de pacientes desde el servicio y la enlaza al DataGridView
         private void CargarPacientesDatagridview()
         {
-            // Trae la lista “plana” para el grid desde la capa de negocio (BD)
-            listaPacientes = pacienteService.ListarPacientes(); // List<PacienteListadoDto>
+            listaPacientes = pacienteService.ListarPacientes();
             enlacePacientes.DataSource = listaPacientes;
             dgvPacientes.DataSource = enlacePacientes;
         }

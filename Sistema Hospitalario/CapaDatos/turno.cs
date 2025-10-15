@@ -21,6 +21,9 @@ namespace Sistema_Hospitalario.CapaDatos
         public int id_paciente { get; set; }
         public int id_medico { get; set; }
         public int id_estado_turno { get; set; }
+        public string telefono { get; set; }
+        public string correo_electronico { get; set; }
+        public string motivo { get; set; }
     
         public virtual estado_turno estado_turno { get; set; }
         public virtual medico medico { get; set; }

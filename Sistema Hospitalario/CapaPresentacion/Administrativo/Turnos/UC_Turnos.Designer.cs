@@ -33,7 +33,7 @@
             this.btnNuevoTurno = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
-            this.lblTurnosCancelados = new System.Windows.Forms.Label();
+            this.lblTurnosPendientes = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
@@ -45,13 +45,13 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.lblTurnosPendientes = new System.Windows.Forms.Label();
+            this.lblTurnosHoy = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.btnLimpiar = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.cboCampo = new System.Windows.Forms.ComboBox();
+            this.btnLimpiarFiltro = new System.Windows.Forms.Button();
+            this.btnBuscarTurno = new System.Windows.Forms.Button();
+            this.txtBuscarTurno = new System.Windows.Forms.TextBox();
+            this.cboCampoFiltroTurno = new System.Windows.Forms.ComboBox();
             this.dgvTurnos = new System.Windows.Forms.DataGridView();
             this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -131,7 +131,7 @@
             this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel8.BackColor = System.Drawing.Color.White;
             this.panel8.Controls.Add(this.label18);
-            this.panel8.Controls.Add(this.lblTurnosCancelados);
+            this.panel8.Controls.Add(this.lblTurnosPendientes);
             this.panel8.Controls.Add(this.label20);
             this.panel8.Location = new System.Drawing.Point(948, 518);
             this.panel8.Name = "panel8";
@@ -141,31 +141,31 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(58, 64);
+            this.label18.Location = new System.Drawing.Point(66, 63);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(88, 16);
+            this.label18.Size = new System.Drawing.Size(75, 16);
             this.label18.TabIndex = 11;
-            this.label18.Text = "Reprogramar";
+            this.label18.Text = "Pendientes";
             // 
-            // lblTurnosCancelados
+            // lblTurnosPendientes
             // 
-            this.lblTurnosCancelados.AutoSize = true;
-            this.lblTurnosCancelados.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosCancelados.Location = new System.Drawing.Point(90, 39);
-            this.lblTurnosCancelados.Name = "lblTurnosCancelados";
-            this.lblTurnosCancelados.Size = new System.Drawing.Size(21, 20);
-            this.lblTurnosCancelados.TabIndex = 10;
-            this.lblTurnosCancelados.Text = "3";
+            this.lblTurnosPendientes.AutoSize = true;
+            this.lblTurnosPendientes.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosPendientes.Location = new System.Drawing.Point(90, 39);
+            this.lblTurnosPendientes.Name = "lblTurnosPendientes";
+            this.lblTurnosPendientes.Size = new System.Drawing.Size(21, 20);
+            this.lblTurnosPendientes.TabIndex = 10;
+            this.lblTurnosPendientes.Text = "3";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(44, 16);
+            this.label20.Location = new System.Drawing.Point(27, 16);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(119, 18);
+            this.label20.Size = new System.Drawing.Size(160, 18);
             this.label20.TabIndex = 9;
-            this.label20.Text = "Recanceladas";
+            this.label20.Text = "Turnos Pendientes";
             // 
             // panel7
             // 
@@ -254,7 +254,7 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.Controls.Add(this.label11);
-            this.panel5.Controls.Add(this.lblTurnosPendientes);
+            this.panel5.Controls.Add(this.lblTurnosHoy);
             this.panel5.Controls.Add(this.label9);
             this.panel5.Location = new System.Drawing.Point(48, 518);
             this.panel5.Name = "panel5";
@@ -270,15 +270,15 @@
             this.label11.TabIndex = 2;
             this.label11.Text = "Pendientes";
             // 
-            // lblTurnosPendientes
+            // lblTurnosHoy
             // 
-            this.lblTurnosPendientes.AutoSize = true;
-            this.lblTurnosPendientes.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosPendientes.Location = new System.Drawing.Point(88, 36);
-            this.lblTurnosPendientes.Name = "lblTurnosPendientes";
-            this.lblTurnosPendientes.Size = new System.Drawing.Size(33, 20);
-            this.lblTurnosPendientes.TabIndex = 1;
-            this.lblTurnosPendientes.Text = "15";
+            this.lblTurnosHoy.AutoSize = true;
+            this.lblTurnosHoy.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosHoy.Location = new System.Drawing.Point(88, 36);
+            this.lblTurnosHoy.Name = "lblTurnosHoy";
+            this.lblTurnosHoy.Size = new System.Drawing.Size(33, 20);
+            this.lblTurnosHoy.TabIndex = 1;
+            this.lblTurnosHoy.Text = "15";
             // 
             // label9
             // 
@@ -296,10 +296,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BackColor = System.Drawing.Color.White;
-            this.panel4.Controls.Add(this.btnLimpiar);
-            this.panel4.Controls.Add(this.btnBuscar);
-            this.panel4.Controls.Add(this.txtBuscar);
-            this.panel4.Controls.Add(this.cboCampo);
+            this.panel4.Controls.Add(this.btnLimpiarFiltro);
+            this.panel4.Controls.Add(this.btnBuscarTurno);
+            this.panel4.Controls.Add(this.txtBuscarTurno);
+            this.panel4.Controls.Add(this.cboCampoFiltroTurno);
             this.panel4.Controls.Add(this.dgvTurnos);
             this.panel4.Controls.Add(this.label8);
             this.panel4.Controls.Add(this.label7);
@@ -308,51 +308,53 @@
             this.panel4.Size = new System.Drawing.Size(1107, 393);
             this.panel4.TabIndex = 12;
             // 
-            // btnLimpiar
+            // btnLimpiarFiltro
             // 
-            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLimpiar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(987, 59);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(83, 36);
-            this.btnLimpiar.TabIndex = 19;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiarFiltro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLimpiarFiltro.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLimpiarFiltro.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnLimpiarFiltro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiarFiltro.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiarFiltro.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiarFiltro.Location = new System.Drawing.Point(987, 59);
+            this.btnLimpiarFiltro.Name = "btnLimpiarFiltro";
+            this.btnLimpiarFiltro.Size = new System.Drawing.Size(83, 36);
+            this.btnLimpiarFiltro.TabIndex = 19;
+            this.btnLimpiarFiltro.Text = "Limpiar";
+            this.btnLimpiarFiltro.UseVisualStyleBackColor = false;
+            this.btnLimpiarFiltro.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
-            // btnBuscar
+            // btnBuscarTurno
             // 
-            this.btnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBuscar.BackColor = System.Drawing.Color.DarkTurquoise;
-            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBuscar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.ForeColor = System.Drawing.Color.White;
-            this.btnBuscar.Location = new System.Drawing.Point(876, 59);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(96, 36);
-            this.btnBuscar.TabIndex = 18;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscarTurno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBuscarTurno.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.btnBuscarTurno.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnBuscarTurno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscarTurno.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscarTurno.ForeColor = System.Drawing.Color.White;
+            this.btnBuscarTurno.Location = new System.Drawing.Point(876, 59);
+            this.btnBuscarTurno.Name = "btnBuscarTurno";
+            this.btnBuscarTurno.Size = new System.Drawing.Size(96, 36);
+            this.btnBuscarTurno.TabIndex = 18;
+            this.btnBuscarTurno.Text = "Buscar";
+            this.btnBuscarTurno.UseVisualStyleBackColor = false;
+            this.btnBuscarTurno.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // txtBuscar
+            // txtBuscarTurno
             // 
-            this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscar.Location = new System.Drawing.Point(232, 71);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(274, 24);
-            this.txtBuscar.TabIndex = 5;
+            this.txtBuscarTurno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscarTurno.Location = new System.Drawing.Point(232, 71);
+            this.txtBuscarTurno.Name = "txtBuscarTurno";
+            this.txtBuscarTurno.Size = new System.Drawing.Size(274, 24);
+            this.txtBuscarTurno.TabIndex = 5;
             // 
-            // cboCampo
+            // cboCampoFiltroTurno
             // 
-            this.cboCampo.FormattingEnabled = true;
-            this.cboCampo.Location = new System.Drawing.Point(35, 71);
-            this.cboCampo.Name = "cboCampo";
-            this.cboCampo.Size = new System.Drawing.Size(173, 24);
-            this.cboCampo.TabIndex = 4;
+            this.cboCampoFiltroTurno.FormattingEnabled = true;
+            this.cboCampoFiltroTurno.Location = new System.Drawing.Point(35, 71);
+            this.cboCampoFiltroTurno.Name = "cboCampoFiltroTurno";
+            this.cboCampoFiltroTurno.Size = new System.Drawing.Size(173, 24);
+            this.cboCampoFiltroTurno.TabIndex = 4;
             // 
             // dgvTurnos
             // 
@@ -379,10 +381,11 @@
             this.dgvTurnos.RowTemplate.Height = 24;
             this.dgvTurnos.Size = new System.Drawing.Size(1035, 253);
             this.dgvTurnos.TabIndex = 3;
+            this.dgvTurnos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTurnos_CellContentClick);
             // 
             // colHora
             // 
-            this.colHora.HeaderText = "Hora";
+            this.colHora.HeaderText = "Fecha";
             this.colHora.MinimumWidth = 6;
             this.colHora.Name = "colHora";
             this.colHora.ReadOnly = true;
@@ -536,7 +539,7 @@
         private System.Windows.Forms.Button btnNuevoTurno;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label lblTurnosCancelados;
+        private System.Windows.Forms.Label lblTurnosPendientes;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label15;
@@ -547,7 +550,7 @@
         private System.Windows.Forms.Label lblTurnosCurso;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label lblTurnosPendientes;
+        private System.Windows.Forms.Label lblTurnosHoy;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label8;
@@ -557,10 +560,10 @@
         private System.Windows.Forms.DataGridView dgvTurnos;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox cboCampo;
-        private System.Windows.Forms.TextBox txtBuscar;
-        private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.ComboBox cboCampoFiltroTurno;
+        private System.Windows.Forms.TextBox txtBuscarTurno;
+        private System.Windows.Forms.Button btnBuscarTurno;
+        private System.Windows.Forms.Button btnLimpiarFiltro;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHora;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMedico;
