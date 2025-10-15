@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\CamaDto.cs" />
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\HabitacionDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\HomeDTO\HomeDto.cs" />
     <Compile Include="CapaNegocio\DTOs\InternacionDTO\InternacionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\MedicoDTO\MedicoDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\EstadoPacienteDTO\EstadoPacienteDto.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="CapaNegocio\DTOs\TurnoDTO\TurnoDto.cs" />
     <Compile Include="CapaNegocio\Servicios\HabitacionService\CamaService\CamaService.cs" />
     <Compile Include="CapaNegocio\Servicios\HabitacionService\HabitacionService.cs" />
+    <Compile Include="CapaNegocio\Servicios\HomeService\HomeService.cs" />
     <Compile Include="CapaNegocio\Servicios\InternacionService\InternacionService.cs" />
     <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteService\EstadoPacienteService\EstadoPacienteService.cs" />
