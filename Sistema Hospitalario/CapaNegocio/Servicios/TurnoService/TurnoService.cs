@@ -127,6 +127,20 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             }
         }
 
+        public void EliminarTurno(int id_turno)
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                var turnoExistente = db.turno.Find(id_turno);
+                if (turnoExistente == null)
+                {
+                    throw new Exception("Turno no encontrado.");
+                }
+                db.turno.Remove(turnoExistente);
+                db.SaveChanges();
+            }
+        }
+
         public TurnoDTO ObtenerDetalle(int p_id_turno)
         {
             TurnoDTO turno = null;

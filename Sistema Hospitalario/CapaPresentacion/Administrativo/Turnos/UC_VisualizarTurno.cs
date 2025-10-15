@@ -229,6 +229,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            TurnoService turnoService = new TurnoService();
             var dr = MessageBox.Show("¿Eliminar este turno?",
                                      "Confirmación",
                                      MessageBoxButtons.YesNo,
@@ -236,9 +237,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
             if (dr == DialogResult.Yes)
             {
-
+                turnoService.EliminarTurno(_turno.Id_turno);
                 CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
-            }
+            }            
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
