@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -22,18 +26,28 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // Método que configuran la información de las estadísticas en el UC Home Gerente
-        private void CargarInformacionPaneles()
+        private async void CargarInformacionPaneles()
         {
-            string cantPacientes = "350";
-            string cantCamasOcupadas = "50";
-            string totalCamas = "100";
-            string cantConsultas = "115";
+            PacienteService pacienteService = new PacienteService();
+            int cantidadPacientes = await pacienteService.ContarPorEstadoIdAsync(1);
+
+            CamaService camaService = new CamaService();
+            int cantidadCamasOcupadas = await camaService.TotalCamasXEstado(9, "Ocupada");
+            int cantidadCamas = await camaService.TotalCamas();
+
+            InternacionService internacionService = new InternacionService();
+            int cantidadInternaciones = internacionService.listadoInternacionDtos().Count;
+
+            string cantPacientes = cantidadPacientes.ToString();
+            string cantCamasOcupadas = cantidadCamasOcupadas.ToString();
+            string totalCamas = cantidadCamas.ToString();
+            string cantInternaciones = cantidadInternaciones.ToString();
 
             if (
                 int.TryParse(cantPacientes, out int valorPaciente) && valorPaciente >= 0 && valorPaciente < 1000 &&
                 int.TryParse(cantCamasOcupadas, out int valorCamasOcupadas) && valorCamasOcupadas >= 0 && valorCamasOcupadas < 1000 &&
                 int.TryParse(totalCamas, out int valorCamas) && valorCamas >= 0 && valorCamas < 1000 && valorCamasOcupadas <= valorCamas &&
-                int.TryParse(cantConsultas, out int valorConsultas) && valorConsultas >= 0 && valorConsultas < 1000
+                int.TryParse(cantInternaciones, out int valorInternaciones) && valorInternaciones >= 0 && valorInternaciones < 1000
                 )
             {
                 string porcentajeCamas = (((float)valorCamasOcupadas / (float)valorCamas) * 100).ToString() + "%";
@@ -41,7 +55,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 lblPacientesActivos.Text = cantPacientes;
                 lblCamasOcupadas.Text = cantCamasOcupadas + "/" + totalCamas;
                 lblPorcentajeCamas.Text = porcentajeCamas + " de ocupación";
-                lblCantidadConsultas.Text = cantConsultas;
+                lblInternaciones.Text = cantInternaciones;
             }
             else
             {

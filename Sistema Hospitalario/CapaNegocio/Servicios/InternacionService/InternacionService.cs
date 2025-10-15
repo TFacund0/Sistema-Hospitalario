@@ -58,5 +58,14 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
                 db.SaveChanges();
             }
         }
+
+        public int TotalInternacionesXProcedimiento(int id_procedimiento)
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                int totalInternaciones = db.internacion.Count(i => i.id_procedimiento == id_procedimiento);
+                return totalInternaciones;
+            }
+        }
     }
 }
