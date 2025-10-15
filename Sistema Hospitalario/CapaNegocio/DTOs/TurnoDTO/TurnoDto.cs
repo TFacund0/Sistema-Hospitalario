@@ -29,15 +29,11 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO
         public int Id_medico { get; set; }
         public int Id_procedimiento { get; set; }
         public string Correo { get; set; }
-        public string DNI { get; set; }
         public string Telefono { get; set; }
+        public string Observaciones { get; set; }
 
         public DateTime FechaTurno { get; set; }
-        public DateTime FechaRegistro { get; set; }
-
-        public string Observaciones { get; set; }
-        public int Id_estado { get; set; }
-        public DateTime Fecha => FechaTurno;
+        public DateTime FechaRegistro { get; set; } = DateTime.Now;
     }
 
     public class ListadoTurno

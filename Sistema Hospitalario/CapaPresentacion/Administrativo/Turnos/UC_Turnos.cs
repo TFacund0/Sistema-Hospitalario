@@ -68,7 +68,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ===================== CONFIGURAR DATOS CAJAS DE TEXTO =====================
         private void ConfigurarLabelsDatosTurno()
         {
-            lblTurnosCancelados.Text = _turnoService.CantidadTurnosPorEstado("Cancelado").ToString();
+            lblTurnosPendientes.Text = _turnoService.CantidadTurnosPendientes().ToString();
             lblTurnosCompletados.Text = _turnoService.CantidadTurnosPorEstado("Atendido").ToString();
             lblTurnosCurso.Text = _turnoService.CantidadTurnosPorEstado("En Curso").ToString();
             lblTurnosHoy.Text = _turnoService.CantidadTurnosPorEstado("Pendiente").ToString();

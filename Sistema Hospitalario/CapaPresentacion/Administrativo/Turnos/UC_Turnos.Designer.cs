@@ -33,7 +33,7 @@
             this.btnNuevoTurno = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
-            this.lblTurnosCancelados = new System.Windows.Forms.Label();
+            this.lblTurnosPendientes = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
@@ -53,6 +53,11 @@
             this.txtBuscarTurno = new System.Windows.Forms.TextBox();
             this.cboCampoFiltroTurno = new System.Windows.Forms.ComboBox();
             this.dgvTurnos = new System.Windows.Forms.DataGridView();
+            this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -62,11 +67,6 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -131,7 +131,7 @@
             this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel8.BackColor = System.Drawing.Color.White;
             this.panel8.Controls.Add(this.label18);
-            this.panel8.Controls.Add(this.lblTurnosCancelados);
+            this.panel8.Controls.Add(this.lblTurnosPendientes);
             this.panel8.Controls.Add(this.label20);
             this.panel8.Location = new System.Drawing.Point(948, 518);
             this.panel8.Name = "panel8";
@@ -141,31 +141,31 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(58, 64);
+            this.label18.Location = new System.Drawing.Point(66, 63);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(88, 16);
+            this.label18.Size = new System.Drawing.Size(75, 16);
             this.label18.TabIndex = 11;
-            this.label18.Text = "Reprogramar";
+            this.label18.Text = "Pendientes";
             // 
-            // lblTurnosCancelados
+            // lblTurnosPendientes
             // 
-            this.lblTurnosCancelados.AutoSize = true;
-            this.lblTurnosCancelados.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosCancelados.Location = new System.Drawing.Point(90, 39);
-            this.lblTurnosCancelados.Name = "lblTurnosCancelados";
-            this.lblTurnosCancelados.Size = new System.Drawing.Size(21, 20);
-            this.lblTurnosCancelados.TabIndex = 10;
-            this.lblTurnosCancelados.Text = "3";
+            this.lblTurnosPendientes.AutoSize = true;
+            this.lblTurnosPendientes.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurnosPendientes.Location = new System.Drawing.Point(90, 39);
+            this.lblTurnosPendientes.Name = "lblTurnosPendientes";
+            this.lblTurnosPendientes.Size = new System.Drawing.Size(21, 20);
+            this.lblTurnosPendientes.TabIndex = 10;
+            this.lblTurnosPendientes.Text = "3";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(44, 16);
+            this.label20.Location = new System.Drawing.Point(27, 16);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(119, 18);
+            this.label20.Size = new System.Drawing.Size(160, 18);
             this.label20.TabIndex = 9;
-            this.label20.Text = "Recanceladas";
+            this.label20.Text = "Turnos Pendientes";
             // 
             // panel7
             // 
@@ -382,6 +382,45 @@
             this.dgvTurnos.Size = new System.Drawing.Size(1035, 253);
             this.dgvTurnos.TabIndex = 3;
             // 
+            // colHora
+            // 
+            this.colHora.HeaderText = "Fecha";
+            this.colHora.MinimumWidth = 6;
+            this.colHora.Name = "colHora";
+            this.colHora.ReadOnly = true;
+            // 
+            // colPaciente
+            // 
+            this.colPaciente.HeaderText = "Paciente";
+            this.colPaciente.MinimumWidth = 6;
+            this.colPaciente.Name = "colPaciente";
+            this.colPaciente.ReadOnly = true;
+            // 
+            // colMedico
+            // 
+            this.colMedico.HeaderText = "Médico";
+            this.colMedico.MinimumWidth = 6;
+            this.colMedico.Name = "colMedico";
+            this.colMedico.ReadOnly = true;
+            // 
+            // colEstado
+            // 
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 6;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            // 
+            // colAccion
+            // 
+            this.colAccion.HeaderText = "Acciones";
+            this.colAccion.MinimumWidth = 6;
+            this.colAccion.Name = "colAccion";
+            this.colAccion.ReadOnly = true;
+            this.colAccion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colAccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colAccion.Text = "Ver";
+            this.colAccion.UseColumnTextForButtonValue = true;
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -462,45 +501,6 @@
             this.panel9.Size = new System.Drawing.Size(1290, 40);
             this.panel9.TabIndex = 1;
             // 
-            // colHora
-            // 
-            this.colHora.HeaderText = "Fecha";
-            this.colHora.MinimumWidth = 6;
-            this.colHora.Name = "colHora";
-            this.colHora.ReadOnly = true;
-            // 
-            // colPaciente
-            // 
-            this.colPaciente.HeaderText = "Paciente";
-            this.colPaciente.MinimumWidth = 6;
-            this.colPaciente.Name = "colPaciente";
-            this.colPaciente.ReadOnly = true;
-            // 
-            // colMedico
-            // 
-            this.colMedico.HeaderText = "Médico";
-            this.colMedico.MinimumWidth = 6;
-            this.colMedico.Name = "colMedico";
-            this.colMedico.ReadOnly = true;
-            // 
-            // colEstado
-            // 
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
-            // 
-            // colAccion
-            // 
-            this.colAccion.HeaderText = "Acciones";
-            this.colAccion.MinimumWidth = 6;
-            this.colAccion.Name = "colAccion";
-            this.colAccion.ReadOnly = true;
-            this.colAccion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colAccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colAccion.Text = "Ver";
-            this.colAccion.UseColumnTextForButtonValue = true;
-            // 
             // UC_Turnos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -538,7 +538,7 @@
         private System.Windows.Forms.Button btnNuevoTurno;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label lblTurnosCancelados;
+        private System.Windows.Forms.Label lblTurnosPendientes;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label15;

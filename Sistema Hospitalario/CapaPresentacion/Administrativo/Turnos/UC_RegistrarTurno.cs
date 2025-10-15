@@ -8,215 +8,196 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
+
+
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_RegistrarTurno : UserControl
     {
+        private PacienteService _servicioPaciente = new PacienteService();
+        private MedicoService _servicioMedico = new MedicoService();
+        private ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
+
+        private List<string> _maestroPaciente = new List<string>();
+        private List<string> _maestroMedico = new List<string>();
+        private List<string> _maestroProcedimiento = new List<string>();
+
         // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
         public event EventHandler CancelarTurnoSolicitado;
-
 
         // ======================== CONSTRUCTOR UC REGISTRAR TURNO ========================
         public UC_RegistrarTurno()
         {
             InitializeComponent();
+
+            DatosComboBoxPaciente();
+            DatosComboBoxMedico();
+            DatosComboBoxProcedimiento();
+        }
+
+        // ========================= COMBO BOX PACIENTE =========================
+        private void DatosComboBoxPaciente()
+        {
+            List<PacienteDto> listaPacientes = _servicioPaciente.ListarAllDatosPaciente() ?? new List<PacienteDto>();
+
+            var fuente = listaPacientes
+                .Where(p => p.Estado_paciente == "Activo")
+                .Select(p => new {
+                    Id = p.Id,
+                    Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"
+                })
+                .ToList();
+
+            _maestroPaciente.Clear();
+            _maestroPaciente.AddRange(fuente.Select(x => x.Display));
+
+            cbPaciente.DropDownStyle = ComboBoxStyle.DropDown;
+            cbPaciente.DataSource = fuente;
+            cbPaciente.DisplayMember = "Display";
+            cbPaciente.ValueMember = "Id";
+        }
+
+        // ========================= COMBO BOX MEDICO =========================
+        private void DatosComboBoxMedico()
+        {
+            List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
+            var fuente = listaMedicos
+                .Select(m => new {
+                    Id = m.Id,
+                    Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                })
+                .ToList();
+
+            _maestroMedico.Clear();
+            _maestroMedico.AddRange(fuente.Select(x => x.Display));
+
+            cbMedico.DropDownStyle = ComboBoxStyle.DropDown;
+            cbMedico.DataSource = fuente;
+            cbMedico.DisplayMember = "Display";
+            cbMedico.ValueMember = "Id";
+        }
+
+        // ========================= COMBOX BOX PROCEDIMIENTO =========================
+        private void DatosComboBoxProcedimiento()
+        {
+            List<ProcedimientoDto> listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
+
+            var fuente = listaProcedimientos
+                .Select(p => new {
+                    Id = p.Id,
+                    Display = p.Name
+                })
+                .ToList();
+
+            _maestroProcedimiento.Clear();
+            _maestroProcedimiento.AddRange(fuente.Select(x => x.Display));
+
+            cbProcedimiento.DropDownStyle = ComboBoxStyle.DropDown;
+            cbProcedimiento.DataSource = fuente;
+            cbProcedimiento.DisplayMember = "Display";
+            cbProcedimiento.ValueMember = "Id";
         }
 
         // ========================= VALIDACIONES =========================
-
-        // ====================== Validacion Paciente ========================= 
-        private void txtPaciente_Validating(object sender, CancelEventArgs e)
+        // ==== Validacion ComboBox Paciente ====
+        private void cbPaciente_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPaciente.Text))
+            if (string.IsNullOrWhiteSpace(cbPaciente.Text) || !_maestroPaciente.Contains(cbPaciente.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtPaciente, "El paciente es obligatorio.");
-            }
-            else if (txtPaciente.Text.Length > 60)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtPaciente, "Máximo 60 caracteres.");
+                errorProvider1.SetError(cbPaciente, "Seleccione un paciente válido de la lista.");
             }
             else
             {
-                errorProvider1.SetError(txtPaciente, "");
+                e.Cancel = false;
+                errorProvider1.SetError(cbPaciente, null);
             }
         }
 
-        // ====================== Validacion Medico =========================
-        private void txtMedico_Validating(object sender, CancelEventArgs e)
+        // ==== Validacion ComboBox Medico ====
+        private void cbMedico_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMedico.Text))
+            if (string.IsNullOrWhiteSpace(cbMedico.Text) || !_maestroMedico.Contains(cbMedico.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtMedico, "El médico es obligatorio.");
-            }
-            else if (txtMedico.Text.Length > 60)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtMedico, "Máximo 60 caracteres.");
+                errorProvider1.SetError(cbMedico, "Seleccione un médico válido de la lista.");
             }
             else
             {
-                errorProvider1.SetError(txtMedico, "");
+                e.Cancel = false;
+                errorProvider1.SetError(cbMedico, null);
             }
         }
 
-        // ====================== Validacion Procedimiento =========================
-        private void txtProcedimiento_Validating(object sender, CancelEventArgs e)
+        // ==== Validacion ComboBox Procedimiento ====
+        private void cbProcedimiento_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtProcedimiento.Text))
+            if (string.IsNullOrWhiteSpace(cbProcedimiento.Text) || !_maestroProcedimiento.Contains(cbProcedimiento.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtProcedimiento, "El procedimiento es obligatorio.");
-            }
-            else if (txtProcedimiento.Text.Length > 80)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtProcedimiento, "Máximo 80 caracteres.");
+                errorProvider1.SetError(cbProcedimiento, "Seleccione un procedimiento válido de la lista.");
             }
             else
             {
-                errorProvider1.SetError(txtProcedimiento, "");
+                e.Cancel = false;
+                errorProvider1.SetError(cbProcedimiento, null);
             }
         }
 
-        // ====================== Validacion Correo =========================
-        private void txtCorreo_Validating(object sender, CancelEventArgs e)
+        // ==== Validacion DateTimePicker Fecha ====
+        private void dtpFecha_Validating(object sender, CancelEventArgs e)
         {
-            string correo = txtCorreo.Text.Trim();
-            if (string.IsNullOrWhiteSpace(correo))
+            if (dtpFechaTurno.Value.Date < DateTime.Now.Date)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtCorreo, "El correo es obligatorio.");
-            }
-            else if (!Regex.IsMatch(correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtCorreo, "Formato de correo no válido.");
-            }
-            else if (correo.Length > 100)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtCorreo, "Máximo 100 caracteres.");
+                errorProvider1.SetError(dtpFechaTurno, "La fecha no puede ser en el pasado.");
             }
             else
             {
-                errorProvider1.SetError(txtCorreo, "");
-            }
-        }
-
-        // ====================== Validacion DNI =========================
-        private void txtDni_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtDni.Text) || !long.TryParse(txtDni.Text, out _))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtDni, "El DNI es obligatorio y numérico.");
-            }
-            else if (txtDni.Text.Length > 15)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtDni, "Máximo 15 dígitos.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtDni, "");
-            }
-        }
-
-        // ====================== Validacion Telefono =========================
-        private void txtTelefono_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtTelefono.Text) || !long.TryParse(txtTelefono.Text, out _))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtTelefono, "El teléfono es obligatorio y numérico.");
-            }
-            else if (txtTelefono.Text.Length > 20)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtTelefono, "Máximo 20 dígitos.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtTelefono, "");
-            }
-        }
-
-        // ====================== Validacion Fecha Turno =========================
-        private void dtpFechaTurno_Validating(object sender, CancelEventArgs e)
-        {
-            // Configuración visual
-            dtpFechaTurno.Format = DateTimePickerFormat.Custom;
-            dtpFechaTurno.CustomFormat = "dd/MM/yyyy HH:mm";
-            dtpFechaTurno.MinDate = DateTime.Today;
-            dtpFechaTurno.MaxDate = DateTime.Today.AddYears(2);
-
-            // Validación
-            if (dtpFechaTurno.Value < DateTime.Now.AddMinutes(-1))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(dtpFechaTurno, "La fecha/hora de turno no puede ser en el pasado.");
-            }
-            else
-            {
-                errorProvider1.SetError(dtpFechaTurno, "");
-            }
-        }
-
-        // ====================== Validacion Fecha Registro =========================
-        private void dtpFechaRegistro_Validating(object sender, CancelEventArgs e)
-        {
-            dtpFechaRegistro.Format = DateTimePickerFormat.Short;
-            dtpFechaRegistro.MaxDate = DateTime.Today;                
-            dtpFechaRegistro.MinDate = DateTime.Today.AddYears(-5);
-
-            if (dtpFechaRegistro.Value.Date > DateTime.Today)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(dtpFechaRegistro, "La fecha de registro no puede ser futura.");
-            }
-            else if (dtpFechaRegistro.Value.Date > dtpFechaTurno.Value.Date)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(dtpFechaRegistro, "La fecha de registro no puede ser posterior al turno.");
-            }
-            else
-            {
-                errorProvider1.SetError(dtpFechaRegistro, "");
-            }
-        }
-
-        // ====================== Validacion Observaciones =========================
-        private void txtObservaciones_Validating(object sender, CancelEventArgs e)
-        {
-            if (txtObservaciones.Text.Length > 300)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtObservaciones, "Máximo 300 caracteres.");
-            }
-            else
-            {
-                errorProvider1.SetError(txtObservaciones, "");
+                e.Cancel = false;
+                errorProvider1.SetError(dtpFechaTurno, null);
             }
         }
 
         // ========================= BOTONES =========================
 
-        // ======================== Boton Cancelar ========================
+        // ==== Boton Cancelar ====
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
             CancelarTurnoSolicitado?.Invoke(this, EventArgs.Empty);
         }
 
-        // ======================== Boton Guardar ========================
+        // ==== Boton Guardar ====
         private void btnGuardar_Click_1(object sender, EventArgs e)
         {
             // Ejecuta todas las validaciones de Validating
             if (this.ValidateChildren())
             {
+                TurnoService _servicioPaciente = new TurnoService();
+
+                var nuevoTurno = new TurnoDto
+                {
+                    Id_paciente = (int)cbPaciente.SelectedValue,
+                    Id_medico = (int)cbMedico.SelectedValue,
+                    Id_procedimiento = (int)cbProcedimiento.SelectedValue,
+                    FechaTurno = dtpFechaTurno.Value,
+                    Observaciones = txtObservaciones.Text.Trim(),
+                    Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
+                    Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(),
+                };
+
+                _servicioPaciente.RegistrarTurno(nuevoTurno);
+
                 MessageBox.Show("Turno registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
@@ -225,20 +206,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
-        // ======================== Boton Limpiar ========================
+        // ==== Boton Limpiar ====
         private void btnLimpiar_Click_1(object sender, EventArgs e)
         {
-            txtPaciente.Clear();
-            txtMedico.Clear();
-            txtProcedimiento.Clear();
-            txtCorreo.Clear();
-            txtDni.Clear();
-            txtTelefono.Clear();
+            cbPaciente.SelectedIndex = -1;
+            cbMedico.SelectedIndex = -1;
+            cbProcedimiento.SelectedIndex = -1;
+            dtpFechaTurno.Value = DateTime.Now;
             txtObservaciones.Clear();
-
-            dtpFechaTurno.Value = DateTime.Now.AddHours(1);
-            dtpFechaRegistro.Value = DateTime.Today;
-
+            txtTelefono.Clear();
+            txtCorreo.Clear();
             errorProvider1.Clear();
         }
     }

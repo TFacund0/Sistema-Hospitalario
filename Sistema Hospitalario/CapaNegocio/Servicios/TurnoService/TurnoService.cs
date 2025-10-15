@@ -57,5 +57,37 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
                 return count;
             }
         }
+
+        public int CantidadTurnosPendientes()
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                var count = (from t in db.turno
+                             join e in db.estado_turno on t.id_estado_turno equals e.id_estado_turno
+                             where e.nombre == "Pendiente"
+                             select t).Count();
+                return count;
+            }
+        }
+
+        public void RegistrarTurno(TurnoDto turnoDto)
+        {
+            using (var db = new Sistema_HospitalarioEntities())
+            {
+                var nuevoTurno = new turno
+                {
+                    id_paciente = turnoDto.Id_paciente,
+                    id_medico = turnoDto.Id_medico,
+                    id_procedimiento = turnoDto.Id_procedimiento,
+                    fecha_turno = turnoDto.FechaTurno,
+                    fecha_registracion = turnoDto.FechaRegistro,
+                    motivo = turnoDto.Observaciones,
+                    id_estado_turno = 6
+                };
+
+                db.turno.Add(nuevoTurno);
+                db.SaveChanges();
+            }
+        }
     }
 }

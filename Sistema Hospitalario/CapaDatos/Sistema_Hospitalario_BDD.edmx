@@ -157,6 +157,9 @@
           <Property Name="id_paciente" Type="int" Nullable="false" />
           <Property Name="id_medico" Type="int" Nullable="false" />
           <Property Name="id_estado_turno" Type="int" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="30" />
+          <Property Name="correo_electronico" Type="nvarchar" MaxLength="100" />
+          <Property Name="motivo" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -671,6 +674,9 @@
           <NavigationProperty Name="medico" Relationship="Self.fk_turno_medico" FromRole="turno" ToRole="medico" />
           <NavigationProperty Name="paciente" Relationship="Self.fk_turno_paciente" FromRole="turno" ToRole="paciente" />
           <NavigationProperty Name="procedimiento" Relationship="Self.fk_turno_procedimiento" FromRole="turno" ToRole="procedimiento" />
+          <Property Name="telefono" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="correo_electronico" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="motivo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -1160,6 +1166,9 @@
           <EntitySetMapping Name="turno">
             <EntityTypeMapping TypeName="Sistema_HospitalarioModel.turno">
               <MappingFragment StoreEntitySet="turno">
+                <ScalarProperty Name="motivo" ColumnName="motivo" />
+                <ScalarProperty Name="correo_electronico" ColumnName="correo_electronico" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="id_turno" ColumnName="id_turno" />
                 <ScalarProperty Name="fecha_turno" ColumnName="fecha_turno" />
                 <ScalarProperty Name="fecha_registracion" ColumnName="fecha_registracion" />
