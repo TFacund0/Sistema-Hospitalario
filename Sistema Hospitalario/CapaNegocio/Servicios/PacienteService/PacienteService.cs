@@ -217,7 +217,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         // ===================== Listar todos los datos del Paciente ======================
         public List<PacienteDto> ListarAllDatosPaciente()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 return db.paciente
                     .Where(p => p.estado_paciente.nombre != "Internado" && p.estado_paciente.nombre == "Activo")

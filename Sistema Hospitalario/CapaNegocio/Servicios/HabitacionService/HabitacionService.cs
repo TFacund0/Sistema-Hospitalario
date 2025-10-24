@@ -16,7 +16,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
         // Método para obtener el total de habitaciones registradas en el sistema
         public async Task<int> TotalHabitaciones()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 // Cuenta todas las habitaciones registradas
                 int totalHabitaciones = await Task.Run(() => db.habitacion.Count());
@@ -34,7 +34,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
                 return habitaciones; // devuelve lista vacía
             }
 
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 habitaciones = db.habitacion
                     .Where(h => h.nro_piso == piso)

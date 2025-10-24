@@ -130,7 +130,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // Carga los médicos en el ComboBox
         private void CargarComboMedico(TurnoDTO p_turno)
         {
-            MedicoService _servicioMedico = new MedicoService();
+            MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
 
             List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
             

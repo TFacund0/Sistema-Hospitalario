@@ -25,7 +25,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
     public partial class UC_RegistrarTurno : UserControl
     {
         private PacienteService _servicioPaciente = new PacienteService();
-        private MedicoService _servicioMedico = new MedicoService();
+        private MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
         private ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
         private List<string> _maestroPaciente = new List<string>();

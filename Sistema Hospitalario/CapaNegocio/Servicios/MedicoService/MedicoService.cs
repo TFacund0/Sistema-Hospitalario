@@ -13,7 +13,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
     {
         public List<MedicoDto> ListarMedicos()
         {
-            using (var context = new Sistema_HospitalarioEntities())
+            using (var context = new Sistema_HospitalarioEntities_Conexion())
             {
                 var medicos = context.medico.ToList();
                 var medicoDtos = medicos.Select(m => new MedicoDto

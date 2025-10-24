@@ -25,6 +25,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
         {
             dgvMedicos.DataSource = _service.ObtenerMedicos();
             dgvMedicos.Columns["IdMedico"].Visible = false;
+            dgvMedicos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMedicos.RowHeadersVisible = false;
+            dgvMedicos.BackgroundColor = Color.White;
+            dgvMedicos.BorderStyle = BorderStyle.None;
+            dgvMedicos.EnableHeadersVisualStyles = false;
+
+            dgvMedicos.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvMedicos.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvMedicos.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+
+            dgvMedicos.DefaultCellStyle.BackColor = Color.WhiteSmoke;
+            dgvMedicos.DefaultCellStyle.ForeColor = Color.Black;
+            dgvMedicos.DefaultCellStyle.Font = new Font("Segoe UI", 9);
         }
 
         private void dgvMedicos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

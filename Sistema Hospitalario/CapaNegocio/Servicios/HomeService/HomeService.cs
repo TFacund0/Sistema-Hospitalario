@@ -13,7 +13,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HomeService
     {
         public async Task<List<HomeDto>> ListarActividadRecienteAsync(int cantidad = 50)
         {
-            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
                 // 1) Turnos
                 var turnos = db.turno

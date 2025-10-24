@@ -13,7 +13,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
         // ===================== TOTAL CAMAS =====================
         public async Task<int> TotalCamas()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 // Cuenta todas las camas en la base de datos
                 int totalCamas = await Task.Run(() => db.cama.Count());
@@ -24,7 +24,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
         // ===================== TOTAL CAMAS X ESTADO =====================
         public async Task<int> TotalCamasXEstado(int p_id_estado, string p_nombre_estado)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 // Cuenta todas las camas que tienen el id de estado de cama igual al parámetro
                 int totalCamasXEstado = await Task.Run(() => db.cama.Count(c => c.id_estado_cama == p_id_estado && c.estado_cama.disponibilidad == p_nombre_estado));
@@ -34,7 +34,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
 
         public List<CamaDto> ListarCamasXHabitacion(string p_nroHabitacion)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var camas = db.cama
                     .Where(c => c.nro_habitacion.ToString() == p_nroHabitacion)

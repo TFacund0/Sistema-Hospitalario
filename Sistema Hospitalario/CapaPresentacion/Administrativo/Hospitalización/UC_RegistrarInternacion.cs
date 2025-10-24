@@ -29,7 +29,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private readonly PacienteService _servicioPaciente = new PacienteService();
         private readonly HabitacionService _servicioHabitacion = new HabitacionService();
         private readonly CamaService _servicioCama = new CamaService();
-        private readonly MedicoService _servicioMedico = new MedicoService();
+        private readonly MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
         private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
         // Atributos que almacenan la informacion de la base de datos a traves de los DTOs

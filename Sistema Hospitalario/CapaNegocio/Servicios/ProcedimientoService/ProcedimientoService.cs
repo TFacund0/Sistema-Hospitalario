@@ -13,7 +13,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService
     {
         public List<ProcedimientoDto> ListarProcedimientos()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 return db.procedimiento
                     .Select(p => new ProcedimientoDto

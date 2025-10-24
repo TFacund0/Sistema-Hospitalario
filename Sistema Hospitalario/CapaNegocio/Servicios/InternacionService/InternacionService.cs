@@ -12,7 +12,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
     {
         public List<ListadoInternacionDto> listadoInternacionDtos()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 return db.internacion
                     .Select(i => new ListadoInternacionDto
@@ -29,7 +29,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
 
         public void altaInternacion(InternacionDto dto)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var paciente = db.paciente.Find(dto.Id_paciente);
                 // Actualizar estado del paciente a "Internado"
@@ -61,7 +61,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
 
         public int TotalInternacionesXProcedimiento(int id_procedimiento)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 int totalInternaciones = db.internacion.Count(i => i.id_procedimiento == id_procedimiento);
                 return totalInternaciones;

@@ -167,8 +167,6 @@
     <Compile Include="CapaNegocio\Servicios\moder\MedicoService.cs" />
     <Compile Include="CapaNegocio\Servicios\moder\ProcedimientoService.cs" />
     <Compile Include="CapaNegocio\Servicios\moder\EspecialidadService.cs" />
-    <Compile Include="CapaNegocio\Servicios\PacienteServicio\EstadoPacienteService\EstadoPacienteService.cs" />
-    <Compile Include="CapaNegocio\Servicios\PacienteServicio\PacienteService.cs" />
     <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.cs">
       <SubType>UserControl</SubType>
     </Compile>

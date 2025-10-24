@@ -16,7 +16,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Listar todos los turnos con detalles
         public List<ListadoTurno> ListarTurnos ()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var turnos = from t in db.turno
                              join p in db.paciente on t.id_paciente equals p.id_paciente
@@ -39,7 +39,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Contar turnos por estado, con manejo especial para "Pendiente" (solo los de hoy)
         public int CantidadTurnosPorEstado(string estado)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var count = 0;
 
@@ -64,7 +64,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Contar todos los turnos pendientes (sin importar la fecha)
         public int CantidadTurnosPendientes()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var count = (from t in db.turno
                              join e in db.estado_turno on t.id_estado_turno equals e.id_estado_turno
@@ -77,7 +77,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Registrar un nuevo turno
         public void RegistrarTurno(TurnoDto turnoDto)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var nuevoTurno = new turno
                 {
@@ -98,7 +98,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Actualizar un turno existente
         public void ActualizarTurno(int id_turno, TurnoDTO turnoDto)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var turnoExistente = db.turno.Find(id_turno);
                 if (turnoExistente == null)
@@ -135,7 +135,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Eliminar un turno por ID
         public void EliminarTurno(int id_turno)
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 var turnoExistente = db.turno.Find(id_turno);
                 if (turnoExistente == null)
@@ -152,7 +152,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         {
             TurnoDTO turno = null;
 
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 turno = (from t in db.turno
                          where t.id_turno == p_id_turno
