@@ -224,7 +224,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             TBDNI.Clear();
             TBDIRECCION.Clear();
             TBMATRICULA.Clear();
-            TBTELEFONO.Clear();
             TBCORREO.Clear();
             TBRUTAARCHIVO.Clear();
             dtpNacimiento.Value = DateTime.Today;
