@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,41 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
-    public partial class UC_agregarMedico : UserControl
+    public partial class UC_agregarMedico : System.Windows.Forms.UserControl
     {
+        private MedicoService _service = new MedicoService(new MedicoRepository());
         public UC_agregarMedico()
         {
             InitializeComponent();
+            CargarEspecialidades();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // Crear el cuadro de diálogo
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            // Configurar filtros (para fotos y PDF)
-            openFileDialog.Filter = "Archivos permitidos|*.docx;*.pdf";
-
-            // Mostrar el diálogo y comprobar si el usuario seleccionó un archivo
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                // Ruta completa del archivo seleccionado
-                string rutaArchivo = openFileDialog.FileName;
-
-                // Mostrar la ruta en un TextBox
-                TBRUTAARCHIVO.Text = rutaArchivo;
-
-                // (Opcional) Copiar el archivo a una carpeta del sistema
-                //string destino = Path.Combine(@"C:\Hospital\Medicos\", Path.GetFileName(rutaArchivo));
-                //File.Copy(rutaArchivo, destino, true);
-
-                MessageBox.Show("Archivo guardado");
-            }
-        }
+        
         private void TBNOMBRE_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBNOMBRE.Text))
@@ -115,26 +96,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
-        private void dtpNacimiento_Validating(object sender, CancelEventArgs e)
-        {
-            dtpNacimiento.MaxDate = DateTime.Today;
-            dtpNacimiento.MinDate = DateTime.Today.AddYears(-120);
-
-            if (dtpNacimiento.Value.Date > DateTime.Today)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(dtpNacimiento, "La fecha no puede ser futura.");
-            }
-            else if (dtpNacimiento.Value.Date < DateTime.Today.AddYears(-120))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(dtpNacimiento, "La fecha no puede ser mayor a 120 años atrás.");
-            }
-            else
-            {
-                errorProvider1.SetError(dtpNacimiento, "");
-            }
-        }
+        
 
         private void TBMATRICULA_Validating(object sender, CancelEventArgs e)
         {
@@ -154,23 +116,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
-        private void TBTELEFONO_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(TBTELEFONO.Text) || !long.TryParse(TBTELEFONO.Text, out _))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(TBTELEFONO, "El teléfono es obligatorio y numérico.");
-            }
-            else if (TBTELEFONO.Text.Length > 15)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(TBTELEFONO, "Máximo 15 caracteres.");
-            }
-            else
-            {
-                errorProvider1.SetError(TBTELEFONO, "");
-            }
-        }
+       
 
         private void TBCORREO_Validating(object sender, CancelEventArgs e)
         {
@@ -202,22 +148,65 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 
         // ============================= BOTONES =============================
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private void btnGuardar_Click_1(object sender, EventArgs e)
+{
+    try
+    {
+        // ... (todo tu código de validación de textboxes está perfecto) ...
+        string nombre = TBNOMBRE.Text.Trim();
+        string apellido = TBAPELLIDO.Text.Trim();
+        string dni = TBDNI.Text.Trim();
+        string direccion = TBDIRECCION.Text.Trim();
+        string matricula = TBMATRICULA.Text.Trim();
+        string correo = TBCORREO.Text.Trim();
+
+        if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) || string.IsNullOrEmpty(dni))
         {
-            if (this.ValidateChildren())
-            {
-                MessageBox.Show("Usuario registrado con éxito.", "Éxito",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // Aquí va el guardado real en BD
-            }
-            else
-            {
-                MessageBox.Show("Corrija los errores antes de guardar.", "Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            MessageBox.Show("Por favor, complete al menos los campos obligatorios: Nombre, Apellido y DNI.");
+            return;
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        // ===============================================
+        // AQUÍ ESTÁ EL CÓDIGO CORRECTO PARA EL COMBOBOX
+        // ===============================================
+        
+        int? idEspecialidad = null; // Lo dejamos nulo por defecto
+
+        // 1. Obtenemos el valor seleccionado (que será el ID)
+        var valorSeleccionado = comboBox1.SelectedValue;
+
+        // 2. Verificamos que no sea nulo
+        if (valorSeleccionado != null)
+        {
+            int idSeleccionado = (int)valorSeleccionado;
+
+            // 3. Si el ID es mayor que 0, significa que NO es "ninguna"
+            if (idSeleccionado > 0)
+            {
+                idEspecialidad = idSeleccionado;
+            }
+        }
+        // Si el ID es 0 (o sea, "ninguna"), idEspecialidad se queda como null,
+        // lo cual es perfecto porque la especialidad es opcional.
+        
+        // ===============================================
+
+        // Guardar en base de datos
+        _service.AgregarMedico(nombre, apellido, dni, direccion, matricula, correo, idEspecialidad);
+
+        MessageBox.Show("Médico registrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        // Opcional: Limpiar el formulario después de guardar
+        btnLimpiar_Click_1(sender, e); 
+
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Error al registrar el médico: " + ex.Message);
+    }
+}
+
+        private void btnLimpiar_Click_1(object sender, EventArgs e)
         {
             TBNOMBRE.Clear();
             TBAPELLIDO.Clear();
@@ -225,9 +214,41 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             TBDIRECCION.Clear();
             TBMATRICULA.Clear();
             TBCORREO.Clear();
-            TBRUTAARCHIVO.Clear();
-            dtpNacimiento.Value = DateTime.Today;
+            TBCORREO.Clear();
+            TBDIRECCION.Clear();
+            TBMATRICULA.Clear();
+
             errorProvider1.Clear();
         }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            MenuModer parentForm = this.FindForm() as MenuModer;
+
+            parentForm.AbrirUserControl(new UC_Medicos()); 
+        }
+
+        private void CargarEspecialidades()
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                // 1. Obtenemos las especialidades reales de la BD
+                var especialidades = db.especialidad
+                    .Select(e => new { id_especialidad = e.id_especialidad, nombre = e.nombre })
+                    .ToList();
+
+                // 4. Agregamos el resto de especialidades de la BD
+                especialidades.AddRange(especialidades);
+
+                // 5. Configuramos el ComboBox
+                comboBox1.DisplayMember = "nombre";
+                comboBox1.ValueMember = "id_especialidad";
+                comboBox1.DataSource = especialidades;
+
+                // Opcional: Dejamos "ninguna" seleccionado por defecto
+                comboBox1.SelectedIndex = 0;
+            }
+        }
+
     }
 }

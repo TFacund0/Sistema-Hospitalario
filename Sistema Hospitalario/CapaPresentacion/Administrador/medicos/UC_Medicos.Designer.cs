@@ -35,13 +35,13 @@
             this.btnBuscar = new System.Windows.Forms.Button();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cboCampo = new System.Windows.Forms.ComboBox();
-            this.dgvPacientes = new System.Windows.Forms.DataGridView();
+            this.dgvMedicos = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMedicos)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -87,7 +87,7 @@
             this.panel8.Controls.Add(this.btnBuscar);
             this.panel8.Controls.Add(this.txtBuscar);
             this.panel8.Controls.Add(this.cboCampo);
-            this.panel8.Controls.Add(this.dgvPacientes);
+            this.panel8.Controls.Add(this.dgvMedicos);
             this.panel8.Controls.Add(this.label3);
             this.panel8.Location = new System.Drawing.Point(32, 108);
             this.panel8.Margin = new System.Windows.Forms.Padding(2);
@@ -141,21 +141,22 @@
             this.cboCampo.Size = new System.Drawing.Size(92, 21);
             this.cboCampo.TabIndex = 10;
             // 
-            // dgvPacientes
+            // dgvMedicos
             // 
-            this.dgvPacientes.AllowUserToAddRows = false;
-            this.dgvPacientes.AllowUserToDeleteRows = false;
-            this.dgvPacientes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvMedicos.AllowUserToAddRows = false;
+            this.dgvMedicos.AllowUserToDeleteRows = false;
+            this.dgvMedicos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPacientes.Location = new System.Drawing.Point(16, 65);
-            this.dgvPacientes.Name = "dgvPacientes";
-            this.dgvPacientes.ReadOnly = true;
-            this.dgvPacientes.RowHeadersWidth = 51;
-            this.dgvPacientes.RowTemplate.Height = 24;
-            this.dgvPacientes.Size = new System.Drawing.Size(807, 322);
-            this.dgvPacientes.TabIndex = 9;
+            this.dgvMedicos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMedicos.Location = new System.Drawing.Point(16, 65);
+            this.dgvMedicos.Name = "dgvMedicos";
+            this.dgvMedicos.ReadOnly = true;
+            this.dgvMedicos.RowHeadersWidth = 51;
+            this.dgvMedicos.RowTemplate.Height = 24;
+            this.dgvMedicos.Size = new System.Drawing.Size(807, 322);
+            this.dgvMedicos.TabIndex = 9;
+            this.dgvMedicos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMedicos_CellDoubleClick);
             // 
             // label3
             // 
@@ -202,7 +203,7 @@
             this.panel2.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMedicos)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -216,7 +217,7 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.ComboBox cboCampo;
-        private System.Windows.Forms.DataGridView dgvPacientes;
+        private System.Windows.Forms.DataGridView dgvMedicos;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

@@ -37,14 +37,11 @@
             this.TBAPELLIDO = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.TBDNI = new System.Windows.Forms.TextBox();
+            this.TBUSERNAME = new System.Windows.Forms.TextBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.TBNOMBRE = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.ESPECIALIDAD = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.TBCORREO = new System.Windows.Forms.TextBox();
@@ -59,10 +56,10 @@
             this.ROL = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.TBTELEFONO = new System.Windows.Forms.TextBox();
+            this.TBPASSWORD = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.dtpNacimiento = new System.Windows.Forms.DateTimePicker();
+            this.ESTADO = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -74,7 +71,6 @@
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel18.SuspendLayout();
-            this.panel20.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel24.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -106,7 +102,6 @@
             this.panel7.Controls.Add(this.panel3);
             this.panel7.Controls.Add(this.panel18);
             this.panel7.Controls.Add(this.btnCancelar);
-            this.panel7.Controls.Add(this.btnLimpiar);
             this.panel7.Controls.Add(this.btnGuardar);
             this.panel7.Controls.Add(this.panel24);
             this.panel7.Controls.Add(this.tableLayoutPanel2);
@@ -159,11 +154,12 @@
             this.TBAPELLIDO.Name = "TBAPELLIDO";
             this.TBAPELLIDO.Size = new System.Drawing.Size(260, 20);
             this.TBAPELLIDO.TabIndex = 5;
+            this.TBAPELLIDO.Validating += new System.ComponentModel.CancelEventHandler(this.TBNOMBRE_Validating);
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.label11);
-            this.panel5.Controls.Add(this.TBDNI);
+            this.panel5.Controls.Add(this.TBUSERNAME);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel5.Location = new System.Drawing.Point(519, 0);
             this.panel5.Name = "panel5";
@@ -176,20 +172,21 @@
             this.label11.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(5, 3);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(38, 17);
+            this.label11.Size = new System.Drawing.Size(157, 17);
             this.label11.TabIndex = 4;
-            this.label11.Text = "DNI";
+            this.label11.Text = "Nombre de Usuario";
             // 
-            // TBDNI
+            // TBUSERNAME
             // 
-            this.TBDNI.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TBUSERNAME.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TBDNI.BackColor = System.Drawing.Color.White;
-            this.TBDNI.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TBDNI.Location = new System.Drawing.Point(7, 28);
-            this.TBDNI.Name = "TBDNI";
-            this.TBDNI.Size = new System.Drawing.Size(221, 20);
-            this.TBDNI.TabIndex = 3;
+            this.TBUSERNAME.BackColor = System.Drawing.Color.White;
+            this.TBUSERNAME.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TBUSERNAME.Location = new System.Drawing.Point(7, 28);
+            this.TBUSERNAME.Name = "TBUSERNAME";
+            this.TBUSERNAME.Size = new System.Drawing.Size(221, 20);
+            this.TBUSERNAME.TabIndex = 3;
+            this.TBUSERNAME.Validating += new System.ComponentModel.CancelEventHandler(this.TBUSERNAME_Validating);
             // 
             // panel6
             // 
@@ -211,6 +208,7 @@
             this.TBNOMBRE.Name = "TBNOMBRE";
             this.TBNOMBRE.Size = new System.Drawing.Size(233, 20);
             this.TBNOMBRE.TabIndex = 1;
+            this.TBNOMBRE.Validating += new System.ComponentModel.CancelEventHandler(this.TBNOMBRE_Validating);
             // 
             // label5
             // 
@@ -227,46 +225,12 @@
             // 
             this.panel18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel18.Controls.Add(this.panel20);
             this.panel18.Controls.Add(this.panel21);
+            this.panel18.Controls.Add(this.btnLimpiar);
             this.panel18.Location = new System.Drawing.Point(22, 258);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(786, 60);
             this.panel18.TabIndex = 17;
-            // 
-            // panel20
-            // 
-            this.panel20.Controls.Add(this.ESPECIALIDAD);
-            this.panel20.Controls.Add(this.label9);
-            this.panel20.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel20.Location = new System.Drawing.Point(486, 0);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(300, 60);
-            this.panel20.TabIndex = 2;
-            // 
-            // ESPECIALIDAD
-            // 
-            this.ESPECIALIDAD.FormattingEnabled = true;
-            this.ESPECIALIDAD.Items.AddRange(new object[] {
-            "ninguna",
-            "pediatra",
-            "anestesiologo",
-            "cirujano"});
-            this.ESPECIALIDAD.Location = new System.Drawing.Point(7, 28);
-            this.ESPECIALIDAD.Name = "ESPECIALIDAD";
-            this.ESPECIALIDAD.Size = new System.Drawing.Size(253, 21);
-            this.ESPECIALIDAD.TabIndex = 8;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(4, 8);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(189, 17);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "Especialidad (opcional)";
             // 
             // panel21
             // 
@@ -303,23 +267,25 @@
             // 
             this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancelar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(698, 357);
+            this.btnCancelar.Location = new System.Drawing.Point(674, 357);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(110, 41);
             this.btnCancelar.TabIndex = 16;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnLimpiar
             // 
             this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(582, 357);
+            this.btnLimpiar.Location = new System.Drawing.Point(546, 22);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(110, 41);
+            this.btnLimpiar.Size = new System.Drawing.Size(201, 26);
             this.btnLimpiar.TabIndex = 15;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click_1);
             // 
             // btnGuardar
             // 
@@ -328,12 +294,13 @@
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.Location = new System.Drawing.Point(454, 352);
+            this.btnGuardar.Location = new System.Drawing.Point(548, 352);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(120, 49);
             this.btnGuardar.TabIndex = 14;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click_1);
             // 
             // panel24
             // 
@@ -414,7 +381,7 @@
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.TBTELEFONO);
+            this.panel15.Controls.Add(this.TBPASSWORD);
             this.panel15.Controls.Add(this.label12);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel15.Location = new System.Drawing.Point(478, 3);
@@ -422,17 +389,18 @@
             this.panel15.Size = new System.Drawing.Size(305, 57);
             this.panel15.TabIndex = 2;
             // 
-            // TBTELEFONO
+            // TBPASSWORD
             // 
-            this.TBTELEFONO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.TBPASSWORD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TBTELEFONO.BackColor = System.Drawing.Color.White;
-            this.TBTELEFONO.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TBTELEFONO.Location = new System.Drawing.Point(7, 27);
-            this.TBTELEFONO.Margin = new System.Windows.Forms.Padding(2);
-            this.TBTELEFONO.Name = "TBTELEFONO";
-            this.TBTELEFONO.Size = new System.Drawing.Size(262, 20);
-            this.TBTELEFONO.TabIndex = 3;
+            this.TBPASSWORD.BackColor = System.Drawing.Color.White;
+            this.TBPASSWORD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TBPASSWORD.Location = new System.Drawing.Point(7, 27);
+            this.TBPASSWORD.Margin = new System.Windows.Forms.Padding(2);
+            this.TBPASSWORD.Name = "TBPASSWORD";
+            this.TBPASSWORD.Size = new System.Drawing.Size(262, 20);
+            this.TBPASSWORD.TabIndex = 3;
+            this.TBPASSWORD.Validating += new System.ComponentModel.CancelEventHandler(this.TBPASSWORD_Validating);
             // 
             // label12
             // 
@@ -441,13 +409,13 @@
             this.label12.Location = new System.Drawing.Point(4, 6);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(76, 17);
+            this.label12.Size = new System.Drawing.Size(97, 17);
             this.label12.TabIndex = 0;
-            this.label12.Text = "Teléfono";
+            this.label12.Text = "Contraseña";
             // 
             // panel16
             // 
-            this.panel16.Controls.Add(this.dtpNacimiento);
+            this.panel16.Controls.Add(this.ESTADO);
             this.panel16.Controls.Add(this.label8);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel16.Location = new System.Drawing.Point(3, 3);
@@ -455,15 +423,18 @@
             this.panel16.Size = new System.Drawing.Size(277, 57);
             this.panel16.TabIndex = 3;
             // 
-            // dtpNacimiento
+            // ESTADO
             // 
-            this.dtpNacimiento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dtpNacimiento.Location = new System.Drawing.Point(5, 23);
-            this.dtpNacimiento.Margin = new System.Windows.Forms.Padding(2);
-            this.dtpNacimiento.Name = "dtpNacimiento";
-            this.dtpNacimiento.Size = new System.Drawing.Size(232, 20);
-            this.dtpNacimiento.TabIndex = 2;
+            this.ESTADO.FormattingEnabled = true;
+            this.ESTADO.Items.AddRange(new object[] {
+            "ninguna",
+            "pediatra",
+            "anestesiologo",
+            "cirujano"});
+            this.ESTADO.Location = new System.Drawing.Point(5, 26);
+            this.ESTADO.Name = "ESTADO";
+            this.ESTADO.Size = new System.Drawing.Size(253, 21);
+            this.ESTADO.TabIndex = 8;
             // 
             // label8
             // 
@@ -472,9 +443,9 @@
             this.label8.Location = new System.Drawing.Point(2, 3);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(167, 17);
+            this.label8.Size = new System.Drawing.Size(61, 17);
             this.label8.TabIndex = 0;
-            this.label8.Text = "Fecha de Nacimiento";
+            this.label8.Text = "Estado";
             // 
             // label2
             // 
@@ -519,8 +490,6 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel18.ResumeLayout(false);
-            this.panel20.ResumeLayout(false);
-            this.panel20.PerformLayout();
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
             this.panel24.ResumeLayout(false);
@@ -547,13 +516,12 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox TBAPELLIDO;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.TextBox TBDNI;
+        private System.Windows.Forms.TextBox TBUSERNAME;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.TextBox TBNOMBRE;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.TextBox TBCORREO;
         private System.Windows.Forms.Label label12;
@@ -567,13 +535,11 @@
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox TBTELEFONO;
+        private System.Windows.Forms.TextBox TBPASSWORD;
         private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.DateTimePicker dtpNacimiento;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox ESPECIALIDAD;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox ESTADO;
         private System.Windows.Forms.ComboBox ROL;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ErrorProvider errorProvider1;

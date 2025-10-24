@@ -15,7 +15,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         { 
             try
             {
-                using (var bdd = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+                using (var bdd = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
                 {
                     // Obtenemos la lista completa de pacientes
                     var listaPacientes = bdd.paciente.ToList();
@@ -65,14 +65,24 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
             }
             catch (Exception ex)
             {
-                return (false, 0, $"Error al guardar el paciente: {ex.Message}");
+                // Creamos un mensaje de error más detallado
+                string errorMessage = ex.Message;
+
+                // Verificamos si hay una excepción interna (el mensaje de la base de datos)
+                if (ex.InnerException != null)
+                {
+                    errorMessage += " --> Inner Exception: " + ex.InnerException.Message;
+                }
+
+                // Devolvemos el mensaje completo
+                return (false, 0, $"Error al guardar el paciente: {errorMessage}");
             }
         }
 
         // ===================== LISTADO (para el DataGridView) =====================
         public List<PacienteListadoDto> ListarPacientes()
         {
-            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
 
                 var pacienteListadoDtos = db.paciente
@@ -92,7 +102,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         // ===================== DETALLE (para ver/editar) =====================
         public PacienteDetalleDto ObtenerDetalle(int p_id_paciente)
         {
-            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
                 return db.paciente
                          .Where(aux_paciente => aux_paciente.id_paciente == p_id_paciente)
@@ -118,7 +128,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         {
             try
             {
-                using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+                using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
                 {
                     // 1) Paciente existente
                     var pacienteEdit = db.paciente
@@ -196,7 +206,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios
         // ===================== CONTAR CANTIDAD PACIENTES (por estado) =====================
         public async Task<int> ContarPorEstadoIdAsync(int estadoId)
         {
-            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities())
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
                 return await db.paciente
                     .Where(p => p.id_estado_paciente == estadoId).CountAsync();

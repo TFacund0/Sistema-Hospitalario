@@ -10,7 +10,7 @@ namespace Sistema_Hospitalario.CapaNegocio
         // Listar todos los estados de paciente disponibles
         public List<EstadoPacienteDto> ListarEstados()
         {
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 return db.estado_paciente
                          .OrderBy(estado => estado.nombre)

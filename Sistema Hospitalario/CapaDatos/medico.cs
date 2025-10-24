@@ -28,6 +28,7 @@ namespace Sistema_Hospitalario.CapaDatos
         public string direccion { get; set; }
         public string correo_electronico { get; set; }
         public int id_especialidad { get; set; }
+        public int DNI { get; set; }
     
         public virtual especialidad especialidad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
