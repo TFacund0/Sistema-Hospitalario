@@ -97,6 +97,7 @@
           <Property Name="direccion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="correo_electronico" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="id_estado_paciente" Type="int" Nullable="false" />
+          <Property Name="fecha_registracion" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="procedimiento">
           <Key>
@@ -153,11 +154,14 @@
           </Key>
           <Property Name="id_turno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="fecha_turno" Type="date" Nullable="false" />
-          <Property Name="fecha_registracion" Type="date" Nullable="false" />
+          <Property Name="fecha_registracion" Type="datetime" Nullable="false" />
           <Property Name="id_procedimiento" Type="int" Nullable="false" />
           <Property Name="id_paciente" Type="int" Nullable="false" />
           <Property Name="id_medico" Type="int" Nullable="false" />
           <Property Name="id_estado_turno" Type="int" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="30" />
+          <Property Name="correo_electronico" Type="nvarchar" MaxLength="100" />
+          <Property Name="motivo" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -378,6 +382,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="pk_habitacion_internacion">
+          <End Role="habitacion" Type="Self.habitacion" Multiplicity="1" />
+          <End Role="internacion" Type="Self.internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="habitacion">
+              <PropertyRef Name="nro_habitacion" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="nro_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Sistema_HospitalarioModelStoreContainer">
           <EntitySet Name="cama" EntityType="Self.cama" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="especialidad" EntityType="Self.especialidad" Schema="dbo" store:Type="Tables" />
@@ -465,6 +481,10 @@
             <End Role="rol" EntitySet="rol" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <AssociationSet Name="pk_habitacion_internacion" Association="Self.pk_habitacion_internacion">
+            <End Role="habitacion" EntitySet="habitacion" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -532,6 +552,7 @@
           <Property Name="id_tipo_habitacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="cama" Relationship="Self.fk_cama_habitacion" FromRole="habitacion" ToRole="cama" />
           <NavigationProperty Name="tipo_habitacion" Relationship="Self.fk_habitacion_tipo_habitacion" FromRole="habitacion" ToRole="tipo_habitacion" />
+          <NavigationProperty Name="internacion" Relationship="Sistema_HospitalarioModel.pk_habitacion_internacion" FromRole="habitacion" ToRole="internacion" />
         </EntityType>
         <EntityType Name="internacion">
           <Key>
@@ -550,6 +571,7 @@
           <NavigationProperty Name="medico" Relationship="Self.fk_internacion_medico" FromRole="internacion" ToRole="medico" />
           <NavigationProperty Name="paciente" Relationship="Self.fk_internacion_paciente" FromRole="internacion" ToRole="paciente" />
           <NavigationProperty Name="procedimiento" Relationship="Self.fk_internacion_procedimiento" FromRole="internacion" ToRole="procedimiento" />
+          <NavigationProperty Name="habitacion" Relationship="Sistema_HospitalarioModel.pk_habitacion_internacion" FromRole="internacion" ToRole="habitacion" />
         </EntityType>
         <EntityType Name="medico">
           <Key>
@@ -584,6 +606,7 @@
           <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_paciente" FromRole="paciente" ToRole="internacion" />
           <NavigationProperty Name="telefono" Relationship="Self.fk_telefono_paciente" FromRole="paciente" ToRole="telefono" />
           <NavigationProperty Name="turno" Relationship="Self.fk_turno_paciente" FromRole="paciente" ToRole="turno" />
+          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="procedimiento">
           <Key>
@@ -646,7 +669,7 @@
           </Key>
           <Property Name="id_turno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="fecha_turno" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="id_procedimiento" Type="Int32" Nullable="false" />
           <Property Name="id_paciente" Type="Int32" Nullable="false" />
           <Property Name="id_medico" Type="Int32" Nullable="false" />
@@ -655,6 +678,9 @@
           <NavigationProperty Name="medico" Relationship="Self.fk_turno_medico" FromRole="turno" ToRole="medico" />
           <NavigationProperty Name="paciente" Relationship="Self.fk_turno_paciente" FromRole="turno" ToRole="paciente" />
           <NavigationProperty Name="procedimiento" Relationship="Self.fk_turno_procedimiento" FromRole="turno" ToRole="procedimiento" />
+          <Property Name="telefono" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="correo_electronico" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="motivo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -964,7 +990,23 @@
             <End Role="rol" EntitySet="rol" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <AssociationSet Name="pk_habitacion_internacion" Association="Sistema_HospitalarioModel.pk_habitacion_internacion">
+            <End Role="habitacion" EntitySet="habitacion" />
+            <End Role="internacion" EntitySet="internacion" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="pk_habitacion_internacion">
+          <End Type="Sistema_HospitalarioModel.habitacion" Role="habitacion" Multiplicity="1" />
+          <End Type="Sistema_HospitalarioModel.internacion" Role="internacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="habitacion">
+              <PropertyRef Name="nro_habitacion" />
+            </Principal>
+            <Dependent Role="internacion">
+              <PropertyRef Name="nro_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1061,6 +1103,7 @@
           <EntitySetMapping Name="paciente">
             <EntityTypeMapping TypeName="Sistema_HospitalarioModel.paciente">
               <MappingFragment StoreEntitySet="paciente">
+                <ScalarProperty Name="fecha_registracion" ColumnName="fecha_registracion" />
                 <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -1129,6 +1172,9 @@
           <EntitySetMapping Name="turno">
             <EntityTypeMapping TypeName="Sistema_HospitalarioModel.turno">
               <MappingFragment StoreEntitySet="turno">
+                <ScalarProperty Name="motivo" ColumnName="motivo" />
+                <ScalarProperty Name="correo_electronico" ColumnName="correo_electronico" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="id_turno" ColumnName="id_turno" />
                 <ScalarProperty Name="fecha_turno" ColumnName="fecha_turno" />
                 <ScalarProperty Name="fecha_registracion" ColumnName="fecha_registracion" />

@@ -31,13 +31,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.txtTelefono = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.dtpFechaRegistro = new System.Windows.Forms.DateTimePicker();
-            this.label12 = new System.Windows.Forms.Label();
             this.panel25 = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
             this.btnCancelar = new System.Windows.Forms.Button();
@@ -53,8 +46,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.txtDni = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.txtTelefono = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
             this.dtpFechaTurno = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
@@ -70,6 +63,7 @@
             this.txtMedico = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
+            this.cbPaciente = new System.Windows.Forms.ComboBox();
             this.txtPaciente = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -78,12 +72,11 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.cbMedico = new System.Windows.Forms.ComboBox();
+            this.cbProcedimiento = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.panel18.SuspendLayout();
-            this.panel20.SuspendLayout();
-            this.panel21.SuspendLayout();
             this.panel25.SuspendLayout();
             this.panel30.SuspendLayout();
             this.panel28.SuspendLayout();
@@ -129,7 +122,6 @@
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.panel18);
             this.panel7.Controls.Add(this.panel25);
             this.panel7.Controls.Add(this.panel22);
             this.panel7.Controls.Add(this.panel14);
@@ -140,71 +132,6 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1194, 578);
             this.panel7.TabIndex = 6;
-            // 
-            // panel18
-            // 
-            this.panel18.Controls.Add(this.panel20);
-            this.panel18.Controls.Add(this.panel21);
-            this.panel18.Location = new System.Drawing.Point(52, 287);
-            this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(1086, 60);
-            this.panel18.TabIndex = 12;
-            // 
-            // panel20
-            // 
-            this.panel20.Controls.Add(this.txtTelefono);
-            this.panel20.Controls.Add(this.label11);
-            this.panel20.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel20.Location = new System.Drawing.Point(570, 0);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(516, 60);
-            this.panel20.TabIndex = 2;
-            // 
-            // txtTelefono
-            // 
-            this.txtTelefono.BackColor = System.Drawing.Color.White;
-            this.txtTelefono.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTelefono.Location = new System.Drawing.Point(7, 28);
-            this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(486, 22);
-            this.txtTelefono.TabIndex = 3;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(3, 4);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(92, 20);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "Teléfono";
-            // 
-            // panel21
-            // 
-            this.panel21.Controls.Add(this.dtpFechaRegistro);
-            this.panel21.Controls.Add(this.label12);
-            this.panel21.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel21.Location = new System.Drawing.Point(0, 0);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(521, 60);
-            this.panel21.TabIndex = 3;
-            // 
-            // dtpFechaRegistro
-            // 
-            this.dtpFechaRegistro.Location = new System.Drawing.Point(7, 28);
-            this.dtpFechaRegistro.Name = "dtpFechaRegistro";
-            this.dtpFechaRegistro.Size = new System.Drawing.Size(486, 22);
-            this.dtpFechaRegistro.TabIndex = 2;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(3, 4);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(309, 20);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Fecha de Registración de Turno";
             // 
             // panel25
             // 
@@ -303,9 +230,9 @@
             // panel22
             // 
             this.panel22.Controls.Add(this.panel24);
-            this.panel22.Location = new System.Drawing.Point(52, 370);
+            this.panel22.Location = new System.Drawing.Point(52, 285);
             this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(1086, 111);
+            this.panel22.Size = new System.Drawing.Size(1086, 196);
             this.panel22.TabIndex = 4;
             // 
             // panel24
@@ -315,7 +242,7 @@
             this.panel24.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel24.Location = new System.Drawing.Point(0, 0);
             this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(1086, 111);
+            this.panel24.Size = new System.Drawing.Size(1086, 196);
             this.panel24.TabIndex = 3;
             // 
             // txtObservaciones
@@ -325,7 +252,7 @@
             this.txtObservaciones.Location = new System.Drawing.Point(7, 28);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(1072, 71);
+            this.txtObservaciones.Size = new System.Drawing.Size(1072, 152);
             this.txtObservaciones.TabIndex = 1;
             // 
             // label14
@@ -349,32 +276,32 @@
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.txtDni);
-            this.panel15.Controls.Add(this.label7);
+            this.panel15.Controls.Add(this.txtTelefono);
+            this.panel15.Controls.Add(this.label11);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel15.Location = new System.Drawing.Point(570, 0);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(516, 60);
             this.panel15.TabIndex = 2;
             // 
-            // txtDni
+            // txtTelefono
             // 
-            this.txtDni.BackColor = System.Drawing.Color.White;
-            this.txtDni.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDni.Location = new System.Drawing.Point(7, 28);
-            this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(486, 22);
-            this.txtDni.TabIndex = 3;
+            this.txtTelefono.BackColor = System.Drawing.Color.White;
+            this.txtTelefono.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTelefono.Location = new System.Drawing.Point(7, 28);
+            this.txtTelefono.Name = "txtTelefono";
+            this.txtTelefono.Size = new System.Drawing.Size(486, 22);
+            this.txtTelefono.TabIndex = 3;
             // 
-            // label7
+            // label11
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(3, 4);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(46, 20);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "DNI";
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(3, 4);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(92, 20);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Teléfono";
             // 
             // panel16
             // 
@@ -443,6 +370,7 @@
             // 
             // panel13
             // 
+            this.panel13.Controls.Add(this.cbProcedimiento);
             this.panel13.Controls.Add(this.txtProcedimiento);
             this.panel13.Controls.Add(this.label6);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Left;
@@ -481,6 +409,7 @@
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.cbMedico);
             this.panel9.Controls.Add(this.txtMedico);
             this.panel9.Controls.Add(this.label4);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
@@ -510,6 +439,7 @@
             // 
             // panel11
             // 
+            this.panel11.Controls.Add(this.cbPaciente);
             this.panel11.Controls.Add(this.txtPaciente);
             this.panel11.Controls.Add(this.label3);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Left;
@@ -517,6 +447,14 @@
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(521, 60);
             this.panel11.TabIndex = 3;
+            // 
+            // cbPaciente
+            // 
+            this.cbPaciente.FormattingEnabled = true;
+            this.cbPaciente.Location = new System.Drawing.Point(7, 26);
+            this.cbPaciente.Name = "cbPaciente";
+            this.cbPaciente.Size = new System.Drawing.Size(486, 24);
+            this.cbPaciente.TabIndex = 2;
             // 
             // txtPaciente
             // 
@@ -592,6 +530,22 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Visualiza la información del turno y opción para la modificación";
             // 
+            // cbMedico
+            // 
+            this.cbMedico.FormattingEnabled = true;
+            this.cbMedico.Location = new System.Drawing.Point(7, 26);
+            this.cbMedico.Name = "cbMedico";
+            this.cbMedico.Size = new System.Drawing.Size(486, 24);
+            this.cbMedico.TabIndex = 3;
+            // 
+            // cbProcedimiento
+            // 
+            this.cbProcedimiento.FormattingEnabled = true;
+            this.cbProcedimiento.Location = new System.Drawing.Point(7, 27);
+            this.cbProcedimiento.Name = "cbProcedimiento";
+            this.cbProcedimiento.Size = new System.Drawing.Size(486, 24);
+            this.cbProcedimiento.TabIndex = 4;
+            // 
             // UC_VisualizarTurno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -602,11 +556,6 @@
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
-            this.panel18.ResumeLayout(false);
-            this.panel20.ResumeLayout(false);
-            this.panel20.PerformLayout();
-            this.panel21.ResumeLayout(false);
-            this.panel21.PerformLayout();
             this.panel25.ResumeLayout(false);
             this.panel30.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
@@ -640,13 +589,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.DateTimePicker dtpFechaRegistro;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Button btnCancelar;
@@ -661,8 +605,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.TextBox txtDni;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.DateTimePicker dtpFechaTurno;
         private System.Windows.Forms.Label label8;
@@ -678,7 +620,6 @@
         private System.Windows.Forms.TextBox txtMedico;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.TextBox txtPaciente;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel5;
@@ -687,5 +628,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.ComboBox cbPaciente;
+        private System.Windows.Forms.TextBox txtPaciente;
+        private System.Windows.Forms.ComboBox cbProcedimiento;
+        private System.Windows.Forms.ComboBox cbMedico;
     }
 }

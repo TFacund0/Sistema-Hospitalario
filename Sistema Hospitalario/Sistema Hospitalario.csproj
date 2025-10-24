@@ -153,6 +153,11 @@
     <Compile Include="CapaNegocio\DTOs\moderDTO\miscelaneoDTOs\MostrarCamaDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\moderDTO\miscelaneoDTOs\MostrarProcedimientoDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\moderDTO\miscelaneoDTOs\EspecialidadDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\HabitacionDTO\CamaDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\HabitacionDTO\HabitacionDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\HomeDTO\HomeDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\InternacionDTO\InternacionDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\MedicoDTO\MedicoDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\EstadoPacienteDTO\EstadoPacienteDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteAltaDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteEdicionDto.cs" />
@@ -176,6 +181,17 @@
     <Compile Include="CapaPresentacion\Administrador\medicos\UC_Medicos.Designer.cs">
       <DependentUpon>UC_Medicos.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaNegocio\DTOs\ProcedimientoDTO\ProcedimientoDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\TurnoDTO\TurnoDto.cs" />
+    <Compile Include="CapaNegocio\Servicios\HabitacionService\CamaService\CamaService.cs" />
+    <Compile Include="CapaNegocio\Servicios\HabitacionService\HabitacionService.cs" />
+    <Compile Include="CapaNegocio\Servicios\HomeService\HomeService.cs" />
+    <Compile Include="CapaNegocio\Servicios\InternacionService\InternacionService.cs" />
+    <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
+    <Compile Include="CapaNegocio\Servicios\PacienteService\EstadoPacienteService\EstadoPacienteService.cs" />
+    <Compile Include="CapaNegocio\Servicios\PacienteService\PacienteService.cs" />
+    <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />
+    <Compile Include="CapaNegocio\Servicios\TurnoService\TurnoService.cs" />
     <Compile Include="CapaPresentacion\Administrador\MenuModer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -271,12 +287,6 @@
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.Designer.cs">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\Procedimientos\UC_Procedimientos.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrativo\Procedimientos\UC_Procedimientos.Designer.cs">
-      <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.cs">
       <SubType>UserControl</SubType>
@@ -420,9 +430,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Pacientes\UC_Pacientes.resx">
       <DependentUpon>UC_Pacientes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrativo\Procedimientos\UC_Procedimientos.resx">
-      <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Turnos\UC_Turnos.resx">
       <DependentUpon>UC_Turnos.cs</DependentUpon>
