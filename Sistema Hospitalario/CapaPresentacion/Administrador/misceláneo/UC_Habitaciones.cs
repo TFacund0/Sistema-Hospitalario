@@ -1,5 +1,7 @@
 ﻿using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaDatos.ModerRepos;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.moder;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
@@ -21,13 +24,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             InitializeComponent();
             _service = new HabitacionService(new HabitacionRepository());
             CargarHabitaciones();
-            cargarComboBox();
+            CargarComboBox();
         }
 
         private void CargarHabitaciones()
         {
             dgvHabitaciones.DataSource = _service.ObtenerHabitaciones();
-            dgvHabitaciones.Columns["id_tipo_habitacion"].Visible = false;
+            dgvHabitaciones.Columns["IdTipoHabitacion"].Visible = false;
             dgvHabitaciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvHabitaciones.RowHeadersVisible = false;
             dgvHabitaciones.BackgroundColor = Color.White;
@@ -44,19 +47,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 
         }
 
-        private void cargarComboBox()
+        private void CargarComboBox()
         {
-            var tipos = _service.ObtenerHabitaciones();
-            comboBox1.DataSource = tipos;
-            comboBox1.DisplayMember = "tipo_habitacion";  // 👈 nombre del campo que quieras mostrar
-            comboBox1.ValueMember = "id_tipo_habitacion";        
+            List<TiposHabitacionDTO> listaHabitacion = _service.ListarTiposHabitacion();
+
+            comboBox1.DataSource = listaHabitacion;
+            comboBox1.DisplayMember = "nombre";  
+            comboBox1.ValueMember = "IdTipoHabitacion";
+            
         }
 
         private void TBPISOHABITACION_Validating(object sender, CancelEventArgs e)
         {
             // Intentar convertir el texto a int de forma segura
-            int nroPiso;
-            if (!int.TryParse(TBPISOHABITACION.Text.Trim(), out nroPiso))
+            if (!int.TryParse(TBPISOHABITACION.Text.Trim(), out int nroPiso))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(TBPISOHABITACION, "Debe ingresar un número válido para el piso.");
@@ -87,19 +91,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             }
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             TBPISOHABITACION.Clear();
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void BtnAgregar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
                 try
                 {
-                    int nroPiso;
                     int IdTipoHabitacion = (int)comboBox1.SelectedValue;
-                    if (int.TryParse(TBPISOHABITACION.Text.Trim(), out nroPiso)) { 
+                    if (int.TryParse(TBPISOHABITACION.Text.Trim(), out int nroPiso)) { 
                     _service.AgregarHabitacion(nroPiso, IdTipoHabitacion);
                     MessageBox.Show("habitacion agregada con éxito.", "Éxito",
                                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -112,7 +115,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                     MessageBox.Show("Error al agregar habitacion: " + ex.Message);
                 }
         }
-        private void dgvHabitaciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvHabitaciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía
             if (e.RowIndex < 0) return;

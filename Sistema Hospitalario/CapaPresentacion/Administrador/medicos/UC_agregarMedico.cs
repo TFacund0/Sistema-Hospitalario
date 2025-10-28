@@ -16,7 +16,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
     public partial class UC_agregarMedico : System.Windows.Forms.UserControl
     {
-        private MedicoService _service = new MedicoService(new MedicoRepository());
+        private static readonly MedicoService medicoService = new MedicoService(new MedicoRepository());
+        private readonly MedicoService _service = medicoService;
         public UC_agregarMedico()
         {
             InitializeComponent();
@@ -148,48 +149,24 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 
         // ============================= BOTONES =============================
 
-        private void btnGuardar_Click_1(object sender, EventArgs e)
+        private void BtnGuardar_Click_1(object sender, EventArgs e)
 {
     try
     {
-        // ... (todo tu código de validación de textboxes está perfecto) ...
+        if (!this.ValidateChildren())
+        {
+          MessageBox.Show("Por favor, corrija los errores antes de guardar.", "Error",
+          MessageBoxButtons.OK, MessageBoxIcon.Error);
+          return;
+        }
         string nombre = TBNOMBRE.Text.Trim();
         string apellido = TBAPELLIDO.Text.Trim();
         string dni = TBDNI.Text.Trim();
         string direccion = TBDIRECCION.Text.Trim();
         string matricula = TBMATRICULA.Text.Trim();
         string correo = TBCORREO.Text.Trim();
-
-        if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) || string.IsNullOrEmpty(dni))
-        {
-            MessageBox.Show("Por favor, complete al menos los campos obligatorios: Nombre, Apellido y DNI.");
-            return;
-        }
-
-        // ===============================================
-        // AQUÍ ESTÁ EL CÓDIGO CORRECTO PARA EL COMBOBOX
-        // ===============================================
         
-        int? idEspecialidad = null; // Lo dejamos nulo por defecto
-
-        // 1. Obtenemos el valor seleccionado (que será el ID)
-        var valorSeleccionado = comboBox1.SelectedValue;
-
-        // 2. Verificamos que no sea nulo
-        if (valorSeleccionado != null)
-        {
-            int idSeleccionado = (int)valorSeleccionado;
-
-            // 3. Si el ID es mayor que 0, significa que NO es "ninguna"
-            if (idSeleccionado > 0)
-            {
-                idEspecialidad = idSeleccionado;
-            }
-        }
-        // Si el ID es 0 (o sea, "ninguna"), idEspecialidad se queda como null,
-        // lo cual es perfecto porque la especialidad es opcional.
-        
-        // ===============================================
+        int idEspecialidad = (int)comboBox1.SelectedValue;  
 
         // Guardar en base de datos
         _service.AgregarMedico(nombre, apellido, dni, direccion, matricula, correo, idEspecialidad);
@@ -197,7 +174,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
         MessageBox.Show("Médico registrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         // Opcional: Limpiar el formulario después de guardar
-        btnLimpiar_Click_1(sender, e); 
+        BtnLimpiar_Click_1(sender, e); 
 
     }
     catch (Exception ex)
@@ -206,7 +183,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
     }
 }
 
-        private void btnLimpiar_Click_1(object sender, EventArgs e)
+        private void BtnLimpiar_Click_1(object sender, EventArgs e)
         {
             TBNOMBRE.Clear();
             TBAPELLIDO.Clear();
@@ -221,7 +198,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             errorProvider1.Clear();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void BtnCancelar_Click(object sender, EventArgs e)
         {
             MenuModer parentForm = this.FindForm() as MenuModer;
 
@@ -232,21 +209,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
-                // 1. Obtenemos las especialidades reales de la BD
                 var especialidades = db.especialidad
-                    .Select(e => new { id_especialidad = e.id_especialidad, nombre = e.nombre })
+                    .Select(e => new { e.id_especialidad, e.nombre })
                     .ToList();
 
-                // 4. Agregamos el resto de especialidades de la BD
-                especialidades.AddRange(especialidades);
-
-                // 5. Configuramos el ComboBox
                 comboBox1.DisplayMember = "nombre";
                 comboBox1.ValueMember = "id_especialidad";
                 comboBox1.DataSource = especialidades;
 
-                // Opcional: Dejamos "ninguna" seleccionado por defecto
-                comboBox1.SelectedIndex = 0;
+                comboBox1.SelectedIndex = 10;
             }
         }
 

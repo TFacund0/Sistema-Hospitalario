@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sistema_Hospitalario.CapaDatos.interfaces;
+using Sistema_Hospitalario.CapaNegocio.DTOs.EspecialidadDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.ModerRepos
 {

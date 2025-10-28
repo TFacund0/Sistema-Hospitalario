@@ -1,4 +1,5 @@
 ﻿using Sistema_Hospitalario.CapaDatos.ModerRepos;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.moder;
 using System;
 using System.Collections.Generic;
@@ -86,10 +87,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             if (this.ValidateChildren())
                 try
                 {
-                    int nroPiso;
-                    if (int.TryParse(TBHabitacionCama.Text.Trim(), out nroPiso))
+                    int NroHabitacion;
+                    if (int.TryParse(TBHabitacionCama.Text.Trim(), out NroHabitacion))
                     {
-                        _service.AgregarCama(nroPiso);
+                        _service.AgregarCama(NroHabitacion);
                         MessageBox.Show("habitacion agregada con éxito.", "Éxito",
                                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                         TBHabitacionCama.Clear();
@@ -105,36 +106,67 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         private void dgvCamas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0)
+                return;
 
-            // Obtener el nombre y el id de la especialidad seleccionada
             var row = dgvCamas.Rows[e.RowIndex];
             int nroCama = Convert.ToInt32(row.Cells["NroCama"].Value);
             int nroHabitacion = Convert.ToInt32(row.Cells["NroHabitacion"].Value);
 
-            // Confirmar eliminación
-            DialogResult result = MessageBox.Show(
-                $"¿Desea eliminar la cama {nroCama} de la habitacion {nroHabitacion}?",
-                "Confirmar eliminación",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-            );
+            string nombreColumna = dgvCamas.Columns[e.ColumnIndex].Name;
 
-            if (result == DialogResult.Yes)
+            if (nombreColumna == "Estado")
             {
-                try
-                {
-                    // Eliminar de la base de datos
-                    _service.EliminarCama(nroHabitacion, nroCama);
+                string estadoActual = (string)dgvCamas.Rows[e.RowIndex].Cells["Estado"].Value;
 
-                    // Refrescar la grilla
+                // Le pasamos el estado actual para que el ComboBox aparezca pre-seleccionado.
+                Form_CambiarEstadoCama formDialogo = new Form_CambiarEstadoCama(estadoActual);
+
+                // .ShowDialog() es clave: congela el formulario principal
+                // y espera a que el usuario presione "Aceptar" o "Cancelar".
+                DialogResult resultado = formDialogo.ShowDialog();
+
+                // ----- 4. ACTUAR SEGÚN EL RESULTADO -----
+                if (resultado == DialogResult.OK)
+                {
+                    // El usuario presionó "Aceptar". Obtenemos el nuevo ID del formulario.
+                    int nuevoEstadoId = formDialogo.NuevoEstadoIdSeleccionado;
+
+                    // Llamamos al servicio para que haga la magia en la BD
+                    // (Crearemos este método en el Paso 4)
+                    _service.CambiarEstado(nroHabitacion, nroCama, nuevoEstadoId);
+
                     CargarCamas();
                 }
-                catch (Exception ex)
+            }
+            else
+            {
+
+                // Confirmar eliminación
+                DialogResult result = MessageBox.Show(
+                    $"¿Desea eliminar la cama {nroCama} de la habitacion {nroHabitacion}?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Error al eliminar la especialidad: " + ex.Message);
+                    try
+                    {
+                        // Eliminar de la base de datos
+                        _service.EliminarCama(nroHabitacion, nroCama);
+
+                        // Refrescar la grilla
+                        CargarCamas();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al eliminar la especialidad: " + ex.Message);
+                    }
                 }
             }
+
         }
 
     }

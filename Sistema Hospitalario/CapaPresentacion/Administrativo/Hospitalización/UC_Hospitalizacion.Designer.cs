@@ -362,7 +362,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Nueva Internación";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.btnRegistrarInternacion_Click);
+            this.button2.Click += new System.EventHandler(this.BtnRegistrarInternacion_Click);
             // 
             // label2
             // 

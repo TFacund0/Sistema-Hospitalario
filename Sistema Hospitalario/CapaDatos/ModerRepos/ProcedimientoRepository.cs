@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

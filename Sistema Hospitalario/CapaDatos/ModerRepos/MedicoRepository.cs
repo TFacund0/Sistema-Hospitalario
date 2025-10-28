@@ -1,5 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaDatos.interfaces;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
 using System;
 using System.Collections.Generic;
@@ -7,46 +8,47 @@ using System.Linq;
 
 public class MedicoRepository : IMedicoRepository
 {
-    public List<MostrarMedicoDTO> GetAll()
+    public (bool Ok, int IdGenerado, string Error) Insertar(string nombre, string apellido, string dni, string direccion, string matricula, string correo, int idEspecialidad)
     {
-        using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+        try
         {
-            var lista = (from m in db.medico
-                         join e in db.especialidad on m.id_especialidad equals e.id_especialidad into espJoin
-                         from e in espJoin.DefaultIfEmpty() // Left join
-                         select new MostrarMedicoDTO
-                         {
-                             IdMedico = m.id_medico,
-                             Nombre = m.nombre,
-                             Apellido = m.apellido,
-                             DNI = m.DNI.ToString(),
-                             Direccion = m.direccion,
-                             Matricula = m.matricula,
-                             Correo = m.correo_electronico,
-                             Especialidad = e != null ? e.nombre : "Ninguna"
-                         }).ToList();
-
-            return lista;
-        }
-    }
-
-    public void Insertar(string nombre, string apellido, string dni, string direccion, string matricula, string correo, int? idEspecialidad)
-    {
-        using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
-        {
-            var nuevo = new medico
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
-                nombre = nombre,
-                apellido = apellido,
-                DNI = Convert.ToInt32(dni),
-                direccion = direccion,
-                matricula = matricula,
-                correo_electronico = correo,
-                id_especialidad = (int)idEspecialidad // puede ser null
-            };
+                int dniint = Convert.ToInt32(dni);
+                bool existeDni = db.medico.Any(unMedico => unMedico.DNI == dniint);
+                if (existeDni)
+                    return (false, 0, "Ya existe un medico registrado con ese DNI.");
 
-            db.medico.Add(nuevo);
-            db.SaveChanges();
+                var nuevoMedico = new medico
+                {
+                    nombre = nombre,
+                    apellido = apellido,
+                    DNI = Convert.ToInt32(dni),
+                    direccion = direccion,
+                    matricula = matricula,
+                    correo_electronico = correo,
+                    id_especialidad = idEspecialidad
+                };
+
+                db.medico.Add(nuevoMedico);
+                db.SaveChanges();
+
+                return (true, nuevoMedico.id_medico, null);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Creamos un mensaje de error más detallado
+            string errorMessage = ex.Message;
+
+            // Verificamos si hay una excepción interna (el mensaje de la base de datos)
+            if (ex.InnerException != null)
+            {
+                errorMessage += " --> Inner Exception: " + ex.InnerException.Message;
+            }
+
+            // Devolvemos el mensaje completo
+            return (false, 0, $"Error al guardar el medico: {errorMessage}");
         }
     }
 
@@ -67,7 +69,7 @@ public class MedicoRepository : IMedicoRepository
                     if (ex.InnerException != null && ex.InnerException.InnerException != null &&
                         ex.InnerException.InnerException.Message.Contains("REFERENCE"))
                     {
-                        throw new Exception("No se puede eliminar el médico porque está asociado a otros registros (por ejemplo, turnos).");
+                        throw new Exception("No se puede eliminar el médico porque está asociado a otros registros.");
                     }
                     else
                     {
@@ -75,6 +77,48 @@ public class MedicoRepository : IMedicoRepository
                     }
                 }
             }
+        }
+    }
+
+    public List<MostrarMedicoDTO> ObtenerMedicos()
+    {
+        
+        using (var db = new Sistema_HospitalarioEntities_Conexion())
+        {
+            var lista = db.medico
+                .Select(m => new MostrarMedicoDTO
+                {
+                    IdMedico = m.id_medico,
+                    Nombre = m.nombre,
+                    Apellido = m.apellido,
+                    DNI = m.DNI.ToString(),
+                    Direccion = m.direccion,
+                    Matricula = m.matricula,
+                    Correo = m.correo_electronico,
+                    Especialidad = (m.especialidad != null ? m.especialidad.nombre : "ninguna")
+                })
+                .ToList();
+
+            return lista;
+        }
+    }
+
+    public List<MedicoDto> ListarMedicos()
+    {
+        using (var context = new Sistema_HospitalarioEntities_Conexion())
+        {
+            var medicos = context.medico.ToList();
+            var medicoDtos = medicos.Select(m => new MedicoDto
+            {
+                Id = m.id_medico,
+                Matricula = m.matricula,
+                Nombre = m.nombre,
+                Apellido = m.apellido,
+                Especialidad = m.especialidad.nombre,
+                Direccion = m.direccion,
+                Email = m.correo_electronico
+            }).ToList();
+            return medicoDtos;
         }
     }
 }

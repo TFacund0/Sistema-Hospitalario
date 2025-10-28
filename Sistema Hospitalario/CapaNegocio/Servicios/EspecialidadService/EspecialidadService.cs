@@ -6,25 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sistema_Hospitalario.CapaDatos.interfaces;
-using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.EspecialidadDTO;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.moder
 {
-    public class ProcedimientoService
+    public class EspecialidadService
     {
-        private readonly IProcedimientoRepository _repo;
+        private readonly IEspecialidadRepository _repo;
 
-        public ProcedimientoService(IProcedimientoRepository repo)
+        public EspecialidadService(IEspecialidadRepository repo)
         {
             _repo = repo;
         }
 
-        public List<MostrarProcedimientoDTO> ObtenerProcedimientos()
+        public List<EspecialidadDTO> ObtenerEspecialidades()
         {
             return _repo.GetAll();
         }
 
-        public void AgregarProcedimiento(string nombre)
+        public void AgregarEspecialidad(string nombre)
         {
             if (string.IsNullOrWhiteSpace(nombre))
                 throw new ArgumentException("El nombre es obligatorio.");
@@ -32,7 +32,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.moder
             _repo.Insertar(nombre);
         }
 
-        public void EliminarProcedimiento(string nombre)
+        public void EliminarEspecialidad(string nombre)
         {
             _repo.Eliminar(nombre);
         }

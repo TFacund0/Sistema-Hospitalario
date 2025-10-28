@@ -1,4 +1,5 @@
 ﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos.ModerRepos;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.HomeDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios;
@@ -43,12 +44,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             PacienteService pacienteService = new PacienteService();
             int cantidadPacientes = await pacienteService.ContarPorEstadoIdAsync(1);
 
-            CamaService camaService = new CamaService();
+            CamaService camaService = new CamaService(new CamaRepository());
             int cantidadCamasOcupadas = await camaService.TotalCamasXEstado(9, "Ocupada");
             int cantidadCamas = await camaService.TotalCamas();
 
             InternacionService internacionService = new InternacionService();
-            int cantidadInternaciones = internacionService.listadoInternacionDtos().Count;
+            int cantidadInternaciones = internacionService.ListadoInternacionDtos().Count;
 
             string cantPacientes = cantidadPacientes.ToString();
             string cantCamasOcupadas = cantidadCamasOcupadas.ToString();

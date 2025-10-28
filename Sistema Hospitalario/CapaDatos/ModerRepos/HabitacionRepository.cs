@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,8 +22,8 @@ namespace Sistema_Hospitalario.CapaDatos.ModerRepos
                          {
                              NroPiso = e.nro_piso,
                              NroHabitacion = e.nro_habitacion,
-                             tipo_habitacion = e.tipo_habitacion.nombre,
-                             id_tipo_habitacion = e.id_tipo_habitacion
+                             TipoHabitacion = e.tipo_habitacion.nombre,
+                             IdTipoHabitacion = e.id_tipo_habitacion
 
                          })
                          .ToList();

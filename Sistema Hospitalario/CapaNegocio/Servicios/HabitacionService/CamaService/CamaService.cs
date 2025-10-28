@@ -1,15 +1,68 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos.interfaces;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService
 {
     public class CamaService
     {
+        private readonly ICamaRepository _repo;
+
+        public CamaService(ICamaRepository repo)
+        {
+            _repo = repo;
+        }
+
+        public List<MostrarCamaDTO> ObtenerCamas()
+        {
+            return _repo.GetAll();
+        }
+
+        public void AgregarCama(int nroHabitacion)
+        {
+            if (nroHabitacion < 0)
+                throw new ArgumentException("el numero de habitacion debe ser positivo");
+
+            _repo.Insertar(nroHabitacion);
+        }
+
+        public void EliminarCama(int nroHabitacion, int nroCama)
+        {
+            _repo.Eliminar(nroHabitacion, nroCama);
+        }
+
+        public (bool Ok, string Error) CambiarEstado(int nroHabitacion, int idCama, int nuevoEstadoId)
+        {
+            try
+            {
+                using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+                {
+                    // Buscamos la cama usando su clave primaria compuesta
+                    var cama = db.cama.Find(idCama, nroHabitacion);
+
+                    if (cama == null)
+                    {
+                        return (false, "La cama no fue encontrada.");
+                    }
+
+                    // ¡Actualizamos el estado!
+                    cama.id_estado_cama = nuevoEstadoId;
+                    db.SaveChanges(); // Guardamos
+
+                    return (true, null); // Éxito
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+        }
         // ===================== TOTAL CAMAS =====================
         public async Task<int> TotalCamas()
         {

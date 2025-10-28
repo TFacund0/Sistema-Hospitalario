@@ -1,4 +1,5 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,35 +14,76 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
     public partial class UC_Medicos : UserControl
     {
-        private MedicoService _service = new MedicoService(new MedicoRepository());
+        private static readonly MedicoService medicoService = new MedicoService(new MedicoRepository());
+        private readonly MedicoService _service = medicoService;
 
-        
         public UC_Medicos()
         {
             InitializeComponent();
-            CargarMedicos();
+            CargarComboOrdenamiento();
+            RefrescarGrilla(null, null); 
+            ConfigurarEstilosGrilla();
         }
-        private void CargarMedicos()
+
+        private void RefrescarGrilla(string campo = null, string valor = null)
         {
-            dgvMedicos.DataSource = _service.ObtenerMedicos();
-            dgvMedicos.Columns["IdMedico"].Visible = false;
+
+            var lista = _service.ObtenerMedicos(campo, valor);
+
+            dgvMedicos.DataSource = lista;
+
+            if (dgvMedicos.Columns["IdMedico"] != null)
+            {
+                dgvMedicos.Columns["IdMedico"].Visible = false;
+            }
+        }
+
+        private void ConfigurarEstilosGrilla()
+        {
+
             dgvMedicos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvMedicos.RowHeadersVisible = false;
             dgvMedicos.BackgroundColor = Color.White;
             dgvMedicos.BorderStyle = BorderStyle.None;
             dgvMedicos.EnableHeadersVisualStyles = false;
-
             dgvMedicos.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
             dgvMedicos.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvMedicos.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-
             dgvMedicos.DefaultCellStyle.BackColor = Color.WhiteSmoke;
             dgvMedicos.DefaultCellStyle.ForeColor = Color.Black;
             dgvMedicos.DefaultCellStyle.Font = new Font("Segoe UI", 9);
         }
 
-        private void dgvMedicos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void CargarComboOrdenamiento()
         {
+ 
+            var tipoDelDto = typeof(MostrarMedicoDTO);
+            var propiedades = tipoDelDto.GetProperties();
+            var listaDeNombres = propiedades.Select(p => p.Name).ToList();
+            cboCampo.DataSource = listaDeNombres;
+        }
+
+         private void  BtnBuscar_Click(object sender, EventArgs e)
+        {
+ 
+            string campo = (string)cboCampo.SelectedItem;
+            string valor = txtBuscar.Text.Trim();
+
+            RefrescarGrilla(campo, valor);
+        }
+
+        private void BtnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Clear();
+
+            RefrescarGrilla(null, null);
+
+            txtBuscar.Focus();
+        }
+
+        private void DgvMedicos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
             if (e.RowIndex < 0) return;
 
             var row = dgvMedicos.Rows[e.RowIndex];
@@ -61,7 +103,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
                 try
                 {
                     _service.EliminarMedico(idMedico);
-                    CargarMedicos();
+                    RefrescarGrilla(cboCampo.Text, txtBuscar.Text); 
                 }
                 catch (Exception ex)
                 {
@@ -70,12 +112,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
-        private void btnNuevoPaciente_Click(object sender, EventArgs e)
+        private void BtnNuevoPaciente_Click(object sender, EventArgs e)
         {
             MenuModer parentForm = this.FindForm() as MenuModer;
-
             parentForm.AbrirUserControl(new UC_agregarMedico());
         }
-
     }
 }

@@ -1,19 +1,57 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos.ModerRepos;
+using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaDatos.interfaces;
 using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
 {
     public class HabitacionService
     {
-        // Método para obtener el total de habitaciones registradas en el sistema
+        private readonly IHabitacionRepository _repo;
+
+        public HabitacionService(IHabitacionRepository repo)
+        {
+            _repo = repo;
+        }
+
+        public List<MostrarHabitacionDTO> ObtenerHabitaciones()
+        {
+            return _repo.GetAll();
+        }
+
+        public void AgregarHabitacion(int nroPiso, int tipoHabitacion)
+        {
+            if (nroPiso < 0)
+                throw new ArgumentException("El piso debe ser mayor o igual a 0.");
+
+            _repo.Insertar(nroPiso, tipoHabitacion);
+        }
+
+        public void EliminarHabitacion(int nroPiso, int nroHabitacion)
+        {
+            _repo.Eliminar(nroPiso, nroHabitacion);
+        }
+
+        public List<TiposHabitacionDTO> ListarTiposHabitacion()
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                return db.tipo_habitacion
+                            .Select(e => new TiposHabitacionDTO
+                            {
+                                IdTipoHabitacion = e.id_tipo_habitacion,
+                                Nombre = e.nombre
+
+                            })
+                            .ToList();
+            }
+        }
+
         public async Task<int> TotalHabitaciones()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -50,6 +88,5 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
 
             return habitaciones;
         }
-
     }
 }

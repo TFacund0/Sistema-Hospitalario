@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,7 +32,25 @@ namespace Sistema_Hospitalario.CapaDatos.ModerRepos
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
-                db.cama.Add(new cama { nro_habitacion = nroHabitacion });
+                int idEstadoPorDefecto = db.estado_cama
+                                           .Where(e => e.disponibilidad == "Disponible")
+                                           .Select(e => e.id_estado_cama)
+                                           .FirstOrDefault();
+
+                if (idEstadoPorDefecto == 0)
+                {
+                    // Lanzamos un error claro si no existe el estado "Disponible"
+                    throw new Exception("Error de configuración: No se encontró el estado 'Disponible' en la base de datos.");
+                }
+
+                // 3. Creamos la cama con el ID de estado correcto
+                var nuevaCama = new cama
+                {
+                    nro_habitacion = nroHabitacion,
+                    id_estado_cama = idEstadoPorDefecto
+                };
+
+                db.cama.Add(nuevaCama);
                 db.SaveChanges();
             }
         }

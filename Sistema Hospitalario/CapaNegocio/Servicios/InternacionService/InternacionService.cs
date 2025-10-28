@@ -10,7 +10,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
 {
     public class InternacionService
     {
-        public List<ListadoInternacionDto> listadoInternacionDtos()
+        public List<ListadoInternacionDto> ListadoInternacionDtos()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
@@ -18,16 +18,16 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
                     .Select(i => new ListadoInternacionDto
                     {
                         Nro_habitacion = i.nro_habitacion,
-                        Nro_piso = i.habitacion.nro_piso,
+                        Nro_piso = i.cama.habitacion.nro_piso,
                         Internado = i.paciente.nombre + " " + i.paciente.apellido,
                         Fecha_ingreso = i.fecha_inicio,
                         Cama = i.id_cama,
-                        Tipo_habitacion = i.habitacion.tipo_habitacion.nombre
+                        Tipo_habitacion = i.cama.habitacion.tipo_habitacion.nombre
                     }).ToList();
             }
         }
 
-        public void altaInternacion(InternacionDto dto)
+        public void AltaInternacion(InternacionDto dto)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
             {

@@ -4,7 +4,6 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
 using System;
 using System.Collections.Generic;
@@ -18,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
+using Sistema_Hospitalario.CapaDatos.ModerRepos;
 
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
@@ -25,7 +25,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
     public partial class UC_VisualizarTurno : UserControl
     {
         // Estado del turno que se está visualizando
-        private TurnoDTO _turno;
+        private readonly TurnoDTO _turno;
         
         // Modo edición
         private bool _modoEdicion = false;
@@ -109,7 +109,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             var fuente = listaPacientes
                 .Where(p => p.Estado == "Activo" || p.Estado == "Internado")
                 .Select(p => new {
-                    Id = p.Id,
+                    p.Id,
                     Display = $"{p.Paciente} ({p.DNI})"
                 })
                 .ToList();
@@ -136,7 +136,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             
             var fuente = listaMedicos
                 .Select(m => new {
-                    Id = m.Id,
+                    m.Id,
                     Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
                 })
                 .ToList();
@@ -157,12 +157,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // Carga los procedimientos en el ComboBox
         private void CargarComboProcedimiento(TurnoDTO p_turno)
         {
-            ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
+            ProcedimientoService _servicioProcedimiento = new ProcedimientoService(new ProcedimientoRepository());
             List<ProcedimientoDto> listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
 
             var fuente = listaProcedimientos
                 .Select(p => new {
-                    Id = p.Id,
+                    p.Id,
                     Display = p.Name
                 })
                 .ToList();
@@ -205,7 +205,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
         // ======================== EVENTOS BOTONES ========================
         // Botón Modificar/Guardar
-        private void btnModificar_Click(object sender, EventArgs e)
+        private void BtnModificar_Click(object sender, EventArgs e)
         {
             if (!_modoEdicion)
             {
@@ -244,7 +244,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // Botón Eliminar
-        private void btnEliminar_Click(object sender, EventArgs e)
+        private void BtnEliminar_Click(object sender, EventArgs e)
         {
             TurnoService turnoService = new TurnoService();
             var dr = MessageBox.Show("¿Eliminar este turno?",
@@ -260,7 +260,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // Botón Volver
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void BtnVolver_Click(object sender, EventArgs e)
         {
             CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
         }

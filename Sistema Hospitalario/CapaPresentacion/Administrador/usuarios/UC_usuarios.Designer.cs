@@ -30,37 +30,38 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnNuevoPaciente = new System.Windows.Forms.Button();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblTotalGerentes = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btnNuevoUsuario = new System.Windows.Forms.Button();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblTotalAdministradores = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cboCampo = new System.Windows.Forms.ComboBox();
-            this.dgvPacientes = new System.Windows.Forms.DataGridView();
+            this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblTotalAdministrativos = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.lblPacientes = new System.Windows.Forms.Label();
+            this.lblTotalMedicos = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEdad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +82,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.LightGray;
-            this.panel2.Controls.Add(this.btnNuevoPaciente);
+            this.panel2.Controls.Add(this.panel5);
+            this.panel2.Controls.Add(this.btnNuevoUsuario);
             this.panel2.Controls.Add(this.panel13);
             this.panel2.Controls.Add(this.panel8);
             this.panel2.Controls.Add(this.panel4);
@@ -94,22 +96,67 @@
             this.panel2.Size = new System.Drawing.Size(901, 553);
             this.panel2.TabIndex = 12;
             // 
-            // btnNuevoPaciente
+            // panel5
             // 
-            this.btnNuevoPaciente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNuevoPaciente.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnNuevoPaciente.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.btnNuevoPaciente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNuevoPaciente.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevoPaciente.ForeColor = System.Drawing.Color.White;
-            this.btnNuevoPaciente.Location = new System.Drawing.Point(724, 30);
-            this.btnNuevoPaciente.Margin = new System.Windows.Forms.Padding(2);
-            this.btnNuevoPaciente.Name = "btnNuevoPaciente";
-            this.btnNuevoPaciente.Size = new System.Drawing.Size(146, 23);
-            this.btnNuevoPaciente.TabIndex = 18;
-            this.btnNuevoPaciente.Text = "Nuevo Usuario";
-            this.btnNuevoPaciente.UseVisualStyleBackColor = false;
-            this.btnNuevoPaciente.Click += new System.EventHandler(this.btnNuevoPaciente_Click);
+            this.panel5.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panel5.BackColor = System.Drawing.Color.White;
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.label11);
+            this.panel5.Controls.Add(this.lblTotalGerentes);
+            this.panel5.Controls.Add(this.label14);
+            this.panel5.Location = new System.Drawing.Point(499, 106);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(147, 83);
+            this.panel5.TabIndex = 13;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 51);
+            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(50, 13);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "Gerentes";
+            // 
+            // lblTotalGerentes
+            // 
+            this.lblTotalGerentes.AutoSize = true;
+            this.lblTotalGerentes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalGerentes.Location = new System.Drawing.Point(16, 34);
+            this.lblTotalGerentes.Name = "lblTotalGerentes";
+            this.lblTotalGerentes.Size = new System.Drawing.Size(16, 14);
+            this.lblTotalGerentes.TabIndex = 11;
+            this.lblTotalGerentes.Text = "6";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(15, 15);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(40, 13);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "Total";
+            // 
+            // btnNuevoUsuario
+            // 
+            this.btnNuevoUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNuevoUsuario.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnNuevoUsuario.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnNuevoUsuario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNuevoUsuario.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNuevoUsuario.ForeColor = System.Drawing.Color.White;
+            this.btnNuevoUsuario.Location = new System.Drawing.Point(724, 30);
+            this.btnNuevoUsuario.Margin = new System.Windows.Forms.Padding(2);
+            this.btnNuevoUsuario.Name = "btnNuevoUsuario";
+            this.btnNuevoUsuario.Size = new System.Drawing.Size(146, 23);
+            this.btnNuevoUsuario.TabIndex = 18;
+            this.btnNuevoUsuario.Text = "Nuevo Usuario";
+            this.btnNuevoUsuario.UseVisualStyleBackColor = false;
+            this.btnNuevoUsuario.Click += new System.EventHandler(this.BtnNuevoUsuario_Click);
             // 
             // panel13
             // 
@@ -117,7 +164,7 @@
             this.panel13.BackColor = System.Drawing.Color.White;
             this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel13.Controls.Add(this.label6);
-            this.panel13.Controls.Add(this.label9);
+            this.panel13.Controls.Add(this.lblTotalAdministradores);
             this.panel13.Controls.Add(this.label12);
             this.panel13.Location = new System.Drawing.Point(724, 106);
             this.panel13.Margin = new System.Windows.Forms.Padding(2);
@@ -135,16 +182,15 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "Administradores";
             // 
-            // label9
+            // lblTotalAdministradores
             // 
-            this.label9.AutoSize = true;
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(11, 37);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(18, 16);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "3";
+            this.lblTotalAdministradores.AutoSize = true;
+            this.lblTotalAdministradores.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalAdministradores.Location = new System.Drawing.Point(11, 37);
+            this.lblTotalAdministradores.Name = "lblTotalAdministradores";
+            this.lblTotalAdministradores.Size = new System.Drawing.Size(16, 14);
+            this.lblTotalAdministradores.TabIndex = 11;
+            this.lblTotalAdministradores.Text = "3";
             // 
             // label12
             // 
@@ -167,7 +213,7 @@
             this.panel8.Controls.Add(this.btnBuscar);
             this.panel8.Controls.Add(this.txtBuscar);
             this.panel8.Controls.Add(this.cboCampo);
-            this.panel8.Controls.Add(this.dgvPacientes);
+            this.panel8.Controls.Add(this.dgvUsuarios);
             this.panel8.Controls.Add(this.label3);
             this.panel8.Location = new System.Drawing.Point(32, 217);
             this.panel8.Margin = new System.Windows.Forms.Padding(2);
@@ -188,6 +234,7 @@
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
             // 
             // btnBuscar
             // 
@@ -202,6 +249,7 @@
             this.btnBuscar.TabIndex = 19;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.BtnBuscar_Click);
             // 
             // txtBuscar
             // 
@@ -221,26 +269,22 @@
             this.cboCampo.Size = new System.Drawing.Size(92, 21);
             this.cboCampo.TabIndex = 10;
             // 
-            // dgvPacientes
+            // dgvUsuarios
             // 
-            this.dgvPacientes.AllowUserToAddRows = false;
-            this.dgvPacientes.AllowUserToDeleteRows = false;
-            this.dgvPacientes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvUsuarios.AllowUserToAddRows = false;
+            this.dgvUsuarios.AllowUserToDeleteRows = false;
+            this.dgvUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPacientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colPaciente,
-            this.colDni,
-            this.colEdad,
-            this.colEstado});
-            this.dgvPacientes.Location = new System.Drawing.Point(16, 65);
-            this.dgvPacientes.Name = "dgvPacientes";
-            this.dgvPacientes.ReadOnly = true;
-            this.dgvPacientes.RowHeadersWidth = 51;
-            this.dgvPacientes.RowTemplate.Height = 24;
-            this.dgvPacientes.Size = new System.Drawing.Size(807, 213);
-            this.dgvPacientes.TabIndex = 9;
+            this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsuarios.Location = new System.Drawing.Point(16, 65);
+            this.dgvUsuarios.Name = "dgvUsuarios";
+            this.dgvUsuarios.ReadOnly = true;
+            this.dgvUsuarios.RowHeadersWidth = 51;
+            this.dgvUsuarios.RowTemplate.Height = 24;
+            this.dgvUsuarios.Size = new System.Drawing.Size(807, 213);
+            this.dgvUsuarios.TabIndex = 9;
+            this.dgvUsuarios.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUsuarios_CellDoubleClick);
             // 
             // label3
             // 
@@ -260,20 +304,51 @@
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.label4);
-            this.panel4.Controls.Add(this.label8);
+            this.panel4.Controls.Add(this.lblTotalAdministrativos);
             this.panel4.Controls.Add(this.label10);
-            this.panel4.Location = new System.Drawing.Point(385, 106);
+            this.panel4.Location = new System.Drawing.Point(271, 106);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(147, 83);
             this.panel4.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 51);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Administrativos";
+            // 
+            // lblTotalAdministrativos
+            // 
+            this.lblTotalAdministrativos.AutoSize = true;
+            this.lblTotalAdministrativos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalAdministrativos.Location = new System.Drawing.Point(16, 34);
+            this.lblTotalAdministrativos.Name = "lblTotalAdministrativos";
+            this.lblTotalAdministrativos.Size = new System.Drawing.Size(16, 14);
+            this.lblTotalAdministrativos.TabIndex = 11;
+            this.lblTotalAdministrativos.Text = "6";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(15, 15);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(40, 13);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Total";
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.label7);
-            this.panel3.Controls.Add(this.lblPacientes);
+            this.panel3.Controls.Add(this.lblTotalMedicos);
             this.panel3.Controls.Add(this.label5);
             this.panel3.Location = new System.Drawing.Point(32, 106);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
@@ -291,15 +366,15 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "Medicos";
             // 
-            // lblPacientes
+            // lblTotalMedicos
             // 
-            this.lblPacientes.AutoSize = true;
-            this.lblPacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPacientes.Location = new System.Drawing.Point(14, 34);
-            this.lblPacientes.Name = "lblPacientes";
-            this.lblPacientes.Size = new System.Drawing.Size(25, 14);
-            this.lblPacientes.TabIndex = 8;
-            this.lblPacientes.Text = "10";
+            this.lblTotalMedicos.AutoSize = true;
+            this.lblTotalMedicos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalMedicos.Location = new System.Drawing.Point(14, 34);
+            this.lblTotalMedicos.Name = "lblTotalMedicos";
+            this.lblTotalMedicos.Size = new System.Drawing.Size(25, 14);
+            this.lblTotalMedicos.TabIndex = 8;
+            this.lblTotalMedicos.Text = "10";
             // 
             // label5
             // 
@@ -334,71 +409,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Gestión de Usuarios";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 51);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Administrativos";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(16, 34);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(16, 14);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "6";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(15, 15);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Total";
-            // 
-            // colPaciente
-            // 
-            this.colPaciente.HeaderText = "Usuario";
-            this.colPaciente.MinimumWidth = 6;
-            this.colPaciente.Name = "colPaciente";
-            this.colPaciente.ReadOnly = true;
-            this.colPaciente.Width = 125;
-            // 
-            // colDni
-            // 
-            this.colDni.HeaderText = "DNI";
-            this.colDni.MinimumWidth = 6;
-            this.colDni.Name = "colDni";
-            this.colDni.ReadOnly = true;
-            this.colDni.Width = 125;
-            // 
-            // colEdad
-            // 
-            this.colEdad.HeaderText = "Edad";
-            this.colEdad.MinimumWidth = 6;
-            this.colEdad.Name = "colEdad";
-            this.colEdad.ReadOnly = true;
-            this.colEdad.Width = 125;
-            // 
-            // colEstado
-            // 
-            this.colEstado.HeaderText = "Tipo";
-            this.colEstado.MinimumWidth = 6;
-            this.colEstado.Name = "colEstado";
-            this.colEstado.ReadOnly = true;
-            this.colEstado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colEstado.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colEstado.Width = 125;
-            // 
             // UC_usuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -409,11 +419,13 @@
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -426,31 +438,31 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnNuevoPaciente;
+        private System.Windows.Forms.Button btnNuevoUsuario;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblTotalAdministradores;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.ComboBox cboCampo;
-        private System.Windows.Forms.DataGridView dgvPacientes;
+        private System.Windows.Forms.DataGridView dgvUsuarios;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label lblPacientes;
+        private System.Windows.Forms.Label lblTotalMedicos;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblTotalAdministrativos;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDni;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEdad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblTotalGerentes;
+        private System.Windows.Forms.Label label14;
     }
 }

@@ -75,7 +75,7 @@
             this.btnNuevoPaciente.TabIndex = 18;
             this.btnNuevoPaciente.Text = "Nuevo Medico";
             this.btnNuevoPaciente.UseVisualStyleBackColor = false;
-            this.btnNuevoPaciente.Click += new System.EventHandler(this.btnNuevoPaciente_Click);
+            this.btnNuevoPaciente.Click += new System.EventHandler(this.BtnNuevoPaciente_Click);
             // 
             // panel8
             // 
@@ -108,6 +108,7 @@
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
             // 
             // btnBuscar
             // 
@@ -122,6 +123,7 @@
             this.btnBuscar.TabIndex = 19;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.BtnBuscar_Click);
             // 
             // txtBuscar
             // 
@@ -156,7 +158,7 @@
             this.dgvMedicos.RowTemplate.Height = 24;
             this.dgvMedicos.Size = new System.Drawing.Size(807, 322);
             this.dgvMedicos.TabIndex = 9;
-            this.dgvMedicos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMedicos_CellDoubleClick);
+           this.dgvMedicos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvMedicos_CellDoubleClick);
             // 
             // label3
             // 

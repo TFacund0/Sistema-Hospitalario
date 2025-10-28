@@ -4,7 +4,6 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios;
 using Sistema_Hospitalario.CapaNegocio.Servicios.moder;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
-using Sistema_Hospitalario.Sistema_HospitalarioDataSet1TableAdapters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -98,12 +97,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         }
 
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             TBESPECIALIDAD.Clear();
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void BtnAgregar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
                 try
@@ -121,7 +120,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 }
         }
 
-        private void dgvEspecialidades_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvEspecialidades_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía
             if (e.RowIndex < 0) return;

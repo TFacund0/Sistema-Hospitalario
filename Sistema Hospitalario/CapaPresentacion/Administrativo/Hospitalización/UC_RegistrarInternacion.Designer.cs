@@ -159,7 +159,7 @@
             this.btnCancelar.TabIndex = 16;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // btnLimpiar
             // 
@@ -171,7 +171,7 @@
             this.btnLimpiar.TabIndex = 15;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
             // 
             // btnGuardar
             // 
@@ -186,7 +186,7 @@
             this.btnGuardar.TabIndex = 14;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
-            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            this.btnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
             // 
             // panel24
             // 
@@ -212,7 +212,7 @@
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.Size = new System.Drawing.Size(1010, 77);
             this.txtObservaciones.TabIndex = 1;
-            this.txtObservaciones.Validating += new System.ComponentModel.CancelEventHandler(this.txtObservaciones_Validating);
+            this.txtObservaciones.Validating += new System.ComponentModel.CancelEventHandler(this.TxtObservaciones_Validating);
             // 
             // label14
             // 
@@ -253,7 +253,7 @@
             this.cbCama.Name = "cbCama";
             this.cbCama.Size = new System.Drawing.Size(235, 24);
             this.cbCama.TabIndex = 3;
-            this.cbCama.Validating += new System.ComponentModel.CancelEventHandler(this.cbCama_Validating);
+            this.cbCama.Validating += new System.ComponentModel.CancelEventHandler(this.CbCama_Validating);
             // 
             // label10
             // 
@@ -294,7 +294,7 @@
             this.dtpFechaFin.ShowCheckBox = true;
             this.dtpFechaFin.Size = new System.Drawing.Size(706, 22);
             this.dtpFechaFin.TabIndex = 3;
-            this.dtpFechaFin.Validating += new System.ComponentModel.CancelEventHandler(this.dtpFechaFin_Validating);
+            this.dtpFechaFin.Validating += new System.ComponentModel.CancelEventHandler(this.DtpFechaFin_Validating);
             // 
             // tableLayoutPanel2
             // 
@@ -334,8 +334,8 @@
             this.txtPiso.Name = "txtPiso";
             this.txtPiso.Size = new System.Drawing.Size(188, 22);
             this.txtPiso.TabIndex = 5;
-            this.txtPiso.TextChanged += new System.EventHandler(this.txtPiso_TextChanged);
-            this.txtPiso.Validating += new System.ComponentModel.CancelEventHandler(this.txtPiso_Validating);
+            this.txtPiso.TextChanged += new System.EventHandler(this.TxtPiso_TextChanged);
+            this.txtPiso.Validating += new System.ComponentModel.CancelEventHandler(this.TxtPiso_Validating);
             // 
             // label9
             // 
@@ -364,9 +364,9 @@
             this.cbHabitacion.Name = "cbHabitacion";
             this.cbHabitacion.Size = new System.Drawing.Size(235, 24);
             this.cbHabitacion.TabIndex = 2;
-            this.cbHabitacion.TextUpdate += new System.EventHandler(this.cbHabitacion_TextUpdate);
-            this.cbHabitacion.TextChanged += new System.EventHandler(this.cbHabitacion_TextChanged);
-            this.cbHabitacion.Validating += new System.ComponentModel.CancelEventHandler(this.cbHabitacion_Validating);
+            this.cbHabitacion.TextUpdate += new System.EventHandler(this.CbHabitacion_TextUpdate);
+            this.cbHabitacion.TextChanged += new System.EventHandler(this.CbHabitacion_TextChanged);
+            this.cbHabitacion.Validating += new System.ComponentModel.CancelEventHandler(this.CbHabitacion_Validating);
             // 
             // label7
             // 
@@ -396,7 +396,7 @@
             this.dtpFechaInicio.Name = "dtpFechaInicio";
             this.dtpFechaInicio.Size = new System.Drawing.Size(454, 22);
             this.dtpFechaInicio.TabIndex = 2;
-            this.dtpFechaInicio.Validating += new System.ComponentModel.CancelEventHandler(this.dtpFechaInicio_Validating);
+            this.dtpFechaInicio.Validating += new System.ComponentModel.CancelEventHandler(this.DtpFechaInicio_Validating);
             // 
             // label8
             // 
@@ -436,7 +436,7 @@
             this.cbMedico.Name = "cbMedico";
             this.cbMedico.Size = new System.Drawing.Size(987, 24);
             this.cbMedico.TabIndex = 2;
-            this.cbMedico.Validating += new System.ComponentModel.CancelEventHandler(this.cbMedico_Validating);
+            this.cbMedico.Validating += new System.ComponentModel.CancelEventHandler(this.CbMedico_Validating);
             // 
             // label5
             // 
@@ -477,7 +477,7 @@
             this.cbProcedimiento.Name = "cbProcedimiento";
             this.cbProcedimiento.Size = new System.Drawing.Size(480, 24);
             this.cbProcedimiento.TabIndex = 2;
-            this.cbProcedimiento.Validating += new System.ComponentModel.CancelEventHandler(this.cbProcedimiento_Validating);
+            this.cbProcedimiento.Validating += new System.ComponentModel.CancelEventHandler(this.CbProcedimiento_Validating);
             // 
             // label4
             // 
@@ -506,8 +506,8 @@
             this.cbPaciente.Name = "cbPaciente";
             this.cbPaciente.Size = new System.Drawing.Size(463, 24);
             this.cbPaciente.TabIndex = 1;
-            this.cbPaciente.TextUpdate += new System.EventHandler(this.cbPaciente_TextUpdate);
-            this.cbPaciente.Validating += new System.ComponentModel.CancelEventHandler(this.cbPaciente_Validating);
+            this.cbPaciente.TextUpdate += new System.EventHandler(this.CbPaciente_TextUpdate);
+            this.cbPaciente.Validating += new System.ComponentModel.CancelEventHandler(this.CbPaciente_Validating);
             // 
             // Paciente
             // 

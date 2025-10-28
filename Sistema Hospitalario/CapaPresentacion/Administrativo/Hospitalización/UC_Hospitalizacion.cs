@@ -1,4 +1,10 @@
 ﻿
+using Sistema_Hospitalario.CapaDatos.ModerRepos;
+using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,11 +15,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -22,8 +23,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Servicio para interactuar con la capa de negocio
         private readonly PacienteService pacienteService = new PacienteService();
         private readonly InternacionService internacionService = new InternacionService();
-        private readonly HabitacionService habitacionService = new HabitacionService();
-        private readonly CamaService camaService = new CamaService();
+        private readonly HabitacionService habitacionService = new HabitacionService(new HabitacionRepository());
+        private readonly CamaService camaService = new CamaService(new CamaRepository());
 
         // Lista para almacenar los pacientes obtenidos del servicio en el dgvInternaciones
         private List<ListadoInternacionDto> listaInternaciones = new List<ListadoInternacionDto>();
@@ -47,7 +48,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ============================ BOTÓN REGISTRAR INTERNACIÓN ============================
-        private void btnRegistrarInternacion_Click(object sender, EventArgs e)
+        private void BtnRegistrarInternacion_Click(object sender, EventArgs e)
         {
             RegistrarInternacionSolicitada?.Invoke(this, EventArgs.Empty);
         }
@@ -98,7 +99,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Método que carga los datos en el DataGridView de Internaciones
         private void CargarDatosDGV()
         {
-            listaInternaciones = internacionService.listadoInternacionDtos();
+            listaInternaciones = internacionService.ListadoInternacionDtos();
             enlaceInternaciones.DataSource = listaInternaciones;
             dgvInternaciones.DataSource = listaInternaciones;
         }

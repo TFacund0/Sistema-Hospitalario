@@ -1,27 +1,52 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos.ModerRepos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Sistema_Hospitalario.CapaDatos.interfaces;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
-using Sistema_Hospitalario.CapaDatos;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService
 {
     public class ProcedimientoService
     {
-        public List<ProcedimientoDto> ListarProcedimientos()
+        private readonly IProcedimientoRepository _repo;
+
+        public ProcedimientoService(IProcedimientoRepository repo)
         {
-            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            _repo = repo;
+        }
+
+        public List<MostrarProcedimientoDTO> ObtenerProcedimientos()
+        {
+            return _repo.GetAll();
+        }
+
+        public void AgregarProcedimiento(string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre))
+                throw new ArgumentException("El nombre es obligatorio.");
+
+            _repo.Insertar(nombre);
+        }
+
+        public void EliminarProcedimiento(string nombre)
+        {
+            _repo.Eliminar(nombre);
+        }
+        public List<ProcedimientoDto> ListarProcedimientos() { 
+           
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
                 return db.procedimiento
-                    .Select(p => new ProcedimientoDto
-                    {
-                        Id = p.id_procedimiento,
-                        Name = p.nombre
-                    })
-                    .ToList();
+                         .Select(p => new ProcedimientoDto
+                         {
+                             Id = p.id_procedimiento,
+                             Name = p.nombre
+                         })
+                         .ToList();
             }
         }
     }

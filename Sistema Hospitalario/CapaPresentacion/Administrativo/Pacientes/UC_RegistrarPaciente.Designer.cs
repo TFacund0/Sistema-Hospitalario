@@ -168,7 +168,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(977, 22);
             this.txtEmail.TabIndex = 3;
-            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.TxtEmail_Validating);
             // 
             // label6
             // 
@@ -201,7 +201,7 @@
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(977, 22);
             this.txtDireccion.TabIndex = 3;
-            this.txtDireccion.Validating += new System.ComponentModel.CancelEventHandler(this.txtDireccion_Validating);
+            this.txtDireccion.Validating += new System.ComponentModel.CancelEventHandler(this.TxtDireccion_Validating);
             // 
             // label5
             // 
@@ -223,7 +223,7 @@
             this.btnCancelar.TabIndex = 16;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // btnLimpiar
             // 
@@ -235,7 +235,7 @@
             this.btnLimpiar.TabIndex = 15;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
             // 
             // btnGuardar
             // 
@@ -250,7 +250,7 @@
             this.btnGuardar.TabIndex = 14;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
-            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            this.btnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
             // 
             // panel24
             // 
@@ -276,7 +276,7 @@
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.Size = new System.Drawing.Size(1016, 70);
             this.txtObservaciones.TabIndex = 1;
-            this.txtObservaciones.Validating += new System.ComponentModel.CancelEventHandler(this.txtObservaciones_Validating);
+            this.txtObservaciones.Validating += new System.ComponentModel.CancelEventHandler(this.TxtObservaciones_Validating);
             // 
             // label14
             // 
@@ -350,7 +350,7 @@
             this.txtTelefono.Size = new System.Drawing.Size(470, 22);
             this.txtTelefono.TabIndex = 6;
             this.txtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros);
-            this.txtTelefono.Validating += new System.ComponentModel.CancelEventHandler(this.txtTelefono_Validating);
+            this.txtTelefono.Validating += new System.ComponentModel.CancelEventHandler(this.TxtTelefono_Validating);
             // 
             // label3
             // 
@@ -400,7 +400,7 @@
             this.txtDni.Size = new System.Drawing.Size(466, 22);
             this.txtDni.TabIndex = 3;
             this.txtDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumeros);
-            this.txtDni.Validating += new System.ComponentModel.CancelEventHandler(this.txtDni_Validating);
+            this.txtDni.Validating += new System.ComponentModel.CancelEventHandler(this.TxtDni_Validating);
             // 
             // label7
             // 
@@ -430,7 +430,7 @@
             this.dtpNacimiento.Name = "dtpNacimiento";
             this.dtpNacimiento.Size = new System.Drawing.Size(465, 22);
             this.dtpNacimiento.TabIndex = 2;
-            this.dtpNacimiento.Validating += new System.ComponentModel.CancelEventHandler(this.dtpNacimiento_Validating);
+            this.dtpNacimiento.Validating += new System.ComponentModel.CancelEventHandler(this.DtpNacimiento_Validating);
             // 
             // label8
             // 
@@ -475,7 +475,7 @@
             this.txtApellido.Size = new System.Drawing.Size(465, 22);
             this.txtApellido.TabIndex = 3;
             this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloLetras);
-            this.txtApellido.Validating += new System.ComponentModel.CancelEventHandler(this.txtApellido_Validating);
+            this.txtApellido.Validating += new System.ComponentModel.CancelEventHandler(this.TxtApellido_Validating);
             // 
             // label4
             // 
@@ -508,7 +508,7 @@
             this.txtNombre.Size = new System.Drawing.Size(470, 22);
             this.txtNombre.TabIndex = 1;
             this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloLetras);
-            this.txtNombre.Validating += new System.ComponentModel.CancelEventHandler(this.txtNombre_Validating);
+            this.txtNombre.Validating += new System.ComponentModel.CancelEventHandler(this.TxtNombre_Validating);
             // 
             // Paciente
             // 

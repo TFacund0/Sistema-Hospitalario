@@ -100,11 +100,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
-                var turnoExistente = db.turno.Find(id_turno);
-                if (turnoExistente == null)
-                {
-                    throw new Exception("Turno no encontrado.");
-                }
+                var turnoExistente = db.turno.Find(id_turno) ?? throw new Exception("Turno no encontrado.");
                 turnoExistente.id_paciente = turnoDto.Id_paciente;
                 turnoExistente.id_medico = turnoDto.Id_medico;
                 turnoExistente.id_procedimiento = turnoDto.Id_procedimiento;
@@ -137,11 +133,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
-                var turnoExistente = db.turno.Find(id_turno);
-                if (turnoExistente == null)
-                {
-                    throw new Exception("Turno no encontrado.");
-                }
+                var turnoExistente = db.turno.Find(id_turno) ?? throw new Exception("Turno no encontrado.");
                 db.turno.Remove(turnoExistente);
                 db.SaveChanges();
             }

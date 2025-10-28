@@ -132,7 +132,7 @@
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click);
             // 
             // btnAgregar
             // 
@@ -147,7 +147,7 @@
             this.btnAgregar.TabIndex = 19;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = false;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            this.btnAgregar.Click += new System.EventHandler(this.BtnAgregar_Click);
             // 
             // label4
             // 
@@ -176,7 +176,7 @@
             this.dgvHabitaciones.RowTemplate.Height = 24;
             this.dgvHabitaciones.Size = new System.Drawing.Size(413, 322);
             this.dgvHabitaciones.TabIndex = 9;
-            this.dgvHabitaciones.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHabitaciones_CellDoubleClick);
+            this.dgvHabitaciones.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvHabitaciones_CellDoubleClick);
             // 
             // label3
             // 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
@@ -90,12 +91,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             }
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             TBPROCEDIMIENTO.Clear();
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void BtnAgregar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
                 try
@@ -112,7 +113,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                     MessageBox.Show("Error al agregar especialidad: " + ex.Message);
                 }
         }
-            private void dgvProcedimientos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvProcedimientos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía
             if (e.RowIndex < 0) return;

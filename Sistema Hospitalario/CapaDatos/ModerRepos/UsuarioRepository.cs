@@ -1,0 +1,106 @@
+﻿using Sistema_Hospitalario.CapaDatos.interfaces;
+using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Sistema_Hospitalario.CapaDatos.ModerRepos
+{
+    public class UsuarioRepository : IUsuarioRepository
+    {
+        public (bool Ok, int IdGenerado, string Error) Insertar(string Nombre, string Apellido, string NombreUsuario, int Estado, int Rol, string Password, string correo)
+        {
+            try
+            {
+                using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+                {
+                    bool existeUsuario = db.usuario.Any(unUsuario => unUsuario.username == NombreUsuario);
+                    if (existeUsuario)
+                        return (false, 0, "Ya existe un usuario registrado con ese nombre de usuario.");
+
+                    var usuarioCreado = new usuario
+                    {
+                        nombre = Nombre,
+                        apellido = Apellido,
+                        username = NombreUsuario,
+                        id_estado_usuario = Estado,
+                        id_rol = Rol,
+                        password = Password,
+                        email = correo
+                    };
+
+                    db.usuario.Add(usuarioCreado);
+                    db.SaveChanges();
+
+                    return (true, usuarioCreado.id_usuario, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Creamos un mensaje de error más detallado
+                string errorMessage = ex.Message;
+
+                // Verificamos si hay una excepción interna (el mensaje de la base de datos)
+                if (ex.InnerException != null)
+                {
+                    errorMessage += " --> Inner Exception: " + ex.InnerException.Message;
+                }
+
+                // Devolvemos el mensaje completo
+                return (false, 0, $"Error al guardar el usuario: {errorMessage}");
+            }
+        }
+
+        public void Eliminar(int IdUsuario)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var usuario = db.usuario.FirstOrDefault(m => m.id_usuario == IdUsuario);
+                if (usuario != null)
+                {
+                    try
+                    {
+                        db.usuario.Remove(usuario);
+                        db.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                    {
+                        if (ex.InnerException == null || ex.InnerException.InnerException == null)
+                        {
+                            throw;
+                        }
+                        else
+                        {
+                            throw new Exception("No se puede eliminar el usuario .");
+                        }
+                    }
+                }
+            }
+        }
+        public List<MostrarUsuariosDTO> ObtenerUsuarios()
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var lista = db.usuario
+                    .Select(m => new MostrarUsuariosDTO
+                    {
+                        IdUsuario = m.id_usuario,
+                        Nombre = m.nombre,
+                        Apellido = m.apellido,
+                        NombreUsuario = m.username,
+                        Estado = m.estado_usuario.nombre,
+                        Rol = m.rol.nombre,
+                        Password = m.password,
+                        Correo = m.email
+                    })
+                    .ToList();
+
+                return lista;
+            }
+
+        }
+    }
+}

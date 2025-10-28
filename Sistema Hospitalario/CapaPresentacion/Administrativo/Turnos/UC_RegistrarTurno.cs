@@ -9,12 +9,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos.ModerRepos;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 
@@ -24,13 +24,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_RegistrarTurno : UserControl
     {
-        private PacienteService _servicioPaciente = new PacienteService();
-        private MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
-        private ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
+        private static readonly PacienteService pacienteService = new PacienteService();
+        private readonly PacienteService _servicioPaciente = pacienteService;
+        private readonly MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
+        private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService(new ProcedimientoRepository());
 
-        private List<string> _maestroPaciente = new List<string>();
-        private List<string> _maestroMedico = new List<string>();
-        private List<string> _maestroProcedimiento = new List<string>();
+        private readonly List<string> _maestroPaciente = new List<string>();
+        private readonly List<string> _maestroMedico = new List<string>();
+        private readonly List<string> _maestroProcedimiento = new List<string>();
 
         // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
         public event EventHandler CancelarTurnoSolicitado;
@@ -53,7 +54,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             var fuente = listaPacientes
                 .Where(p => p.Estado_paciente == "Activo")
                 .Select(p => new {
-                    Id = p.Id,
+                    p.Id,
                     Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"
                 })
                 .ToList();
@@ -73,7 +74,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
             var fuente = listaMedicos
                 .Select(m => new {
-                    Id = m.Id,
+                    m.Id,
                     Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
                 })
                 .ToList();
@@ -94,7 +95,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
             var fuente = listaProcedimientos
                 .Select(p => new {
-                    Id = p.Id,
+                    p.Id,
                     Display = p.Name
                 })
                 .ToList();
@@ -110,7 +111,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
         // ========================= VALIDACIONES =========================
         // ==== Validacion ComboBox Paciente ====
-        private void cbPaciente_Validating(object sender, CancelEventArgs e)
+        private void CbPaciente_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cbPaciente.Text) || !_maestroPaciente.Contains(cbPaciente.Text))
             {
@@ -125,7 +126,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // ==== Validacion ComboBox Medico ====
-        private void cbMedico_Validating(object sender, CancelEventArgs e)
+        private void CbMedico_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cbMedico.Text) || !_maestroMedico.Contains(cbMedico.Text))
             {
@@ -140,7 +141,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // ==== Validacion ComboBox Procedimiento ====
-        private void cbProcedimiento_Validating(object sender, CancelEventArgs e)
+        private void CbProcedimiento_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cbProcedimiento.Text) || !_maestroProcedimiento.Contains(cbProcedimiento.Text))
             {
@@ -155,7 +156,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // ==== Validacion DateTimePicker Fecha ====
-        private void dtpFecha_Validating(object sender, CancelEventArgs e)
+        private void DtpFecha_Validating(object sender, CancelEventArgs e)
         {
             if (dtpFechaTurno.Value.Date < DateTime.Now.Date)
             {
@@ -172,13 +173,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // ========================= BOTONES =========================
 
         // ==== Boton Cancelar ====
-        private void btnCancelar_Click_1(object sender, EventArgs e)
+        private void BtnCancelar_Click_1(object sender, EventArgs e)
         {
             CancelarTurnoSolicitado?.Invoke(this, EventArgs.Empty);
         }
 
         // ==== Boton Guardar ====
-        private void btnGuardar_Click_1(object sender, EventArgs e)
+        private void BtnGuardar_Click_1(object sender, EventArgs e)
         {
             // Mensaje de confirmación
             var confirmacion = MessageBox.Show(
@@ -218,7 +219,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // ==== Boton Limpiar ====
-        private void btnLimpiar_Click_1(object sender, EventArgs e)
+        private void BtnLimpiar_Click_1(object sender, EventArgs e)
         {
             cbPaciente.SelectedIndex = -1;
             cbMedico.SelectedIndex = -1;

@@ -95,6 +95,7 @@
     <Compile Include="CapaDatos\interfaces\IProcedimientoRepository.cs" />
     <Compile Include="CapaDatos\interfaces\ICamaRepository.cs" />
     <Compile Include="CapaDatos\interfaces\IEspecialidadRepository.cs" />
+    <Compile Include="CapaDatos\interfaces\IUsuarioRepository.cs" />
     <Compile Include="CapaDatos\internacion.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
@@ -106,6 +107,7 @@
     <Compile Include="CapaDatos\ModerRepos\ProcedimientoRepository.cs" />
     <Compile Include="CapaDatos\ModerRepos\CamaRepository.cs" />
     <Compile Include="CapaDatos\ModerRepos\EspecialidadRepository.cs" />
+    <Compile Include="CapaDatos\ModerRepos\UsuarioRepository.cs" />
     <Compile Include="CapaDatos\paciente.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
@@ -148,12 +150,12 @@
     <Compile Include="CapaDatos\usuario.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
-    <Compile Include="CapaNegocio\DTOs\moderDTO\MostrarMedicoDTO.cs" />
-    <Compile Include="CapaNegocio\DTOs\moderDTO\miscelaneoDTOs\MostrarHabitacionDTO.cs" />
-    <Compile Include="CapaNegocio\DTOs\moderDTO\miscelaneoDTOs\MostrarCamaDTO.cs" />
-    <Compile Include="CapaNegocio\DTOs\moderDTO\miscelaneoDTOs\MostrarProcedimientoDTO.cs" />
-    <Compile Include="CapaNegocio\DTOs\moderDTO\miscelaneoDTOs\EspecialidadDTO.cs" />
-    <Compile Include="CapaNegocio\DTOs\HabitacionDTO\CamaDto.cs" />
+    <Compile Include="CapaNegocio\DTOs\CamaDTO\MostrarCamaDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\EspecialidadDTO\EspecialidadDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\HabitacionDTO\MostrarHabitacionDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\HabitacionDTO\TiposHabitacionDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\MedicoDTO\MostrarMedicoDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\CamaDTO\CamaDto.cs" />
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\HabitacionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\HomeDTO\HomeDto.cs" />
     <Compile Include="CapaNegocio\DTOs\InternacionDTO\InternacionDto.cs" />
@@ -162,11 +164,12 @@
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteAltaDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteEdicionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteViewDto.cs" />
-    <Compile Include="CapaNegocio\Servicios\moder\HabitacionService.cs" />
-    <Compile Include="CapaNegocio\Servicios\moder\CamaService.cs" />
-    <Compile Include="CapaNegocio\Servicios\moder\MedicoService.cs" />
-    <Compile Include="CapaNegocio\Servicios\moder\ProcedimientoService.cs" />
-    <Compile Include="CapaNegocio\Servicios\moder\EspecialidadService.cs" />
+    <Compile Include="CapaNegocio\DTOs\ProcedimientoDTO\MostrarProcedimientoDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\UsuarioDTO\UsuarioDTO.cs" />
+    <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
+    <Compile Include="CapaNegocio\Servicios\EspecialidadService\EspecialidadService.cs" />
+    <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />
+    <Compile Include="CapaNegocio\Servicios\UsuarioService\UsuarioService.cs" />
     <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -185,16 +188,20 @@
     <Compile Include="CapaNegocio\Servicios\HabitacionService\HabitacionService.cs" />
     <Compile Include="CapaNegocio\Servicios\HomeService\HomeService.cs" />
     <Compile Include="CapaNegocio\Servicios\InternacionService\InternacionService.cs" />
-    <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteService\EstadoPacienteService\EstadoPacienteService.cs" />
     <Compile Include="CapaNegocio\Servicios\PacienteService\PacienteService.cs" />
-    <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />
     <Compile Include="CapaNegocio\Servicios\TurnoService\TurnoService.cs" />
     <Compile Include="CapaPresentacion\Administrador\MenuModer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CapaPresentacion\Administrador\MenuModer.Designer.cs">
       <DependentUpon>MenuModer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\misceláneo\Form_CambiarEstadoCama.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrador\misceláneo\Form_CambiarEstadoCama.Designer.cs">
+      <DependentUpon>Form_CambiarEstadoCama.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Camas.cs">
       <SubType>UserControl</SubType>
@@ -367,14 +374,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sistema_HospitalarioDataSet1.cs">
-      <DependentUpon>Sistema_HospitalarioDataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Sistema_HospitalarioDataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Sistema_HospitalarioDataSet1.xsd</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.resx">
       <DependentUpon>UC_agregarMedico.cs</DependentUpon>
     </EmbeddedResource>
@@ -383,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrador\MenuModer.resx">
       <DependentUpon>MenuModer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrador\misceláneo\Form_CambiarEstadoCama.resx">
+      <DependentUpon>Form_CambiarEstadoCama.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrador\misceláneo\UC_Camas.resx">
       <DependentUpon>UC_Camas.cs</DependentUpon>
@@ -495,17 +497,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Sistema_HospitalarioDataSet1.xsc">
-      <DependentUpon>Sistema_HospitalarioDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="Sistema_HospitalarioDataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Sistema_HospitalarioDataSet1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Sistema_HospitalarioDataSet1.xss">
-      <DependentUpon>Sistema_HospitalarioDataSet1.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -531,7 +522,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="CapaDatos\Sistema_Hospitalario_BDD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
