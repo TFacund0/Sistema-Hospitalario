@@ -52,7 +52,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             List<PacienteDto> listaPacientes = _servicioPaciente.ListarAllDatosPaciente() ?? new List<PacienteDto>();
 
             var fuente = listaPacientes
-                .Where(p => p.Estado_paciente == "Activo")
+                .Where(p => p.Estado_paciente == "activo")
                 .Select(p => new {
                     p.Id,
                     Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"

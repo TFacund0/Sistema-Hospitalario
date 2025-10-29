@@ -90,12 +90,12 @@
     <Compile Include="CapaDatos\habitacion.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
-    <Compile Include="CapaDatos\interfaces\IMedicoRepository.cs" />
-    <Compile Include="CapaDatos\interfaces\IHabitacionRepository.cs" />
-    <Compile Include="CapaDatos\interfaces\IProcedimientoRepository.cs" />
-    <Compile Include="CapaDatos\interfaces\ICamaRepository.cs" />
-    <Compile Include="CapaDatos\interfaces\IEspecialidadRepository.cs" />
-    <Compile Include="CapaDatos\interfaces\IUsuarioRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\IMedicoRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\IHabitacionRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\IProcedimientoRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\ICamaRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\IEspecialidadRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\IUsuarioRepository.cs" />
     <Compile Include="CapaDatos\internacion.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
@@ -336,12 +336,6 @@
     <Compile Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.Designer.cs">
       <DependentUpon>ConsultaMedica.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\home\UC_Home_M.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Medico\home\UC_Home_M.Designer.cs">
-      <DependentUpon>UC_Home_M.cs</DependentUpon>
-    </Compile>
     <Compile Include="CapaPresentacion\Medico\MenuMedicos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -452,9 +446,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.resx">
       <DependentUpon>ConsultaMedica.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\home\UC_Home_M.resx">
-      <DependentUpon>UC_Home_M.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Medico\MenuMedicos.resx">
       <DependentUpon>MenuMedicos.cs</DependentUpon>

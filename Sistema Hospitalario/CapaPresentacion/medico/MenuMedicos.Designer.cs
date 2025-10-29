@@ -40,7 +40,6 @@
             this.Btn_pacientes = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_salir = new System.Windows.Forms.Button();
-            this.Btn_home = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -64,7 +63,6 @@
             this.panelMenu.Controls.Add(this.Btn_pacientes);
             this.panelMenu.Controls.Add(this.label2);
             this.panelMenu.Controls.Add(this.btn_salir);
-            this.panelMenu.Controls.Add(this.Btn_home);
             this.panelMenu.Controls.Add(this.panel2);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
@@ -79,7 +77,7 @@
             this.Btn_procedimiento.FlatAppearance.BorderSize = 0;
             this.Btn_procedimiento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_procedimiento.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_procedimiento.Location = new System.Drawing.Point(0, 287);
+            this.Btn_procedimiento.Location = new System.Drawing.Point(0, 241);
             this.Btn_procedimiento.Margin = new System.Windows.Forms.Padding(2);
             this.Btn_procedimiento.Name = "Btn_procedimiento";
             this.Btn_procedimiento.Size = new System.Drawing.Size(188, 46);
@@ -94,7 +92,7 @@
             this.Btn_consulta.FlatAppearance.BorderSize = 0;
             this.Btn_consulta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_consulta.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_consulta.Location = new System.Drawing.Point(0, 241);
+            this.Btn_consulta.Location = new System.Drawing.Point(0, 195);
             this.Btn_consulta.Margin = new System.Windows.Forms.Padding(2);
             this.Btn_consulta.Name = "Btn_consulta";
             this.Btn_consulta.Size = new System.Drawing.Size(188, 46);
@@ -157,7 +155,7 @@
             this.Btn_turnos.FlatAppearance.BorderSize = 0;
             this.Btn_turnos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_turnos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_turnos.Location = new System.Drawing.Point(0, 195);
+            this.Btn_turnos.Location = new System.Drawing.Point(0, 149);
             this.Btn_turnos.Margin = new System.Windows.Forms.Padding(2);
             this.Btn_turnos.Name = "Btn_turnos";
             this.Btn_turnos.Size = new System.Drawing.Size(188, 46);
@@ -172,7 +170,7 @@
             this.Btn_pacientes.FlatAppearance.BorderSize = 0;
             this.Btn_pacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_pacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_pacientes.Location = new System.Drawing.Point(0, 149);
+            this.Btn_pacientes.Location = new System.Drawing.Point(0, 103);
             this.Btn_pacientes.Margin = new System.Windows.Forms.Padding(2);
             this.Btn_pacientes.Name = "Btn_pacientes";
             this.Btn_pacientes.Size = new System.Drawing.Size(188, 46);
@@ -208,23 +206,6 @@
             this.btn_salir.Text = "Salir";
             this.btn_salir.UseVisualStyleBackColor = false;
             this.btn_salir.Click += new System.EventHandler(this.btn_salir_Click);
-            // 
-            // Btn_home
-            // 
-            this.Btn_home.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolTip;
-            this.Btn_home.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Btn_home.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.Btn_home.FlatAppearance.BorderSize = 0;
-            this.Btn_home.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_home.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_home.Location = new System.Drawing.Point(0, 103);
-            this.Btn_home.Margin = new System.Windows.Forms.Padding(2);
-            this.Btn_home.Name = "Btn_home";
-            this.Btn_home.Size = new System.Drawing.Size(188, 46);
-            this.Btn_home.TabIndex = 1;
-            this.Btn_home.Text = "Home";
-            this.Btn_home.UseVisualStyleBackColor = true;
-            this.Btn_home.Click += new System.EventHandler(this.btn_home_Click);
             // 
             // panel2
             // 
@@ -319,7 +300,6 @@
 
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Button btn_salir;
-        private System.Windows.Forms.Button Btn_home;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label4;
