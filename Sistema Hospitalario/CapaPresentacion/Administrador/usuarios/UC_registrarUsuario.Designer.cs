@@ -41,11 +41,13 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.TBNOMBRE = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.panel18 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cboMedicos = new System.Windows.Forms.ComboBox();
             this.panel21 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.TBCORREO = new System.Windows.Forms.TextBox();
-            this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.panel24 = new System.Windows.Forms.Panel();
@@ -100,6 +102,7 @@
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.panel3);
+            this.panel7.Controls.Add(this.btnLimpiar);
             this.panel7.Controls.Add(this.panel18);
             this.panel7.Controls.Add(this.btnCancelar);
             this.panel7.Controls.Add(this.btnGuardar);
@@ -221,16 +224,52 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Nombre";
             // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.Location = new System.Drawing.Point(541, 357);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(110, 41);
+            this.btnLimpiar.TabIndex = 15;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click_1);
+            // 
             // panel18
             // 
             this.panel18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel18.Controls.Add(this.label9);
+            this.panel18.Controls.Add(this.cboMedicos);
             this.panel18.Controls.Add(this.panel21);
-            this.panel18.Controls.Add(this.btnLimpiar);
             this.panel18.Location = new System.Drawing.Point(22, 258);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(786, 60);
             this.panel18.TabIndex = 17;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(481, 4);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(135, 17);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Medico asociado";
+            // 
+            // cboMedicos
+            // 
+            this.cboMedicos.FormattingEnabled = true;
+            this.cboMedicos.Items.AddRange(new object[] {
+            "administrador",
+            "administrativo",
+            "medico"});
+            this.cboMedicos.Location = new System.Drawing.Point(485, 27);
+            this.cboMedicos.Name = "cboMedicos";
+            this.cboMedicos.Size = new System.Drawing.Size(262, 21);
+            this.cboMedicos.TabIndex = 8;
             // 
             // panel21
             // 
@@ -239,7 +278,7 @@
             this.panel21.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel21.Location = new System.Drawing.Point(0, 0);
             this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(511, 60);
+            this.panel21.Size = new System.Drawing.Size(476, 60);
             this.panel21.TabIndex = 3;
             // 
             // label4
@@ -260,21 +299,9 @@
             this.TBCORREO.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TBCORREO.Location = new System.Drawing.Point(7, 28);
             this.TBCORREO.Name = "TBCORREO";
-            this.TBCORREO.Size = new System.Drawing.Size(469, 20);
+            this.TBCORREO.Size = new System.Drawing.Size(434, 20);
             this.TBCORREO.TabIndex = 1;
             this.TBCORREO.Validating += new System.ComponentModel.CancelEventHandler(this.TBCORREO_Validating);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(546, 22);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(201, 26);
-            this.btnLimpiar.TabIndex = 15;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click_1);
             // 
             // btnCancelar
             // 
@@ -295,7 +322,7 @@
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.Location = new System.Drawing.Point(548, 352);
+            this.btnGuardar.Location = new System.Drawing.Point(398, 352);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(120, 49);
             this.btnGuardar.TabIndex = 14;
@@ -368,6 +395,7 @@
             this.cboRol.Name = "cboRol";
             this.cboRol.Size = new System.Drawing.Size(180, 21);
             this.cboRol.TabIndex = 7;
+            this.cboRol.SelectedIndexChanged += new System.EventHandler(this.cboRol_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -491,6 +519,7 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel18.ResumeLayout(false);
+            this.panel18.PerformLayout();
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
             this.panel24.ResumeLayout(false);
@@ -544,5 +573,7 @@
         private System.Windows.Forms.ComboBox cboRol;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cboMedicos;
     }
 }

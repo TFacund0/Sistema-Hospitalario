@@ -10,8 +10,9 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
 
 public interface IUsuarioRepository
 {
-    (bool Ok, int IdGenerado, string Error) Insertar(string Nombre, string Apellido, string NombreUsuario, int Estado, int Rol, string Password, string correo);
-   void Eliminar(int IdUsuario);
-   List<MostrarUsuariosDTO> ObtenerUsuarios();
+    (bool Ok, int IdGenerado, string Error) Insertar(string Nombre, string Apellido, string NombreUsuario, int Estado, int Rol, string Password, string correo, int? IdMedico);
+    void Eliminar(int IdUsuario);
+    List<MostrarUsuariosDTO> ObtenerUsuarios();
+    bool ExisteUsername(string username);
 }
 

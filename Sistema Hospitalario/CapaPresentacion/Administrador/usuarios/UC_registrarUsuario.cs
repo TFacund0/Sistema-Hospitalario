@@ -1,4 +1,5 @@
 ﻿using Sistema_Hospitalario.CapaDatos.ModerRepos;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
 using System;
@@ -17,11 +18,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
     {
         private static readonly UsuarioService usuarioService = new UsuarioService(new UsuarioRepository());
         private readonly UsuarioService _service = usuarioService;
+
+        private readonly MedicoService _medicoService = new MedicoService(new MedicoRepository());
+
         public UC_registrarUsuario()
         {
             InitializeComponent();
             CargarRoles();
             CargarEstados();
+            cboMedicos.Enabled = false;
         }
 
         private void CargarRoles()
@@ -47,6 +52,45 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
                 cboEstado.DisplayMember = "NombreEstado";
                 cboEstado.ValueMember = "IdEstado";
                 cboEstado.DataSource = estados;
+            }
+        }
+
+        private void CargarMedicos()
+        {
+            try
+            {
+                var medicos = _medicoService.ObtenerMedicosParaComboBox();
+
+                cboMedicos.DisplayMember = "NombreCompletoYDNI";
+                cboMedicos.ValueMember = "Id";
+                cboMedicos.DataSource = medicos;
+
+                cboMedicos.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la lista de médicos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Deshabilitar el combo si no se pudo cargar
+                cboMedicos.Enabled = false;
+            }
+        }
+
+        private void cboRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboRol.SelectedItem != null && cboRol.Text == "medico") 
+            {
+                cboMedicos.Visible = true;
+
+                if (cboMedicos.DataSource == null)
+                {
+                    CargarMedicos();
+                }
+                cboMedicos.Enabled = true;
+            }
+            else
+            {
+                cboMedicos.Enabled = false;
+                cboMedicos.SelectedIndex = -1;
             }
         }
 
@@ -172,9 +216,27 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
                     return;
                 }
 
-                // Obtener IDs de los ComboBox seleccionados
-                int idRol = (int)cboRol.SelectedValue; // Asume ComboBox cboRol
-                int idEstado = (int)cboEstado.SelectedValue; // Asume ComboBox cboEstado
+                int idRol = (int)cboRol.SelectedValue; 
+                int idEstado = (int)cboEstado.SelectedValue;
+                string rolSeleccionado = cboRol.Text;
+
+                int? idMedicoAsociado = null;
+                if (rolSeleccionado == "medico")
+                {
+                    if (cboMedicos.SelectedValue == null || (int)cboMedicos.SelectedValue == 0)
+                    {
+                        // Si el rol es Médico, es obligatorio seleccionar uno
+                        MessageBox.Show("Debe seleccionar un médico para asociar a este usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        errorProvider1.SetError(cboMedicos, "Selección requerida."); // Marcar error en el combo
+                        return; // Detener guardado
+                    }
+                    idMedicoAsociado = (int)cboMedicos.SelectedValue;
+                    errorProvider1.SetError(cboMedicos, ""); // Limpiar error si todo OK
+                }
+                else
+                {
+                    errorProvider1.SetError(cboMedicos, ""); // Limpiar error si no es rol médico
+                }
 
                 // Crear el DTO de alta
                 UsuarioAltaDTO nuevoUsuario = new UsuarioAltaDTO
@@ -185,7 +247,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
                     Password = TBPASSWORD.Text.Trim(),
                     Correo = TBCORREO.Text.Trim(),
                     IdRol = idRol,
-                    IdEstado = idEstado
+                    IdEstado = idEstado,
+                    IdMedico = idMedicoAsociado
                 };
 
                 // Llamar al servicio para agregar el usuario
@@ -217,8 +280,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             TBPASSWORD.Clear();
             TBCORREO.Clear();
             errorProvider1.Clear();
-            cboRol.SelectedIndex = 0; // Seleccionar el primer rol por defecto
-            cboEstado.SelectedIndex = 0; // Seleccionar el primer estado por defecto
+            cboRol.SelectedIndex = -1; // Seleccionar el primer rol por defecto
+            cboEstado.SelectedIndex = -1;
+            cboRol.SelectedIndex = -1;
             errorProvider1.Clear();
         }
 
@@ -228,5 +292,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 
             parentForm.AbrirUserControl(new UC_usuarios());
         }
+
     }
 }

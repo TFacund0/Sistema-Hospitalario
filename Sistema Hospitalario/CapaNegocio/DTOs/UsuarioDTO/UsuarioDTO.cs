@@ -26,6 +26,7 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO
         public int IdRol { get; set; }      
         public string Password { get; set; }
         public string Correo { get; set; }
+        public int? IdMedico { get; set; }
     }
 
 }

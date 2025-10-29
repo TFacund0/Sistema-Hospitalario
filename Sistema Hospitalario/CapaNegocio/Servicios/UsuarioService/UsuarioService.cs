@@ -87,8 +87,11 @@ public class UsuarioService
 
     public (bool Ok, int IdGenerado, string Error) AgregarUsuario(UsuarioAltaDTO dto)
     {
+        if (_repo.ExisteUsername(dto.NombreUsuario))
+        {
+            return (false, 0, $"El nombre de usuario '{dto.NombreUsuario}' ya está en uso.");
+        }
 
-        // Hashing de la contraseña
         string hashedPassword = HashPassword(dto.Password);
 
         return _repo.Insertar(
@@ -98,7 +101,9 @@ public class UsuarioService
             dto.IdEstado, 
             dto.IdRol,    
             hashedPassword,
-            dto.Correo
+            dto.Correo,
+            dto.IdMedico
+
         );
     }
     public void EliminarUsuario(int idUsuario)

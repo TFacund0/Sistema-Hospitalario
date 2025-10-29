@@ -154,6 +154,7 @@
     <Compile Include="CapaNegocio\DTOs\EspecialidadDTO\EspecialidadDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\MostrarHabitacionDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\TiposHabitacionDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\MedicoDTO\MedicoSimpleDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\MedicoDTO\MostrarMedicoDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\CamaDTO\CamaDto.cs" />
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\HabitacionDto.cs" />

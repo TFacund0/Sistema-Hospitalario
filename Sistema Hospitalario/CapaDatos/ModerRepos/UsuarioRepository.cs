@@ -11,7 +11,7 @@ namespace Sistema_Hospitalario.CapaDatos.ModerRepos
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        public (bool Ok, int IdGenerado, string Error) Insertar(string Nombre, string Apellido, string NombreUsuario, int Estado, int Rol, string Password, string correo)
+        public (bool Ok, int IdGenerado, string Error) Insertar(string Nombre, string Apellido, string NombreUsuario, int Estado, int Rol, string Password, string correo, int? IdMedico)
         {
             try
             {
@@ -29,7 +29,8 @@ namespace Sistema_Hospitalario.CapaDatos.ModerRepos
                         id_estado_usuario = Estado,
                         id_rol = Rol,
                         password = Password,
-                        email = correo
+                        email = correo,
+                        id_medico = IdMedico
                     };
 
                     db.usuario.Add(usuarioCreado);
@@ -101,6 +102,14 @@ namespace Sistema_Hospitalario.CapaDatos.ModerRepos
                 return lista;
             }
 
+        }
+
+        public bool ExisteUsername(string username)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                return db.usuario.Any(u => u.username == username);
+            }
         }
     }
 }

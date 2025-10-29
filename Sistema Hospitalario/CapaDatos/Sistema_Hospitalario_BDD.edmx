@@ -175,6 +175,7 @@
           <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="id_estado_usuario" Type="int" Nullable="false" />
           <Property Name="id_rol" Type="int" Nullable="false" />
+          <Property Name="id_medico" Type="int" />
         </EntityType>
         <Association Name="fk_cama_estado_cama">
           <End Role="estado_cama" Type="Self.estado_cama" Multiplicity="1" />
@@ -370,6 +371,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usuario_Medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_usuario_rol">
           <End Role="rol" Type="Self.rol" Multiplicity="1" />
           <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -463,6 +476,10 @@
           </AssociationSet>
           <AssociationSet Name="fk_usuario_estado_usuario" Association="Self.fk_usuario_estado_usuario">
             <End Role="estado_usuario" EntitySet="estado_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Medico" Association="Self.FK_Usuario_Medico">
+            <End Role="medico" EntitySet="medico" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
           <AssociationSet Name="fk_usuario_rol" Association="Self.fk_usuario_rol">
@@ -570,6 +587,7 @@
           <NavigationProperty Name="especialidad" Relationship="Self.fk_medico_especialidad" FromRole="medico" ToRole="especialidad" />
           <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_medico" FromRole="medico" ToRole="internacion" />
           <NavigationProperty Name="turno" Relationship="Self.fk_turno_medico" FromRole="medico" ToRole="turno" />
+          <NavigationProperty Name="usuario" Relationship="Sistema_HospitalarioModel.FK_Usuario_Medico" FromRole="medico" ToRole="usuario" />
         </EntityType>
         <EntityType Name="paciente">
           <Key>
@@ -678,6 +696,8 @@
           <Property Name="id_rol" Type="Int32" Nullable="false" />
           <NavigationProperty Name="estado_usuario" Relationship="Self.fk_usuario_estado_usuario" FromRole="usuario" ToRole="estado_usuario" />
           <NavigationProperty Name="rol" Relationship="Self.fk_usuario_rol" FromRole="usuario" ToRole="rol" />
+          <Property Name="id_medico" Type="Int32" />
+          <NavigationProperty Name="medico" Relationship="Sistema_HospitalarioModel.FK_Usuario_Medico" FromRole="usuario" ToRole="medico" />
         </EntityType>
         <Association Name="fk_cama_estado_cama">
           <End Role="estado_cama" Type="Self.estado_cama" Multiplicity="1" />
@@ -972,7 +992,23 @@
             <End Role="rol" EntitySet="rol" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Medico" Association="Sistema_HospitalarioModel.FK_Usuario_Medico">
+            <End Role="medico" EntitySet="medico" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Usuario_Medico">
+          <End Type="Sistema_HospitalarioModel.medico" Role="medico" Multiplicity="0..1" />
+          <End Type="Sistema_HospitalarioModel.usuario" Role="usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1154,6 +1190,7 @@
           <EntitySetMapping Name="usuario">
             <EntityTypeMapping TypeName="Sistema_HospitalarioModel.usuario">
               <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id_medico" ColumnName="id_medico" />
                 <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="password" ColumnName="password" />

@@ -40,6 +40,7 @@
         <AssociationConnector Association="Sistema_HospitalarioModel.fk_turno_paciente" ManuallyRouted="false" />
         <AssociationConnector Association="Sistema_HospitalarioModel.fk_turno_procedimiento" ManuallyRouted="false" />
         <AssociationConnector Association="Sistema_HospitalarioModel.fk_usuario_rol" ManuallyRouted="false" />
+        <AssociationConnector Association="Sistema_HospitalarioModel.FK_Usuario_Medico" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

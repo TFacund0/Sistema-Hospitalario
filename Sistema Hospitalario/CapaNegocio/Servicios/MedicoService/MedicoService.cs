@@ -3,6 +3,7 @@ using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaDatos.interfaces;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -109,5 +110,20 @@ public class MedicoService
     public List<MedicoDto> ListarMedicos()
     {
             return _repo.ListarMedicos();
+    }
+
+    public List<MedicoSimpleDTO> ObtenerMedicosParaComboBox()
+    {
+        var todosLosMedicos = _repo.ObtenerMedicos();
+
+        var resultado = todosLosMedicos
+                        .OrderBy(m => m.Apellido).ThenBy(m => m.Nombre).ThenBy(m => m.DNI) 
+                        .Select(m => new MedicoSimpleDTO
+                        {
+                            Id = m.IdMedico,
+                            NombreCompletoYDNI = $"{m.Apellido}, {m.Nombre} ({m.DNI}) esp:{m.Especialidad}"
+                        })
+                        .ToList();
+        return resultado;
     }
 }
