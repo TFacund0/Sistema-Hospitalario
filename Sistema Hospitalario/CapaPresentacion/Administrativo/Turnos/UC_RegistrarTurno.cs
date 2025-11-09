@@ -8,15 +8,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 
 
 
@@ -26,8 +25,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
     {
         private static readonly PacienteService pacienteService = new PacienteService();
         private readonly PacienteService _servicioPaciente = pacienteService;
-        private readonly MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
-        private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService(new ProcedimientoRepository());
+        private readonly MedicoService _servicioMedico = new MedicoService();
+        private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
         private readonly List<string> _maestroPaciente = new List<string>();
         private readonly List<string> _maestroMedico = new List<string>();
@@ -49,7 +48,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // ========================= COMBO BOX PACIENTE =========================
         private void DatosComboBoxPaciente()
         {
-            List<PacienteDto> listaPacientes = _servicioPaciente.ListarAllDatosPaciente() ?? new List<PacienteDto>();
+            List<PacienteDto> listaPacientes = _servicioPaciente.ListarPacientes();
 
             var fuente = listaPacientes
                 .Where(p => p.Estado_paciente == "activo")

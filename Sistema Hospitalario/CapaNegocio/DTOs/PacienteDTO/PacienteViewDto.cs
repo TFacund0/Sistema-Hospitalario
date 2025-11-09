@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sistema_Hospitalario.CapaNegocio.DTOs
+namespace Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO
 {
     public class PacienteDto
     {
@@ -19,6 +19,18 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs
         public string Direccion {  get; set; }
         public string Email { get; set; }
         public string Estado_paciente { get; set; }
+        public int Id_estado_paciente { get; set; }
+        public string Telefono { get; set; }
+        public int Edad 
+        { 
+            get
+            {
+                var today = DateTime.Today;
+                var age = today.Year - Fecha_nacimiento.Year;
+                if (Fecha_nacimiento.Date > today.AddYears(-age)) age--;
+                return age;
+            }
+        }
     }
 
     // ===== Clases “view” para mostrar en los combos (DisplayMember/ValueMember) =====

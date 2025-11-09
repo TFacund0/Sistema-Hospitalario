@@ -1,8 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
-using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,14 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 {
     public partial class UC_registrarUsuario : UserControl
     {
-        private static readonly UsuarioService usuarioService = new UsuarioService(new UsuarioRepository());
+        private static readonly UsuarioService usuarioService = new UsuarioService();
         private readonly UsuarioService _service = usuarioService;
 
-        private readonly MedicoService _medicoService = new MedicoService(new MedicoRepository());
+        private readonly MedicoService _medicoService = new MedicoService();
 
         public UC_registrarUsuario()
         {

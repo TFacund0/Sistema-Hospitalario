@@ -1,22 +1,21 @@
 ﻿using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sistema_Hospitalario.CapaDatos.interfaces;
+
 using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaDatos.Repositories;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
 {
     public class HabitacionService
     {
-        private readonly IHabitacionRepository _repo;
+        private readonly HabitacionRepository _repo = new HabitacionRepository();
 
-        public HabitacionService(IHabitacionRepository repo)
+        public HabitacionService()
         {
-            _repo = repo;
         }
 
         public List<MostrarHabitacionDTO> ObtenerHabitaciones()
@@ -39,27 +38,13 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
 
         public List<TiposHabitacionDTO> ListarTiposHabitacion()
         {
-            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
-            {
-                return db.tipo_habitacion
-                            .Select(e => new TiposHabitacionDTO
-                            {
-                                IdTipoHabitacion = e.id_tipo_habitacion,
-                                Nombre = e.nombre
-
-                            })
-                            .ToList();
-            }
+            return _repo.ListarTiposHabitacion();
         }
 
-        public async Task<int> TotalHabitaciones()
+        public int TotalHabitaciones()
         {
-            using (var db = new Sistema_HospitalarioEntities_Conexion())
-            {
-                // Cuenta todas las habitaciones registradas
-                int totalHabitaciones = await Task.Run(() => db.habitacion.Count());
-                return totalHabitaciones;
-            }
+            var totalHabitaciones = _repo.GetAll().Count;
+            return totalHabitaciones;
         }
 
         public List<HabitacionDto> ListarHabitacionesXPiso(string pisoTexto)

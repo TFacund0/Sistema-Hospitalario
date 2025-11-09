@@ -8,8 +8,9 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO
 {
     public class MostrarCamaDTO
     {
-        public int NroHabitacion { get; set; }
-        public string Estado { get; set; }
         public int NroCama { get; set; }
+        public int NroHabitacion { get; set; }
+        public int IdEstadoCama { get; set; }
+        public string Estado { get; set; }
     }
 }

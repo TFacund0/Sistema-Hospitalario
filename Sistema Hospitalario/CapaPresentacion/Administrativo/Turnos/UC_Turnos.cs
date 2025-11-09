@@ -29,7 +29,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         BindingSource enlaceTurnos = new BindingSource();
 
         // ============== EVENTOS ==============
-        public event EventHandler<TurnoDTO> VerTurnoSolicitado;
+        public event EventHandler<TurnoDto> VerTurnoSolicitado;
         public event EventHandler RegistrarTurnoSolicitado;
 
 
@@ -72,7 +72,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ===================== CONFIGURAR DATOS CAJAS DE TEXTO =====================
         private void ConfigurarLabelsDatosTurno()
         {
-            lblTurnosPendientes.Text = _turnoService.CantidadTurnosPendientes().ToString();
+            lblTurnosPendientes.Text = _turnoService.CantidadTurnosPorEstado("Pendiente").ToString();
             lblTurnosCompletados.Text = _turnoService.CantidadTurnosPorEstado("Atendido").ToString();
             lblTurnosCurso.Text = _turnoService.CantidadTurnosPorEstado("En Curso").ToString();
             lblTurnosHoy.Text = _turnoService.CantidadTurnosPorEstado("Pendiente").ToString();

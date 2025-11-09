@@ -1,12 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HomeDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HomeService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Sistema_Hospitalario.CapaNegocio.DTOs.HomeDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HomeService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_HomeGerente : UserControl
@@ -23,7 +21,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ========= Campos/miembros del UC/Form =========
         private List<HomeDto> listaActividad = new List<HomeDto>();   // Cargada desde HomeService
         private BindingSource enlaceActividad = new BindingSource();  // DataSource del DataGridView
-
 
         // ============================ CONSTRUCTOR DEL UC HOME ADMINISTRATIVO ============================
         public UC_HomeGerente()
@@ -39,14 +36,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // Método que configuran la información de las estadísticas en el UC Home Gerente
-        private async void CargarInformacionPaneles()
+        private void CargarInformacionPaneles()
         {
             PacienteService pacienteService = new PacienteService();
-            int cantidadPacientes = await pacienteService.ContarPorEstadoIdAsync(1);
+            int cantidadPacientes = pacienteService.ContarPorEstadoId(1);
 
-            CamaService camaService = new CamaService(new CamaRepository());
-            int cantidadCamasOcupadas = await camaService.TotalCamasXEstado(9, "Ocupada");
-            int cantidadCamas = await camaService.TotalCamas();
+            CamaService camaService = new CamaService();
+            int cantidadCamasOcupadas = camaService.TotalCamasXEstado("ocupada");
+            int cantidadCamas = camaService.TotalCamas();
 
             InternacionService internacionService = new InternacionService();
             int cantidadInternaciones = internacionService.ListadoInternacionDtos().Count;
@@ -100,12 +97,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvActividad.Columns["colTipo"].DataPropertyName = "Tipo";
         }
 
-        private async Task CargarActividadRecienteAsync()
+        private void CargarActividadReciente()
         {
             var homeService = new HomeService();
 
             // Cargamos la lista de la clase
-            var datos = await homeService.ListarActividadRecienteAsync(100);
+            var datos = homeService.ListarActividadReciente(100);
             listaActividad = datos ?? new List<HomeDto>();
 
             // Usamos el BindingSource de la clase
@@ -120,9 +117,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
 
-        private async void Home_Load(object sender, EventArgs e)
+        private void Home_Load(object sender, EventArgs e)
         {
-            await CargarActividadRecienteAsync();
+            CargarActividadReciente();
             CargarOpcionesDeFiltroHome();
         }
 

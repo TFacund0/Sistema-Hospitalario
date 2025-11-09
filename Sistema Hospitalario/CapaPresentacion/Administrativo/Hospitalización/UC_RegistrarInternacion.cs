@@ -1,11 +1,12 @@
-﻿using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
@@ -27,10 +28,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
     {
         // Servicios para manejar la lógica de negocio
         private readonly PacienteService _servicioPaciente = new PacienteService();
-        private readonly HabitacionService _servicioHabitacion = new HabitacionService(new HabitacionRepository());
-        private readonly CamaService _servicioCama = new CamaService(new CamaRepository());
-        private readonly MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
-        private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService(new ProcedimientoRepository());
+        private readonly HabitacionService _servicioHabitacion = new HabitacionService();
+        private readonly CamaService _servicioCama = new CamaService();
+        private readonly MedicoService _servicioMedico = new MedicoService();
+        private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
         // Atributos que almacenan la informacion de la base de datos a traves de los DTOs
         private List<PacienteDto> listaPacientes = new List<PacienteDto>();
@@ -85,7 +86,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         // ============================= COMBO PACIENTE =============================
         private void DatosComboBoxPaciente()
         {
-            listaPacientes = _servicioPaciente.ListarAllDatosPaciente() ?? new List<PacienteDto>();
+            listaPacientes = _servicioPaciente.ListarPacientes();
 
             var fuente = listaPacientes
                 .Where(p => p.Estado_paciente == "activo")

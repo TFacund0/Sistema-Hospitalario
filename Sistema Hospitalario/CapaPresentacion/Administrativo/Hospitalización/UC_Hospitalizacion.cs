@@ -1,10 +1,9 @@
 ﻿
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
 using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,11 +22,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Servicio para interactuar con la capa de negocio
         private readonly PacienteService pacienteService = new PacienteService();
         private readonly InternacionService internacionService = new InternacionService();
-        private readonly HabitacionService habitacionService = new HabitacionService(new HabitacionRepository());
-        private readonly CamaService camaService = new CamaService(new CamaRepository());
+        private readonly HabitacionService habitacionService = new HabitacionService();
+        private readonly CamaService camaService = new CamaService();
 
         // Lista para almacenar los pacientes obtenidos del servicio en el dgvInternaciones
-        private List<ListadoInternacionDto> listaInternaciones = new List<ListadoInternacionDto>();
+        private List<InternacionDto> listaInternaciones = new List<InternacionDto>();
 
         // BindingSource para enlazar la lista de habitaciones al DataGridView
         private readonly BindingSource enlaceInternaciones = new BindingSource();
@@ -56,26 +55,26 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ============================ CONFIGURACION DE LAS CAJAS DE RESUMEN ============================
 
         // Método que configura la información en las cajas de resumen
-        private async void ConfigurarInformacionCajas()
+        private void ConfigurarInformacionCajas()
         {
-            int totalHabitaciones = await habitacionService.TotalHabitaciones();
+            int totalHabitaciones = habitacionService.TotalHabitaciones();
             lblTotalHabitaciones.Text = totalHabitaciones.ToString();
 
-            int totalCamasDisponibles = await camaService.TotalCamasXEstado(8, "Disponible");
+            int totalCamasDisponibles = camaService.TotalCamasXEstado("Disponible");
             lblDisponibles.Text = totalCamasDisponibles.ToString();
 
-            int totalCamas = await camaService.TotalCamas();
+            int totalCamas = camaService.TotalCamas();
 
             float porcentajeDisponible = ((float)totalCamasDisponibles / (float)totalCamas) * 100;
             lblPorcentajeDisponibles.Text = porcentajeDisponible.ToString() + "% de camas disponibles";
 
-            int totalCamasOcupadas = await camaService.TotalCamasXEstado(9, "Ocupada");
+            int totalCamasOcupadas = camaService.TotalCamasXEstado("Ocupada");
             lblOcupadas.Text = totalCamasOcupadas.ToString();
 
             float porcentajeOcupadas = ((float)totalCamasOcupadas / (float)totalCamas) * 100;
             lblPorcentajeOcupadas.Text = porcentajeOcupadas.ToString() + "% de camas ocupadas";
 
-            int totalPacientesInternados = await pacienteService.ContarPorEstadoIdAsync(2);
+            int totalPacientesInternados = pacienteService.ContarPorEstadoId(2);
             lblPacientesInternados.Text = totalPacientesInternados.ToString();
         }
 

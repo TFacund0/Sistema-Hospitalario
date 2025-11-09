@@ -69,6 +69,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapaDatos\Interfaces\IHomeRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\IInternacionRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\ITurnoRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\HomeRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\InternacionRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\PacienteRepository.cs" />
     <Compile Include="CapaDatos\cama.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
@@ -92,6 +98,7 @@
     </Compile>
     <Compile Include="CapaDatos\Interfaces\IMedicoRepository.cs" />
     <Compile Include="CapaDatos\Interfaces\IHabitacionRepository.cs" />
+    <Compile Include="CapaDatos\Interfaces\IPacienteRepository.cs" />
     <Compile Include="CapaDatos\Interfaces\IProcedimientoRepository.cs" />
     <Compile Include="CapaDatos\Interfaces\ICamaRepository.cs" />
     <Compile Include="CapaDatos\Interfaces\IEspecialidadRepository.cs" />
@@ -102,12 +109,13 @@
     <Compile Include="CapaDatos\medico.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>
-    <Compile Include="CapaDatos\ModerRepos\HabitacionRepository.cs" />
-    <Compile Include="CapaDatos\ModerRepos\MedicoRepository.cs" />
-    <Compile Include="CapaDatos\ModerRepos\ProcedimientoRepository.cs" />
-    <Compile Include="CapaDatos\ModerRepos\CamaRepository.cs" />
-    <Compile Include="CapaDatos\ModerRepos\EspecialidadRepository.cs" />
-    <Compile Include="CapaDatos\ModerRepos\UsuarioRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\HabitacionRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\MedicoRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\ProcedimientoRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\CamaRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\EspecialidadRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\TurnoRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\UsuarioRepository.cs" />
     <Compile Include="CapaDatos\paciente.cs">
       <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
     </Compile>

@@ -1,6 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using Sistema_Hospitalario.CapaNegocio.Servicios.moder;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +17,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         public UC_Procedimientos()
         {
             InitializeComponent();
-            _service = new ProcedimientoService(new ProcedimientoRepository());
+            _service = new ProcedimientoService();
             CargarProcedimientos();
         }
 

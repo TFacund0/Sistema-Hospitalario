@@ -10,11 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
     public partial class UC_Medicos : UserControl
     {
-        private static readonly MedicoService medicoService = new MedicoService(new MedicoRepository());
+        private static readonly MedicoService medicoService = new MedicoService();
         private readonly MedicoService _service = medicoService;
 
         public UC_Medicos()

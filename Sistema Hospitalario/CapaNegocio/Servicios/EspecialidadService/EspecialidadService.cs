@@ -1,22 +1,20 @@
-﻿using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sistema_Hospitalario.CapaDatos.interfaces;
+
+using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.DTOs.EspecialidadDTO;
 
-namespace Sistema_Hospitalario.CapaNegocio.Servicios.moder
+namespace Sistema_Hospitalario.CapaNegocio.Servicios.EspecialidadService
 {
     public class EspecialidadService
     {
-        private readonly IEspecialidadRepository _repo;
+        private readonly EspecialidadRepository _repo = new EspecialidadRepository();
 
-        public EspecialidadService(IEspecialidadRepository repo)
+        public EspecialidadService()
         {
-            _repo = repo;
         }
 
         public List<EspecialidadDTO> ObtenerEspecialidades()

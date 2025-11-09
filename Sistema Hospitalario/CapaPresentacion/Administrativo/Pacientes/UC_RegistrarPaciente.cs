@@ -1,6 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaNegocio;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO.EstadoPacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -244,7 +244,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         // ============================ BOTÓN GUARDAR =============================
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            var dto = new CapaNegocio.DTOs.PacienteAltaDto
+            var dto = new PacienteAltaDto
             {
                 Nombre = txtNombre.Text.Trim(),
                 Apellido = txtApellido.Text.Trim(),

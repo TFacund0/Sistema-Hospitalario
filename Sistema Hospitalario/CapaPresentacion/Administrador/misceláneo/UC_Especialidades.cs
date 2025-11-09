@@ -1,10 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.moder;
-using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Sistema_Hospitalario.CapaNegocio.Servicios.EspecialidadService;
+
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
@@ -24,7 +21,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         public UC_Especialidades()
         {
             InitializeComponent();
-            _service = new EspecialidadService(new EspecialidadRepository());
+            _service = new EspecialidadService();
             CargarEspecialidades();
         }
 

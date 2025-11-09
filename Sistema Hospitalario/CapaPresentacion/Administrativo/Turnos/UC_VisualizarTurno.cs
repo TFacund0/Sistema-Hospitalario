@@ -1,5 +1,5 @@
 ﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO.EstadoPacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
@@ -15,17 +15,17 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
 
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_VisualizarTurno : UserControl
     {
         // Estado del turno que se está visualizando
-        private readonly TurnoDTO _turno;
+        private readonly TurnoDto _turno;
         
         // Modo edición
         private bool _modoEdicion = false;
@@ -33,7 +33,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
         public event EventHandler CancelarVisualizacionSolicitada;
 
-        public UC_VisualizarTurno(TurnoDTO turno)
+        public UC_VisualizarTurno(TurnoDto turno)
         {
             InitializeComponent();
             _turno = turno ?? throw new ArgumentNullException(nameof(turno));
@@ -51,7 +51,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // Carga los datos del turno en los controles de solo lectura
-        private void CargarDatosLectura(TurnoDTO p_turno)
+        private void CargarDatosLectura(TurnoDto p_turno)
         {
             txtPaciente.Text = p_turno.Paciente;
             txtMedico.Text = p_turno.Medico;
@@ -63,7 +63,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // Carga los datos en los ComboBox
-        private void CargarCombosBox(TurnoDTO p_turno)
+        private void CargarCombosBox(TurnoDto p_turno)
         {
             CargarComboPaciente(p_turno);
             CargarComboMedico(p_turno);
@@ -100,17 +100,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
         // ======================== CARGA DE COMBOS ========================
         // Carga los pacientes en el ComboBox
-        private void CargarComboPaciente(TurnoDTO p_turno)
+        private void CargarComboPaciente(TurnoDto p_turno)
         {
             PacienteService _servicioPaciente = new PacienteService();
             
-            List<PacienteListadoDto> listaPacientes = _servicioPaciente.ListarPacientes();
+            List<PacienteDto> listaPacientes = _servicioPaciente.ListarPacientes();
 
             var fuente = listaPacientes
-                .Where(p => p.Estado == "Activo" || p.Estado == "Internado")
+                .Where(p => p.Estado_paciente == "activo" || p.Estado_paciente == "internado")
                 .Select(p => new {
                     p.Id,
-                    Display = $"{p.Paciente} ({p.DNI})"
+                    Display = $"{p.Nombre} ({p.Dni})"
                 })
                 .ToList();
 
@@ -128,9 +128,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // Carga los médicos en el ComboBox
-        private void CargarComboMedico(TurnoDTO p_turno)
+        private void CargarComboMedico(TurnoDto p_turno)
         {
-            MedicoService _servicioMedico = new MedicoService(new MedicoRepository());
+            MedicoService _servicioMedico = new MedicoService();
 
             List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
             
@@ -155,9 +155,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         }
 
         // Carga los procedimientos en el ComboBox
-        private void CargarComboProcedimiento(TurnoDTO p_turno)
+        private void CargarComboProcedimiento(TurnoDto p_turno)
         {
-            ProcedimientoService _servicioProcedimiento = new ProcedimientoService(new ProcedimientoRepository());
+            ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
             List<ProcedimientoDto> listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
 
             var fuente = listaProcedimientos

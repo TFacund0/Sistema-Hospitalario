@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
 
-namespace Sistema_Hospitalario.CapaDatos.interfaces
+namespace Sistema_Hospitalario.CapaDatos.Interfaces
 {
     public interface IHabitacionRepository
     {

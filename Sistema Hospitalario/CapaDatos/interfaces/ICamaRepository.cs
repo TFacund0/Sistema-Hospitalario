@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
 
-namespace Sistema_Hospitalario.CapaDatos.interfaces
+namespace Sistema_Hospitalario.CapaDatos.Interfaces
 {
     public interface ICamaRepository
     {
         List<MostrarCamaDTO> GetAll();
         void Insertar(int NroHabitacion);
         void Eliminar(int NroHabitacion, int NroCama);
+        void CambiarEstado(int NroHabitacion, int NroCama, int NuevoEstadoId);
     }
 }

@@ -1,8 +1,5 @@
-﻿using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaDatos.ModerRepos;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios.moder;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO; 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +19,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         public UC_Habitaciones()
         {
             InitializeComponent();
-            _service = new HabitacionService(new HabitacionRepository());
+            _service = new HabitacionService();
             CargarHabitaciones();
             CargarComboBox();
         }

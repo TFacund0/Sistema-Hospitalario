@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -21,7 +22,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private readonly BindingSource enlacePacientes = new BindingSource();
 
         // Lista completa de pacientes cargada desde el servicio
-        private List<PacienteListadoDto> listaPacientes = new List<PacienteListadoDto>();
+        private List<PacienteDto> listaPacientes = new List<PacienteDto>();
 
         // Evento que notifica al formulario padre que se solicitó registrar un nuevo paciente
         public event EventHandler RegistrarPacienteSolicitado;
@@ -59,11 +60,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ===================== CONFIGURACIÓN DE LABELS DE INFORMACIÓN =====================
-        private async void ConfigurarLabelsInformacion()
+        private void ConfigurarLabelsInformacion()
         {
-            lblTotalPacientes.Text = (await pacienteService.ContarPorEstadoIdAsync(1)).ToString();
-            lblTotalInternados.Text = (await pacienteService.ContarPorEstadoIdAsync(2)).ToString();
-            lblTotalEgresados.Text = (await pacienteService.ContarPorEstadoIdAsync(3)).ToString();
+            lblTotalPacientes.Text = pacienteService.ContarPorEstadoId(1).ToString();
+            lblTotalInternados.Text = pacienteService.ContarPorEstadoId(2).ToString();
+            lblTotalEgresados.Text = pacienteService.ContarPorEstadoId(3).ToString();
         }
 
 
@@ -110,7 +111,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             txtBuscar.Clear();
             if (cboCampo != null) cboCampo.SelectedIndex = 0;
 
-            enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Paciente).ToList();
+            enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Nombre).ToList();
             enlacePacientes.ResetBindings(false);
         }
 
@@ -132,7 +133,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             // Normaliza el texto para comparación
             string busqueda = (texto ?? "").Trim().ToLowerInvariant();
-            IEnumerable<PacienteListadoDto> query = listaPacientes;
+            IEnumerable<PacienteDto> query = listaPacientes;
 
             // Si hay texto, aplica el filtro según el campo seleccionado
             if (!string.IsNullOrEmpty(busqueda))
@@ -140,26 +141,26 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 switch (campo)
                 {
                     case "Paciente":
-                        query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
+                        query = query.Where(t => (t.Nombre ?? "").ToLower().Contains(busqueda));
                         break;
                     case "DNI":
                         int dniBuscado = int.Parse(busqueda);
-                        query = query.Where(t => t.DNI == dniBuscado);
+                        query = query.Where(t => t.Dni == dniBuscado);
                         break;
                     case "Estado":
-                        query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
+                        query = query.Where(t => (t.Estado_paciente ?? "").ToLower().Contains(busqueda));
                         break;
                     default:
                         query = query.Where(t =>
-                            (t.Paciente ?? "").ToLower().Contains(busqueda) ||
-                            t.DNI.ToString().Contains(busqueda) ||
-                            (t.Estado ?? "").ToLower().Contains(busqueda));
+                            (t.Nombre ?? "").ToLower().Contains(busqueda) ||
+                            t.Dni.ToString().Contains(busqueda) ||
+                            (t.Estado_paciente ?? "").ToLower().Contains(busqueda));
                         break;
                 }
             }
 
             // Actualiza el BindingSource con los resultados filtrados
-            enlacePacientes.DataSource = query.OrderBy(t => t.Paciente).ToList();
+            enlacePacientes.DataSource = query.OrderBy(t => t.Nombre).ToList();
             enlacePacientes.ResetBindings(false);
         }
 

@@ -1,6 +1,5 @@
-﻿using Sistema_Hospitalario.CapaDatos.ModerRepos;
+﻿using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.moder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +18,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         public UC_Camas()
         {
             InitializeComponent();
-            _service = new CamaService(new CamaRepository());
+            _service = new CamaService();
             CargarCamas();
         }
 

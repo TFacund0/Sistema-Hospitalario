@@ -12,11 +12,13 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
     public partial class UC_agregarMedico : System.Windows.Forms.UserControl
     {
-        private static readonly MedicoService medicoService = new MedicoService(new MedicoRepository());
+        private static readonly MedicoService medicoService = new MedicoService();
         private readonly MedicoService _service = medicoService;
         public UC_agregarMedico()
         {
