@@ -29,7 +29,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             CargarInformacionPaneles();
             ConfigurarTablaActividad();
-            ConfigurarEnlazadoDatosColumnas();
 
             // Asegura que se ejecute el Load
             this.Load += Home_Load;
@@ -39,14 +38,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private void CargarInformacionPaneles()
         {
             PacienteService pacienteService = new PacienteService();
-            int cantidadPacientes = pacienteService.ContarPorEstadoId(1);
+            int cantidadPacientes = pacienteService.ContarPorEstadoId("activo");
 
             CamaService camaService = new CamaService();
             int cantidadCamasOcupadas = camaService.TotalCamasXEstado("ocupada");
             int cantidadCamas = camaService.TotalCamas();
 
             InternacionService internacionService = new InternacionService();
-            int cantidadInternaciones = internacionService.ListadoInternacionDtos().Count;
+            int cantidadInternaciones = internacionService.ListadoInternacionDtos().Count();
 
             string cantPacientes = cantidadPacientes.ToString();
             string cantCamasOcupadas = cantidadCamasOcupadas.ToString();
@@ -84,6 +83,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvActividad.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold); // Fuente en negrita para los encabezados de columna
             dgvActividad.ColumnHeadersHeight = 35; // Altura de los encabezados de columna
             dgvActividad.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo para los encabezados de columna
+            
+            ConfigurarEnlazadoDatosColumnas();
         }
 
         private void ConfigurarEnlazadoDatosColumnas()
@@ -103,7 +104,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             // Cargamos la lista de la clase
             var datos = homeService.ListarActividadReciente(100);
-            listaActividad = datos ?? new List<HomeDto>();
+            listaActividad = datos;
 
             // Usamos el BindingSource de la clase
             enlaceActividad.DataSource = listaActividad
@@ -112,10 +113,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             dgvActividad.AutoGenerateColumns = false;
             dgvActividad.DataSource = enlaceActividad;
-
             dgvActividad.Columns["colHorario"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
         }
-
 
         private void Home_Load(object sender, EventArgs e)
         {
@@ -222,6 +221,5 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             enlaceActividad.ResetBindings(false);
         }
-
     }
 }

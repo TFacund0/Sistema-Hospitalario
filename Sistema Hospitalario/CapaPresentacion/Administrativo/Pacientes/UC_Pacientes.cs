@@ -35,8 +35,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             InitializeComponent();
 
-            ConfigurarTablaActividad();
             ConfigurarLabelsInformacion();
+            ConfigurarTablaActividad();
 
             CargarOpcionesDeFiltro();
             ConfigurarEnlazadoDatosPacienteColumnas();
@@ -62,9 +62,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ===================== CONFIGURACIÓN DE LABELS DE INFORMACIÓN =====================
         private void ConfigurarLabelsInformacion()
         {
-            lblTotalPacientes.Text = pacienteService.ContarPorEstadoId(1).ToString();
-            lblTotalInternados.Text = pacienteService.ContarPorEstadoId(2).ToString();
-            lblTotalEgresados.Text = pacienteService.ContarPorEstadoId(3).ToString();
+            lblTotalPacientes.Text = pacienteService.ContarPorEstadoId("activo").ToString();
+            lblTotalInternados.Text = pacienteService.ContarPorEstadoId("internado").ToString();
+            lblTotalEgresados.Text = pacienteService.ContarPorEstadoId("alta").ToString();
         }
 
 
@@ -86,7 +86,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente"; 
             dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";      
             dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";    
-            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
+            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado_paciente";
         }
 
 
@@ -111,7 +111,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             txtBuscar.Clear();
             if (cboCampo != null) cboCampo.SelectedIndex = 0;
 
-            enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Nombre).ToList();
+            enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Paciente).ToList();
             enlacePacientes.ResetBindings(false);
         }
 
@@ -141,7 +141,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 switch (campo)
                 {
                     case "Paciente":
-                        query = query.Where(t => (t.Nombre ?? "").ToLower().Contains(busqueda));
+                        query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
                         break;
                     case "DNI":
                         int dniBuscado = int.Parse(busqueda);
@@ -160,7 +160,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             }
 
             // Actualiza el BindingSource con los resultados filtrados
-            enlacePacientes.DataSource = query.OrderBy(t => t.Nombre).ToList();
+            enlacePacientes.DataSource = query.OrderBy(t => t.Paciente).ToList();
             enlacePacientes.ResetBindings(false);
         }
 
@@ -175,7 +175,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             if (dgvPacientes.Columns[evento.ColumnIndex].Name == "colAccion")
             {
                 // Obtener el paciente seleccionado
-                var paciente = enlacePacientes[evento.RowIndex] as PacienteListadoDto;
+                var paciente = enlacePacientes[evento.RowIndex] as PacienteDto;
                 if (paciente == null) return;
 
                 // Traer el detalle desde negocio/datos

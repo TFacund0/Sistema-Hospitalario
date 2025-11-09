@@ -124,7 +124,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             dtpNacimiento.Format = DateTimePickerFormat.Short; 
             dtpNacimiento.MaxDate = DateTime.Today;            
-            dtpNacimiento.MinDate = DateTime.Today.AddYears(-120); 
+            dtpNacimiento.MinDate = DateTime.Today.AddYears(-110); 
 
             if (dtpNacimiento.Value > DateTime.Today)
             {
@@ -150,15 +150,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 e.Cancel = true;
                 errorProvider1.SetError(txtDni, "El DNI es obligatorio y númerico.");
             }
-            else if (txtDni.Text.Length > 15)
+            else if (txtDni.Text.Length > 8)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtDni, "Máximo 15 caracteres.");
             }
-            else if (int.TryParse(txtDni.Text, out int dni) && dni <= 0)
+            else if (int.TryParse(txtDni.Text, out int dni) && dni <= 0 )
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtDni, "El DNI debe ser un número positivo.");
+            }
+            else if (txtDni.Text.Length < 7)
+            {
+                e.Cancel= true;
+                errorProvider1.SetError(txtDni, "El DNI debe ser de al menos 7 digitos.");
             }
             else
             {
@@ -254,7 +259,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 FechaNacimiento = dtpNacimiento.Value,
                 Email = txtEmail.Text.Trim(),
                 Observaciones = txtObservaciones.Text.Trim(),
-                EstadoInicial = cbEstadoInicial.Text.Trim()
+                EstadoInicial = cbEstadoInicial.Text.Trim(),
             };
 
             var (Ok, IdGenerado, Error) = _pacienteService.Alta(dto);

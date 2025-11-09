@@ -74,7 +74,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             float porcentajeOcupadas = ((float)totalCamasOcupadas / (float)totalCamas) * 100;
             lblPorcentajeOcupadas.Text = porcentajeOcupadas.ToString() + "% de camas ocupadas";
 
-            int totalPacientesInternados = pacienteService.ContarPorEstadoId(2);
+            int totalPacientesInternados = pacienteService.ContarPorEstadoId("internado");
             lblPacientesInternados.Text = totalPacientesInternados.ToString();
         }
 

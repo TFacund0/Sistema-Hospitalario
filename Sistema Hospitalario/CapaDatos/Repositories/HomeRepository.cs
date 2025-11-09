@@ -51,7 +51,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Nombre = p.nombre,
                         Apellido = p.apellido,
                         Accion = "Paciente registrado",
-                        Horario = p.fecha_registracion, // agrega esta columna si no existe
+                        Horario = p.fecha_registracion,
                         Tipo = null
                     });
 

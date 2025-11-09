@@ -606,7 +606,7 @@
           <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_paciente" FromRole="paciente" ToRole="internacion" />
           <NavigationProperty Name="telefono" Relationship="Self.fk_telefono_paciente" FromRole="paciente" ToRole="telefono" />
           <NavigationProperty Name="turno" Relationship="Self.fk_turno_paciente" FromRole="paciente" ToRole="turno" />
-          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_registracion" Type="DateTime" Precision="3" Nullable="false" />
         </EntityType>
         <EntityType Name="procedimiento">
           <Key>

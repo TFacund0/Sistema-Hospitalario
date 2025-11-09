@@ -50,7 +50,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
         // ===================== TOTAL CAMAS X ESTADO =====================
         public int TotalCamasXEstado(string p_nombre_estado)
         {
-            var totalCamasXEstado = _repo.GetAll().Count(c => c.Estado == p_nombre_estado);
+            var totalCamasXEstado = _repo.GetAll().Count(c => c.Estado.ToLower() == p_nombre_estado.ToLower());
             return totalCamasXEstado;
         }
 

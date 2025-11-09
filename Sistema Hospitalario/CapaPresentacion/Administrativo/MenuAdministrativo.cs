@@ -5,6 +5,7 @@ using Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización;
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using System.Linq.Expressions;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {

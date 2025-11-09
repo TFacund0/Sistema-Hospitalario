@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -12,6 +13,13 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO
     {
         public int Id { get; set; }
         public int Dni { get; set; }
+        public string Paciente 
+        { 
+            get
+            {
+                return $"{Apellido}, {Nombre}";
+            }
+        }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public DateTime Fecha_nacimiento {get; set; }
@@ -21,6 +29,8 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO
         public string Estado_paciente { get; set; }
         public int Id_estado_paciente { get; set; }
         public string Telefono { get; set; }
+        
+        public virtual ICollection<telefono> Telefonos { get; set; }
         public int Edad 
         { 
             get

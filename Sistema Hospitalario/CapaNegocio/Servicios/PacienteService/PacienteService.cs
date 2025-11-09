@@ -36,12 +36,12 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                     return (false, 0, "Ya existe un paciente registrado con ese DNI.");
                     
                 // Obtener el estado inicial del paciente o usar "Activo" por defecto
-                var nombreEstado = (dtoPaciente.EstadoInicial ?? "Activo").Trim();
+                var nombreEstado = (dtoPaciente.EstadoInicial ?? "activo").Trim().ToLower();
 
                 // Buscar el estado en la base de datos
                 var listaEstados = this._repo.GetEstados();
                 // Buscar el estado por nombre y obtener us id
-                var estado = listaEstados.FirstOrDefault(e => e.Nombre == nombreEstado);
+                var estado = listaEstados.FirstOrDefault(e => e.Nombre.ToLower() == nombreEstado.ToLower());
 
                 if (estado == null)
                         return (false, 0, $"El estado '{nombreEstado}' no existe en estado_paciente.");
@@ -55,9 +55,11 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                         Fecha_nacimiento = dtoPaciente.FechaNacimiento ?? DateTime.Now,
                         Observaciones = dtoPaciente.Observaciones?.Trim(),
                         Direccion = dtoPaciente.Direccion?.Trim(),
+                        Telefono = dtoPaciente.Telefono,
                         Email = dtoPaciente.Email?.Trim(),
-                        Id_estado_paciente = estado.Id
-                    };
+                        Id_estado_paciente = estado.Id,
+                        Estado_paciente = estado.Nombre.ToLower()
+                };
 
                 if (!string.IsNullOrWhiteSpace(dtoPaciente.Telefono))
                 {
@@ -109,6 +111,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                 pacienteEdit.Fecha_nacimiento = dto.FechaNacimiento;
                 pacienteEdit.Email = dto.Email?.Trim();
                 pacienteEdit.Observaciones = dto.Observaciones?.Trim();
+                pacienteEdit.Telefono = dto.Telefono.Trim();
 
                 // 4) Estado (busca por nombre y asigna el id)
                 var listaEstados = this._repo.GetEstados();
@@ -122,13 +125,6 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
 
                 pacienteEdit.Id_estado_paciente = estadoId;
 
-
-                // 5) Teléfono principal (editar el "primero" que mostramos en el detalle)
-                string nuevoTelefono = dto.Telefono?.Trim();
-
-                // Tomamos el "primero" de forma estable (por id)
-                var telPrincipal = pacienteEdit.Telefono.FirstOrDefault();
-
                 _repo.Actualizar(pacienteEdit.Id, pacienteEdit);
                 
                 return (true, null);
@@ -140,10 +136,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
         }
 
         // ===================== CONTAR CANTIDAD PACIENTES (por estado) =====================
-        public int ContarPorEstadoId(int estadoId)
+        public int ContarPorEstadoId(string estado)
         {
             var listaPacientes = this.ObtenerPacientes();
-            return listaPacientes.Where(p => p.Id_estado_paciente == estadoId).Count();
+            return listaPacientes.Where(p => p.Estado_paciente.ToLower() == estado.ToLower()).Count();
         }
 
         // ===================== DETALLE (para ver/editar) =====================
