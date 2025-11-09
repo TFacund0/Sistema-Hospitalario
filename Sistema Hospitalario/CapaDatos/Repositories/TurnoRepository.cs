@@ -46,6 +46,34 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        public TurnoDto ObtenerDetalle(int id_turno)
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var t = db.turno
+                    .AsNoTracking()
+                    .Where(x => x.id_turno == id_turno)
+                    .Select(x => new TurnoDto
+                    {
+                        Id_turno = x.id_turno,
+                        Id_paciente = x.id_paciente,
+                        Paciente = x.paciente.nombre + " " + x.paciente.apellido,
+                        Id_medico = x.id_medico,
+                        Medico = x.medico.apellido + " " + x.medico.nombre,
+                        Id_procedimiento = x.id_procedimiento,
+                        Procedimiento = x.procedimiento.nombre,
+                        FechaTurno = x.fecha_turno,
+                        Observaciones = x.motivo,
+                        Correo = x.correo_electronico,  // OJO: que venga del turno
+                        Telefono = x.telefono,            // idem
+                        Estado = x.estado_turno.nombre
+                    })
+                    .FirstOrDefault();
+
+                return t;
+            }
+        }
+
         public List<ListadoTurno> ListadoTurnos()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -72,6 +100,13 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
+                var estado = db.estado_turno
+                            .AsNoTracking()
+                            .FirstOrDefault(e => e.nombre.ToLower() == "pendiente");
+
+                if (estado == null)
+                    throw new Exception("No se encontró el estado 'Programado' en la base de datos.");
+
                 var nuevoTurno = new turno
                 {
                     id_paciente = p_turno.Id_paciente,
@@ -79,8 +114,10 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     id_procedimiento = p_turno.Id_procedimiento,
                     fecha_turno = p_turno.FechaTurno,
                     fecha_registracion = p_turno.FechaRegistro,
+                    correo_electronico = p_turno.Correo,
+                    telefono = p_turno.Telefono,
                     motivo = p_turno.Observaciones,
-                    id_estado_turno = 6
+                    id_estado_turno = db.estado_turno.AsNoTracking().FirstOrDefault(e => e.nombre.ToLower() == "pendiente").id_estado_turno,
                 };
 
                 db.turno.Add(nuevoTurno);
@@ -92,33 +129,31 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
-                var turnoExistente = db.turno.Find(id_turno) ?? throw new Exception("Turno no encontrado.");
+                var turnoExistente = db.turno.Find(id_turno)
+                                     ?? throw new Exception("Turno no encontrado.");
+
                 turnoExistente.id_paciente = turnoDto.Id_paciente;
                 turnoExistente.id_medico = turnoDto.Id_medico;
                 turnoExistente.id_procedimiento = turnoDto.Id_procedimiento;
                 turnoExistente.fecha_turno = turnoDto.FechaTurno;
                 turnoExistente.motivo = turnoDto.Observaciones;
 
-                bool correoActivo = !string.IsNullOrEmpty(turnoDto.Correo);
-                bool telefonoActivo = !string.IsNullOrEmpty(turnoDto.Telefono);
+                // ✉️ Correo: si viene vacío, lo guardamos como null (o como "")
+                turnoExistente.correo_electronico =
+                    string.IsNullOrWhiteSpace(turnoDto.Correo)
+                        ? null                    // o "" si preferís
+                        : turnoDto.Correo.Trim();
 
-                if (correoActivo == true && telefonoActivo == true)
-                {
-                    turnoExistente.correo_electronico = turnoDto.Correo;
-                    turnoExistente.telefono = turnoDto.Telefono;
-                }
-                else if (correoActivo == true && telefonoActivo == false)
-                {
-                    turnoExistente.correo_electronico = turnoDto.Correo;
-                }
-                else if (correoActivo == false && telefonoActivo == true)
-                {
-                    turnoExistente.telefono = turnoDto.Telefono;
-                }
+                // 📞 Teléfono: igual idea
+                turnoExistente.telefono =
+                    string.IsNullOrWhiteSpace(turnoDto.Telefono)
+                        ? null
+                        : turnoDto.Telefono.Trim();
 
                 db.SaveChanges();
             }
         }
+
         public void Eliminar(int id_turno)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())

@@ -26,15 +26,22 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Contar turnos por estado, con manejo especial para "Pendiente" (solo los de hoy)
         public int CantidadTurnosPorEstado(string estado)
         {
-            var turnos = _repo.GetAll().Where(t => t.Estado == estado);
+            var turnos = _repo.GetAll().Where(t => t.Estado.ToLower() == estado.ToLower());
 
-            if (estado == "Pendiente")
+            if (estado.ToLower() == "pendiente")
             {
                 var hoy = DateTime.Today;
                 turnos = turnos.Where(t => t.FechaTurno.Date == hoy);
             }
 
             return turnos.Count();
+        }
+
+        public int CantidadTurnosPendientes()
+        {
+            var turnosPendientes = _repo.GetAll()
+                                        .Where(t => t.Estado.ToLower() == "pendiente");
+            return turnosPendientes.Count();
         }
 
         // Registrar un nuevo turno
@@ -58,7 +65,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         // Obtener detalles de un turno por ID
         public TurnoDto ObtenerDetalle(int p_id_turno)
         {
-            return _repo.GetAll().FirstOrDefault(t => t.Id_turno == p_id_turno);
+            return _repo.ObtenerDetalle(p_id_turno);
         }
     }
 }
