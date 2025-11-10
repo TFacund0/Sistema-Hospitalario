@@ -28,6 +28,5 @@ namespace Sistema_Hospitalario.CapaDatos
         public virtual medico medico { get; set; }
         public virtual paciente paciente { get; set; }
         public virtual procedimiento procedimiento { get; set; }
-        public virtual habitacion habitacion { get; set; }
     }
 }

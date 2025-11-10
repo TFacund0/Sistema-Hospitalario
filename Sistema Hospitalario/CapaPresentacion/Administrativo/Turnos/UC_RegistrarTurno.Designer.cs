@@ -203,7 +203,7 @@
             this.btnCancelar.TabIndex = 9;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click_1);
+            this.btnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click_1);
             // 
             // panel29
             // 
@@ -231,7 +231,7 @@
             this.btnLimpiar.TabIndex = 8;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click_1);
+            this.btnLimpiar.Click += new System.EventHandler(this.BtnLimpiar_Click_1);
             // 
             // panel26
             // 
@@ -262,7 +262,7 @@
             this.btnGuardar.TabIndex = 7;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
-            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click_1);
+            this.btnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click_1);
             // 
             // panel22
             // 
@@ -308,7 +308,7 @@
             this.dtpFechaTurno.Name = "dtpFechaTurno";
             this.dtpFechaTurno.Size = new System.Drawing.Size(486, 22);
             this.dtpFechaTurno.TabIndex = 2;
-            this.dtpFechaTurno.Validating += new System.ComponentModel.CancelEventHandler(this.dtpFecha_Validating);
+            this.dtpFechaTurno.Validating += new System.ComponentModel.CancelEventHandler(this.DtpFecha_Validating);
             // 
             // label8
             // 
@@ -497,7 +497,7 @@
             this.cbPaciente.Name = "cbPaciente";
             this.cbPaciente.Size = new System.Drawing.Size(486, 24);
             this.cbPaciente.TabIndex = 2;
-            this.cbPaciente.Validating += new System.ComponentModel.CancelEventHandler(this.cbPaciente_Validating);
+            this.cbPaciente.Validating += new System.ComponentModel.CancelEventHandler(this.CbPaciente_Validating);
             // 
             // cbMedico
             // 
@@ -506,7 +506,7 @@
             this.cbMedico.Name = "cbMedico";
             this.cbMedico.Size = new System.Drawing.Size(486, 24);
             this.cbMedico.TabIndex = 3;
-            this.cbMedico.Validating += new System.ComponentModel.CancelEventHandler(this.cbMedico_Validating);
+            this.cbMedico.Validating += new System.ComponentModel.CancelEventHandler(this.CbMedico_Validating);
             // 
             // cbProcedimiento
             // 
@@ -515,7 +515,7 @@
             this.cbProcedimiento.Name = "cbProcedimiento";
             this.cbProcedimiento.Size = new System.Drawing.Size(486, 24);
             this.cbProcedimiento.TabIndex = 4;
-            this.cbProcedimiento.Validating += new System.ComponentModel.CancelEventHandler(this.cbProcedimiento_Validating);
+            this.cbProcedimiento.Validating += new System.ComponentModel.CancelEventHandler(this.CbProcedimiento_Validating);
             // 
             // panel21
             // 

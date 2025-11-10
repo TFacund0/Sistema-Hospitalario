@@ -8,14 +8,94 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 {
     public partial class UC_registrarUsuario : UserControl
     {
+        private static readonly UsuarioService usuarioService = new UsuarioService();
+        private readonly UsuarioService _service = usuarioService;
+
+        private readonly MedicoService _medicoService = new MedicoService();
+
         public UC_registrarUsuario()
         {
             InitializeComponent();
+            CargarRoles();
+            CargarEstados();
+            cboMedicos.Enabled = false;
         }
+
+        private void CargarRoles()
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var roles = db.rol
+                              .Select(r => new { IdRol = r.id_rol, NombreRol = r.nombre })
+                              .ToList();
+                cboRol.DisplayMember = "NombreRol";
+                cboRol.ValueMember = "IdRol";
+                cboRol.DataSource = roles;
+            }
+        }
+
+        private void CargarEstados()
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var estados = db.estado_usuario
+                                .Select(e => new { IdEstado = e.id_estado_usuario, NombreEstado = e.nombre })
+                                .ToList();
+                cboEstado.DisplayMember = "NombreEstado";
+                cboEstado.ValueMember = "IdEstado";
+                cboEstado.DataSource = estados;
+            }
+        }
+
+        private void CargarMedicos()
+        {
+            try
+            {
+                var medicos = _medicoService.ObtenerMedicosParaComboBox();
+
+                cboMedicos.DisplayMember = "NombreCompletoYDNI";
+                cboMedicos.ValueMember = "Id";
+                cboMedicos.DataSource = medicos;
+
+                cboMedicos.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la lista de médicos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Deshabilitar el combo si no se pudo cargar
+                cboMedicos.Enabled = false;
+            }
+        }
+
+        private void cboRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboRol.SelectedItem != null && cboRol.Text == "medico") 
+            {
+                cboMedicos.Visible = true;
+
+                if (cboMedicos.DataSource == null)
+                {
+                    CargarMedicos();
+                }
+                cboMedicos.Enabled = true;
+            }
+            else
+            {
+                cboMedicos.Enabled = false;
+                cboMedicos.SelectedIndex = -1;
+            }
+        }
+
+
+        // ============================= Validaciones ===========================
         private void TBNOMBRE_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBNOMBRE.Text))
@@ -52,64 +132,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
-        private void TBDNI_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(TBDNI.Text) || !int.TryParse(TBDNI.Text, out _))
-            { // Validar que no esté vacío y sea numérico
-                e.Cancel = true;
-                errorProvider1.SetError(TBDNI, "El DNI es obligatorio y numérico.");
-            }
-            else if (TBDNI.Text.Length > 15)
-            { // Validar longitud máxima
-                e.Cancel = true;
-                errorProvider1.SetError(TBDNI, "Máximo 15 caracteres.");
-            }
-            else   // Si todo está bien, limpiar el error
-            {
-                errorProvider1.SetError(TBDNI, "");
-            }
-        }
-
-        private void dtpNacimiento_Validating(object sender, CancelEventArgs e)
-        {
-            // Limita la fecha a hoy y 120 años atrás
-            dtpNacimiento.MaxDate = DateTime.Today;
-            dtpNacimiento.MinDate = DateTime.Today.AddYears(-120);
-
-            if (dtpNacimiento.Value.Date > DateTime.Today)
-            { // Validar que no sea futura
-                e.Cancel = true;
-                errorProvider1.SetError(dtpNacimiento, "La fecha de nacimiento no puede ser futura.");
-            }
-            else if (dtpNacimiento.Value.Date < DateTime.Today.AddYears(-120))
-            { // Validar que no sea mayor a 120 años atrás
-                e.Cancel = true;
-                errorProvider1.SetError(dtpNacimiento, "La fecha no puede ser mayor a 120 años atrás.");
-            }
-            else // Si todo está bien, limpiar el error
-            {
-                errorProvider1.SetError(dtpNacimiento, "");
-            }
-        }
-
-        private void TBTELEFONO_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(TBTELEFONO.Text) || !long.TryParse(TBTELEFONO.Text, out _))
-            { // Validar que no esté vacío y sea numérico
-                e.Cancel = true;
-                errorProvider1.SetError(TBTELEFONO, "El teléfono es obligatorio y numérico.");
-            }
-            else if (TBTELEFONO.Text.Length > 15)
-            { // Validar longitud máxima
-                e.Cancel = true;
-                errorProvider1.SetError(TBTELEFONO, "Máximo 15 caracteres.");
-            }
-            else // Si todo está bien, limpiar el error
-            {
-                errorProvider1.SetError(TBTELEFONO, "");
-            }
-        }
-
         private void TBCORREO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBCORREO.Text))
@@ -134,32 +156,142 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
                 errorProvider1.SetError(TBCORREO, "");
             }
         }
+        private void TBUSERNAME_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TBUSERNAME.Text))
+            { // Validar que no esté vacío o solo espacios
+                e.Cancel = true;
+                errorProvider1.SetError(TBUSERNAME, "El nombre de usuario es obligatorio.");
+            }
+            else if (TBUSERNAME.Text.Length > 50)
+            { // Validar longitud máxima
+                e.Cancel = true;
+                errorProvider1.SetError(TBUSERNAME, "Máximo 50 caracteres.");
+            }
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(
+                         TBUSERNAME.Text, @"^[a-zA-Z0-9_]+$"))
+            { // Validar caracteres permitidos (opcional)
+                e.Cancel = true;
+                errorProvider1.SetError(TBUSERNAME, "Solo se permiten letras, números y guión bajo.");
+            }
+            else // Si todo está bien, limpiar el error
+            {
+                errorProvider1.SetError(TBUSERNAME, "");
+            }
+        }
+
+        private void TBPASSWORD_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TBPASSWORD.Text))
+            { // Validar que no esté vacío
+                e.Cancel = true;
+                errorProvider1.SetError(TBPASSWORD, "La contraseña es obligatoria.");
+            }
+            else if (TBPASSWORD.Text.Length > 65)
+            { // Validar longitud máxima
+                e.Cancel = true;
+                errorProvider1.SetError(TBPASSWORD, "Máximo 60 caracteres.");
+            }
+            else if (TBPASSWORD.Text.Length < 6)
+            { // Validar longitud mínima básica (opcional)
+                e.Cancel = true;
+                errorProvider1.SetError(TBPASSWORD, "Debe tener al menos 6 caracteres.");
+            }
+            else // Si todo está bien, limpiar el error
+            {
+                errorProvider1.SetError(TBPASSWORD, "");
+            }
+        }
 
         // ============================= BOTONES =============================
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private void BtnGuardar_Click_1(object sender, EventArgs e)
         {
-            if (this.ValidateChildren())
-            { // Si todas las validaciones pasan
-                MessageBox.Show("Usuario registrado con éxito.", "Éxito",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else  // Si alguna validación falla
+            try
             {
-                MessageBox.Show("Corrija los errores antes de guardar.", "Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!this.ValidateChildren())
+                {
+                    MessageBox.Show("Por favor, corrija los errores antes de guardar.", "Error de Validación",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int idRol = (int)cboRol.SelectedValue; 
+                int idEstado = (int)cboEstado.SelectedValue;
+                string rolSeleccionado = cboRol.Text;
+
+                int? idMedicoAsociado = null;
+                if (rolSeleccionado == "medico")
+                {
+                    if (cboMedicos.SelectedValue == null || (int)cboMedicos.SelectedValue == 0)
+                    {
+                        // Si el rol es Médico, es obligatorio seleccionar uno
+                        MessageBox.Show("Debe seleccionar un médico para asociar a este usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        errorProvider1.SetError(cboMedicos, "Selección requerida."); // Marcar error en el combo
+                        return; // Detener guardado
+                    }
+                    idMedicoAsociado = (int)cboMedicos.SelectedValue;
+                    errorProvider1.SetError(cboMedicos, ""); // Limpiar error si todo OK
+                }
+                else
+                {
+                    errorProvider1.SetError(cboMedicos, ""); // Limpiar error si no es rol médico
+                }
+
+                // Crear el DTO de alta
+                UsuarioAltaDTO nuevoUsuario = new UsuarioAltaDTO
+                {
+                    Nombre = TBNOMBRE.Text.Trim(),
+                    Apellido = TBAPELLIDO.Text.Trim(),
+                    NombreUsuario = TBUSERNAME.Text.Trim(),
+                    Password = TBPASSWORD.Text.Trim(),
+                    Correo = TBCORREO.Text.Trim(),
+                    IdRol = idRol,
+                    IdEstado = idEstado,
+                    IdMedico = idMedicoAsociado
+                };
+
+                // Llamar al servicio para agregar el usuario
+                var (Ok, IdGenerado, Error) = _service.AgregarUsuario(nuevoUsuario);
+
+                if (Ok)
+                {
+                    MessageBox.Show("Usuario registrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BtnLimpiar_Click_1(sender, e); // Limpiar el formulario
+                }
+                else
+                {
+                    // Mostrar el error específico devuelto por el repositorio/servicio
+                    MessageBox.Show("Error al registrar el usuario: " + Error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error inesperado al registrar el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        { // Limpiar todos los campos y errores
+
+        private void BtnLimpiar_Click_1(object sender, EventArgs e)
+        {
             TBNOMBRE.Clear();
             TBAPELLIDO.Clear();
-            TBDNI.Clear();
-            TBTELEFONO.Clear();
+            TBUSERNAME.Clear();
+            TBPASSWORD.Clear();
             TBCORREO.Clear();
-            dtpNacimiento.Value = DateTime.Today;
+            errorProvider1.Clear();
+            cboRol.SelectedIndex = -1; // Seleccionar el primer rol por defecto
+            cboEstado.SelectedIndex = -1;
+            cboRol.SelectedIndex = -1;
             errorProvider1.Clear();
         }
+
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            MenuModer parentForm = this.FindForm() as MenuModer;
+
+            parentForm.AbrirUserControl(new UC_usuarios());
+        }
+
     }
 }

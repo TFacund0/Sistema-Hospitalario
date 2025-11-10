@@ -18,7 +18,6 @@ namespace Sistema_Hospitalario.CapaDatos
         public habitacion()
         {
             this.cama = new HashSet<cama>();
-            this.internacion = new HashSet<internacion>();
         }
     
         public int nro_habitacion { get; set; }
@@ -28,7 +27,5 @@ namespace Sistema_Hospitalario.CapaDatos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cama> cama { get; set; }
         public virtual tipo_habitacion tipo_habitacion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<internacion> internacion { get; set; }
     }
 }

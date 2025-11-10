@@ -1,6 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaNegocio;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO.EstadoPacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,7 +63,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         // ============================= VALIDACIONES DE CAMPOS PACIENTE =============================
 
         // ========== VALIDACIÓN NOMBRE ==========
-        private void txtNombre_Validating(object sender, CancelEventArgs e)
+        private void TxtNombre_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
@@ -82,7 +82,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ========== VALIDACIÓN APELLIDO ==========
-        private void txtApellido_Validating(object sender, CancelEventArgs e)
+        private void TxtApellido_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtApellido.Text))
             {
@@ -101,7 +101,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ========== VALIDACIÓN DIRECCIÓN ==========
-        private void txtDireccion_Validating(object sender, CancelEventArgs e)
+        private void TxtDireccion_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtDireccion.Text))
             {
@@ -120,11 +120,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ========== VALIDACIÓN FECHA DE NACIMIENTO ==========
-        private void dtpNacimiento_Validating(object sender, CancelEventArgs e)
+        private void DtpNacimiento_Validating(object sender, CancelEventArgs e)
         {
             dtpNacimiento.Format = DateTimePickerFormat.Short; 
             dtpNacimiento.MaxDate = DateTime.Today;            
-            dtpNacimiento.MinDate = DateTime.Today.AddYears(-120); 
+            dtpNacimiento.MinDate = DateTime.Today.AddYears(-110); 
 
             if (dtpNacimiento.Value > DateTime.Today)
             {
@@ -143,22 +143,27 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ========== VALIDACIÓN DNI ==========
-        private void txtDni_Validating(object sender, CancelEventArgs e)
+        private void TxtDni_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtDni.Text) || !int.TryParse(txtDni.Text, out int _))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtDni, "El DNI es obligatorio y númerico.");
             }
-            else if (txtDni.Text.Length > 15)
+            else if (txtDni.Text.Length > 8)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtDni, "Máximo 15 caracteres.");
             }
-            else if (int.TryParse(txtDni.Text, out int dni) && dni <= 0)
+            else if (int.TryParse(txtDni.Text, out int dni) && dni <= 0 )
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtDni, "El DNI debe ser un número positivo.");
+            }
+            else if (txtDni.Text.Length < 7)
+            {
+                e.Cancel= true;
+                errorProvider1.SetError(txtDni, "El DNI debe ser de al menos 7 digitos.");
             }
             else
             {
@@ -167,7 +172,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ========== VALIDACIÓN TELÉFONO ==========
-        private void txtTelefono_Validating(object sender, CancelEventArgs e)
+        private void TxtTelefono_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTelefono.Text) || !int.TryParse(txtTelefono.Text, out int _))
             {
@@ -186,7 +191,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ========= VALIDACIÓN CORREO ==========
-        private void txtEmail_Validating(object sender, CancelEventArgs e)
+        private void TxtEmail_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
@@ -211,7 +216,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ========== VALIDACIÓN OBSERVACIONES ==========
-        private void txtObservaciones_Validating(object sender, CancelEventArgs e)
+        private void TxtObservaciones_Validating(object sender, CancelEventArgs e)
         {
             if (txtObservaciones.Text.Length > 200)
             {
@@ -242,9 +247,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 
 
         // ============================ BOTÓN GUARDAR =============================
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            var dto = new CapaNegocio.DTOs.PacienteAltaDto
+            var dto = new PacienteAltaDto
             {
                 Nombre = txtNombre.Text.Trim(),
                 Apellido = txtApellido.Text.Trim(),
@@ -254,25 +259,25 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 FechaNacimiento = dtpNacimiento.Value,
                 Email = txtEmail.Text.Trim(),
                 Observaciones = txtObservaciones.Text.Trim(),
-                EstadoInicial = cbEstadoInicial.Text.Trim()
+                EstadoInicial = cbEstadoInicial.Text.Trim(),
             };
 
-            var r = _pacienteService.Alta(dto);
+            var (Ok, IdGenerado, Error) = _pacienteService.Alta(dto);
 
-            if (r.Ok)
+            if (Ok)
             {
-                MessageBox.Show($"Paciente registrado con éxito. ID: {r.IdGenerado}", "Éxito",
+                MessageBox.Show($"Paciente registrado con éxito. ID: {IdGenerado}", "Éxito",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-                btnLimpiar_Click(null, EventArgs.Empty);
+                BtnLimpiar_Click(null, EventArgs.Empty);
             }
             else
             {
-                MessageBox.Show(r.Error, "No se pudo guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Error, "No se pudo guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         // ============================ BOTÓN LIMPIAR =============================
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             txtNombre.Clear();
             txtDireccion.Clear();
@@ -288,7 +293,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         }
 
         // ============================ BOTÓN CANCELAR =============================
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void BtnCancelar_Click(object sender, EventArgs e)
         {
             CancelarRegistroSolicitado?.Invoke(this, EventArgs.Empty);
         }

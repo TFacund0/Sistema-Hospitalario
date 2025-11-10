@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sistema_Hospitalario.CapaNegocio.DTOs
+namespace Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO
 {
     public class PacienteEditarDto
     {

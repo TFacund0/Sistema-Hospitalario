@@ -1,52 +1,72 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos.Repositories;
+using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService
 {
     public class CamaService
     {
-        // ===================== TOTAL CAMAS =====================
-        public async Task<int> TotalCamas()
+        private readonly CamaRepository _repo = new CamaRepository();
+
+        public CamaService()
         {
-            using (var db = new Sistema_HospitalarioEntities())
-            {
-                // Cuenta todas las camas en la base de datos
-                int totalCamas = await Task.Run(() => db.cama.Count());
-                return totalCamas;
-            }
+        }
+
+        public List<MostrarCamaDTO> ObtenerCamas()
+        {
+            return _repo.GetAll();
+        }
+
+        public void AgregarCama(int nroHabitacion)
+        {
+            if (nroHabitacion < 0)
+                throw new ArgumentException("el numero de habitacion debe ser positivo");
+
+            _repo.Insertar(nroHabitacion);
+        }
+
+        public void EliminarCama(int nroHabitacion, int nroCama)
+        {
+            _repo.Eliminar(nroHabitacion, nroCama);
+        }
+
+        public void CambiarEstado(int nroHabitacion, int idCama, int nuevoEstadoId)
+        {   
+            _repo.CambiarEstado(nroHabitacion, idCama, nuevoEstadoId);
+        }
+
+        // ===================== TOTAL CAMAS =====================
+        public int TotalCamas()
+        {
+            var totalCamas = _repo.GetAll().Count;
+            return totalCamas;
         }
 
         // ===================== TOTAL CAMAS X ESTADO =====================
-        public async Task<int> TotalCamasXEstado(int p_id_estado, string p_nombre_estado)
+        public int TotalCamasXEstado(string p_nombre_estado)
         {
-            using (var db = new Sistema_HospitalarioEntities())
-            {
-                // Cuenta todas las camas que tienen el id de estado de cama igual al parámetro
-                int totalCamasXEstado = await Task.Run(() => db.cama.Count(c => c.id_estado_cama == p_id_estado && c.estado_cama.disponibilidad == p_nombre_estado));
-                return totalCamasXEstado;
-            }
+            var totalCamasXEstado = _repo.GetAll().Count(c => c.Estado.ToLower() == p_nombre_estado.ToLower());
+            return totalCamasXEstado;
         }
 
         public List<CamaDto> ListarCamasXHabitacion(string p_nroHabitacion)
         {
-            using (var db = new Sistema_HospitalarioEntities())
-            {
-                var camas = db.cama
-                    .Where(c => c.nro_habitacion.ToString() == p_nroHabitacion)
-                    .Select(c => new CamaDto
+            var camasList = _repo.GetAll();
+            
+            return camasList
+                .Where(c => c.NroHabitacion.ToString() == p_nroHabitacion)
+                .Select(c => new CamaDto
                 {
-                    NroCama = c.id_cama,
-                    NroHabitacion = c.nro_habitacion,
-                    IdEstadoCama = c.id_estado_cama,
-                    EstadoCama = c.estado_cama.disponibilidad
+                    NroCama = c.NroCama,
+                    NroHabitacion = c.NroHabitacion,
+                    IdEstadoCama = c.IdEstadoCama,
+                    EstadoCama = c.Estado
                 }).ToList();
-                return camas;
-            }
         }
     }
 }

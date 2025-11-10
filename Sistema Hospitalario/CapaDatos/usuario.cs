@@ -22,8 +22,10 @@ namespace Sistema_Hospitalario.CapaDatos
         public string email { get; set; }
         public int id_estado_usuario { get; set; }
         public int id_rol { get; set; }
+        public Nullable<int> id_medico { get; set; }
     
         public virtual estado_usuario estado_usuario { get; set; }
         public virtual rol rol { get; set; }
+        public virtual medico medico { get; set; }
     }
 }
