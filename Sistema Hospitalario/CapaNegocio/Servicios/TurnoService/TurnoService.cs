@@ -20,7 +20,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
 
         public List<ListadoTurno> ListarTurnos ()
         {
-            return _repo.ListadoTurnos();
+            return _repo.ListadoTurnos().Where(t => t.FechaTurno >= DateTime.Now.AddDays(-7)).ToList();
         }
 
         // Contar turnos por estado, con manejo especial para "Pendiente" (solo los de hoy)
