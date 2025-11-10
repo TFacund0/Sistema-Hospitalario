@@ -14,6 +14,18 @@
           <Property Name="nro_habitacion" Type="int" Nullable="false" />
           <Property Name="id_estado_cama" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Consulta">
+          <Key>
+            <PropertyRef Name="id_consulta" />
+          </Key>
+          <Property Name="id_consulta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="motivo" Type="varchar(max)" />
+          <Property Name="diagnostico" Type="varchar(max)" />
+          <Property Name="tratamiento" Type="varchar(max)" />
+          <Property Name="id_medico" Type="int" Nullable="false" />
+          <Property Name="id_paciente" Type="int" Nullable="false" />
+          <Property Name="fecha_consulta" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="especialidad">
           <Key>
             <PropertyRef Name="id_especialidad" />
@@ -62,8 +74,8 @@
             <PropertyRef Name="id_internacion" />
           </Key>
           <Property Name="id_internacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fecha_inicio" Type="date" Nullable="false" />
-          <Property Name="fecha_fin" Type="date" />
+          <Property Name="fecha_inicio" Type="datetime" Nullable="false" />
+          <Property Name="fecha_fin" Type="datetime" />
           <Property Name="motivo" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="id_cama" Type="int" Nullable="false" />
           <Property Name="nro_habitacion" Type="int" Nullable="false" />
@@ -92,7 +104,7 @@
           <Property Name="dni" Type="int" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="fecha_nacimiento" Type="date" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="datetime" Nullable="false" />
           <Property Name="observaciones" Type="varchar" MaxLength="200" />
           <Property Name="direccion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="correo_electronico" Type="varchar" MaxLength="150" Nullable="false" />
@@ -153,8 +165,8 @@
             <PropertyRef Name="id_turno" />
           </Key>
           <Property Name="id_turno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fecha_turno" Type="date" Nullable="false" />
-          <Property Name="fecha_registracion" Type="date" Nullable="false" />
+          <Property Name="fecha_turno" Type="datetime" Nullable="false" />
+          <Property Name="fecha_registracion" Type="datetime" Nullable="false" />
           <Property Name="id_procedimiento" Type="int" Nullable="false" />
           <Property Name="id_paciente" Type="int" Nullable="false" />
           <Property Name="id_medico" Type="int" Nullable="false" />
@@ -198,6 +210,30 @@
             </Principal>
             <Dependent Role="cama">
               <PropertyRef Name="nro_habitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_Medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_Paciente">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="id_paciente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -397,6 +433,7 @@
         </Association>
         <EntityContainer Name="Sistema_HospitalarioModelStoreContainer">
           <EntitySet Name="cama" EntityType="Self.cama" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Consulta" EntityType="Self.Consulta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="especialidad" EntityType="Self.especialidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="estado_cama" EntityType="Self.estado_cama" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="estado_paciente" EntityType="Self.estado_paciente" Schema="dbo" store:Type="Tables" />
@@ -421,6 +458,14 @@
           <AssociationSet Name="fk_cama_habitacion" Association="Self.fk_cama_habitacion">
             <End Role="habitacion" EntitySet="habitacion" />
             <End Role="cama" EntitySet="cama" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_Medico" Association="Self.FK_Consulta_Medico">
+            <End Role="medico" EntitySet="medico" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_Paciente" Association="Self.FK_Consulta_Paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="Consulta" EntitySet="Consulta" />
           </AssociationSet>
           <AssociationSet Name="fk_habitacion_tipo_habitacion" Association="Self.fk_habitacion_tipo_habitacion">
             <End Role="tipo_habitacion" EntitySet="tipo_habitacion" />
@@ -559,8 +604,8 @@
             <PropertyRef Name="id_internacion" />
           </Key>
           <Property Name="id_internacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="fecha_fin" Type="DateTime" Precision="0" />
+          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_fin" Type="DateTime" Precision="3" />
           <Property Name="motivo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="id_cama" Type="Int32" Nullable="false" />
           <Property Name="nro_habitacion" Type="Int32" Nullable="false" />
@@ -588,6 +633,7 @@
           <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_medico" FromRole="medico" ToRole="internacion" />
           <NavigationProperty Name="turno" Relationship="Self.fk_turno_medico" FromRole="medico" ToRole="turno" />
           <NavigationProperty Name="usuario" Relationship="Sistema_HospitalarioModel.FK_Usuario_Medico" FromRole="medico" ToRole="usuario" />
+          <NavigationProperty Name="Consulta" Relationship="Sistema_HospitalarioModel.FK_Consulta_Medico" FromRole="medico" ToRole="Consulta" />
         </EntityType>
         <EntityType Name="paciente">
           <Key>
@@ -597,7 +643,7 @@
           <Property Name="dni" Type="Int32" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fecha_nacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="correo_electronico" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
@@ -607,6 +653,7 @@
           <NavigationProperty Name="telefono" Relationship="Self.fk_telefono_paciente" FromRole="paciente" ToRole="telefono" />
           <NavigationProperty Name="turno" Relationship="Self.fk_turno_paciente" FromRole="paciente" ToRole="turno" />
           <Property Name="fecha_registracion" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="Consulta" Relationship="Sistema_HospitalarioModel.FK_Consulta_Paciente" FromRole="paciente" ToRole="Consulta" />
         </EntityType>
         <EntityType Name="procedimiento">
           <Key>
@@ -668,8 +715,8 @@
             <PropertyRef Name="id_turno" />
           </Key>
           <Property Name="id_turno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fecha_turno" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_turno" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_registracion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="id_procedimiento" Type="Int32" Nullable="false" />
           <Property Name="id_paciente" Type="Int32" Nullable="false" />
           <Property Name="id_medico" Type="Int32" Nullable="false" />
@@ -996,6 +1043,15 @@
             <End Role="medico" EntitySet="medico" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <EntitySet Name="Consulta" EntityType="Sistema_HospitalarioModel.Consulta" />
+          <AssociationSet Name="FK_Consulta_Medico" Association="Sistema_HospitalarioModel.FK_Consulta_Medico">
+            <End Role="medico" EntitySet="medico" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_Paciente" Association="Sistema_HospitalarioModel.FK_Consulta_Paciente">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Usuario_Medico">
           <End Type="Sistema_HospitalarioModel.medico" Role="medico" Multiplicity="0..1" />
@@ -1006,6 +1062,44 @@
             </Principal>
             <Dependent Role="usuario">
               <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Consulta">
+          <Key>
+            <PropertyRef Name="id_consulta" />
+          </Key>
+          <Property Name="id_consulta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="motivo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="diagnostico" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tratamiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_medico" Type="Int32" Nullable="false" />
+          <Property Name="id_paciente" Type="Int32" Nullable="false" />
+          <Property Name="fecha_consulta" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="medico" Relationship="Sistema_HospitalarioModel.FK_Consulta_Medico" FromRole="Consulta" ToRole="medico" />
+          <NavigationProperty Name="paciente" Relationship="Sistema_HospitalarioModel.FK_Consulta_Paciente" FromRole="Consulta" ToRole="paciente" />
+        </EntityType>
+        <Association Name="FK_Consulta_Medico">
+          <End Type="Sistema_HospitalarioModel.medico" Role="medico" Multiplicity="1" />
+          <End Type="Sistema_HospitalarioModel.Consulta" Role="Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medico">
+              <PropertyRef Name="id_medico" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="id_medico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_Paciente">
+          <End Type="Sistema_HospitalarioModel.paciente" Role="paciente" Multiplicity="1" />
+          <End Type="Sistema_HospitalarioModel.Consulta" Role="Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="id_paciente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1199,6 +1293,19 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id_estado_usuario" ColumnName="id_estado_usuario" />
                 <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consulta">
+            <EntityTypeMapping TypeName="Sistema_HospitalarioModel.Consulta">
+              <MappingFragment StoreEntitySet="Consulta">
+                <ScalarProperty Name="fecha_consulta" ColumnName="fecha_consulta" />
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+                <ScalarProperty Name="id_medico" ColumnName="id_medico" />
+                <ScalarProperty Name="tratamiento" ColumnName="tratamiento" />
+                <ScalarProperty Name="diagnostico" ColumnName="diagnostico" />
+                <ScalarProperty Name="motivo" ColumnName="motivo" />
+                <ScalarProperty Name="id_consulta" ColumnName="id_consulta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

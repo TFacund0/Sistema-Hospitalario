@@ -43,5 +43,6 @@ namespace Sistema_Hospitalario.CapaDatos
         public virtual DbSet<tipo_habitacion> tipo_habitacion { get; set; }
         public virtual DbSet<turno> turno { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
+        public virtual DbSet<Consulta> Consulta { get; set; }
     }
 }

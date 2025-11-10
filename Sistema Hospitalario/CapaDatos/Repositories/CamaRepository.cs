@@ -23,14 +23,14 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
                 return db.cama
-                         .Select(e => new MostrarCamaDTO
-                         {
-                             NroHabitacion = e.nro_habitacion,
-                             Estado = e.estado_cama.disponibilidad,
-                             NroCama = e.id_cama,
-                             IdEstadoCama = e.id_estado_cama
-                         })
-                         .ToList();
+                            .Select(e => new MostrarCamaDTO
+                            {
+                                NroHabitacion = e.nro_habitacion,
+                                Estado = e.estado_cama.disponibilidad,
+                                NroCama = e.id_cama,
+                                IdEstadoCama = e.id_estado_cama
+                            })
+                            .ToList();
             }
         }
 

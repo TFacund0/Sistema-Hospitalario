@@ -38,10 +38,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
 
         public void AbrirUserControl(UserControl uc)
         {
-            panelContenedor.Controls.Clear();   // Limpia el panel
-            uc.Dock = DockStyle.Fill;           // Que ocupe todo el espacio disponible
-            panelContenedor.Controls.Add(uc);   // Lo agrega al panel
-            uc.BringToFront();                  // Lo trae al frente
+            try
+            {
+                foreach (Control c in panelContenedor.Controls) c.Dispose();
+                panelContenedor.Controls.Clear();
+
+                uc.Dock = DockStyle.Fill;
+                panelContenedor.Controls.Add(uc);
+                uc.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al inicializar: {ex.Message}",
+                   "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }              // Lo trae al frente
         }
 
         private void btn_pacientes_Click(object sender, EventArgs e)
