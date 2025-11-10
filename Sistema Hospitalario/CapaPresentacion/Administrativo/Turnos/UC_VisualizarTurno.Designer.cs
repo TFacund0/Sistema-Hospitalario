@@ -31,6 +31,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.cbEstadoTurno = new System.Windows.Forms.ComboBox();
+            this.lblEstado = new System.Windows.Forms.Label();
             this.panel25 = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
             this.btnCancelar = new System.Windows.Forms.Button();
@@ -56,10 +59,12 @@
             this.txtCorreo = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
+            this.cbProcedimiento = new System.Windows.Forms.ComboBox();
             this.txtProcedimiento = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.cbMedico = new System.Windows.Forms.ComboBox();
             this.txtMedico = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
@@ -72,11 +77,10 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbMedico = new System.Windows.Forms.ComboBox();
-            this.cbProcedimiento = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.panel17.SuspendLayout();
             this.panel25.SuspendLayout();
             this.panel30.SuspendLayout();
             this.panel28.SuspendLayout();
@@ -122,6 +126,7 @@
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.panel17);
             this.panel7.Controls.Add(this.panel25);
             this.panel7.Controls.Add(this.panel22);
             this.panel7.Controls.Add(this.panel14);
@@ -132,6 +137,38 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1194, 578);
             this.panel7.TabIndex = 6;
+            // 
+            // panel17
+            // 
+            this.panel17.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel17.Controls.Add(this.cbEstadoTurno);
+            this.panel17.Controls.Add(this.lblEstado);
+            this.panel17.Location = new System.Drawing.Point(52, 482);
+            this.panel17.Name = "panel17";
+            this.panel17.Size = new System.Drawing.Size(521, 74);
+            this.panel17.TabIndex = 10;
+            // 
+            // cbEstadoTurno
+            // 
+            this.cbEstadoTurno.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbEstadoTurno.FormattingEnabled = true;
+            this.cbEstadoTurno.Location = new System.Drawing.Point(7, 33);
+            this.cbEstadoTurno.Name = "cbEstadoTurno";
+            this.cbEstadoTurno.Size = new System.Drawing.Size(486, 24);
+            this.cbEstadoTurno.TabIndex = 3;
+            // 
+            // lblEstado
+            // 
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEstado.Location = new System.Drawing.Point(3, 4);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(136, 20);
+            this.lblEstado.TabIndex = 3;
+            this.lblEstado.Text = "Estado Turno";
             // 
             // panel25
             // 
@@ -379,6 +416,14 @@
             this.panel13.Size = new System.Drawing.Size(521, 60);
             this.panel13.TabIndex = 3;
             // 
+            // cbProcedimiento
+            // 
+            this.cbProcedimiento.FormattingEnabled = true;
+            this.cbProcedimiento.Location = new System.Drawing.Point(7, 27);
+            this.cbProcedimiento.Name = "cbProcedimiento";
+            this.cbProcedimiento.Size = new System.Drawing.Size(486, 24);
+            this.cbProcedimiento.TabIndex = 4;
+            // 
             // txtProcedimiento
             // 
             this.txtProcedimiento.BackColor = System.Drawing.Color.White;
@@ -417,6 +462,14 @@
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(516, 60);
             this.panel9.TabIndex = 2;
+            // 
+            // cbMedico
+            // 
+            this.cbMedico.FormattingEnabled = true;
+            this.cbMedico.Location = new System.Drawing.Point(7, 26);
+            this.cbMedico.Name = "cbMedico";
+            this.cbMedico.Size = new System.Drawing.Size(486, 24);
+            this.cbMedico.TabIndex = 3;
             // 
             // txtMedico
             // 
@@ -530,22 +583,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Visualiza la información del turno y opción para la modificación";
             // 
-            // cbMedico
-            // 
-            this.cbMedico.FormattingEnabled = true;
-            this.cbMedico.Location = new System.Drawing.Point(7, 26);
-            this.cbMedico.Name = "cbMedico";
-            this.cbMedico.Size = new System.Drawing.Size(486, 24);
-            this.cbMedico.TabIndex = 3;
-            // 
-            // cbProcedimiento
-            // 
-            this.cbProcedimiento.FormattingEnabled = true;
-            this.cbProcedimiento.Location = new System.Drawing.Point(7, 27);
-            this.cbProcedimiento.Name = "cbProcedimiento";
-            this.cbProcedimiento.Size = new System.Drawing.Size(486, 24);
-            this.cbProcedimiento.TabIndex = 4;
-            // 
             // UC_VisualizarTurno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -556,6 +593,8 @@
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
+            this.panel17.ResumeLayout(false);
+            this.panel17.PerformLayout();
             this.panel25.ResumeLayout(false);
             this.panel30.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
@@ -632,5 +671,8 @@
         private System.Windows.Forms.TextBox txtPaciente;
         private System.Windows.Forms.ComboBox cbProcedimiento;
         private System.Windows.Forms.ComboBox cbMedico;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.ComboBox cbEstadoTurno;
+        private System.Windows.Forms.Label lblEstado;
     }
 }
