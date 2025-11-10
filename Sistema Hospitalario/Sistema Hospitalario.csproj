@@ -69,9 +69,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapaDatos\Consulta.cs">
+      <DependentUpon>Sistema_Hospitalario_BDD.tt</DependentUpon>
+    </Compile>
     <Compile Include="CapaDatos\Interfaces\IHomeRepository.cs" />
     <Compile Include="CapaDatos\Interfaces\IInternacionRepository.cs" />
     <Compile Include="CapaDatos\Interfaces\ITurnoRepository.cs" />
+    <Compile Include="CapaDatos\Repositories\EstadisticasRepository.cs" />
     <Compile Include="CapaDatos\Repositories\HomeRepository.cs" />
     <Compile Include="CapaDatos\Repositories\InternacionRepository.cs" />
     <Compile Include="CapaDatos\Repositories\PacienteRepository.cs" />
@@ -160,6 +164,7 @@
     </Compile>
     <Compile Include="CapaNegocio\DTOs\CamaDTO\MostrarCamaDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\EspecialidadDTO\EspecialidadDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\EstadisticaDTO\EstadisticaDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\MostrarHabitacionDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\HabitacionDTO\TiposHabitacionDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\MedicoDTO\MedicoSimpleDTO.cs" />
@@ -175,6 +180,7 @@
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteViewDto.cs" />
     <Compile Include="CapaNegocio\DTOs\ProcedimientoDTO\MostrarProcedimientoDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\UsuarioDTO\UsuarioDTO.cs" />
+    <Compile Include="CapaNegocio\Servicios\EstadisticasService\EstadisticasService.cs" />
     <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
     <Compile Include="CapaNegocio\Servicios\EspecialidadService\EspecialidadService.cs" />
     <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />

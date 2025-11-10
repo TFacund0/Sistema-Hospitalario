@@ -157,7 +157,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // ==== Validacion DateTimePicker Fecha ====
         private void DtpFecha_Validating(object sender, CancelEventArgs e)
         {
-            if (dtpFechaTurno.Value.Date < DateTime.Now.Date)
+            if (dtpFechaTurno.Value.Date <= DateTime.Now.Date)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(dtpFechaTurno, "La fecha no puede ser en el pasado.");

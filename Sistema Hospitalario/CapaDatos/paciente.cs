@@ -20,6 +20,7 @@ namespace Sistema_Hospitalario.CapaDatos
             this.internacion = new HashSet<internacion>();
             this.telefono = new HashSet<telefono>();
             this.turno = new HashSet<turno>();
+            this.Consulta = new HashSet<Consulta>();
         }
     
         public int id_paciente { get; set; }
@@ -40,5 +41,7 @@ namespace Sistema_Hospitalario.CapaDatos
         public virtual ICollection<telefono> telefono { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<turno> turno { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Consulta> Consulta { get; set; }
     }
 }

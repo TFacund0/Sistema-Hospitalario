@@ -1,4 +1,4 @@
-SELECT *
+﻿SELECT *
 FROM paciente
 
 EXEC sp_help 'turno';
@@ -10,7 +10,7 @@ ALTER TABLE paciente
 ALTER COLUMN fecha_registracion datetime NOT NULL;
 
 ALTER TABLE paciente
-DROP CONSTRAINT DF_paciente_fecha_registracion;  -- reemplaz� con tu nombre real
+DROP CONSTRAINT DF_paciente_fecha_registracion;  -- reemplazá con tu nombre real
 
 SELECT *
 FROM internacion;
@@ -101,4 +101,103 @@ ADD CONSTRAINT DF_turno_fecha_creacion
 DEFAULT (GETDATE()) FOR fecha_registracion;
 
 ALTER TABLE turno
-DROP CONSTRAINT DF_turno_fecha_registracion;  -- reemplaz� con tu nombre real
+DROP CONSTRAINT DF_turno_fecha_registracion;  -- reemplazá con tu nombre real
+
+
+ALTER TABLE paciente
+ALTER COLUMN fecha_nacimiento datetime NULL;
+
+ALTER TABLE turno
+ALTER COLUMN fecha_turno datetime NOT NULL;
+
+ALTER TABLE turno
+ALTER COLUMN fecha_registracion datetime NOT NULL;
+
+ALTER TABLE internacion
+ALTER COLUMN fecha_ingreso datetime NOT NULL;
+
+
+-- reestricion de que fecha turno no sea pasado en check
+ALTER TABLE turno
+DROP CONSTRAINT CK_turno_no_pasado;
+
+ALTER TABLE turno
+DROP CONSTRAINT ck_turno_fechas;
+
+-- reestrciion de que fecha default registracion
+ALTER TABLE turno
+DROP CONSTRAINT DF_turno_fecha_creacion
+
+
+ALTER TABLE turno
+ADD CONSTRAINT CK_turno_no_pasado
+CHECK (fecha_turno >= GETDATE());
+
+select *
+from turno
+
+DELETE FROM turno WHERE id_turno = 13
+
+ALTER TABLE turno
+ADD CONSTRAINT DF_turno_fecha_creacion
+DEFAULT (GETDATE()) FOR fecha_registracion;
+
+
+
+EXEC sp_help 'paciente';
+
+SELECT *
+FROM paciente
+
+ALTER TABLE paciente
+DROP CONSTRAINT ck_paciente_fecha_nac
+
+ALTER TABLE paciente
+ALTER COLUMN fecha_nacimiento datetime not null
+
+EXEC sp_help 'internacion';
+
+SELECT *
+FROM internacion
+
+ALTER TABLE internacion
+ALTER COLUMN fecha_inicio datetime not null
+
+ALTER TABLE internacion
+ALTER COLUMN fecha_fin datetime NULL
+
+ALTER TABLE internacion
+DROP CONSTRAINT ck_internacion_fechas_fin_inicio
+
+ALTER TABLE internacion
+DROP CONSTRAINT DF_internacion_fecha_inicio
+
+ALTER TABLE internacion
+DROP CONSTRAINT ck_internacion_fechas
+
+ALTER TABLE internacion
+ADD CONSTRAINT ck_internacion_fechas_fin_inicio 
+CHECK (fecha_inicio <= fecha_fin)
+
+-- 1️⃣ Pacientes
+SELECT *
+FROM paciente
+WHERE fecha_nacimiento IS NULL;
+
+SELECT *
+FROM telefono
+
+DELETE FROM telefono WHERE id_paciente = 27
+DELETE FROM paciente WHERE id_paciente = 27
+
+-- 2️⃣ Turnos
+SELECT *
+FROM turno
+WHERE fecha_turno IS NULL
+   OR fecha_registracion IS NULL;
+
+-- 3️⃣ Internaciones
+SELECT *
+FROM internacion
+
+DELETE FROM internacion WHERE id_internacion = 4

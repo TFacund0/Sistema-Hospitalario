@@ -19,6 +19,7 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 
 using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaDatos;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
@@ -68,6 +69,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             CargarComboPaciente(p_turno);
             CargarComboMedico(p_turno);
             CargarComboProcedimiento(p_turno);
+            CargarComboBoxTurno();
         }
 
         // Habilita o deshabilita los controles para edición
@@ -89,6 +91,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
             cbPaciente.Visible = habilitar;
             cbPaciente.Enabled = habilitar;
+            lblEstado.Visible = habilitar;
+            cbEstadoTurno.Visible = habilitar;
+            cbEstadoTurno.Enabled = habilitar;
             cbMedico.Visible = habilitar;
             cbMedico.Enabled = habilitar;
             cbProcedimiento.Visible = habilitar;
@@ -180,6 +185,25 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        private void CargarComboBoxTurno()
+        {
+            var turnoService = new TurnoService();
+            var listaEstadosTurnos = turnoService.ListadoEstadosTurnos();
+
+            var lista = new List<ListadoEstadoTurno>
+            {
+                new ListadoEstadoTurno { Id_estado = "0", Estado = "— Seleccioná —" }
+            };
+
+            lista.AddRange(listaEstadosTurnos);
+
+            cbEstadoTurno.DropDownStyle = ComboBoxStyle.DropDown;
+            cbEstadoTurno.DataSource = lista;
+            cbEstadoTurno.DisplayMember = nameof(ListadoEstadoTurno.Estado);
+            cbEstadoTurno.ValueMember = nameof(ListadoEstadoTurno.Id_estado);
+            cbEstadoTurno.SelectedIndex = 0;
+        }
+
         // ======================== GUARDAR CAMBIOS ========================
         // Actualiza el objeto turno con los datos de los controles
         private void ActualizarTurno()
@@ -194,6 +218,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             _turno.Telefono = txtTelefono.Text.Trim();
             _turno.FechaTurno = dtpFechaTurno.Value;
             _turno.Observaciones = txtObservaciones.Text.Trim();
+            _turno.Estado = cbEstadoTurno.SelectedIndex > 0
+                ? ((ListadoEstadoTurno)cbEstadoTurno.SelectedItem).Estado
+                : _turno.Estado;
         }
 
         // Guarda los cambios del turno en la base de datos

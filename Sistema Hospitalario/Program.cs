@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaPresentacion;
+using Sistema_Hospitalario.CapaPresentacion.Gerente;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Hospitalario.CapaPresentacion;
 using WindowsFormsInicio_de_sesion;
 
 namespace Sistema_Hospitalario
@@ -19,6 +20,19 @@ namespace Sistema_Hospitalario
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Application.ThreadException += (s, exArgs) =>
+            {
+                MessageBox.Show($"ThreadException:\n{exArgs.Exception}", "Error global",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (s, exArgs) =>
+            {
+                MessageBox.Show($"UnhandledException:\n{exArgs.ExceptionObject}", "Error global dominio",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
+
             Application.Run(new Login());
         }
     }

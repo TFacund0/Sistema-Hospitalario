@@ -27,45 +27,53 @@ namespace WindowsFormsInicio_de_sesion
             string usuario = txtUsuario.Text;
             string contraseña = txtContraseña.Text;
 
-            // Validación básica de credenciales (para demostración)
-            if (usuario == "admin" && contraseña == "1234")
+            try
             {
-                this.Hide();
+                // Validación básica de credenciales (para demostración)
+                if (usuario == "admin" && contraseña == "1234")
+                {
+                    this.Hide();
 
-                MenuAdministrativo ventanaPrincipal = new MenuAdministrativo();
-                ventanaPrincipal.ShowDialog();
+                    MenuAdministrativo ventanaPrincipal = new MenuAdministrativo();
+                    ventanaPrincipal.ShowDialog();
 
-                this.Close();
+                    this.Close();
 
+                }
+                else if (usuario == "medico" && contraseña == "1234")
+                {
+                    this.Hide();
+
+                    MenuMedicos ventanaPrincipal = new MenuMedicos();
+                    ventanaPrincipal.ShowDialog();
+
+                    this.Close();
+                }
+                else if (usuario == "mod" && contraseña == "1234")
+                {
+                    this.Hide();
+                    MenuModer ventanaPrincipal = new MenuModer();
+                    ventanaPrincipal.ShowDialog();
+                    this.Close();
+                }
+                else if (usuario == "gerente" && contraseña == "1234")
+                {
+                    this.Hide();
+                    MenuGerente ventanaPrincipal = new MenuGerente();
+                    ventanaPrincipal.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Mensaje de error si las credenciales son incorrectas
+                }
             }
-            else if (usuario == "medico" && contraseña == "1234")
+            catch (Exception ex)
             {
-                this.Hide();
-
-                MenuMedicos ventanaPrincipal = new MenuMedicos();
-                ventanaPrincipal.ShowDialog();
-
-                this.Close();
-            }
-            else if (usuario == "mod" && contraseña == "1234")
-            {
-                this.Hide();
-                MenuModer ventanaPrincipal = new MenuModer();
-                ventanaPrincipal.ShowDialog();
-                this.Close();
-            }
-            else if (usuario == "gerente" && contraseña == "1234")
-            {
-                this.Hide();
-                MenuGerente ventanaPrincipal = new MenuGerente();
-                ventanaPrincipal.ShowDialog();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // Mensaje de error si las credenciales son incorrectas
+                MessageBox.Show($"Error al inicializar: {ex.Message}",
+                   "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

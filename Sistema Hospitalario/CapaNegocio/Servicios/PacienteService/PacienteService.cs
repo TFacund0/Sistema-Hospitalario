@@ -180,5 +180,21 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                 })
                 .ToList();
         }
+
+        public List<PacienteDto> ListadoPacientesDGV()
+        {
+            var listaPacientes = this.ObtenerPacientes();
+            return listaPacientes
+                .Select(p => new PacienteDto
+                {
+                    Id = p.Id,
+                    Nombre = p.Nombre,
+                    Apellido = p.Apellido,
+                    Dni = p.Dni,
+                    Estado_paciente = p.Estado_paciente,
+                    Fecha_nacimiento = p.Fecha_nacimiento
+                })
+                .ToList();
+        }
     }
 }

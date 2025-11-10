@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,14 +10,209 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
     public partial class UC_TurnosGerente : UserControl
     {
+        // Acceso a los servicios de Turnos
+        TurnoService _turnoService = new TurnoService();
+
+        // Listado de turnos
+        List<ListadoTurno> _listadoTurnos = new List<ListadoTurno>();
+
+        // Enlace de datos para el DataGridView
+        BindingSource enlaceTurnos = new BindingSource();
+
         public UC_TurnosGerente()
         {
             InitializeComponent();
+
+            ConfigurarLabelsDatosTurno();
+            ConfigurarActividad();
+
+            ConfigurarEnlazadoDatosTurnoColumnas();
+            CargarTurnosDGV();
+            CargarOpcionesDeFiltro();
+
+            CargarGraficoTurnosPorDia();
+            CargarGraficoEstadoTurnos();
+        }
+
+        private void ConfigurarLabelsDatosTurno()
+        {
+            lblTurnosPendientes.Text = _turnoService.CantidadTurnosPendientes().ToString();
+            lblTurnosCompletados.Text = _turnoService.CantidadTurnosPorEstado("Atendido").ToString();
+            lblTurnosCancelados.Text = _turnoService.CantidadTurnosPorEstado("Cancelado").ToString();
+        }
+
+        private void ConfigurarActividad()
+        {
+            dgvTurnos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            dgvTurnos.DataSource = null;
+
+            dgvTurnos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvTurnos.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvTurnos.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            dgvTurnos.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvTurnos.ColumnHeadersHeight = 35;
+            dgvTurnos.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
+        }
+
+        // ===================== ENLAZADO DE DATOS =====================
+        // Configura el enlace de datos entre las columnas del DataGridView y las propiedades del objeto ListadoTurno
+        private void ConfigurarEnlazadoDatosTurnoColumnas()
+        {
+            dgvTurnos.AutoGenerateColumns = false;
+
+            dgvTurnos.Columns["colPaciente"].DataPropertyName = "Paciente";
+            dgvTurnos.Columns["colMedico"].DataPropertyName = "Medico";
+            dgvTurnos.Columns["colHora"].DataPropertyName = "FechaTurno";
+            dgvTurnos.Columns["colEstado"].DataPropertyName = "Estado";
+        }
+
+        // ===================== CARGA DE DATOS =====================
+        // Carga los turnos en el DataGridView
+        public void CargarTurnosDGV()
+        {
+            _listadoTurnos = _turnoService.ListarTurnos();
+            enlaceTurnos.DataSource = _listadoTurnos;
+            dgvTurnos.DataSource = enlaceTurnos;
+        }
+
+        // ===================== BOTÓN BUSCAR TURNO =====================
+        // Filtra los turnos según el campo y el texto ingresado
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            var campo = cboCampoFiltroTurno.SelectedItem?.ToString() ?? "Todos";
+            var texto = txtBuscarTurno.Text;
+            AplicarFiltro(campo, texto);
+        }
+
+        // ===================== BOTÓN LIMPIAR FILTRO =====================
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscarTurno.Clear();
+            if (cboCampoFiltroTurno != null) cboCampoFiltroTurno.SelectedIndex = 0;
+
+            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.ResetBindings(false);
+        }
+
+
+        // ===================== MÉTODOS DE FILTRADO =====================
+        // Carga las opciones de filtro en el ComboBox
+        private void CargarOpcionesDeFiltro()
+        {
+            if (cboCampoFiltroTurno == null) return;
+
+            cboCampoFiltroTurno.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCampoFiltroTurno.Items.Clear();
+            cboCampoFiltroTurno.Items.AddRange(new string[] { "Todos", "Paciente", "Fecha", "Estado" });
+            cboCampoFiltroTurno.SelectedIndex = 0;
+        }
+
+        // Aplica el filtro basado en el campo y el texto ingresado
+        private void AplicarFiltro(string campo, string texto)
+        {
+            // Normaliza el texto para comparación
+            string busqueda = (texto ?? "").Trim().ToLowerInvariant();
+            IEnumerable<ListadoTurno> query = _listadoTurnos;
+
+            // Si hay texto, aplica el filtro según el campo seleccionado
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                switch (campo)
+                {
+                    case "Paciente":
+                        query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
+                        break;
+                    case "Hora":
+                        query = query.Where(t => t.FechaTurno.ToString("g").ToLower().Contains(busqueda));
+                        break;
+                    case "Estado":
+                        query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
+                        break;
+                    default:
+                        query = query.Where(t =>
+                            (t.Paciente ?? "").ToLower().Contains(busqueda) ||
+                            t.FechaTurno.ToString("g").ToLower().Contains(busqueda) ||
+                            (t.Estado ?? "").ToLower().Contains(busqueda));
+                        break;
+                }
+            }
+
+            // Actualiza el BindingSource con los resultados filtrados
+            enlaceTurnos.DataSource = query.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.ResetBindings(false);
+        }
+
+        private void CargarGraficoTurnosPorDia()
+        {
+            var _estadisticasService = new EstadisticasService();
+            // cambia chartTurnosPorDia por el nombre real de tu Chart
+            chartTurnosPorDia.Series.Clear();
+            chartTurnosPorDia.ChartAreas[0].AxisX.Title = "Día";
+            chartTurnosPorDia.ChartAreas[0].AxisY.Title = "Cantidad de Turnos";
+
+            var datos = _estadisticasService.ObtenerTurnosPorDiaUltimaSemana();
+
+            Series serieTurnos = new Series("Turnos")
+            {
+                ChartType = SeriesChartType.Column,
+                IsValueShownAsLabel = true
+            };
+
+            foreach (var d in datos.OrderBy(x => x.Fecha))
+            {
+                string etiqueta = d.Fecha.ToString("dd/MM"); // eje X
+                serieTurnos.Points.AddXY(etiqueta, d.Cantidad);
+            }
+
+            chartTurnosPorDia.Series.Add(serieTurnos);
+
+            // opcional
+            serieTurnos["PointWidth"] = "0.4";
+        }
+
+        private void CargarGraficoEstadoTurnos()
+        {
+            var _estadisticasService = new EstadisticasService();
+
+            chartEstadoTurnos.Series.Clear();
+
+            Series serieEstados = new Series("Estados")
+            {
+                ChartType = SeriesChartType.Doughnut,   // Donut
+                IsValueShownAsLabel = true
+            };
+
+            var dist = _estadisticasService.ObtenerDistribucionEstadosTurnosUltimaSemana();
+
+            int total = dist.Pendientes + dist.Atendidos + dist.Cancelados;
+            if (total == 0)
+                return;
+
+            // Agregamos los puntos; el Chart calcula los % solo
+            if (dist.Pendientes > 0)
+                serieEstados.Points.AddXY("Pendientes", dist.Pendientes);
+
+            if (dist.Atendidos > 0)
+                serieEstados.Points.AddXY("Atendidos", dist.Atendidos);
+
+            if (dist.Cancelados > 0)
+                serieEstados.Points.AddXY("Cancelados", dist.Cancelados);
+
+            // Etiquetas: nombre + porcentaje
+            serieEstados.Label = "#VALX\n#PERCENT{P0}";
+            serieEstados.LegendText = "#VALX";
+
+            if (chartEstadoTurnos.Legends.Count > 0)
+                chartEstadoTurnos.Legends[0].Enabled = true;
+
+            chartEstadoTurnos.Series.Add(serieEstados);
         }
     }
 }
