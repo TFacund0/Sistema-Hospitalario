@@ -64,8 +64,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         FechaRegistro = x.fecha_registracion,
                         FechaTurno = x.fecha_turno,
                         Observaciones = x.motivo,
-                        Correo = x.correo_electronico,  // OJO: que venga del turno
-                        Telefono = x.telefono,            // idem
+                        Correo = x.correo_electronico,  
+                        Telefono = x.telefono,          
                         Estado = x.estado_turno.nombre
                     })
                     .FirstOrDefault();
@@ -138,10 +138,29 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 turnoExistente.fecha_turno = turnoDto.FechaTurno;
                 turnoExistente.motivo = turnoDto.Observaciones;
 
-                // ✉️ Correo: si viene vacío, lo guardamos como null (o como "")
+                // Actualizar estado SOLO si viene texto en el DTO
+                if (!string.IsNullOrWhiteSpace(turnoDto.Estado))
+                {
+                    // Buscamos el ID del estado por nombre (case-insensitive)
+                    var nuevoEstadoId = db.estado_turno
+                        .Where(e => e.nombre.Equals(
+                            turnoDto.Estado,
+                            StringComparison.OrdinalIgnoreCase))
+                        .Select(e => e.id_estado_turno)   // ajustá el nombre si la PK se llama distinto
+                        .FirstOrDefault();                // si no encuentra, devuelve 0
+
+                    // Si encontramos un estado válido, lo asignamos
+                    if (nuevoEstadoId != 0)
+                    {
+                        turnoExistente.id_estado_turno = nuevoEstadoId; // FK en la tabla turno
+                    }
+                    // Si no lo encuentra, conserva el estado actual
+                }
+
+                // Correo: si viene vacío, lo guardamos como null
                 turnoExistente.correo_electronico =
                     string.IsNullOrWhiteSpace(turnoDto.Correo)
-                        ? null                    // o "" si preferís
+                        ? null
                         : turnoDto.Correo.Trim();
 
                 // Teléfono: igual idea
@@ -154,6 +173,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+
         public void Eliminar(int id_turno)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -161,6 +181,20 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 var turnoExistente = db.turno.Find(id_turno) ?? throw new Exception("Turno no encontrado.");
                 db.turno.Remove(turnoExistente);
                 db.SaveChanges();
+            }
+        }
+
+        public List<ListadoEstadoTurno> ListarEstadosTurno()
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var estados = from e in db.estado_turno
+                              select new ListadoEstadoTurno
+                              {
+                                  Id_estado = e.id_estado_turno.ToString(),
+                                  Estado = e.nombre
+                              };
+                return estados.ToList();
             }
         }
     }

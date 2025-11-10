@@ -34,4 +34,10 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO
         public DateTime FechaTurno { get; set; }
         public string Estado { get; set; }
     }
+
+    public class ListadoEstadoTurno
+    {
+        public string Id_estado { get; set; }
+        public string Estado { get; set; }
+    }
 }

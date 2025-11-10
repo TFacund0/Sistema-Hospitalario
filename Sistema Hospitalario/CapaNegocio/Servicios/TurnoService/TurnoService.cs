@@ -67,5 +67,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         {
             return _repo.ObtenerDetalle(p_id_turno);
         }
+
+        public List<ListadoEstadoTurno> ListadoEstadosTurnos()
+        {
+            return _repo.ListarEstadosTurno();
+        }
     }
 }
