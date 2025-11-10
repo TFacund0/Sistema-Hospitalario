@@ -18,5 +18,18 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.EstadisticasDTO
         public int Ocupadas { get; set; }
         public int Disponibles { get; set; }
     }
+
+    public class TurnosPorDiaDto
+    {
+        public DateTime Fecha { get; set; }
+        public int Cantidad { get; set; }
+    }
+
+    public class TurnosEstadosDistribucionDto
+    {
+        public int Pendientes { get; set; }
+        public int Atendidos { get; set; }
+        public int Cancelados { get; set; }
+    }
 }
 

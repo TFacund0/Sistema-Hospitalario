@@ -1,4 +1,5 @@
 ﻿using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
@@ -33,6 +35,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             ConfigurarEnlazadoDatosTurnoColumnas();
             CargarTurnosDGV();
             CargarOpcionesDeFiltro();
+
+            CargarGraficoTurnosPorDia();
+            CargarGraficoEstadoTurnos();
         }
 
         private void ConfigurarLabelsDatosTurno()
@@ -142,6 +147,72 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             // Actualiza el BindingSource con los resultados filtrados
             enlaceTurnos.DataSource = query.OrderBy(t => t.FechaTurno).ToList();
             enlaceTurnos.ResetBindings(false);
+        }
+
+        private void CargarGraficoTurnosPorDia()
+        {
+            var _estadisticasService = new EstadisticasService();
+            // cambia chartTurnosPorDia por el nombre real de tu Chart
+            chartTurnosPorDia.Series.Clear();
+            chartTurnosPorDia.ChartAreas[0].AxisX.Title = "Día";
+            chartTurnosPorDia.ChartAreas[0].AxisY.Title = "Cantidad de Turnos";
+
+            var datos = _estadisticasService.ObtenerTurnosPorDiaUltimaSemana();
+
+            Series serieTurnos = new Series("Turnos")
+            {
+                ChartType = SeriesChartType.Column,
+                IsValueShownAsLabel = true
+            };
+
+            foreach (var d in datos.OrderBy(x => x.Fecha))
+            {
+                string etiqueta = d.Fecha.ToString("dd/MM"); // eje X
+                serieTurnos.Points.AddXY(etiqueta, d.Cantidad);
+            }
+
+            chartTurnosPorDia.Series.Add(serieTurnos);
+
+            // opcional
+            serieTurnos["PointWidth"] = "0.4";
+        }
+
+        private void CargarGraficoEstadoTurnos()
+        {
+            var _estadisticasService = new EstadisticasService();
+
+            chartEstadoTurnos.Series.Clear();
+
+            Series serieEstados = new Series("Estados")
+            {
+                ChartType = SeriesChartType.Doughnut,   // Donut
+                IsValueShownAsLabel = true
+            };
+
+            var dist = _estadisticasService.ObtenerDistribucionEstadosTurnosUltimaSemana();
+
+            int total = dist.Pendientes + dist.Atendidos + dist.Cancelados;
+            if (total == 0)
+                return;
+
+            // Agregamos los puntos; el Chart calcula los % solo
+            if (dist.Pendientes > 0)
+                serieEstados.Points.AddXY("Pendientes", dist.Pendientes);
+
+            if (dist.Atendidos > 0)
+                serieEstados.Points.AddXY("Atendidos", dist.Atendidos);
+
+            if (dist.Cancelados > 0)
+                serieEstados.Points.AddXY("Cancelados", dist.Cancelados);
+
+            // Etiquetas: nombre + porcentaje
+            serieEstados.Label = "#VALX\n#PERCENT{P0}";
+            serieEstados.LegendText = "#VALX";
+
+            if (chartEstadoTurnos.Legends.Count > 0)
+                chartEstadoTurnos.Legends[0].Enabled = true;
+
+            chartEstadoTurnos.Series.Add(serieEstados);
         }
     }
 }

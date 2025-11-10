@@ -51,6 +51,50 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
                 Disponibles = disponibles
             };
         }
+        public List<TurnosPorDiaDto> ObtenerTurnosPorDiaUltimaSemana()
+        {
+            DateTime hoy = DateTime.Today;
+            DateTime inicio = hoy.AddDays(-6);
+
+            // El repo devuelve un diccionarioFecha->Cantidad
+            var conteo = _repo.ObtenerConteoTurnosPorDia(inicio, hoy);
+
+            var lista = new List<TurnosPorDiaDto>();
+
+            // Armamos la semana completa, incluyendo días sin turnos (cantidad 0)
+            for (DateTime d = inicio; d <= hoy; d = d.AddDays(1))
+            {
+                int cantidad = conteo.ContainsKey(d.Date) ? conteo[d.Date] : 0;
+
+                lista.Add(new TurnosPorDiaDto
+                {
+                    Fecha = d.Date,
+                    Cantidad = cantidad
+                });
+            }
+
+            return lista;
+        }
+
+        public TurnosEstadosDistribucionDto ObtenerDistribucionEstadosTurnosUltimaSemana()
+        {
+            DateTime hoy = DateTime.Today;
+            DateTime inicio = hoy.AddDays(-6);
+
+            var dic = _repo.ObtenerDistribucionEstadosTurnos(inicio, hoy);
+
+            // normalizamos claves a lower
+            int pendientes = dic.ContainsKey("pendiente") ? dic["pendiente"] : 0;
+            int atendidos = dic.ContainsKey("atendido") ? dic["atendido"] : 0;
+            int cancelados = dic.ContainsKey("cancelado") ? dic["cancelado"] : 0;
+
+            return new TurnosEstadosDistribucionDto
+            {
+                Pendientes = pendientes,
+                Atendidos = atendidos,
+                Cancelados = cancelados
+            };
+        }
     }
 }
 

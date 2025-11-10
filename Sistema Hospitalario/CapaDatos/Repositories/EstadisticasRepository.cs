@@ -28,6 +28,66 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     .Count(c => c.estado_cama.disponibilidad.ToLower() == disponibilidad.ToLower());
             }
         }
+
+        public Dictionary<DateTime, int> ObtenerConteoTurnosPorDia(DateTime fechaInicio, DateTime fechaFin)
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                // truncamos fecha para comparar solo día
+                var query = db.turno
+                    .Where(t =>
+                        DbFunctions.TruncateTime(t.fecha_registracion) >= fechaInicio.Date &&
+                        DbFunctions.TruncateTime(t.fecha_registracion) <= fechaFin.Date)
+                    .GroupBy(t => DbFunctions.TruncateTime(t.fecha_registracion))
+                    .Select(g => new
+                    {
+                        Fecha = g.Key.Value,
+                        Cantidad = g.Count()
+                    })
+                    .ToList();
+
+                // pasamos a diccionario Fecha -> Cantidad
+                var dic = new Dictionary<DateTime, int>();
+
+                foreach (var item in query)
+                {
+                    dic[item.Fecha.Date] = item.Cantidad;
+                }
+
+                return dic;
+            }
+        }
+
+        public Dictionary<string, int> ObtenerDistribucionEstadosTurnos(DateTime fechaInicio, DateTime fechaFin)
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var query = db.turno
+                    .Where(t =>
+                        DbFunctions.TruncateTime(t.fecha_registracion) >= fechaInicio.Date &&
+                        DbFunctions.TruncateTime(t.fecha_registracion) <= fechaFin.Date)
+                    .GroupBy(t => t.estado_turno.nombre)
+                    .Select(g => new
+                    {
+                        Estado = g.Key,
+                        Cantidad = g.Count()
+                    })
+                    .ToList();
+
+                var dic = new Dictionary<string, int>();
+
+                foreach (var item in query)
+                {
+                    if (item.Estado == null) continue;
+
+                    string clave = item.Estado.ToLower();
+                    dic[clave] = item.Cantidad;
+                }
+
+                return dic;
+            }
+        }
+
     }
 }
 
