@@ -52,7 +52,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Apellido = p.apellido,
                         Accion = "Paciente registrado",
                         Horario = p.fecha_registracion,
-                        Tipo = null
+                        Tipo = "Registración"
                     });
 
                 // Unificamos, ordenamos por más reciente y limitamos

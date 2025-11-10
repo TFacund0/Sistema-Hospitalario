@@ -194,7 +194,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             {
                 listaCamas = _servicioCama.ListarCamasXHabitacion(habitacionText) ?? new List<CamaDto>();
 
-                foreach (var unaCama in listaCamas)
+                foreach (var unaCama in listaCamas.Where(c => c.EstadoCama.ToLower() == "disponible"))
                     _maestroCama.Add(unaCama.NroCama.ToString());
             }
 

@@ -25,6 +25,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return db.especialidad
                          .Select(e => new EspecialidadDTO
                          {
+                             Id = e.id_especialidad,
                              Nombre = e.nombre,
                          })
                          .ToList();

@@ -266,7 +266,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 
             if (Ok)
             {
-                MessageBox.Show($"Paciente registrado con éxito. ID: {IdGenerado}", "Éxito",
+                MessageBox.Show($"Paciente registrado con éxito.", "Éxito",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
                 BtnLimpiar_Click(null, EventArgs.Empty);
             }
