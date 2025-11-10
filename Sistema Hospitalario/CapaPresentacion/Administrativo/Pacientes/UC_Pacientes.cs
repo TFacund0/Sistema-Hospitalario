@@ -84,7 +84,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.AutoGenerateColumns = false;
 
             dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente"; 
-            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";      
+            dgvPacientes.Columns["colDni"].DataPropertyName = "DNI";      
             dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";    
             dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado_paciente";
         }
@@ -144,8 +144,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
                         break;
                     case "DNI":
-                        int dniBuscado = int.Parse(busqueda);
-                        query = query.Where(t => t.Dni == dniBuscado);
+                        if (int.TryParse(busqueda, out int dniBuscado))
+                            query = query.Where(t => t.Dni == dniBuscado); // o Dni según el DTO que uses
+                        else
+                            query = Enumerable.Empty<PacienteDto>(); // o no aplicar filtro
                         break;
                     case "Estado":
                         query = query.Where(t => (t.Estado_paciente ?? "").ToLower().Contains(busqueda));

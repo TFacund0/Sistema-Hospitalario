@@ -24,6 +24,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Id_paciente = i.id_paciente,
                         Id_medico = i.id_medico,
                         Id_procedimiento = i.id_procedimiento,
+                        Internado = i.paciente.nombre + " " + i.paciente.apellido,
                         Fecha_ingreso = i.fecha_inicio,
                         Fecha_egreso = i.fecha_fin,
                         Diagnostico = i.motivo,
@@ -98,7 +99,6 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 db.SaveChanges();
             }
         }
-
 
         public void Eliminar(int id_internacion)
             {
