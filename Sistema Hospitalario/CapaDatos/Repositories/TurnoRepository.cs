@@ -39,7 +39,6 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                                  DNI = p.dni.ToString(),
                                  Telefono = t.telefono,
                                  Estado = e.nombre,
-                                 FechaRegistro = t.fecha_registracion,
                                  Observaciones = t.motivo
                              };
                 return turnos.ToList();
@@ -62,6 +61,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Medico = x.medico.apellido + " " + x.medico.nombre,
                         Id_procedimiento = x.id_procedimiento,
                         Procedimiento = x.procedimiento.nombre,
+                        FechaRegistro = x.fecha_registracion,
                         FechaTurno = x.fecha_turno,
                         Observaciones = x.motivo,
                         Correo = x.correo_electronico,  // OJO: que venga del turno
@@ -113,8 +113,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     id_medico = p_turno.Id_medico,
                     id_procedimiento = p_turno.Id_procedimiento,
                     fecha_turno = p_turno.FechaTurno,
-                    fecha_registracion = p_turno.FechaRegistro,
                     correo_electronico = p_turno.Correo,
+                    fecha_registracion = DateTime.Now,
                     telefono = p_turno.Telefono,
                     motivo = p_turno.Observaciones,
                     id_estado_turno = db.estado_turno.AsNoTracking().FirstOrDefault(e => e.nombre.ToLower() == "pendiente").id_estado_turno,
@@ -144,7 +144,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         ? null                    // o "" si preferís
                         : turnoDto.Correo.Trim();
 
-                // 📞 Teléfono: igual idea
+                // Teléfono: igual idea
                 turnoExistente.telefono =
                     string.IsNullOrWhiteSpace(turnoDto.Telefono)
                         ? null

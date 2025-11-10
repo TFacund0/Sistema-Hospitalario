@@ -437,9 +437,9 @@
             this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(30, 16);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(175, 25);
+            this.label7.Size = new System.Drawing.Size(90, 25);
             this.label7.TabIndex = 0;
-            this.label7.Text = "Turnos de Hoy";
+            this.label7.Text = "Turnos";
             // 
             // label2
             // 
