@@ -13,10 +13,10 @@ namespace Sistema_Hospitalario.CapaDatos
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Sistema_HospitalarioEntities : DbContext
+    public partial class Sistema_HospitalarioEntities_Conexion : DbContext
     {
-        public Sistema_HospitalarioEntities()
-            : base("name=Sistema_HospitalarioEntities")
+        public Sistema_HospitalarioEntities_Conexion()
+            : base("name=Sistema_HospitalarioEntities_Conexion")
         {
         }
     

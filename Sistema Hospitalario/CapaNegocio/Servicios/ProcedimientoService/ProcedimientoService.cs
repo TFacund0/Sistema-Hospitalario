@@ -4,25 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
-using Sistema_Hospitalario.CapaDatos;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService
 {
     public class ProcedimientoService
     {
-        public List<ProcedimientoDto> ListarProcedimientos()
+        private readonly ProcedimientoRepository _repo = new ProcedimientoRepository();
+
+        public ProcedimientoService()
         {
-            using (var db = new Sistema_HospitalarioEntities())
-            {
-                return db.procedimiento
-                    .Select(p => new ProcedimientoDto
-                    {
-                        Id = p.id_procedimiento,
-                        Name = p.nombre
-                    })
-                    .ToList();
-            }
+        }
+
+        public List<MostrarProcedimientoDTO> ObtenerProcedimientos()
+        {
+            return _repo.GetAll();
+        }
+
+        public void AgregarProcedimiento(string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre))
+                throw new ArgumentException("El nombre es obligatorio.");
+
+            _repo.Insertar(nombre);
+        }
+
+        public void EliminarProcedimiento(string nombre)
+        {
+            _repo.Eliminar(nombre);
+        }
+        public List<ProcedimientoDto> ListarProcedimientos() { 
+           return _repo.ListarProcedimientos();
         }
     }
 }

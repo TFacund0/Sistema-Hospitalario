@@ -1,5 +1,4 @@
 ﻿using Sistema_Hospitalario.CapaPresentacion.Medico;
-using Sistema_Hospitalario.CapaPresentacion.Medico.home;
 using Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes;
 using Sistema_Hospitalario.CapaPresentacion.Medico.procedimientos;
 using System;
@@ -44,11 +43,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             // Marca el botón presionado
             btnClic.BackColor = Color.LightSeaGreen;
         }
-        private void btn_home_Click(object sender, EventArgs e)
-        {
-            Boton_Click(sender, e);
-            AbrirUserControl(new UC_Home_M()); // Poner el UserControl de Home
-        }
+        
 
         private void btn_pacientes_Click(object sender, EventArgs e)
         {

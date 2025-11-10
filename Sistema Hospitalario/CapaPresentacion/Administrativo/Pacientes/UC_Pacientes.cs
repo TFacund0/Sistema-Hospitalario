@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -21,7 +22,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private readonly BindingSource enlacePacientes = new BindingSource();
 
         // Lista completa de pacientes cargada desde el servicio
-        private List<PacienteListadoDto> listaPacientes = new List<PacienteListadoDto>();
+        private List<PacienteDto> listaPacientes = new List<PacienteDto>();
 
         // Evento que notifica al formulario padre que se solicitó registrar un nuevo paciente
         public event EventHandler RegistrarPacienteSolicitado;
@@ -34,8 +35,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             InitializeComponent();
 
-            ConfigurarTablaActividad();
             ConfigurarLabelsInformacion();
+            ConfigurarTablaActividad();
 
             CargarOpcionesDeFiltro();
             ConfigurarEnlazadoDatosPacienteColumnas();
@@ -59,11 +60,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ===================== CONFIGURACIÓN DE LABELS DE INFORMACIÓN =====================
-        private async void ConfigurarLabelsInformacion()
+        private void ConfigurarLabelsInformacion()
         {
-            lblTotalPacientes.Text = (await pacienteService.ContarPorEstadoIdAsync(1)).ToString();
-            lblTotalInternados.Text = (await pacienteService.ContarPorEstadoIdAsync(2)).ToString();
-            lblTotalEgresados.Text = (await pacienteService.ContarPorEstadoIdAsync(3)).ToString();
+            lblTotalPacientes.Text = pacienteService.ContarPorEstadoId("activo").ToString();
+            lblTotalInternados.Text = pacienteService.ContarPorEstadoId("internado").ToString();
+            lblTotalEgresados.Text = pacienteService.ContarPorEstadoId("alta").ToString();
         }
 
 
@@ -83,9 +84,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvPacientes.AutoGenerateColumns = false;
 
             dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente"; 
-            dgvPacientes.Columns["colDNI"].DataPropertyName = "DNI";      
+            dgvPacientes.Columns["colDni"].DataPropertyName = "DNI";      
             dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";    
-            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado";
+            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado_paciente";
         }
 
 
@@ -132,7 +133,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             // Normaliza el texto para comparación
             string busqueda = (texto ?? "").Trim().ToLowerInvariant();
-            IEnumerable<PacienteListadoDto> query = listaPacientes;
+            IEnumerable<PacienteDto> query = listaPacientes;
 
             // Si hay texto, aplica el filtro según el campo seleccionado
             if (!string.IsNullOrEmpty(busqueda))
@@ -143,17 +144,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
                         break;
                     case "DNI":
-                        int dniBuscado = int.Parse(busqueda);
-                        query = query.Where(t => t.DNI == dniBuscado);
+                        if (int.TryParse(busqueda, out int dniBuscado))
+                            query = query.Where(t => t.Dni == dniBuscado); // o Dni según el DTO que uses
+                        else
+                            query = Enumerable.Empty<PacienteDto>(); // o no aplicar filtro
                         break;
                     case "Estado":
-                        query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
+                        query = query.Where(t => (t.Estado_paciente ?? "").ToLower().Contains(busqueda));
                         break;
                     default:
                         query = query.Where(t =>
-                            (t.Paciente ?? "").ToLower().Contains(busqueda) ||
-                            t.DNI.ToString().Contains(busqueda) ||
-                            (t.Estado ?? "").ToLower().Contains(busqueda));
+                            (t.Nombre ?? "").ToLower().Contains(busqueda) ||
+                            t.Dni.ToString().Contains(busqueda) ||
+                            (t.Estado_paciente ?? "").ToLower().Contains(busqueda));
                         break;
                 }
             }
@@ -174,7 +177,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             if (dgvPacientes.Columns[evento.ColumnIndex].Name == "colAccion")
             {
                 // Obtener el paciente seleccionado
-                var paciente = enlacePacientes[evento.RowIndex] as PacienteListadoDto;
+                var paciente = enlacePacientes[evento.RowIndex] as PacienteDto;
                 if (paciente == null) return;
 
                 // Traer el detalle desde negocio/datos

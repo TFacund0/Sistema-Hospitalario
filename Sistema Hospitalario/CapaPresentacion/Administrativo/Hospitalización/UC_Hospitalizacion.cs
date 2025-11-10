@@ -1,4 +1,9 @@
 ﻿
+using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,11 +14,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -26,13 +26,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private readonly CamaService camaService = new CamaService();
 
         // Lista para almacenar los pacientes obtenidos del servicio en el dgvInternaciones
-        private List<ListadoInternacionDto> listaInternaciones = new List<ListadoInternacionDto>();
+        private List<InternacionDto> listaInternaciones = new List<InternacionDto>();
 
         // BindingSource para enlazar la lista de habitaciones al DataGridView
         private readonly BindingSource enlaceInternaciones = new BindingSource();
 
         // Evento para notificar cuando se solicita registrar una internación
-        public event EventHandler RegistrarInternacionSolicitada;        
+        public event EventHandler RegistrarInternacionSolicitada;
 
         // ============================ CONSTRUCTOR DEL UC HOSPITALIZACIÓN ============================
         public UC_Hospitalizacion()
@@ -44,10 +44,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             ConfigurarTablaInternaciones();
             ConfigurarEnlazadoDatosPacienteColumnas();
             CargarDatosDGV();
+            CargarOpcionesDeFiltro();
         }
 
+
         // ============================ BOTÓN REGISTRAR INTERNACIÓN ============================
-        private void btnRegistrarInternacion_Click(object sender, EventArgs e)
+        private void BtnRegistrarInternacion_Click(object sender, EventArgs e)
         {
             RegistrarInternacionSolicitada?.Invoke(this, EventArgs.Empty);
         }
@@ -55,26 +57,26 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // ============================ CONFIGURACION DE LAS CAJAS DE RESUMEN ============================
 
         // Método que configura la información en las cajas de resumen
-        private async void ConfigurarInformacionCajas()
+        private void ConfigurarInformacionCajas()
         {
-            int totalHabitaciones = await habitacionService.TotalHabitaciones();
+            int totalHabitaciones = habitacionService.TotalHabitaciones();
             lblTotalHabitaciones.Text = totalHabitaciones.ToString();
 
-            int totalCamasDisponibles = await camaService.TotalCamasXEstado(8, "Disponible");
+            int totalCamasDisponibles = camaService.TotalCamasXEstado("Disponible");
             lblDisponibles.Text = totalCamasDisponibles.ToString();
 
-            int totalCamas = await camaService.TotalCamas();
+            int totalCamas = camaService.TotalCamas();
 
-            float porcentajeDisponible = ((float)totalCamasDisponibles / (float)totalCamas) * 100;
-            lblPorcentajeDisponibles.Text = porcentajeDisponible.ToString() + "% de camas disponibles";
+            float porcentajeDisponible = totalCamas > 0 ? ((float)totalCamasDisponibles / totalCamas) * 100 : 0;
+            lblPorcentajeDisponibles.Text = $"{porcentajeDisponible:F2}% de camas disponibles";
 
-            int totalCamasOcupadas = await camaService.TotalCamasXEstado(9, "Ocupada");
+            int totalCamasOcupadas = camaService.TotalCamasXEstado("Ocupada");
             lblOcupadas.Text = totalCamasOcupadas.ToString();
 
-            float porcentajeOcupadas = ((float)totalCamasOcupadas / (float)totalCamas) * 100;
-            lblPorcentajeOcupadas.Text = porcentajeOcupadas.ToString() + "% de camas ocupadas";
+            float porcentajeOcupadas = totalCamas > 0 ? ((float)totalCamasOcupadas / totalCamas) * 100 : 0;
+            lblPorcentajeOcupadas.Text = $"{porcentajeOcupadas:F2}% de camas ocupadas";
 
-            int totalPacientesInternados = await pacienteService.ContarPorEstadoIdAsync(2);
+            int totalPacientesInternados = pacienteService.ContarPorEstadoId("internado");
             lblPacientesInternados.Text = totalPacientesInternados.ToString();
         }
 
@@ -98,9 +100,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Método que carga los datos en el DataGridView de Internaciones
         private void CargarDatosDGV()
         {
-            listaInternaciones = internacionService.listadoInternacionDtos();
+            listaInternaciones = internacionService.ListadoInternacionDtos();
             enlaceInternaciones.DataSource = listaInternaciones;
-            dgvInternaciones.DataSource = listaInternaciones;
+            dgvInternaciones.DataSource = enlaceInternaciones;
         }
 
         // Método que configura el enlace de datos entre las columnas del DataGridView y las propiedades del DTO
@@ -112,8 +114,121 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvInternaciones.Columns["colPiso"].DataPropertyName = "Nro_piso";
             dgvInternaciones.Columns["colInternado"].DataPropertyName = "Internado";
             dgvInternaciones.Columns["colFechaIngreso"].DataPropertyName = "Fecha_ingreso";
-            dgvInternaciones.Columns["colCama"].DataPropertyName = "cama";
-            dgvInternaciones.Columns["colTipo"].DataPropertyName = "Tipo_habitacion";
+            dgvInternaciones.Columns["colCama"].DataPropertyName = "Id_Cama";
+        }
+
+        private void CargarOpcionesDeFiltro()
+        {
+            if (cboCampo == null) return;
+
+            cboCampo.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCampo.Items.Clear();
+            cboCampo.Items.AddRange(new[] {
+                                "Todos",
+                                "Habitación",
+                                "Piso",
+                                "Internado",
+                                "Fecha ingreso",
+                                "Cama"
+                            });
+            cboCampo.SelectedIndex = 0;
+        }
+
+
+        // Aplica el filtro basado en el campo y el texto ingresado
+        // Aplica el filtro basado en el campo y el texto ingresado
+        private void AplicarFiltro(string campo, string texto)
+        {
+            string busqueda = (texto ?? "").Trim().ToLowerInvariant();
+            IEnumerable<InternacionDto> query = listaInternaciones;
+
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                switch (campo)
+                {
+                    case "Habitación":
+                        if (int.TryParse(busqueda, out int numHab))
+                            query = query.Where(i => i.Nro_habitacion == numHab);
+                        else
+                            query = Enumerable.Empty<InternacionDto>();
+                        break;
+
+                    case "Piso":
+                        if (int.TryParse(busqueda, out int piso))
+                            query = query.Where(i => i.Nro_piso == piso);
+                        else
+                            query = Enumerable.Empty<InternacionDto>();
+                        break;
+
+                    case "Internado":
+                        query = query.Where(i => (i.Internado ?? "")
+                            .ToLower()
+                            .Contains(busqueda));
+                        break;
+
+                    case "Fecha ingreso":
+                        // Podés hacer búsqueda por día (dd/MM/yyyy)
+                        if (DateTime.TryParse(busqueda, out DateTime fecha))
+                        {
+                            var soloFecha = fecha.Date;
+                            query = query.Where(i => i.Fecha_ingreso.Date == soloFecha);
+                        }
+                        else
+                        {
+                            // o por string
+                            query = query.Where(i =>
+                                i.Fecha_ingreso.ToShortDateString()
+                                .ToLower()
+                                .Contains(busqueda));
+                        }
+                        break;
+
+                    case "Cama":
+                        if (int.TryParse(busqueda, out int idCama))
+                            query = query.Where(i => i.Id_cama == idCama);
+                        else
+                            query = Enumerable.Empty<InternacionDto>();
+                        break;
+
+                    case "Todos":
+                    default:
+                        query = query.Where(i =>
+                            i.Nro_habitacion.ToString().Contains(busqueda) ||
+                            i.Nro_piso.ToString().Contains(busqueda) ||
+                            (i.Internado ?? "").ToLower().Contains(busqueda) ||
+                            i.Fecha_ingreso.ToShortDateString().ToLower().Contains(busqueda) ||
+                            i.Id_cama.ToString().Contains(busqueda)
+                        );
+                        break;
+                }
+            }
+
+            enlaceInternaciones.DataSource = query
+                .OrderBy(i => i.Nro_habitacion)
+                .ThenBy(i => i.Id_cama)
+                .ToList();
+
+            enlaceInternaciones.ResetBindings(false);
+        }
+
+        private void btnBuscar_Click_1(object sender, EventArgs e)
+        {
+            var campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
+            var texto = txtBuscar.Text;
+            AplicarFiltro(campo, texto);
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Clear();
+            if (cboCampo != null) cboCampo.SelectedIndex = 0;
+
+            enlaceInternaciones.DataSource = listaInternaciones
+                .OrderBy(i => i.Nro_habitacion)
+                .ThenBy(i => i.Id_cama)
+                .ToList();
+
+            enlaceInternaciones.ResetBindings(false);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         BindingSource enlaceTurnos = new BindingSource();
 
         // ============== EVENTOS ==============
-        public event EventHandler<TurnoDTO> VerTurnoSolicitado;
+        public event EventHandler<TurnoDto> VerTurnoSolicitado;
         public event EventHandler RegistrarTurnoSolicitado;
 
 
@@ -74,7 +74,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         {
             lblTurnosPendientes.Text = _turnoService.CantidadTurnosPendientes().ToString();
             lblTurnosCompletados.Text = _turnoService.CantidadTurnosPorEstado("Atendido").ToString();
-            lblTurnosCurso.Text = _turnoService.CantidadTurnosPorEstado("En Curso").ToString();
+            lblTurnosCurso.Text = _turnoService.CantidadTurnosPorEstado("En Proceso").ToString();
             lblTurnosHoy.Text = _turnoService.CantidadTurnosPorEstado("Pendiente").ToString();
         }
         

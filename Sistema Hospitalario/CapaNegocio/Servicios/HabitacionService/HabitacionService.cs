@@ -1,27 +1,50 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos;
+using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
+
 using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
+using Sistema_Hospitalario.CapaDatos.Repositories;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
 {
     public class HabitacionService
     {
-        // Método para obtener el total de habitaciones registradas en el sistema
-        public async Task<int> TotalHabitaciones()
+        private readonly HabitacionRepository _repo = new HabitacionRepository();
+
+        public HabitacionService()
         {
-            using (var db = new Sistema_HospitalarioEntities())
-            {
-                // Cuenta todas las habitaciones registradas
-                int totalHabitaciones = await Task.Run(() => db.habitacion.Count());
-                return totalHabitaciones;
-            }
+        }
+
+        public List<MostrarHabitacionDTO> ObtenerHabitaciones()
+        {
+            return _repo.GetAll();
+        }
+
+        public void AgregarHabitacion(int nroPiso, int tipoHabitacion)
+        {
+            if (nroPiso < 0)
+                throw new ArgumentException("El piso debe ser mayor o igual a 0.");
+
+            _repo.Insertar(nroPiso, tipoHabitacion);
+        }
+
+        public void EliminarHabitacion(int nroPiso, int nroHabitacion)
+        {
+            _repo.Eliminar(nroPiso, nroHabitacion);
+        }
+
+        public List<TiposHabitacionDTO> ListarTiposHabitacion()
+        {
+            return _repo.ListarTiposHabitacion();
+        }
+
+        public int TotalHabitaciones()
+        {
+            var totalHabitaciones = _repo.GetAll().Count;
+            return totalHabitaciones;
         }
 
         public List<HabitacionDto> ListarHabitacionesXPiso(string pisoTexto)
@@ -34,7 +57,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
                 return habitaciones; // devuelve lista vacía
             }
 
-            using (var db = new Sistema_HospitalarioEntities())
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
                 habitaciones = db.habitacion
                     .Where(h => h.nro_piso == piso)
@@ -50,6 +73,5 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
 
             return habitaciones;
         }
-
     }
 }

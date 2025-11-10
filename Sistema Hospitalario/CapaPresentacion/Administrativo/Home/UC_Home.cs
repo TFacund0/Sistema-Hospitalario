@@ -1,11 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
-using Sistema_Hospitalario.CapaNegocio.DTOs.HomeDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.HomeService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Sistema_Hospitalario.CapaNegocio.DTOs.HomeDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HomeService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
     public partial class UC_HomeGerente : UserControl
@@ -23,7 +22,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private List<HomeDto> listaActividad = new List<HomeDto>();   // Cargada desde HomeService
         private BindingSource enlaceActividad = new BindingSource();  // DataSource del DataGridView
 
-
         // ============================ CONSTRUCTOR DEL UC HOME ADMINISTRATIVO ============================
         public UC_HomeGerente()
         {
@@ -31,24 +29,23 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             CargarInformacionPaneles();
             ConfigurarTablaActividad();
-            ConfigurarEnlazadoDatosColumnas();
 
             // Asegura que se ejecute el Load
             this.Load += Home_Load;
         }
 
         // Método que configuran la información de las estadísticas en el UC Home Gerente
-        private async void CargarInformacionPaneles()
+        private void CargarInformacionPaneles()
         {
             PacienteService pacienteService = new PacienteService();
-            int cantidadPacientes = await pacienteService.ContarPorEstadoIdAsync(1);
+            int cantidadPacientes = pacienteService.ContarPorEstadoId("activo");
 
             CamaService camaService = new CamaService();
-            int cantidadCamasOcupadas = await camaService.TotalCamasXEstado(9, "Ocupada");
-            int cantidadCamas = await camaService.TotalCamas();
+            int cantidadCamasOcupadas = camaService.TotalCamasXEstado("ocupada");
+            int cantidadCamas = camaService.TotalCamas();
 
             InternacionService internacionService = new InternacionService();
-            int cantidadInternaciones = internacionService.listadoInternacionDtos().Count;
+            int cantidadInternaciones = internacionService.ListadoInternacionDtos().Count();
 
             string cantPacientes = cantidadPacientes.ToString();
             string cantCamasOcupadas = cantidadCamasOcupadas.ToString();
@@ -86,6 +83,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvActividad.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold); // Fuente en negrita para los encabezados de columna
             dgvActividad.ColumnHeadersHeight = 35; // Altura de los encabezados de columna
             dgvActividad.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo para los encabezados de columna
+            
+            ConfigurarEnlazadoDatosColumnas();
         }
 
         private void ConfigurarEnlazadoDatosColumnas()
@@ -99,13 +98,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvActividad.Columns["colTipo"].DataPropertyName = "Tipo";
         }
 
-        private async Task CargarActividadRecienteAsync()
+        private void CargarActividadReciente()
         {
             var homeService = new HomeService();
 
             // Cargamos la lista de la clase
-            var datos = await homeService.ListarActividadRecienteAsync(100);
-            listaActividad = datos ?? new List<HomeDto>();
+            var datos = homeService.ListarActividadReciente(100);
+            listaActividad = datos;
 
             // Usamos el BindingSource de la clase
             enlaceActividad.DataSource = listaActividad
@@ -114,14 +113,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             dgvActividad.AutoGenerateColumns = false;
             dgvActividad.DataSource = enlaceActividad;
-
             dgvActividad.Columns["colHorario"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
         }
 
-
-        private async void Home_Load(object sender, EventArgs e)
+        private void Home_Load(object sender, EventArgs e)
         {
-            await CargarActividadRecienteAsync();
+            CargarActividadReciente();
             CargarOpcionesDeFiltroHome();
         }
 
@@ -224,6 +221,5 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             enlaceActividad.ResetBindings(false);
         }
-
     }
 }

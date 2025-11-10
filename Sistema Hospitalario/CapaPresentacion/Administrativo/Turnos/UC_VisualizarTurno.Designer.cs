@@ -163,7 +163,7 @@
             this.btnCancelar.TabIndex = 9;
             this.btnCancelar.Text = "Volver";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnVolver_Click);
+            this.btnCancelar.Click += new System.EventHandler(this.BtnVolver_Click);
             // 
             // panel29
             // 
@@ -194,7 +194,7 @@
             this.btnEliminar.TabIndex = 8;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            this.btnEliminar.Click += new System.EventHandler(this.BtnEliminar_Click);
             // 
             // panel26
             // 
@@ -225,7 +225,7 @@
             this.btnModificar.TabIndex = 7;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = false;
-            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            this.btnModificar.Click += new System.EventHandler(this.BtnModificar_Click);
             // 
             // panel22
             // 

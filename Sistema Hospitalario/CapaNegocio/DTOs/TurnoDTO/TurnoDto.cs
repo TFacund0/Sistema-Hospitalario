@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO
 {
-    public class TurnoDTO
+    public class TurnoDto
         {
             public int Id_turno { get; set; }
             public string Paciente { get; set; }
@@ -21,24 +21,9 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO
 
             public DateTime FechaTurno { get; set; }
             public DateTime FechaRegistro { get; set; }
-
             public string Observaciones { get; set; }
             public string Estado { get; set; }
-            public DateTime Fecha => FechaTurno;
         }
-
-    public class TurnoDto
-    {
-        public int Id_paciente { get; set; }
-        public int Id_medico { get; set; }
-        public int Id_procedimiento { get; set; }
-        public string Correo { get; set; }
-        public string Telefono { get; set; }
-        public string Observaciones { get; set; }
-
-        public DateTime FechaTurno { get; set; }
-        public DateTime FechaRegistro { get; set; } = DateTime.Now;
-    }
 
     public class ListadoTurno
     {

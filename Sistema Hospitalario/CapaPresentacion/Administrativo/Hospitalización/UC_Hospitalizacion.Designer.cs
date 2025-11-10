@@ -46,6 +46,11 @@
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cboCampo = new System.Windows.Forms.ComboBox();
             this.dgvInternaciones = new System.Windows.Forms.DataGridView();
+            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPiso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInternado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.lblPorcentajeDisponibles = new System.Windows.Forms.Label();
@@ -54,12 +59,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.colHabitacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPiso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colInternado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCama = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -236,6 +235,7 @@
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnBuscar
             // 
@@ -251,6 +251,7 @@
             this.btnBuscar.TabIndex = 19;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
             // 
             // txtBuscar
             // 
@@ -283,8 +284,7 @@
             this.colPiso,
             this.colInternado,
             this.colFechaIngreso,
-            this.colCama,
-            this.colTipo});
+            this.colCama});
             this.dgvInternaciones.EnableHeadersVisualStyles = false;
             this.dgvInternaciones.Location = new System.Drawing.Point(19, 89);
             this.dgvInternaciones.Name = "dgvInternaciones";
@@ -294,6 +294,41 @@
             this.dgvInternaciones.RowTemplate.Height = 24;
             this.dgvInternaciones.Size = new System.Drawing.Size(1071, 266);
             this.dgvInternaciones.TabIndex = 9;
+            // 
+            // colHabitacion
+            // 
+            this.colHabitacion.HeaderText = "Habitación";
+            this.colHabitacion.MinimumWidth = 6;
+            this.colHabitacion.Name = "colHabitacion";
+            this.colHabitacion.ReadOnly = true;
+            // 
+            // colPiso
+            // 
+            this.colPiso.HeaderText = "Piso";
+            this.colPiso.MinimumWidth = 6;
+            this.colPiso.Name = "colPiso";
+            this.colPiso.ReadOnly = true;
+            // 
+            // colInternado
+            // 
+            this.colInternado.HeaderText = "Internado";
+            this.colInternado.MinimumWidth = 6;
+            this.colInternado.Name = "colInternado";
+            this.colInternado.ReadOnly = true;
+            // 
+            // colFechaIngreso
+            // 
+            this.colFechaIngreso.HeaderText = "Fecha_Ingreso";
+            this.colFechaIngreso.MinimumWidth = 6;
+            this.colFechaIngreso.Name = "colFechaIngreso";
+            this.colFechaIngreso.ReadOnly = true;
+            // 
+            // colCama
+            // 
+            this.colCama.HeaderText = "Cama";
+            this.colCama.MinimumWidth = 6;
+            this.colCama.Name = "colCama";
+            this.colCama.ReadOnly = true;
             // 
             // label3
             // 
@@ -362,7 +397,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Nueva Internación";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.btnRegistrarInternacion_Click);
+            this.button2.Click += new System.EventHandler(this.BtnRegistrarInternacion_Click);
             // 
             // label2
             // 
@@ -383,48 +418,6 @@
             this.label1.Size = new System.Drawing.Size(209, 28);
             this.label1.TabIndex = 0;
             this.label1.Text = "Hospitalización";
-            // 
-            // colHabitacion
-            // 
-            this.colHabitacion.HeaderText = "Habitación";
-            this.colHabitacion.MinimumWidth = 6;
-            this.colHabitacion.Name = "colHabitacion";
-            this.colHabitacion.ReadOnly = true;
-            // 
-            // colPiso
-            // 
-            this.colPiso.HeaderText = "Piso";
-            this.colPiso.MinimumWidth = 6;
-            this.colPiso.Name = "colPiso";
-            this.colPiso.ReadOnly = true;
-            // 
-            // colInternado
-            // 
-            this.colInternado.HeaderText = "Internado";
-            this.colInternado.MinimumWidth = 6;
-            this.colInternado.Name = "colInternado";
-            this.colInternado.ReadOnly = true;
-            // 
-            // colFechaIngreso
-            // 
-            this.colFechaIngreso.HeaderText = "Fecha_Ingreso";
-            this.colFechaIngreso.MinimumWidth = 6;
-            this.colFechaIngreso.Name = "colFechaIngreso";
-            this.colFechaIngreso.ReadOnly = true;
-            // 
-            // colCama
-            // 
-            this.colCama.HeaderText = "Cama";
-            this.colCama.MinimumWidth = 6;
-            this.colCama.Name = "colCama";
-            this.colCama.ReadOnly = true;
-            // 
-            // colTipo
-            // 
-            this.colTipo.HeaderText = "Tipo";
-            this.colTipo.MinimumWidth = 6;
-            this.colTipo.Name = "colTipo";
-            this.colTipo.ReadOnly = true;
             // 
             // UC_Hospitalizacion
             // 
@@ -484,6 +477,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colInternado;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFechaIngreso;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCama;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTipo;
     }
 }

@@ -1,4 +1,6 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
+﻿using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
+using Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo;
+using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -81,6 +83,37 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
                     Application.Exit();
                 }
             }
+        }
+
+        private void btn_medico_Click(object sender, EventArgs e)
+        {
+            Boton_Click(sender, e);
+            AbrirUserControl(new UC_Medicos());
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Boton_Click(sender, e);
+            AbrirUserControl(new UC_Especialidades());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Boton_Click(sender, e);
+
+            AbrirUserControl(new UC_Camas());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Boton_Click(sender, e);
+            AbrirUserControl(new UC_Habitaciones());
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Boton_Click(sender, e);
+            AbrirUserControl(new UC_Procedimientos());
         }
     }
 }

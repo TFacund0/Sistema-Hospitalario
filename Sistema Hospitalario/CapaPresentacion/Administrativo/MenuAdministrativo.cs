@@ -1,12 +1,11 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización;
-using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
-using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
-using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
-using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización;
+using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using System.Linq.Expressions;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -104,7 +103,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // Abrir el UserControl para ver los detalles de un turno
-        private void AbrirVisualizarTurnos(TurnoDTO turno)
+        private void AbrirVisualizarTurnos(TurnoDto turno)
         {
             var ucVisualizar = new Turnos.UC_VisualizarTurno(turno);
 

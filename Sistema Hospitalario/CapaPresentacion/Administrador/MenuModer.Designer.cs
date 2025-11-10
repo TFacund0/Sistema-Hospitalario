@@ -30,6 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuModer));
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btn_medico = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,6 +61,11 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.panelMenu.Controls.Add(this.button4);
+            this.panelMenu.Controls.Add(this.button3);
+            this.panelMenu.Controls.Add(this.button2);
+            this.panelMenu.Controls.Add(this.button1);
+            this.panelMenu.Controls.Add(this.btn_medico);
             this.panelMenu.Controls.Add(this.panel1);
             this.panelMenu.Controls.Add(this.btn_pacientes);
             this.panelMenu.Controls.Add(this.label2);
@@ -63,20 +73,95 @@
             this.panelMenu.Controls.Add(this.panel2);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
-            this.panelMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelMenu.Margin = new System.Windows.Forms.Padding(2);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(255, 859);
+            this.panelMenu.Size = new System.Drawing.Size(191, 609);
             this.panelMenu.TabIndex = 1;
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(0, 333);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(191, 46);
+            this.button4.TabIndex = 13;
+            this.button4.Text = "Procedimientos";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(0, 287);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(191, 46);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Camas";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(0, 241);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(191, 46);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Habitaciones";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(0, 195);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(191, 46);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Especialidades";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // btn_medico
+            // 
+            this.btn_medico.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_medico.FlatAppearance.BorderSize = 0;
+            this.btn_medico.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_medico.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_medico.Location = new System.Drawing.Point(0, 149);
+            this.btn_medico.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_medico.Name = "btn_medico";
+            this.btn_medico.Size = new System.Drawing.Size(191, 46);
+            this.btn_medico.TabIndex = 9;
+            this.btn_medico.Text = "Medicos";
+            this.btn_medico.UseVisualStyleBackColor = true;
+            this.btn_medico.Click += new System.EventHandler(this.btn_medico_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.MediumTurquoise;
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 767);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.panel1.Location = new System.Drawing.Point(0, 534);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(255, 50);
+            this.panel1.Size = new System.Drawing.Size(191, 41);
             this.panel1.TabIndex = 5;
             // 
             // panel3
@@ -86,10 +171,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.label3);
-            this.panel3.Location = new System.Drawing.Point(55, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel3.Location = new System.Drawing.Point(41, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(133, 50);
+            this.panel3.Size = new System.Drawing.Size(100, 41);
             this.panel3.TabIndex = 5;
             // 
             // label1
@@ -97,9 +182,10 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 23);
+            this.label1.Location = new System.Drawing.Point(2, 19);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(110, 18);
+            this.label1.Size = new System.Drawing.Size(94, 14);
             this.label1.TabIndex = 5;
             this.label1.Text = "administrador";
             // 
@@ -108,10 +194,10 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(43, 2);
-            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label3.Location = new System.Drawing.Point(32, 2);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 20);
+            this.label3.Size = new System.Drawing.Size(39, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "Rol:";
             // 
@@ -121,10 +207,10 @@
             this.btn_pacientes.FlatAppearance.BorderSize = 0;
             this.btn_pacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_pacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_pacientes.Location = new System.Drawing.Point(0, 127);
-            this.btn_pacientes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_pacientes.Location = new System.Drawing.Point(0, 103);
+            this.btn_pacientes.Margin = new System.Windows.Forms.Padding(2);
             this.btn_pacientes.Name = "btn_pacientes";
-            this.btn_pacientes.Size = new System.Drawing.Size(255, 57);
+            this.btn_pacientes.Size = new System.Drawing.Size(191, 46);
             this.btn_pacientes.TabIndex = 7;
             this.btn_pacientes.Text = "Usuarios";
             this.btn_pacientes.UseVisualStyleBackColor = true;
@@ -135,10 +221,9 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Location = new System.Drawing.Point(-3, 177);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(-3, 369);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(259, 16);
+            this.label2.Size = new System.Drawing.Size(223, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "____________________________________";
             // 
@@ -149,10 +234,10 @@
             this.btn_salir.FlatAppearance.BorderSize = 0;
             this.btn_salir.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_salir.ForeColor = System.Drawing.Color.White;
-            this.btn_salir.Location = new System.Drawing.Point(0, 817);
-            this.btn_salir.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btn_salir.Location = new System.Drawing.Point(0, 575);
+            this.btn_salir.Margin = new System.Windows.Forms.Padding(4);
             this.btn_salir.Name = "btn_salir";
-            this.btn_salir.Size = new System.Drawing.Size(255, 42);
+            this.btn_salir.Size = new System.Drawing.Size(191, 34);
             this.btn_salir.TabIndex = 6;
             this.btn_salir.Text = "Salir";
             this.btn_salir.UseVisualStyleBackColor = false;
@@ -165,18 +250,18 @@
             this.panel2.Controls.Add(this.label5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(255, 127);
+            this.panel2.Size = new System.Drawing.Size(191, 103);
             this.panel2.TabIndex = 1;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Sistema_Hospitalario.Properties.Resources.Clinicks_Logo_Titulo;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(260, 124);
+            this.pictureBox1.Size = new System.Drawing.Size(195, 101);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
@@ -186,9 +271,10 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label5.Location = new System.Drawing.Point(-3, 111);
+            this.label5.Location = new System.Drawing.Point(-2, 90);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(259, 16);
+            this.label5.Size = new System.Drawing.Size(223, 13);
             this.label5.TabIndex = 7;
             this.label5.Text = "____________________________________";
             // 
@@ -197,10 +283,10 @@
             this.panelContenedor.Controls.Add(this.panel4);
             this.panelContenedor.Controls.Add(this.label4);
             this.panelContenedor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContenedor.Location = new System.Drawing.Point(255, 0);
-            this.panelContenedor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelContenedor.Location = new System.Drawing.Point(191, 0);
+            this.panelContenedor.Margin = new System.Windows.Forms.Padding(2);
             this.panelContenedor.Name = "panelContenedor";
-            this.panelContenedor.Size = new System.Drawing.Size(1494, 859);
+            this.panelContenedor.Size = new System.Drawing.Size(837, 609);
             this.panelContenedor.TabIndex = 6;
             // 
             // panel4
@@ -208,9 +294,9 @@
             this.panel4.Controls.Add(this.label6);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1494, 859);
+            this.panel4.Size = new System.Drawing.Size(837, 609);
             this.panel4.TabIndex = 6;
             // 
             // label6
@@ -220,10 +306,9 @@
             this.label6.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.label6.Font = new System.Drawing.Font("Verdana", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.DarkTurquoise;
-            this.label6.Location = new System.Drawing.Point(625, 375);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(327, 260);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(242, 34);
+            this.label6.Size = new System.Drawing.Size(193, 26);
             this.label6.TabIndex = 4;
             this.label6.Text = "BIENVENIDO!!";
             // 
@@ -234,25 +319,23 @@
             this.label4.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.label4.Font = new System.Drawing.Font("Verdana", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.DarkTurquoise;
-            this.label4.Location = new System.Drawing.Point(625, 375);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(327, 260);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(242, 34);
+            this.label4.Size = new System.Drawing.Size(193, 26);
             this.label4.TabIndex = 4;
             this.label4.Text = "BIENVENIDO!!";
             // 
             // MenuModer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.GhostWhite;
-            this.ClientSize = new System.Drawing.Size(1749, 859);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.ControlBox = false;
             this.Controls.Add(this.panelContenedor);
             this.Controls.Add(this.panelMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "MenuModer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -291,5 +374,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btn_medico;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
