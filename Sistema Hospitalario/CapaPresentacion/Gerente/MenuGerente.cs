@@ -1,4 +1,5 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrativo;
+﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaPresentacion.Administrativo;
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización;
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,12 +31,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
         // Método común para mostrar un UserControl en el panel contenedor.
         private void AbrirUserControl(UserControl uc)
         {
-            foreach (Control c in panelContenedor.Controls) c.Dispose();
-            panelContenedor.Controls.Clear();
+            try
+            {
+                foreach (Control c in panelContenedor.Controls) c.Dispose();
+                panelContenedor.Controls.Clear();
 
-            uc.Dock = DockStyle.Fill;   
-            panelContenedor.Controls.Add(uc);
-            uc.BringToFront();
+                uc.Dock = DockStyle.Fill;
+                panelContenedor.Controls.Add(uc);
+                uc.BringToFront();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show($"Error al inicializar: {ex.Message}",
+                   "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // ======================= HOME =======================
