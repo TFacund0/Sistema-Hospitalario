@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,132 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
     public partial class UC_PacientesGerente : UserControl
     {
+        // Servicio para interactuar con la capa de negocio
+        private readonly PacienteService pacienteService = new PacienteService();
+
+        // BindingSource para enlazar la lista de pacientes al DataGridView
+        private readonly BindingSource enlacePacientes = new BindingSource();
+
+        // Lista completa de pacientes cargada desde el servicio
+        private List<PacienteDto> listaPacientes = new List<PacienteDto>();
+
         public UC_PacientesGerente()
         {
             InitializeComponent();
+
+            try
+            {
+                ConfigurarTablaActividad();
+
+                CargarOpcionesDeFiltro();
+                ConfigurarEnlazadoDatosPacienteColumnas();
+                CargarPacientesDatagridview();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al inicializar UC_PacientesGerente: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ConfigurarTablaActividad()
+        {
+            dgvPacientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selección de fila completa
+
+            dgvPacientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Ajustar columnas al ancho del control
+            dgvPacientes.DefaultCellStyle.Font = new Font("Segoe UI", 10F); // Fuente para las celdas
+            dgvPacientes.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248); // Color alternativo para filas
+
+            dgvPacientes.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold); // Fuente para encabezados
+            dgvPacientes.ColumnHeadersHeight = 35; // Altura de encabezado
+            dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo del encabezado
+        }
+
+        private void CargarPacientesDatagridview()
+        {
+            listaPacientes = pacienteService.ListadoPacientesDGV();
+            enlacePacientes.DataSource = listaPacientes;
+            dgvPacientes.DataSource = enlacePacientes;
+        }
+
+        // Configura el enlace entre las columnas del DataGridView y las propiedades del DTO
+        private void ConfigurarEnlazadoDatosPacienteColumnas()
+        {
+            dgvPacientes.AutoGenerateColumns = false;
+
+            dgvPacientes.Columns["colPaciente"].DataPropertyName = "Paciente";
+            dgvPacientes.Columns["colDni"].DataPropertyName = "DNI";
+            dgvPacientes.Columns["colEdad"].DataPropertyName = "Edad";
+            dgvPacientes.Columns["colEstado"].DataPropertyName = "Estado_paciente";
+        }
+
+        // ===================== BUSQUEDA DE PACIENTE POR FILTRADO =====================
+
+        // Carga las opciones de filtro en el ComboBox
+        private void CargarOpcionesDeFiltro()
+        {
+            if (cboCampo == null) return;
+
+            cboCampo.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCampo.Items.Clear();
+            cboCampo.Items.AddRange(new[] { "Todos", "Paciente", "DNI", "Estado" });
+            cboCampo.SelectedIndex = 0;
+        }
+
+        // Aplica el filtro basado en el campo y el texto ingresado
+        private void AplicarFiltro(string campo, string texto)
+        {
+            // Normaliza el texto para comparación
+            string busqueda = (texto ?? "").Trim().ToLowerInvariant();
+            IEnumerable<PacienteDto> query = listaPacientes;
+
+            // Si hay texto, aplica el filtro según el campo seleccionado
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                switch (campo)
+                {
+                    case "Paciente":
+                        query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
+                        break;
+                    case "DNI":
+                        if (int.TryParse(busqueda, out int dniBuscado))
+                            query = query.Where(t => t.Dni == dniBuscado); // o Dni según el DTO que uses
+                        else
+                            query = Enumerable.Empty<PacienteDto>(); // o no aplicar filtro
+                        break;
+                    case "Estado":
+                        query = query.Where(t => (t.Estado_paciente ?? "").ToLower().Contains(busqueda));
+                        break;
+                    default:
+                        query = query.Where(t =>
+                            (t.Nombre ?? "").ToLower().Contains(busqueda) ||
+                            t.Dni.ToString().Contains(busqueda) ||
+                            (t.Estado_paciente ?? "").ToLower().Contains(busqueda));
+                        break;
+                }
+            }
+
+            // Actualiza el BindingSource con los resultados filtrados
+            enlacePacientes.DataSource = query.OrderBy(t => t.Paciente).ToList();
+            enlacePacientes.ResetBindings(false);
+        }
+
+        // ===================== BOTÓN BUSCAR PACIENTE =====================
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            var campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
+            var texto = txtBuscar.Text;
+            AplicarFiltro(campo, texto);
+        }
+
+        // ===================== BOTÓN LIMPIAR BUSCADOR PACIENTE =====================
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Clear();
+            if (cboCampo != null) cboCampo.SelectedIndex = 0;
+
+            enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Paciente).ToList();
+            enlacePacientes.ResetBindings(false);
         }
     }
 }

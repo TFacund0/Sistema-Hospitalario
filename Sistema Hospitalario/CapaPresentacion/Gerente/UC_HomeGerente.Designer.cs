@@ -39,26 +39,23 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblOcupacionCamas = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblPacientesInternados = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.lblCantidadConsultas = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblPacientesActivos = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.lblPacientesActivos = new System.Windows.Forms.Label();
+            this.lblPacientesEgresos = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label20 = new System.Windows.Forms.Label();
@@ -70,7 +67,6 @@
             this.panel1.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.panel11.SuspendLayout();
             this.panel12.SuspendLayout();
@@ -134,7 +130,7 @@
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.lblOcupacionCamas);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 2);
@@ -154,16 +150,16 @@
             this.label6.TabIndex = 7;
             this.label6.Text = "Porcentaje de ocupación";
             // 
-            // label7
+            // lblOcupacionCamas
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(121, 35);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 25);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "75%";
+            this.lblOcupacionCamas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.lblOcupacionCamas.AutoSize = true;
+            this.lblOcupacionCamas.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOcupacionCamas.Location = new System.Drawing.Point(121, 35);
+            this.lblOcupacionCamas.Name = "lblOcupacionCamas";
+            this.lblOcupacionCamas.Size = new System.Drawing.Size(65, 25);
+            this.lblOcupacionCamas.TabIndex = 5;
+            this.lblOcupacionCamas.Text = "75%";
             // 
             // label8
             // 
@@ -181,7 +177,7 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.lblPacientesInternados);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(389, 2);
@@ -201,16 +197,16 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Cantidad mensual";
             // 
-            // label4
+            // lblPacientesInternados
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(127, 35);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 25);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "35";
+            this.lblPacientesInternados.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.lblPacientesInternados.AutoSize = true;
+            this.lblPacientesInternados.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPacientesInternados.Location = new System.Drawing.Point(127, 35);
+            this.lblPacientesInternados.Name = "lblPacientesInternados";
+            this.lblPacientesInternados.Size = new System.Drawing.Size(40, 25);
+            this.lblPacientesInternados.TabIndex = 5;
+            this.lblPacientesInternados.Text = "35";
             // 
             // label5
             // 
@@ -275,7 +271,6 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.chart1);
             this.panel3.Controls.Add(this.panel11);
             this.panel3.Controls.Add(this.panel12);
@@ -283,40 +278,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(560, 335);
             this.panel3.TabIndex = 10;
-            // 
-            // panel4
-            // 
-            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel4.BackColor = System.Drawing.Color.White;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.label9);
-            this.panel4.Controls.Add(this.label10);
-            this.panel4.Location = new System.Drawing.Point(391, 1);
-            this.panel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(168, 80);
-            this.panel4.TabIndex = 7;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(15, 13);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(26, 25);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "3";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(17, 47);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(97, 16);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Altas diarias";
             // 
             // chart1
             // 
@@ -342,23 +303,23 @@
             this.panel11.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panel11.BackColor = System.Drawing.Color.White;
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel11.Controls.Add(this.label1);
+            this.panel11.Controls.Add(this.lblPacientesActivos);
             this.panel11.Controls.Add(this.label2);
-            this.panel11.Location = new System.Drawing.Point(185, 1);
+            this.panel11.Location = new System.Drawing.Point(341, 0);
             this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(189, 80);
+            this.panel11.Size = new System.Drawing.Size(219, 80);
             this.panel11.TabIndex = 6;
             // 
-            // label1
+            // lblPacientesActivos
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(15, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 25);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "57";
+            this.lblPacientesActivos.AutoSize = true;
+            this.lblPacientesActivos.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPacientesActivos.Location = new System.Drawing.Point(15, 13);
+            this.lblPacientesActivos.Name = "lblPacientesActivos";
+            this.lblPacientesActivos.Size = new System.Drawing.Size(40, 25);
+            this.lblPacientesActivos.TabIndex = 1;
+            this.lblPacientesActivos.Text = "57";
             // 
             // label2
             // 
@@ -375,23 +336,23 @@
             // 
             this.panel12.BackColor = System.Drawing.Color.White;
             this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel12.Controls.Add(this.lblPacientesActivos);
+            this.panel12.Controls.Add(this.lblPacientesEgresos);
             this.panel12.Controls.Add(this.label19);
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(168, 80);
+            this.panel12.Size = new System.Drawing.Size(209, 80);
             this.panel12.TabIndex = 5;
             // 
-            // lblPacientesActivos
+            // lblPacientesEgresos
             // 
-            this.lblPacientesActivos.AutoSize = true;
-            this.lblPacientesActivos.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPacientesActivos.Location = new System.Drawing.Point(12, 12);
-            this.lblPacientesActivos.Name = "lblPacientesActivos";
-            this.lblPacientesActivos.Size = new System.Drawing.Size(54, 25);
-            this.lblPacientesActivos.TabIndex = 0;
-            this.lblPacientesActivos.Text = "121";
+            this.lblPacientesEgresos.AutoSize = true;
+            this.lblPacientesEgresos.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPacientesEgresos.Location = new System.Drawing.Point(12, 12);
+            this.lblPacientesEgresos.Name = "lblPacientesEgresos";
+            this.lblPacientesEgresos.Size = new System.Drawing.Size(54, 25);
+            this.lblPacientesEgresos.TabIndex = 0;
+            this.lblPacientesEgresos.Text = "121";
             // 
             // label19
             // 
@@ -462,8 +423,6 @@
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
@@ -487,23 +446,20 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblOcupacionCamas;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblPacientesInternados;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPacientesActivos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Label lblPacientesActivos;
+        private System.Windows.Forms.Label lblPacientesEgresos;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
