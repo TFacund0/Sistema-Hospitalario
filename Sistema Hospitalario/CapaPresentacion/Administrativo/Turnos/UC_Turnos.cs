@@ -95,7 +95,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Carga los turnos en el DataGridView
         public void CargarTurnosDGV()
         {
-            _listadoTurnos = _turnoService.ListarTurnos();
+            _listadoTurnos = _turnoService.ListarTurnos().Where(t => t.FechaTurno >= DateTime.Now.AddDays(-7)).ToList();
             enlaceTurnos.DataSource = _listadoTurnos;
             dgvTurnos.DataSource = enlaceTurnos;
         }
