@@ -104,7 +104,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             // Cargamos la lista de la clase
             var datos = homeService.ListarActividadReciente(100);
-            listaActividad = datos;
+            listaActividad = datos.Where(e => e.Horario >= DateTime.Now.AddMonths(-1)).ToList();
 
             // Usamos el BindingSource de la clase
             enlaceActividad.DataSource = listaActividad
