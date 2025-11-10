@@ -31,5 +31,18 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.EstadisticasDTO
         public int Atendidos { get; set; }
         public int Cancelados { get; set; }
     }
+
+    public class PacientesRegistradosPorDiaDto
+    {
+        public DateTime Fecha { get; set; }
+        public int Cantidad { get; set; }
+    }
+
+    public class PacientesEstadosDistribucionDto
+    {
+        public int Activos { get; set; }
+        public int Internados { get; set; }
+        public int Altas { get; set; }
+    }
 }
 

@@ -88,6 +88,60 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        public Dictionary<DateTime, int> ObtenerConteoPacientesRegistradosPorDia(DateTime fechaInicio, DateTime fechaFin)
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var query = db.paciente
+                    .Where(p =>
+                        DbFunctions.TruncateTime(p.fecha_registracion) >= fechaInicio.Date &&
+                        DbFunctions.TruncateTime(p.fecha_registracion) <= fechaFin.Date)
+                    .GroupBy(p => DbFunctions.TruncateTime(p.fecha_registracion))
+                    .Select(g => new
+                    {
+                        Fecha = g.Key.Value,
+                        Cantidad = g.Count()
+                    })
+                    .ToList();
+
+                var dic = new Dictionary<DateTime, int>();
+
+                foreach (var item in query)
+                {
+                    dic[item.Fecha.Date] = item.Cantidad;
+                }
+
+                return dic;
+            }
+        }
+
+        public Dictionary<string, int> ObtenerDistribucionPacientesPorEstado()
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var query = db.paciente
+                    .GroupBy(p => p.estado_paciente.nombre)
+                    .Select(g => new
+                    {
+                        Estado = g.Key,
+                        Cantidad = g.Count()
+                    })
+                    .ToList();
+
+                var dic = new Dictionary<string, int>();
+
+                foreach (var item in query)
+                {
+                    if (item.Estado == null)
+                        continue;
+
+                    string clave = item.Estado.ToLower(); // "activo", "internado", "alta"
+                    dic[clave] = item.Cantidad;
+                }
+
+                return dic;
+            }
+        }
     }
 }
 

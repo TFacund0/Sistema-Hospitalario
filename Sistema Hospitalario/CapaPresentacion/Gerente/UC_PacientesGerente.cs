@@ -1,5 +1,6 @@
-﻿using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
-using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
@@ -34,6 +36,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
                 CargarOpcionesDeFiltro();
                 ConfigurarEnlazadoDatosPacienteColumnas();
                 CargarPacientesDatagridview();
+
+                CargarGraficoPacientesRegistradosPorDia();
+                CargarGraficoPacientesPorEstado();
             }
             catch (Exception ex)
             {
@@ -141,5 +146,68 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             enlacePacientes.DataSource = listaPacientes.OrderBy(t => t.Paciente).ToList();
             enlacePacientes.ResetBindings(false);
         }
+
+        private void CargarGraficoPacientesRegistradosPorDia()
+        {
+            var _estadisticasService = new EstadisticasService();
+            chartPacientesPorDia.Series.Clear();
+            chartPacientesPorDia.ChartAreas[0].AxisX.Title = "Día";
+            chartPacientesPorDia.ChartAreas[0].AxisY.Title = "Pacientes registrados";
+
+            // Pedimos los datos ya procesados al servicio
+            var datos = _estadisticasService.ObtenerPacientesRegistradosPorDiaUltimaSemana();
+
+            Series serie = new Series("Pacientes")
+            {
+                ChartType = SeriesChartType.Column,
+                IsValueShownAsLabel = true
+            };
+
+            foreach (var d in datos.OrderBy(x => x.Fecha))
+            {
+                string etiqueta = d.Fecha.ToString("dd/MM"); // eje X
+                serie.Points.AddXY(etiqueta, d.Cantidad);
+            }
+
+            chartPacientesPorDia.Series.Add(serie);
+            serie["PointWidth"] = "0.4"; // opcional, para que no queden barras súper anchas
+        }
+        private void CargarGraficoPacientesPorEstado()
+        {
+            var _estadisticasService = new EstadisticasService();
+            chartPacientesPorEstado.Series.Clear();
+
+            Series serieEstados = new Series("Estados")
+            {
+                ChartType = SeriesChartType.Doughnut,  // Donut
+                IsValueShownAsLabel = true
+            };
+
+            // Datos desde la capa de negocio
+            var dist = _estadisticasService.ObtenerDistribucionPacientesPorEstado();
+
+            int total = dist.Activos + dist.Internados + dist.Altas;
+            if (total == 0)
+                return;
+
+            if (dist.Activos > 0)
+                serieEstados.Points.AddXY("Activos", dist.Activos);
+
+            if (dist.Internados > 0)
+                serieEstados.Points.AddXY("Internados", dist.Internados);
+
+            if (dist.Altas > 0)
+                serieEstados.Points.AddXY("Altas", dist.Altas);
+
+            // Etiquetas: nombre + porcentaje
+            serieEstados.Label = "#VALX\n#PERCENT{P0}";
+            serieEstados.LegendText = "#VALX";
+
+            if (chartPacientesPorEstado.Legends.Count > 0)
+                chartPacientesPorEstado.Legends[0].Enabled = true;
+
+            chartPacientesPorEstado.Series.Add(serieEstados);
+        }
+
     }
 }

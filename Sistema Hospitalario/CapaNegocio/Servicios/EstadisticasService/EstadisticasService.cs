@@ -95,6 +95,48 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
                 Cancelados = cancelados
             };
         }
+
+        public List<PacientesRegistradosPorDiaDto> ObtenerPacientesRegistradosPorDiaUltimaSemana()
+        {
+            DateTime hoy = DateTime.Today;
+            DateTime inicio = hoy.AddDays(-6);
+
+            // El repo devuelve un diccionario Fecha -> Cantidad
+            var conteo = _repo.ObtenerConteoPacientesRegistradosPorDia(inicio, hoy);
+
+            var lista = new List<PacientesRegistradosPorDiaDto>();
+
+            // Rellenamos la semana completa (aunque algún día tenga 0)
+            for (DateTime d = inicio; d <= hoy; d = d.AddDays(1))
+            {
+                int cantidad = conteo.ContainsKey(d.Date) ? conteo[d.Date] : 0;
+
+                lista.Add(new PacientesRegistradosPorDiaDto
+                {
+                    Fecha = d.Date,
+                    Cantidad = cantidad
+                });
+            }
+
+            return lista;
+        }
+
+        public PacientesEstadosDistribucionDto ObtenerDistribucionPacientesPorEstado()
+        {
+            // El repo devuelve un diccionario estado -> cantidad
+            var dic = _repo.ObtenerDistribucionPacientesPorEstado();
+
+            int activos = dic.ContainsKey("activo") ? dic["activo"] : 0;
+            int internados = dic.ContainsKey("internado") ? dic["internado"] : 0;
+            int altas = dic.ContainsKey("alta") ? dic["alta"] : 0;
+
+            return new PacientesEstadosDistribucionDto
+            {
+                Activos = activos,
+                Internados = internados,
+                Altas = altas
+            };
+        }
     }
 }
 
