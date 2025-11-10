@@ -21,9 +21,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HomeService
         public List<HomeDto> ListarActividadReciente(int cantidad)
         {
             // Trae la lista y filtra solo las actividades del último mes
-            return _repo.ListarActividad(cantidad)
-                .Where(e => e.Horario >= DateTime.Now.AddMonths(-1))
-                .ToList();
+            return _repo.ListarActividad(cantidad);
         }
 
     }
