@@ -23,12 +23,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Método común para mostrar un UserControl en el panel contenedor.
         private void AbrirUserControl(UserControl uc)
         {
-            foreach (Control c in panelContenedor.Controls) c.Dispose(); // elimina el panel anterior
-            panelContenedor.Controls.Clear();
+            try
+            {
+                foreach (Control c in panelContenedor.Controls) c.Dispose();
+                panelContenedor.Controls.Clear();
 
-            uc.Dock = DockStyle.Fill;    // ocupar todo el contenedor
-            panelContenedor.Controls.Add(uc);
-            uc.BringToFront();
+                uc.Dock = DockStyle.Fill;
+                panelContenedor.Controls.Add(uc);
+                uc.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al inicializar: {ex.Message}",
+                   "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // ======================= HOME =======================

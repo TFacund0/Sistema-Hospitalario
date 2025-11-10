@@ -280,6 +280,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             txtNombre.Clear();
+            txtApellido.Clear();
             txtDireccion.Clear();
             txtTelefono.Clear();
             txtDni.Clear();
