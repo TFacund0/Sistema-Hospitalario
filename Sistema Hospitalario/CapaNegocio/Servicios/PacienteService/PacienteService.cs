@@ -169,6 +169,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
         {
             var listaPacientes = this.ObtenerPacientes();
             return listaPacientes
+                .Where(p => p.Estado_paciente.ToLower() == "activo" || p.Estado_paciente.ToLower() == "internado")
                 .Select(p => new PacienteDto
                 {
                     Id = p.Id,
