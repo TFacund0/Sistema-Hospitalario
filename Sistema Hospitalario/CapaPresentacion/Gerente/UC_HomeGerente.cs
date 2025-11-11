@@ -54,7 +54,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             
             lblPacientesActivos.Text = _pacienteService.ListarPacientes().Where(p => p.Estado_paciente.ToLower() == "activo").Count().ToString();
 
-            lblPacientesEgresos.Text = _pacienteService.ListarPacientes().Where(p => p.Estado_paciente.ToLower() == "alta").Count().ToString();
+            lblPacientesEgresos.Text = _pacienteService.ListarPacienteEgresados().Count().ToString();
         }
 
         private void CargarGraficoPacientesSemana()

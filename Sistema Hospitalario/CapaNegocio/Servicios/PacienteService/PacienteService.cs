@@ -176,7 +176,24 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                     Nombre = p.Nombre,
                     Apellido = p.Apellido,
                     Dni = p.Dni,
-                    Estado_paciente = p.Estado_paciente
+                    Estado_paciente = p.Estado_paciente,
+                    Fecha_nacimiento = p.Fecha_nacimiento
+                })
+                .ToList();
+        }
+        public List<PacienteDto> ListarPacienteEgresados()
+        {
+            var listaPacientes = this.ObtenerPacientes();
+            return listaPacientes
+                .Where(p => p.Estado_paciente.ToLower() == "alta")
+                .Select(p => new PacienteDto
+                {
+                    Id = p.Id,
+                    Nombre = p.Nombre,
+                    Apellido = p.Apellido,
+                    Dni = p.Dni,
+                    Estado_paciente = p.Estado_paciente,
+                    Fecha_nacimiento = p.Fecha_nacimiento
                 })
                 .ToList();
         }
