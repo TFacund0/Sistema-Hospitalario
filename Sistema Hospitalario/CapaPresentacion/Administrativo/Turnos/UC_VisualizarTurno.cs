@@ -1,10 +1,11 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,13 +14,9 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
-
-using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
-using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
-using Sistema_Hospitalario.CapaDatos;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
@@ -185,6 +182,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
+        // Carga los estados de turno en el ComboBox
         private void CargarComboBoxTurno()
         {
             var turnoService = new TurnoService();
@@ -215,13 +213,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             _turno.Id_medico = (int)(cbMedico.SelectedValue ?? 0);
             _turno.Id_procedimiento = (int)(cbProcedimiento.SelectedValue ?? 0);
             _turno.Correo = txtCorreo.Text.Trim();
-            _turno.Telefono = txtTelefono.Text.Trim();
+
+            _turno.Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text)
+                ? null
+                : txtTelefono.Text.Trim();
+
             _turno.FechaTurno = dtpFechaTurno.Value;
             _turno.Observaciones = txtObservaciones.Text.Trim();
             _turno.Estado = cbEstadoTurno.SelectedIndex > 0
                 ? ((ListadoEstadoTurno)cbEstadoTurno.SelectedItem).Estado
                 : _turno.Estado;
         }
+
 
         // Guarda los cambios del turno en la base de datos
         private void GuardarCambios()
@@ -252,15 +255,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 if (confirmacion != DialogResult.Yes)
                     return;
 
-                // Guardar cambios
-                if (string.IsNullOrWhiteSpace(txtPaciente.Text) ||
-                    string.IsNullOrWhiteSpace(txtMedico.Text))
+                // alidar datos alineado con RegistrarTurno
+                if (!ValidarDatosTurno(out var msg))
                 {
-                    MessageBox.Show("Paciente y Médico son obligatorios.", "Validación",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(msg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
+                // Guardar cambios
                 ActualizarTurno();
                 GuardarCambios();
                 ConfigurarUISoloLectura();
@@ -291,6 +293,70 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         {
             CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
         }
+
+        // ======================== VALIDACIONES ========================
+        private bool ValidarDatosTurno(out string error)
+        {
+            error = null;
+
+            // Paciente obligatorio
+            if (cbPaciente.SelectedValue == null)
+            {
+                error = "Debe seleccionar un paciente.";
+                return false;
+            }
+
+            // Médico obligatorio
+            if (cbMedico.SelectedValue == null)
+            {
+                error = "Debe seleccionar un médico.";
+                return false;
+            }
+
+            // Procedimiento obligatorio
+            if (cbProcedimiento.SelectedValue == null)
+            {
+                error = "Debe seleccionar un procedimiento.";
+                return false;
+            }
+
+            // Correo obligatorio + formato
+            var correo = txtCorreo.Text.Trim();
+            if (string.IsNullOrWhiteSpace(correo))
+            {
+                error = "El correo es obligatorio.";
+                return false;
+            }
+            if (!Regex.IsMatch(correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
+            {
+                error = "El formato del correo no es válido.";
+                return false;
+            }
+
+            // Observaciones obligatorias (igual que en registrar turno)
+            var obs = txtObservaciones.Text.Trim();
+            if (string.IsNullOrWhiteSpace(obs))
+            {
+                error = "Las observaciones son obligatorias.";
+                return false;
+            }
+            if (obs.Length > 200)
+            {
+                error = "Las observaciones no pueden superar 200 caracteres.";
+                return false;
+            }
+
+            // Fecha de turno: debe ser posterior a hoy (no hoy, no pasado)
+            var fecha = dtpFechaTurno.Value.Date;
+            if (fecha <= DateTime.Today)
+            {
+                error = "La fecha del turno debe ser posterior a hoy.";
+                return false;
+            }
+
+            return true;
+        }
+
     }
 
 }

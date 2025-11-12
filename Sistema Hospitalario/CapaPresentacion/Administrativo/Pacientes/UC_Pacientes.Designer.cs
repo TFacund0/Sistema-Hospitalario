@@ -110,7 +110,7 @@
             this.btnNuevoPaciente.ForeColor = System.Drawing.Color.White;
             this.btnNuevoPaciente.Location = new System.Drawing.Point(965, 37);
             this.btnNuevoPaciente.Name = "btnNuevoPaciente";
-            this.btnNuevoPaciente.Size = new System.Drawing.Size(195, 28);
+            this.btnNuevoPaciente.Size = new System.Drawing.Size(195, 44);
             this.btnNuevoPaciente.TabIndex = 18;
             this.btnNuevoPaciente.Text = "Nuevo Paciente";
             this.btnNuevoPaciente.UseVisualStyleBackColor = false;
@@ -124,16 +124,16 @@
             this.panel13.Controls.Add(this.label6);
             this.panel13.Controls.Add(this.lblTotalEgresados);
             this.panel13.Controls.Add(this.label12);
-            this.panel13.Location = new System.Drawing.Point(965, 130);
+            this.panel13.Location = new System.Drawing.Point(944, 130);
             this.panel13.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(195, 102);
+            this.panel13.Size = new System.Drawing.Size(216, 114);
             this.panel13.TabIndex = 13;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 68);
+            this.label6.Location = new System.Drawing.Point(17, 68);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 16);
             this.label6.TabIndex = 12;
@@ -188,7 +188,7 @@
             this.btnLimpiar.Location = new System.Drawing.Point(973, 44);
             this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(124, 28);
+            this.btnLimpiar.Size = new System.Drawing.Size(124, 41);
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
@@ -204,7 +204,7 @@
             this.btnBuscar.Location = new System.Drawing.Point(833, 44);
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(124, 28);
+            this.btnBuscar.Size = new System.Drawing.Size(124, 41);
             this.btnBuscar.TabIndex = 19;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
@@ -213,7 +213,7 @@
             // txtBuscar
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscar.Location = new System.Drawing.Point(166, 48);
+            this.txtBuscar.Location = new System.Drawing.Point(165, 61);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(154, 24);
             this.txtBuscar.TabIndex = 11;
@@ -221,7 +221,7 @@
             // cboCampo
             // 
             this.cboCampo.FormattingEnabled = true;
-            this.cboCampo.Location = new System.Drawing.Point(21, 48);
+            this.cboCampo.Location = new System.Drawing.Point(21, 61);
             this.cboCampo.Name = "cboCampo";
             this.cboCampo.Size = new System.Drawing.Size(121, 24);
             this.cboCampo.TabIndex = 10;
@@ -243,14 +243,14 @@
             this.colEstado,
             this.colAccion});
             this.dgvPacientes.EnableHeadersVisualStyles = false;
-            this.dgvPacientes.Location = new System.Drawing.Point(21, 80);
+            this.dgvPacientes.Location = new System.Drawing.Point(21, 93);
             this.dgvPacientes.Margin = new System.Windows.Forms.Padding(4);
             this.dgvPacientes.Name = "dgvPacientes";
             this.dgvPacientes.ReadOnly = true;
             this.dgvPacientes.RowHeadersVisible = false;
             this.dgvPacientes.RowHeadersWidth = 51;
             this.dgvPacientes.RowTemplate.Height = 24;
-            this.dgvPacientes.Size = new System.Drawing.Size(1076, 262);
+            this.dgvPacientes.Size = new System.Drawing.Size(1076, 249);
             this.dgvPacientes.TabIndex = 9;
             // 
             // colPaciente
@@ -314,13 +314,13 @@
             this.panel4.Location = new System.Drawing.Point(513, 130);
             this.panel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(195, 102);
+            this.panel4.Size = new System.Drawing.Size(214, 114);
             this.panel4.TabIndex = 5;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 64);
+            this.label8.Location = new System.Drawing.Point(13, 68);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(97, 16);
             this.label8.TabIndex = 12;
@@ -357,13 +357,13 @@
             this.panel3.Location = new System.Drawing.Point(43, 130);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(195, 102);
+            this.panel3.Size = new System.Drawing.Size(216, 114);
             this.panel3.TabIndex = 4;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 63);
+            this.label7.Location = new System.Drawing.Point(19, 68);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(67, 16);
             this.label7.TabIndex = 9;

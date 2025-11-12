@@ -87,6 +87,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             ConfigurarEnlazadoDatosColumnas();
         }
 
+        // Método que configura el DataPropertyName de cada columna del DataGridView
         private void ConfigurarEnlazadoDatosColumnas()
         {
             dgvActividad.AutoGenerateColumns = false;
@@ -98,6 +99,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvActividad.Columns["colTipo"].DataPropertyName = "Tipo";
         }
 
+        // ===================== CARGAR ACTIVIDAD RECIENTE =====================
         private void CargarActividadReciente()
         {
             var homeService = new HomeService();
@@ -116,6 +118,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvActividad.Columns["colHorario"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
         }
 
+        // ===================== EVENTO LOAD DEL UC HOME =====================
         private void Home_Load(object sender, EventArgs e)
         {
             CargarActividadReciente();

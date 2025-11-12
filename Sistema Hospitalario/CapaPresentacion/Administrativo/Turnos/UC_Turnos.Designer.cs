@@ -58,7 +58,6 @@
             this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -120,7 +119,7 @@
             this.btnNuevoTurno.ForeColor = System.Drawing.Color.White;
             this.btnNuevoTurno.Location = new System.Drawing.Point(959, 35);
             this.btnNuevoTurno.Name = "btnNuevoTurno";
-            this.btnNuevoTurno.Size = new System.Drawing.Size(195, 28);
+            this.btnNuevoTurno.Size = new System.Drawing.Size(195, 39);
             this.btnNuevoTurno.TabIndex = 17;
             this.btnNuevoTurno.Text = "Nuevo Turno";
             this.btnNuevoTurno.UseVisualStyleBackColor = false;
@@ -135,7 +134,7 @@
             this.panel8.Controls.Add(this.label20);
             this.panel8.Location = new System.Drawing.Point(948, 518);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(207, 101);
+            this.panel8.Size = new System.Drawing.Size(207, 104);
             this.panel8.TabIndex = 14;
             // 
             // label18
@@ -176,7 +175,7 @@
             this.panel7.Controls.Add(this.label17);
             this.panel7.Location = new System.Drawing.Point(648, 518);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(207, 101);
+            this.panel7.Size = new System.Drawing.Size(207, 104);
             this.panel7.TabIndex = 15;
             // 
             // label15
@@ -217,7 +216,7 @@
             this.panel6.Controls.Add(this.label14);
             this.panel6.Location = new System.Drawing.Point(346, 518);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(207, 101);
+            this.panel6.Size = new System.Drawing.Size(207, 104);
             this.panel6.TabIndex = 16;
             // 
             // label12
@@ -258,7 +257,7 @@
             this.panel5.Controls.Add(this.label9);
             this.panel5.Location = new System.Drawing.Point(48, 518);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(207, 101);
+            this.panel5.Size = new System.Drawing.Size(207, 104);
             this.panel5.TabIndex = 13;
             // 
             // label11
@@ -301,7 +300,6 @@
             this.panel4.Controls.Add(this.txtBuscarTurno);
             this.panel4.Controls.Add(this.cboCampoFiltroTurno);
             this.panel4.Controls.Add(this.dgvTurnos);
-            this.panel4.Controls.Add(this.label8);
             this.panel4.Controls.Add(this.label7);
             this.panel4.Location = new System.Drawing.Point(47, 107);
             this.panel4.Name = "panel4";
@@ -316,9 +314,9 @@
             this.btnLimpiarFiltro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiarFiltro.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiarFiltro.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiarFiltro.Location = new System.Drawing.Point(987, 59);
+            this.btnLimpiarFiltro.Location = new System.Drawing.Point(958, 49);
             this.btnLimpiarFiltro.Name = "btnLimpiarFiltro";
-            this.btnLimpiarFiltro.Size = new System.Drawing.Size(83, 36);
+            this.btnLimpiarFiltro.Size = new System.Drawing.Size(112, 48);
             this.btnLimpiarFiltro.TabIndex = 19;
             this.btnLimpiarFiltro.Text = "Limpiar";
             this.btnLimpiarFiltro.UseVisualStyleBackColor = false;
@@ -332,9 +330,9 @@
             this.btnBuscarTurno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscarTurno.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscarTurno.ForeColor = System.Drawing.Color.White;
-            this.btnBuscarTurno.Location = new System.Drawing.Point(876, 59);
+            this.btnBuscarTurno.Location = new System.Drawing.Point(817, 49);
             this.btnBuscarTurno.Name = "btnBuscarTurno";
-            this.btnBuscarTurno.Size = new System.Drawing.Size(96, 36);
+            this.btnBuscarTurno.Size = new System.Drawing.Size(120, 48);
             this.btnBuscarTurno.TabIndex = 18;
             this.btnBuscarTurno.Text = "Buscar";
             this.btnBuscarTurno.UseVisualStyleBackColor = false;
@@ -343,7 +341,7 @@
             // txtBuscarTurno
             // 
             this.txtBuscarTurno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscarTurno.Location = new System.Drawing.Point(232, 71);
+            this.txtBuscarTurno.Location = new System.Drawing.Point(232, 62);
             this.txtBuscarTurno.Name = "txtBuscarTurno";
             this.txtBuscarTurno.Size = new System.Drawing.Size(274, 24);
             this.txtBuscarTurno.TabIndex = 5;
@@ -351,7 +349,7 @@
             // cboCampoFiltroTurno
             // 
             this.cboCampoFiltroTurno.FormattingEnabled = true;
-            this.cboCampoFiltroTurno.Location = new System.Drawing.Point(35, 71);
+            this.cboCampoFiltroTurno.Location = new System.Drawing.Point(35, 62);
             this.cboCampoFiltroTurno.Name = "cboCampoFiltroTurno";
             this.cboCampoFiltroTurno.Size = new System.Drawing.Size(173, 24);
             this.cboCampoFiltroTurno.TabIndex = 4;
@@ -373,13 +371,13 @@
             this.colEstado,
             this.colAccion});
             this.dgvTurnos.EnableHeadersVisualStyles = false;
-            this.dgvTurnos.Location = new System.Drawing.Point(35, 112);
+            this.dgvTurnos.Location = new System.Drawing.Point(35, 103);
             this.dgvTurnos.Name = "dgvTurnos";
             this.dgvTurnos.ReadOnly = true;
             this.dgvTurnos.RowHeadersVisible = false;
             this.dgvTurnos.RowHeadersWidth = 51;
             this.dgvTurnos.RowTemplate.Height = 24;
-            this.dgvTurnos.Size = new System.Drawing.Size(1035, 253);
+            this.dgvTurnos.Size = new System.Drawing.Size(1035, 262);
             this.dgvTurnos.TabIndex = 3;
             this.dgvTurnos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTurnos_CellContentClick);
             // 
@@ -421,15 +419,6 @@
             this.colAccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.colAccion.Text = "Ver";
             this.colAccion.UseColumnTextForButtonValue = true;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(32, 41);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(164, 16);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Sábado, 28 de junio - 2025";
             // 
             // label7
             // 
@@ -553,7 +542,6 @@
         private System.Windows.Forms.Label lblTurnosHoy;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

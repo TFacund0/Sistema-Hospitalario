@@ -23,11 +23,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_RegistrarTurno : UserControl
     {
+        // Servicio para interactuar con la capa de negocio
         private static readonly PacienteService pacienteService = new PacienteService();
         private readonly PacienteService _servicioPaciente = pacienteService;
         private readonly MedicoService _servicioMedico = new MedicoService();
         private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
+        // Listas maestras para validaciones de ComboBox
         private readonly List<string> _maestroPaciente = new List<string>();
         private readonly List<string> _maestroMedico = new List<string>();
         private readonly List<string> _maestroProcedimiento = new List<string>();
@@ -40,10 +42,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         {
             InitializeComponent();
 
+            // No permitir elegir hoy ni fechas pasadas
+            dtpFechaTurno.MinDate = DateTime.Today.AddDays(1);
+            dtpFechaTurno.Value = DateTime.Today.AddDays(1);
+
             DatosComboBoxPaciente();
             DatosComboBoxMedico();
             DatosComboBoxProcedimiento();
         }
+
 
         // ========================= COMBO BOX PACIENTE =========================
         private void DatosComboBoxPaciente()
@@ -154,20 +161,74 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
-        // ==== Validacion DateTimePicker Fecha ====
-        private void DtpFecha_Validating(object sender, CancelEventArgs e)
+        // ==== Validacion TextBox Observaciones ====
+        private void TxtObservaciones_Validating(object sender, CancelEventArgs e)
         {
-            if (dtpFechaTurno.Value.Date <= DateTime.Now.Date)
+            var texto = txtObservaciones.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(texto))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(dtpFechaTurno, "La fecha no puede ser en el pasado.");
+                errorProvider1.SetError(txtObservaciones, "Las observaciones son obligatorias.");
             }
             else
             {
                 e.Cancel = false;
-                errorProvider1.SetError(dtpFechaTurno, null);
+                errorProvider1.SetError(txtObservaciones, null);
             }
         }
+
+        // ==== Validacion Correo ====
+        private void TxtCorreo_Validating(object sender, CancelEventArgs e)
+        {
+            var correo = txtCorreo.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(correo))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtCorreo, "El correo es obligatorio.");
+                return;
+            }
+
+            // Validación simple de formato de correo
+            if (!Regex.IsMatch(correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtCorreo, "El formato del correo no es válido.");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtCorreo, null);
+            }
+        }
+
+        // ==== Validacion DateTimePicker Fecha ====
+        private void DtpFecha_Validating(object sender, CancelEventArgs e)
+        {
+            if (!ValidarFechaTurno())
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                e.Cancel = false;
+            }
+        }
+
+        // Validación específica de la fecha del turno
+        private bool ValidarFechaTurno()
+        {
+            if (dtpFechaTurno.Value.Date <= DateTime.Today)
+            {
+                errorProvider1.SetError(dtpFechaTurno, "La fecha del turno debe ser posterior a hoy.");
+                return false;
+            }
+
+            errorProvider1.SetError(dtpFechaTurno, null);
+            return true;
+        }
+
 
         // ========================= BOTONES =========================
 
@@ -180,7 +241,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // ==== Boton Guardar ====
         private void BtnGuardar_Click_1(object sender, EventArgs e)
         {
-            // Mensaje de confirmación
+            // Confirmación previa
             var confirmacion = MessageBox.Show(
                 "¿Estás seguro de que deseas guardar este turno?",
                 "Confirmar guardado",
@@ -191,31 +252,72 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             if (confirmacion != DialogResult.Yes)
                 return;
 
-            // Ejecuta todas las validaciones de Validating
-            if (this.ValidateChildren())
+            // Ejecutar todas las validaciones de los controles (Validating de combos, correo, observaciones, etc.)
+            bool controlesValidos = this.ValidateChildren();
+
+            // Refuerzo explícito de la validación de fecha (por si el Validating no se disparó)
+            bool fechaValida = ValidarFechaTurno(); //
+
+            if (!controlesValidos || !fechaValida)
             {
-                TurnoService _servicioPaciente = new TurnoService();
-
-                var nuevoTurno = new TurnoDto
-                {
-                    Id_paciente = (int)cbPaciente.SelectedValue,
-                    Id_medico = (int)cbMedico.SelectedValue,
-                    Id_procedimiento = (int)cbProcedimiento.SelectedValue,
-                    FechaTurno = dtpFechaTurno.Value,
-                    Observaciones = txtObservaciones.Text.Trim(),
-                    Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
-                    Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim(),
-                };
-
-                _servicioPaciente.RegistrarTurno(nuevoTurno);
-
-                MessageBox.Show("Turno registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Por favor, corrija los errores antes de guardar.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
             }
-            else
+
+            // Chequeo defensivo extra por si algún SelectedValue viene en null
+            if (cbPaciente.SelectedValue == null || cbMedico.SelectedValue == null || cbProcedimiento.SelectedValue == null)
             {
-                MessageBox.Show("Por favor, corrija los errores antes de guardar.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Debe seleccionar paciente, médico y procedimiento.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            // Construir el DTO del turno
+            var nuevoTurno = new TurnoDto
+            {
+                Id_paciente = (int)cbPaciente.SelectedValue,
+                Id_medico = (int)cbMedico.SelectedValue,
+                Id_procedimiento = (int)cbProcedimiento.SelectedValue,
+                FechaTurno = dtpFechaTurno.Value,
+                Observaciones = txtObservaciones.Text.Trim(),
+                Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),  
+                Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim()         
+            };
+
+            // Guardar usando el servicio
+            try
+            {
+                var turnoService = new TurnoService();
+                turnoService.RegistrarTurno(nuevoTurno);
+
+                MessageBox.Show(
+                    "Turno registrado con éxito.",
+                    "Éxito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Ocurrió un error al registrar el turno. Verifique los datos o inténtelo nuevamente. ",
+                    "Error: " + ex,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
+
+
 
         // ==== Boton Limpiar ====
         private void BtnLimpiar_Click_1(object sender, EventArgs e)
@@ -223,11 +325,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbPaciente.SelectedIndex = -1;
             cbMedico.SelectedIndex = -1;
             cbProcedimiento.SelectedIndex = -1;
-            dtpFechaTurno.Value = DateTime.Now;
+
+            dtpFechaTurno.MinDate = DateTime.Today.AddDays(1);
+            dtpFechaTurno.Value = DateTime.Today.AddDays(1);
+
             txtObservaciones.Clear();
             txtTelefono.Clear();
             txtCorreo.Clear();
             errorProvider1.Clear();
         }
+
     }
 }

@@ -514,21 +514,29 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
 
         // ============================= VALIDACION FECHA INICIO =============================
+        // ============================= VALIDACION FECHA INICIO =============================
         private void DtpFechaInicio_Validating(object sender, CancelEventArgs e)
         {
-            var ahora = DateTime.Now;
-            if (dtpFechaInicio.Value > ahora)
+            var fecha = dtpFechaInicio.Value;
+
+            // Permitimos fechas pasadas y futuras,
+            // pero acotadas a un rango razonable (±10 años)
+            var limiteInferior = DateTime.Today.AddYears(-10);
+            var limiteSuperior = DateTime.Today.AddYears(10);
+
+            if (fecha < limiteInferior)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(dtpFechaInicio, "La fecha/hora de inicio no puede ser futura.");
+                errorProvider1.SetError(dtpFechaInicio,
+                    "La fecha de inicio es demasiado antigua (máx. 10 años atrás).");
                 return;
             }
 
-            var limiteAntiguedad = ahora.AddYears(-10);
-            if (dtpFechaInicio.Value < limiteAntiguedad)
+            if (fecha > limiteSuperior)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(dtpFechaInicio, "La fecha de inicio es demasiado antigua (máx. 10 años).");
+                errorProvider1.SetError(dtpFechaInicio,
+                    "La fecha de inicio no puede ser más de 10 años en el futuro.");
                 return;
             }
 
@@ -559,10 +567,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private void TxtObservaciones_Validating(object sender, CancelEventArgs e)
         {
             var texto = txtObservaciones.Text?.Trim() ?? "";
+
+            if (string.IsNullOrWhiteSpace(texto))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtObservaciones,
+                    "El diagnóstico / observaciones es obligatorio.");
+                return;
+            }
+
             if (texto.Length > 300)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtObservaciones, "Máximo 300 caracteres.");
+                errorProvider1.SetError(txtObservaciones,
+                    "Máximo 300 caracteres.");
                 return;
             }
 
