@@ -541,7 +541,6 @@
       <DependentUpon>Sistema_Hospitalario_BDD.edmx</DependentUpon>
       <LastGenOutput>Sistema_Hospitalario_BDD.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="CapaDatos\Sistema_Hospitalario_BDD.edmx.sql" />
     <Content Include="CapaDatos\Sistema_Hospitalario_BDD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Sistema_Hospitalario_BDD.edmx</DependentUpon>

@@ -17,6 +17,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes
     {
         private MedicoService _service = new MedicoService();
         private int _idMedicoLogueado;
+
         public ConsultaMedica()
         {
             InitializeComponent();
