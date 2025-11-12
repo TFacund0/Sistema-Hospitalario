@@ -16,6 +16,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
         }
 
+        // Obtener todos los turnos con detalles
         public List<TurnoDto> GetAll()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -45,6 +46,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Obtener detalle de un turno por ID
         public TurnoDto ObtenerDetalle(int id_turno)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -74,6 +76,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Listar todos los turnos en formato listado
         public List<ListadoTurno> ListadoTurnos()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -96,6 +99,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Insertar un nuevo turno
         public void Insertar(TurnoDto p_turno)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -125,6 +129,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Actualizar un turno existente
         public void Actualizar(int id_turno, TurnoDto turnoDto)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -173,7 +178,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-
+        // Eliminar un turno por ID
         public void Eliminar(int id_turno)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -184,6 +189,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Listar todos los estados de turno
         public List<ListadoEstadoTurno> ListarEstadosTurno()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())

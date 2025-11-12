@@ -15,6 +15,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
         }
 
+        // Inserta un nuevo médico en la base de datos
         public (bool Ok, int IdGenerado, string Error) Insertar(string nombre, string apellido, string dni, string direccion, string matricula, string correo, int idEspecialidad)
         {
             try
@@ -59,6 +60,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Elimina un médico por su ID
         public void Eliminar(int idMedico)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -87,6 +89,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Obtener la lista de médicos con sus detalles
         public List<MostrarMedicoDTO> ObtenerMedicos()
         {
 
@@ -110,6 +113,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Listar todos los médicos como DTOs
         public List<MedicoDto> ListarMedicos()
         {
             using (var context = new Sistema_HospitalarioEntities_Conexion())

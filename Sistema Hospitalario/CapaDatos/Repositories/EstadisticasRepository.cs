@@ -9,6 +9,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
     public class EstadisticasRepository
     {
+        // Contar turnos por estado en una fecha específica
         public int ContarPacientesPorEstadoYFecha(string estado, DateTime fecha)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -20,6 +21,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Contar camas por disponibilidad
         public int ContarCamasPorDisponibilidad(string disponibilidad)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -29,6 +31,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Obtener conteo de turnos por día en un rango de fechas
         public Dictionary<DateTime, int> ObtenerConteoTurnosPorDia(DateTime fechaInicio, DateTime fechaFin)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -58,6 +61,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Obtener distribución de turnos por estado en un rango de fechas
         public Dictionary<string, int> ObtenerDistribucionEstadosTurnos(DateTime fechaInicio, DateTime fechaFin)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -88,6 +92,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Obtener conteo de pacientes registrados por día en un rango de fechas
         public Dictionary<DateTime, int> ObtenerConteoPacientesRegistradosPorDia(DateTime fechaInicio, DateTime fechaFin)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -115,6 +120,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Obtener distribución de pacientes por estado
         public Dictionary<string, int> ObtenerDistribucionPacientesPorEstado()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())

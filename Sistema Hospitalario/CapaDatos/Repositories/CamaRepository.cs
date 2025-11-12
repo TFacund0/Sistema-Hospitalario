@@ -18,6 +18,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
         }
 
+        // Obtener todas las camas con su estado y número de habitación
         public List<MostrarCamaDTO> GetAll()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -34,6 +35,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Insertar una nueva cama con el estado "Disponible" por defecto
         public void Insertar(int nroHabitacion)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -61,6 +63,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Eliminar una cama específica
         public void Eliminar(int nroHabitacion, int nroCama)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -79,6 +82,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Cambiar el estado de una cama específica
         public void CambiarEstado(int nroHabitacion, int nroCama, int nuevoEstadoId)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -92,6 +96,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Obtener todos los estados de cama disponibles
         public List<estado_cama> GetEstadosCama()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

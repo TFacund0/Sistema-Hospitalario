@@ -18,6 +18,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
         }
 
+        // Obtener todas las habitaciones
         public List<MostrarHabitacionDTO> GetAll()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -35,6 +36,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Insertar una nueva habitación
         public void Insertar(int nroPiso, int tipoHabitacion)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -44,6 +46,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Eliminar una habitación por número de piso y número de habitación
         public void Eliminar(int nroPiso, int nroHabitacion)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -72,6 +75,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Listar tipos de habitación
         public List<TiposHabitacionDTO> ListarTiposHabitacion()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
