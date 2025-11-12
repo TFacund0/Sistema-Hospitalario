@@ -179,12 +179,15 @@
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteEdicionDto.cs" />
     <Compile Include="CapaNegocio\DTOs\PacienteDTO\PacienteViewDto.cs" />
     <Compile Include="CapaNegocio\DTOs\ProcedimientoDTO\MostrarProcedimientoDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\UsuarioDTO\DatosLoginUsuarioDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\UsuarioDTO\UsuarioDTO.cs" />
+    <Compile Include="CapaNegocio\DTOs\UsuarioDTO\UsuarioLoginResultadoDTO.cs" />
     <Compile Include="CapaNegocio\Servicios\EstadisticasService\EstadisticasService.cs" />
     <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
     <Compile Include="CapaNegocio\Servicios\EspecialidadService\EspecialidadService.cs" />
     <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />
     <Compile Include="CapaNegocio\Servicios\UsuarioService\UsuarioService.cs" />
+    <Compile Include="CapaNegocio\SesionUsuario.cs" />
     <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -534,6 +537,7 @@
       <DependentUpon>Sistema_Hospitalario_BDD.edmx</DependentUpon>
       <LastGenOutput>Sistema_Hospitalario_BDD.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="CapaDatos\Sistema_Hospitalario_BDD.edmx.sql" />
     <Content Include="CapaDatos\Sistema_Hospitalario_BDD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Sistema_Hospitalario_BDD.edmx</DependentUpon>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography; // Necesario para hashing
 using System.Text; // Necesario para hashing
 
+
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
 {
     public class UsuarioService
@@ -137,6 +138,34 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
                     builder.Append(bytes[i].ToString("x2"));
                 }
                 return builder.ToString();
+            }
+        }
+
+        public UsuarioLoginResultadoDTO ValidarCredenciales(string username, string passwordIngresada)
+        {
+            // 1. Hasheamos la contraseña que el usuario escribió
+            string hashedPasswordIngresada = HashPassword(passwordIngresada);
+
+            // 2. Pedimos los datos al Repositorio
+            var datosUsuario = _repo.ObtenerUsuarioParaLogin(username);
+
+            // 3. Verificamos si existe y si el hash coincide
+            if (datosUsuario != null && datosUsuario.PasswordHashAlmacenado == hashedPasswordIngresada)
+            {
+                // ¡Éxito!
+                return new UsuarioLoginResultadoDTO
+                {
+                    LoginExitoso = true,
+                    IdUsuario = datosUsuario.IdUsuario,
+                    Username = datosUsuario.Username,
+                    NombreRol = datosUsuario.NombreRol,
+                    IdMedicoAsociado = datosUsuario.IdMedicoAsociado
+                };
+            }
+            else
+            {
+                // Falla
+                return new UsuarioLoginResultadoDTO { LoginExitoso = false };
             }
         }
 

@@ -113,5 +113,25 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return db.usuario.Any(u => u.username == username);
             }
         }
+
+        public DatosLoginUsuarioDTO ObtenerUsuarioParaLogin(string username)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var usuario = db.usuario
+                    .Where(u => u.username == username)
+                    .Select(u => new DatosLoginUsuarioDTO
+                    {
+                        IdUsuario = u.id_usuario,
+                        Username = u.username,
+                        PasswordHashAlmacenado = u.password, // El hash guardado
+                        NombreRol = u.rol.nombre,           // El nombre del rol
+                        IdMedicoAsociado = u.id_medico     // El ID del médico (puede ser null)
+                    })
+                    .FirstOrDefault();
+
+                return usuario;
+            }
+        }
     }
 }
