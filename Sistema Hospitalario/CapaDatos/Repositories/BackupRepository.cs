@@ -28,9 +28,13 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
 DECLARE @db sysname = @_db;
 DECLARE @path nvarchar(4000) = @_path;
 
-BACKUP DATABASE QUOTENAME(@db)
+DECLARE @sql nvarchar(max) = N'
+BACKUP DATABASE ' + QUOTENAME(@db) + N'
 TO DISK = @path
-WITH INIT, COMPRESSION, STATS = 5;";
+WITH INIT, STATS = 5;';   -- 👈 SIN COMPRESSION
+
+EXEC sp_executesql @sql, N'@path nvarchar(4000)', @path;
+";
 
             using (var cnn = new SqlConnection(_masterCnn))
             using (var cmd = new SqlCommand(sql, cnn))
@@ -56,6 +60,8 @@ WITH INIT, COMPRESSION, STATS = 5;";
                 progreso?.Report(100);
             }
         }
+
+
 
         public async Task RestoreAsync(string backupFullPath, IProgress<int> progreso = null, CancellationToken ct = default)
         {
