@@ -874,7 +874,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                     cbMedico.Text = "";
                     _maestroMedico.Clear();
 
-                    // 🔴 CLAVE: deshabilitás y evitás validación bloqueante
+                    // CLAVE: deshabilitás y evitás validación bloqueante
                     cbMedico.Enabled = false;
                     cbMedico.CausesValidation = false;
 
