@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,88 +18,90 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
     {
 
-        private List<PacienteDTO> pacienteDTOs = new List<PacienteDTO>();
-        private readonly BindingSource _bs = new BindingSource();
+        private MedicoService _service = new MedicoService();
         public UC_PacientesM()
         {
             InitializeComponent();
-            CargarFilasEjemplo();
-            ConfigurarActividad();
+            RefrescarGrilla();
+            ConfigurarEstilosGrilla();
+            CargarContadores();
         }
 
-        private void CargarFilasEjemplo() // Carga datos de ejemplo en el DataGridView
+        private void RefrescarGrilla(string nombre = null, string apellido = null, string dni = null, DateTime? fechaTurno = null)
         {
-            pacienteDTOs = new List<PacienteDTO>
+            try
             {
-                new PacienteDTO()
-                { // Ejemplo 1
-                    nombre = "Juan",
-                    apellido = "Pérez",
-                    direccion = "Calle Falsa 123",
-                    obraSocial = "OSDE",
-                    nroAfiliado = 123456,
-                    dni = 12345678,
-                    habitacion = 101,
-                    telefono = 123456789,
-                    observaciones = "Ninguna",
-                    Estado = "Internado",
-                    FechaNacimiento = new DateTime(1980, 5, 15)
-                },
-                new PacienteDTO()
-                { // Ejemplo 2
-                    nombre = "María",
-                    apellido = "Gómez",
-                    direccion = "Avenida Siempre Viva 742",
-                    obraSocial = "Swiss Medical",
-                    nroAfiliado = 654321,
-                    dni = 87654321,
-                    habitacion = 202,
-                    telefono = 987654321,
-                    observaciones = "Alergia a la penicilina",
-                    Estado = "Consulta",
-                    FechaNacimiento = new DateTime(2024, 11, 22)
-                },
+                var lista = _service.ObtenerPacientes(nombre, apellido, dni, fechaTurno);
+                dgvPacientes.DataSource = lista;
+
+                if (dgvPacientes.Columns.Contains("IdPaciente"))
+                {
+                    dgvPacientes.Columns["IdPaciente"].Visible = false;
+                }
             }
-            ;
-            // Enlazar la lista al BindingSource y luego al DataGridView
-            _bs.DataSource = pacienteDTOs;
-            dgvPacientes.DataSource = _bs;
-        }
-        private void ConfigurarActividad()
-        {
-            // Estilos generales
-            dgvPacientes.ReadOnly = true;
-            dgvPacientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPacientes.RowHeadersVisible = false;
-            dgvPacientes.AllowUserToResizeRows = false;
-
-            dgvPacientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvPacientes.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvPacientes.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
-
-            dgvPacientes.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvPacientes.ColumnHeadersHeight = 35;
-            dgvPacientes.EnableHeadersVisualStyles = false;
-            dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
-        }
-
-        private void DgvPacientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0) // asegurarse que no sea header
+            catch (Exception ex)
             {
-                // Obtenemos la fila seleccionada
+                MessageBox.Show("Error al cargar pacientes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ConfigurarEstilosGrilla()
+        {
+            dgvPacientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvPacientes.RowHeadersVisible = false;
+            dgvPacientes.BackgroundColor = Color.White;
+            dgvPacientes.BorderStyle = BorderStyle.None;
+            dgvPacientes.EnableHeadersVisualStyles = false;
+
+            dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgvPacientes.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvPacientes.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+
+            dgvPacientes.DefaultCellStyle.BackColor = Color.WhiteSmoke;
+            dgvPacientes.DefaultCellStyle.ForeColor = Color.Black;
+            dgvPacientes.DefaultCellStyle.Font = new Font("Segoe UI", 9);
+            
+            if (dgvPacientes.Columns.Contains("Historial"))
+            {
+                dgvPacientes.Columns["Historial"].DefaultCellStyle.NullValue = "Ver";
+            }
+        }
+
+        private void DgvPacientes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) 
+            {
                 DataGridViewRow fila = dgvPacientes.Rows[e.RowIndex];
                 
                 MenuMedicos menu = this.FindForm() as MenuMedicos;
-                // Obtenemos el paciente asociado a la fila
                 PacienteDTO paciente = fila.DataBoundItem as PacienteDTO;
 
                 if (menu != null)
                 {
-                    // Llamamos al método de MenuMedicos
                     menu.AbrirUserControl(new UC_DetallePaciente(paciente));
                 }
             }
+        }
+        private void CargarContadores()
+        {
+            try
+            {
+                lblTotalPacientes.Text = _service.ObtenerConteoTotalPacientes().ToString();
+            }
+            catch (Exception ex)
+            {
+                lblTotalPacientes.Text = "N/A";
+                MessageBox.Show("Error al cargar contadores: " + ex.Message);
+            }
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DateTime? fecha = null;
+            if (dtpFechaTurno.Checked)
+            {
+                fecha = dtpFechaTurno.Value.Date;
+            }
+            RefrescarGrilla(txtNombre.Text, txtApellido.Text, txtDni.Text, fecha);
         }
     }
 }

@@ -24,6 +24,33 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
 
+        public UsuarioLoginResultadoDTO ValidarCredenciales(string username, string passwordIngresada)
+        {
+            // 1. Hasheamos la contraseña que el usuario escribió
+            string hashedPasswordIngresada = HashPassword(passwordIngresada);
+
+            // 2. Pedimos los datos al Repositorio
+            var datosUsuario = _repo.ObtenerUsuarioParaLogin(username);
+
+            // 3. Verificamos si existe y si el hash coincide
+            if (datosUsuario != null && datosUsuario.PasswordHashAlmacenado == hashedPasswordIngresada)
+            {
+                // ¡Éxito!
+                return new UsuarioLoginResultadoDTO
+                {
+                    LoginExitoso = true,
+                    IdUsuario = datosUsuario.IdUsuario,
+                    Username = datosUsuario.Username,
+                    NombreRol = datosUsuario.NombreRol,
+                    IdMedicoAsociado = datosUsuario.IdMedicoAsociado
+                };
+            }
+            else
+            {
+                // Falla
+                return new UsuarioLoginResultadoDTO { LoginExitoso = false };
+            }
+        }
         // Obtener usuarios con filtrado y ordenamiento
         public List<MostrarUsuariosDTO> ObtenerUsuarios(string campo = null, string valor = null)
         {

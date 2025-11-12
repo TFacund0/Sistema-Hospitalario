@@ -34,10 +34,8 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dtpFechaFiltro = new System.Windows.Forms.DateTimePicker();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -53,7 +51,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.DNILabel = new System.Windows.Forms.Label();
-            this.TBDNI = new System.Windows.Forms.TextBox();
+            this.txtDni = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.TBEdad = new System.Windows.Forms.TextBox();
@@ -74,7 +72,7 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.TBDireccion = new System.Windows.Forms.TextBox();
-            this.panel8 = new System.Windows.Forms.Panel();
+            this.txtHistorialDetalle = new System.Windows.Forms.Panel();
             this.TBContacto.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -101,7 +99,7 @@
             this.TBContacto.BackColor = System.Drawing.Color.LightGray;
             this.TBContacto.Controls.Add(this.panel1);
             this.TBContacto.Controls.Add(this.panel3);
-            this.TBContacto.Controls.Add(this.panel8);
+            this.TBContacto.Controls.Add(this.txtHistorialDetalle);
             this.TBContacto.Location = new System.Drawing.Point(32, 31);
             this.TBContacto.Name = "TBContacto";
             this.TBContacto.Size = new System.Drawing.Size(900, 552);
@@ -117,10 +115,8 @@
             this.panel1.Controls.Add(this.label19);
             this.panel1.Controls.Add(this.label18);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.dateTimePicker1);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.dtpFechaFiltro);
             this.panel1.Controls.Add(this.textBox4);
-            this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label16);
             this.panel1.Controls.Add(this.label17);
             this.panel1.Location = new System.Drawing.Point(95, 130);
@@ -160,7 +156,7 @@
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(422, 22);
+            this.label18.Location = new System.Drawing.Point(356, 22);
             this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(117, 13);
@@ -174,22 +170,13 @@
             this.label2.Size = new System.Drawing.Size(100, 23);
             this.label2.TabIndex = 21;
             // 
-            // dateTimePicker1
+            // dtpFechaFiltro
             // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(425, 38);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 16;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.textBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.textBox1.Location = new System.Drawing.Point(315, 38);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 14;
+            this.dtpFechaFiltro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpFechaFiltro.Location = new System.Drawing.Point(359, 38);
+            this.dtpFechaFiltro.Name = "dtpFechaFiltro";
+            this.dtpFechaFiltro.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaFiltro.TabIndex = 16;
             // 
             // textBox4
             // 
@@ -199,18 +186,6 @@
             this.textBox4.Size = new System.Drawing.Size(100, 20);
             this.textBox4.TabIndex = 13;
             // 
-            // label8
-            // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(333, 22);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Apellido";
-            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -218,9 +193,9 @@
             this.label16.Location = new System.Drawing.Point(207, 22);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(97, 13);
+            this.label16.Size = new System.Drawing.Size(102, 13);
             this.label16.TabIndex = 10;
-            this.label16.Text = "ID del medico";
+            this.label16.Text = "dni del medico";
             // 
             // label17
             // 
@@ -361,7 +336,7 @@
             // panel9
             // 
             this.panel9.Controls.Add(this.DNILabel);
-            this.panel9.Controls.Add(this.TBDNI);
+            this.panel9.Controls.Add(this.txtDni);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
@@ -379,14 +354,14 @@
             this.DNILabel.TabIndex = 21;
             this.DNILabel.Text = "DNI:";
             // 
-            // TBDNI
+            // txtDni
             // 
-            this.TBDNI.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBDNI.Location = new System.Drawing.Point(45, 4);
-            this.TBDNI.Name = "TBDNI";
-            this.TBDNI.ReadOnly = true;
-            this.TBDNI.Size = new System.Drawing.Size(125, 21);
-            this.TBDNI.TabIndex = 41;
+            this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDni.Location = new System.Drawing.Point(45, 4);
+            this.txtDni.Name = "txtDni";
+            this.txtDni.ReadOnly = true;
+            this.txtDni.Size = new System.Drawing.Size(125, 21);
+            this.txtDni.TabIndex = 41;
             // 
             // tableLayoutPanel2
             // 
@@ -606,17 +581,17 @@
             this.TBDireccion.Size = new System.Drawing.Size(344, 21);
             this.TBDireccion.TabIndex = 40;
             // 
-            // panel8
+            // txtHistorialDetalle
             // 
-            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.txtHistorialDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel8.BackColor = System.Drawing.Color.White;
-            this.panel8.Location = new System.Drawing.Point(33, 199);
-            this.panel8.Margin = new System.Windows.Forms.Padding(2);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(838, 324);
-            this.panel8.TabIndex = 16;
+            this.txtHistorialDetalle.BackColor = System.Drawing.Color.White;
+            this.txtHistorialDetalle.Location = new System.Drawing.Point(33, 199);
+            this.txtHistorialDetalle.Margin = new System.Windows.Forms.Padding(2);
+            this.txtHistorialDetalle.Name = "txtHistorialDetalle";
+            this.txtHistorialDetalle.Size = new System.Drawing.Size(838, 324);
+            this.txtHistorialDetalle.TabIndex = 16;
             // 
             // UC_DetallePaciente
             // 
@@ -659,7 +634,7 @@
         #endregion
 
         private System.Windows.Forms.Panel TBContacto;
-        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel txtHistorialDetalle;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
@@ -672,7 +647,7 @@
         private System.Windows.Forms.TextBox TBEstado;
         private System.Windows.Forms.TextBox TBHabitacion;
         private System.Windows.Forms.TextBox TBTurno;
-        private System.Windows.Forms.TextBox TBDNI;
+        private System.Windows.Forms.TextBox txtDni;
         private System.Windows.Forms.TextBox TBDireccion;
         private System.Windows.Forms.TextBox TBAfiliado;
         private System.Windows.Forms.Label label9;
@@ -697,10 +672,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DateTimePicker dtpFechaFiltro;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label19;

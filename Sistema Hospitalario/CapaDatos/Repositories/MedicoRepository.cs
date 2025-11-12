@@ -1,11 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaDatos.Interfaces;
-using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Text;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
@@ -130,6 +134,114 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     Email = m.correo_electronico
                 }).ToList();
                 return medicoDtos;
+            }
+        }
+        public List<PacienteListadoMedicoDto> ObtenerTodosParaMedico(DateTime? fechaTurno)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var query = db.paciente.AsQueryable();
+
+                if (fechaTurno.HasValue)
+                {
+                    query = query.Where(p => p.turno.Any(t =>
+                        DbFunctions.TruncateTime(t.fecha_turno) == fechaTurno.Value.Date
+                    ));
+                }
+                var lista = query
+                    .Select(p => new PacienteListadoMedicoDto
+                    {
+                        IdPaciente = p.id_paciente,
+                        FechaNacim = p.fecha_nacimiento,
+                        Nombre = p.nombre,
+                        Apellido = p.apellido,
+                        Direccion = p.direccion,
+                        Dni = p.dni.ToString(), // Convertimos el int a string
+                        Observacion = p.observaciones,
+
+                       
+                        Telefono = p.telefono.FirstOrDefault().numero_telefono ?? "N/A",
+                        Estado = p.estado_paciente.nombre,
+
+                        
+                        Habitacion = p.internacion.Any(i => i.fecha_fin == null)
+                                     ? p.internacion.OrderByDescending(i => i.fecha_inicio)
+                                                  .FirstOrDefault(i => i.fecha_fin == null)
+                                                  .nro_habitacion.ToString()
+                                     : "Ambulatorio"
+                    })
+                    .ToList();
+
+                return lista;
+            }
+        }
+        public int ContarTotalPacientes()
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                // Simplemente cuenta todas las filas en la tabla paciente
+                return db.paciente.Count();
+            }
+        }
+        public void InsertarConsulta(Consulta consulta)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                try
+                {
+                    db.Consulta.Add(consulta);
+                    db.SaveChanges();
+                }
+                // Captura el error específico de validación de EF (como el de la contraseña)
+                catch (DbEntityValidationException ex)
+                {
+                    var sb = new StringBuilder();
+                    foreach (var failure in ex.EntityValidationErrors)
+                    {
+                        foreach (var error in failure.ValidationErrors)
+                        {
+                            sb.AppendLine($"- {error.PropertyName}: {error.ErrorMessage}");
+                        }
+                    }
+                    throw new Exception("Error de validación: \n" + sb.ToString());
+                }
+            }
+        }
+        public List<HistorialItemDto> ObtenerHistorialConsultas(int idPaciente)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                return db.Consulta
+                    .Where(c => c.id_paciente == idPaciente)
+                    .Select(c => new HistorialItemDto
+                    {
+                        Fecha = c.fecha_consulta,
+                        Tipo = "Consulta",
+                        Motivo = c.motivo,
+                        Diagnostico = c.diagnostico,
+                        Tratamiento = c.tratamiento,
+                        NombreMedico = c.medico.nombre + " " + c.medico.apellido,
+                        DniMedico = c.medico.DNI.ToString() // Asumimos que dni es int
+                    })
+                    .ToList();
+            }
+        }
+        public List<HistorialItemDto> ObtenerHistorialInternaciones(int idPaciente)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                return db.internacion
+                    .Where(i => i.id_paciente == idPaciente)
+                    .Select(i => new HistorialItemDto
+                    {
+                        Fecha = i.fecha_inicio,
+                        Tipo = "Procedimiento/Internación",
+                        Motivo = i.motivo, 
+                        Diagnostico = i.procedimiento.nombre,
+                        NombreMedico = i.medico.nombre + " " + i.medico.apellido,
+                        DniMedico = i.medico.DNI.ToString()
+                    })
+                    .ToList();
             }
         }
     }

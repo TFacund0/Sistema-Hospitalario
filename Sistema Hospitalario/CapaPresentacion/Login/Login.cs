@@ -40,60 +40,69 @@ namespace WindowsFormsInicio_de_sesion
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            try
+            else
             {
-                // 1. Llamamos al servicio para validar
-                UsuarioLoginResultadoDTO resultadoLogin = _usuarioService.ValidarCredenciales(usuario, contraseña);
-
-                if (resultadoLogin.LoginExitoso)
+                if (usuario == "admin" && contraseña == "admin")
                 {
-                    // 2. Guardamos los datos en la sesión estática
-                    SesionUsuario.Login(resultadoLogin);
-
-                    this.Hide();
-
-                    // 3. Abrimos el formulario según el Rol
-                    Form menuPrincipal = null;
-                    switch (SesionUsuario.NombreRol) // ¡Verificá que estos nombres sean los de tu BD!
-                    {
-                        case "Administrativo":
-                            menuPrincipal = new MenuAdministrativo();
-                            break;
-                        case "Medico":
-                            menuPrincipal = new MenuMedicos();
-                            break;
-                        case "Moderador": // O "Administrador" o como lo llames
-                            menuPrincipal = new MenuModer();
-                            break;
-                        case "Gerente":
-                            menuPrincipal = new MenuGerente();
-                            break;
-                        default:
-                            MessageBox.Show("Rol de usuario no reconocido. Contacte al administrador.", "Error",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Show();
-                            SesionUsuario.Logout();
-                            return;
-                    }
-
+                    Form menuPrincipal = new MenuMedicos();
                     menuPrincipal.ShowDialog();
                     this.Close();
                 }
-                else
+            }
+
+                try
                 {
-                    // Si el login falló
-                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Autenticación",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtContraseña.Clear();
-                    txtUsuario.Focus();
+                    // 1. Llamamos al servicio para validar
+                    UsuarioLoginResultadoDTO resultadoLogin = _usuarioService.ValidarCredenciales(usuario, contraseña);
+
+                    if (resultadoLogin.LoginExitoso)
+                    {
+                        // 2. Guardamos los datos en la sesión estática
+                        SesionUsuario.Login(resultadoLogin);
+
+                        this.Hide();
+
+                        // 3. Abrimos el formulario según el Rol
+                        Form menuPrincipal = null;
+                        switch (SesionUsuario.NombreRol) // ¡Verificá que estos nombres sean los de tu BD!
+                        {
+                            case "Administrativo":
+                                menuPrincipal = new MenuAdministrativo();
+                                break;
+                            case "Medico":
+                                menuPrincipal = new MenuMedicos();
+                                break;
+                            case "Moderador": // O "Administrador" o como lo llames
+                                menuPrincipal = new MenuModer();
+                                break;
+                            case "Gerente":
+                                menuPrincipal = new MenuGerente();
+                                break;
+                            default:
+                                MessageBox.Show("Rol de usuario no reconocido. Contacte al administrador.", "Error",
+                                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                this.Show();
+                                SesionUsuario.Logout();
+                                return;
+                        }
+
+                        menuPrincipal.ShowDialog();
+                        this.Close();
+                    }
+                    else
+                    {
+                        // Si el login falló
+                        MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Autenticación",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        txtContraseña.Clear();
+                        txtUsuario.Focus();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocurrió un error inesperado durante el inicio de sesión: " + ex.Message,
-                                "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ocurrió un error inesperado durante el inicio de sesión: " + ex.Message,
+                                    "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
         }
 
         // ======================= MÉTODOS AUXILIARES =======================

@@ -33,10 +33,10 @@
             this.button4 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dtpFechaTurno = new System.Windows.Forms.DateTimePicker();
+            this.txtDni = new System.Windows.Forms.TextBox();
+            this.txtApellido = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblTotalPacientes = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -92,6 +92,7 @@
             this.button4.TabIndex = 19;
             this.button4.Text = "Buscar";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // panel2
             // 
@@ -99,10 +100,10 @@
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.dateTimePicker1);
-            this.panel2.Controls.Add(this.textBox3);
-            this.panel2.Controls.Add(this.textBox2);
-            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.dtpFechaTurno);
+            this.panel2.Controls.Add(this.txtDni);
+            this.panel2.Controls.Add(this.txtApellido);
+            this.panel2.Controls.Add(this.txtNombre);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.label11);
@@ -124,36 +125,38 @@
             this.label12.TabIndex = 17;
             this.label12.Text = "Fecha Ultimo Turno";
             // 
-            // dateTimePicker1
+            // dtpFechaTurno
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(372, 45);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 16;
+            this.dtpFechaTurno.Checked = false;
+            this.dtpFechaTurno.Location = new System.Drawing.Point(372, 45);
+            this.dtpFechaTurno.Name = "dtpFechaTurno";
+            this.dtpFechaTurno.ShowCheckBox = true;
+            this.dtpFechaTurno.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaTurno.TabIndex = 16;
             // 
-            // textBox3
+            // txtDni
             // 
-            this.textBox3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.textBox3.Location = new System.Drawing.Point(249, 44);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 15;
+            this.txtDni.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.txtDni.Location = new System.Drawing.Point(249, 44);
+            this.txtDni.Name = "txtDni";
+            this.txtDni.Size = new System.Drawing.Size(100, 20);
+            this.txtDni.TabIndex = 15;
             // 
-            // textBox2
+            // txtApellido
             // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.textBox2.Location = new System.Drawing.Point(129, 44);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 14;
+            this.txtApellido.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.txtApellido.Location = new System.Drawing.Point(129, 44);
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(100, 20);
+            this.txtApellido.TabIndex = 14;
             // 
-            // textBox1
+            // txtNombre
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.textBox1.Location = new System.Drawing.Point(17, 45);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 13;
+            this.txtNombre.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.txtNombre.Location = new System.Drawing.Point(17, 45);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(100, 20);
+            this.txtNombre.TabIndex = 13;
             // 
             // label10
             // 
@@ -234,8 +237,7 @@
             this.dgvPacientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvPacientes.Size = new System.Drawing.Size(803, 221);
             this.dgvPacientes.TabIndex = 9;
-            this.dgvPacientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPacientes_CellContentClick);
-            this.dgvPacientes.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPacientes_CellContentClick);
+            this.dgvPacientes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPacientes_CellDoubleClick);
             // 
             // VerHistorial
             // 
@@ -270,7 +272,7 @@
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.label7);
-            this.panel3.Controls.Add(this.label6);
+            this.panel3.Controls.Add(this.lblTotalPacientes);
             this.panel3.Controls.Add(this.label5);
             this.panel3.Location = new System.Drawing.Point(33, 96);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
@@ -288,16 +290,16 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "Pacientes";
             // 
-            // label6
+            // lblTotalPacientes
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(14, 32);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(16, 14);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "3";
+            this.lblTotalPacientes.AutoSize = true;
+            this.lblTotalPacientes.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalPacientes.Location = new System.Drawing.Point(14, 32);
+            this.lblTotalPacientes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTotalPacientes.Name = "lblTotalPacientes";
+            this.lblTotalPacientes.Size = new System.Drawing.Size(16, 14);
+            this.lblTotalPacientes.TabIndex = 8;
+            this.lblTotalPacientes.Text = "3";
             // 
             // label5
             // 
@@ -366,7 +368,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblTotalPacientes;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -375,12 +377,12 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtDni;
+        private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpFechaTurno;
         private System.Windows.Forms.DataGridViewButtonColumn VerHistorial;
         private System.Windows.Forms.ErrorProvider errorProvider1;
     }

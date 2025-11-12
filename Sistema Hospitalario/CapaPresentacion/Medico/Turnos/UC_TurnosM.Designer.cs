@@ -1,6 +1,6 @@
 ﻿namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
-    partial class UC_TurnosM
+    partial class panel1
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -31,41 +31,40 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.lblTotalRecanceladas = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.lblTotalCompletadas = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.lblTotalPendientes = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.dtpFecha = new System.Windows.Forms.DateTimePicker();
+            this.dgvTurnos = new System.Windows.Forms.DataGridView();
             this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPaciente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMedico = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAcciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnLimpiar = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTurnos)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
             // 
+            this.panel2.AccessibleName = "lblTotalCompletadas";
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -86,7 +85,7 @@
             this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel8.BackColor = System.Drawing.Color.White;
             this.panel8.Controls.Add(this.label18);
-            this.panel8.Controls.Add(this.label19);
+            this.panel8.Controls.Add(this.lblTotalRecanceladas);
             this.panel8.Controls.Add(this.label20);
             this.panel8.Location = new System.Drawing.Point(710, 446);
             this.panel8.Margin = new System.Windows.Forms.Padding(2);
@@ -104,16 +103,16 @@
             this.label18.TabIndex = 11;
             this.label18.Text = "Reprogramar";
             // 
-            // label19
+            // lblTotalRecanceladas
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(68, 32);
-            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(18, 17);
-            this.label19.TabIndex = 10;
-            this.label19.Text = "3";
+            this.lblTotalRecanceladas.AutoSize = true;
+            this.lblTotalRecanceladas.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalRecanceladas.Location = new System.Drawing.Point(68, 32);
+            this.lblTotalRecanceladas.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTotalRecanceladas.Name = "lblTotalRecanceladas";
+            this.lblTotalRecanceladas.Size = new System.Drawing.Size(18, 17);
+            this.lblTotalRecanceladas.TabIndex = 10;
+            this.lblTotalRecanceladas.Text = "3";
             // 
             // label20
             // 
@@ -131,7 +130,7 @@
             this.panel7.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.Controls.Add(this.label15);
-            this.panel7.Controls.Add(this.label16);
+            this.panel7.Controls.Add(this.lblTotalCompletadas);
             this.panel7.Controls.Add(this.label17);
             this.panel7.Location = new System.Drawing.Point(375, 446);
             this.panel7.Margin = new System.Windows.Forms.Padding(2);
@@ -149,16 +148,17 @@
             this.label15.TabIndex = 8;
             this.label15.Text = "Finalizadas hoy";
             // 
-            // label16
+            // lblTotalCompletadas
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(64, 32);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(28, 17);
-            this.label16.TabIndex = 7;
-            this.label16.Text = "13";
+            this.lblTotalCompletadas.AccessibleName = "";
+            this.lblTotalCompletadas.AutoSize = true;
+            this.lblTotalCompletadas.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalCompletadas.Location = new System.Drawing.Point(64, 32);
+            this.lblTotalCompletadas.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTotalCompletadas.Name = "lblTotalCompletadas";
+            this.lblTotalCompletadas.Size = new System.Drawing.Size(28, 17);
+            this.lblTotalCompletadas.TabIndex = 7;
+            this.lblTotalCompletadas.Text = "13";
             // 
             // label17
             // 
@@ -176,7 +176,7 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.Controls.Add(this.label11);
-            this.panel5.Controls.Add(this.label10);
+            this.panel5.Controls.Add(this.lblTotalPendientes);
             this.panel5.Controls.Add(this.label9);
             this.panel5.Location = new System.Drawing.Point(34, 446);
             this.panel5.Margin = new System.Windows.Forms.Padding(2);
@@ -187,23 +187,23 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(46, 52);
+            this.label11.Location = new System.Drawing.Point(53, 52);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(68, 13);
+            this.label11.Size = new System.Drawing.Size(59, 13);
             this.label11.TabIndex = 2;
-            this.label11.Text = "5 pendientes";
+            this.label11.Text = "pendientes";
             // 
-            // label10
+            // lblTotalPendientes
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(66, 29);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(28, 17);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "15";
+            this.lblTotalPendientes.AutoSize = true;
+            this.lblTotalPendientes.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalPendientes.Location = new System.Drawing.Point(66, 29);
+            this.lblTotalPendientes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTotalPendientes.Name = "lblTotalPendientes";
+            this.lblTotalPendientes.Size = new System.Drawing.Size(28, 17);
+            this.lblTotalPendientes.TabIndex = 1;
+            this.lblTotalPendientes.Text = "15";
             // 
             // label9
             // 
@@ -224,10 +224,8 @@
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.Controls.Add(this.btnLimpiar);
             this.panel4.Controls.Add(this.btnBuscar);
-            this.panel4.Controls.Add(this.textBox1);
-            this.panel4.Controls.Add(this.dateTimePicker1);
-            this.panel4.Controls.Add(this.dataGridView1);
-            this.panel4.Controls.Add(this.comboBox1);
+            this.panel4.Controls.Add(this.dtpFecha);
+            this.panel4.Controls.Add(this.dgvTurnos);
             this.panel4.Controls.Add(this.label7);
             this.panel4.Location = new System.Drawing.Point(35, 107);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
@@ -235,40 +233,68 @@
             this.panel4.Size = new System.Drawing.Size(829, 319);
             this.panel4.TabIndex = 5;
             // 
-            // textBox1
+            // btnLimpiar
             // 
-            this.textBox1.Location = new System.Drawing.Point(259, 49);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(125, 20);
-            this.textBox1.TabIndex = 18;
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLimpiar.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiar.Location = new System.Drawing.Point(742, 45);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(62, 29);
+            this.btnLimpiar.TabIndex = 21;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
-            // dateTimePicker1
+            // btnBuscar
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(25, 49);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 17;
+            this.btnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBuscar.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscar.ForeColor = System.Drawing.Color.White;
+            this.btnBuscar.Location = new System.Drawing.Point(659, 45);
+            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(72, 29);
+            this.btnBuscar.TabIndex = 20;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // dataGridView1
+            // dtpFecha
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dtpFecha.Location = new System.Drawing.Point(160, 54);
+            this.dtpFecha.Name = "dtpFecha";
+            this.dtpFecha.Size = new System.Drawing.Size(200, 20);
+            this.dtpFecha.TabIndex = 17;
+            // 
+            // dgvTurnos
+            // 
+            this.dgvTurnos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvTurnos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTurnos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTurnos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colHora,
             this.colPaciente,
             this.colMedico,
             this.colEstado,
             this.colAcciones});
-            this.dataGridView1.Location = new System.Drawing.Point(26, 91);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(779, 206);
-            this.dataGridView1.TabIndex = 3;
+            this.dgvTurnos.Location = new System.Drawing.Point(26, 91);
+            this.dgvTurnos.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvTurnos.Name = "dgvTurnos";
+            this.dgvTurnos.RowHeadersWidth = 51;
+            this.dgvTurnos.RowTemplate.Height = 24;
+            this.dgvTurnos.Size = new System.Drawing.Size(779, 206);
+            this.dgvTurnos.TabIndex = 3;
+            this.dgvTurnos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTurnos_CellDoubleClick);
             // 
             // colHora
             // 
@@ -300,25 +326,16 @@
             this.colAcciones.MinimumWidth = 6;
             this.colAcciones.Name = "colAcciones";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(433, 49);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(148, 21);
-            this.comboBox1.TabIndex = 2;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(22, 13);
+            this.label7.Location = new System.Drawing.Point(23, 56);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(136, 18);
+            this.label7.Size = new System.Drawing.Size(103, 18);
             this.label7.TabIndex = 0;
-            this.label7.Text = "Turnos de Hoy";
+            this.label7.Text = "Turnos de:";
             // 
             // label2
             // 
@@ -342,46 +359,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Agenda de Turnos";
             // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLimpiar.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(742, 45);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(62, 29);
-            this.btnLimpiar.TabIndex = 21;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = false;
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBuscar.BackColor = System.Drawing.Color.DarkTurquoise;
-            this.btnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBuscar.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.ForeColor = System.Drawing.Color.White;
-            this.btnBuscar.Location = new System.Drawing.Point(659, 45);
-            this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(72, 29);
-            this.btnBuscar.TabIndex = 20;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = false;
-            // 
-            // UC_TurnosM
+            // panel1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.panel2);
             this.MinimumSize = new System.Drawing.Size(968, 618);
-            this.Name = "UC_TurnosM";
+            this.Name = "panel1";
             this.Size = new System.Drawing.Size(968, 618);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -393,7 +378,7 @@
             this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTurnos)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -403,29 +388,27 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lblTotalRecanceladas;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblTotalCompletadas;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblTotalPendientes;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvTurnos;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHora;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPaciente;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMedico;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAcciones;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DateTimePicker dtpFecha;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnBuscar;
     }

@@ -1,6 +1,5 @@
 ﻿using Sistema_Hospitalario.CapaPresentacion.Medico;
 using Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes;
-using Sistema_Hospitalario.CapaPresentacion.Medico.procedimientos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,7 +55,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         {
             
             Boton_Click(sender, e);
-            AbrirUserControl(new UC_TurnosM()); // Poner el UserControl de Turnos
+            AbrirUserControl(new panel1()); // Poner el UserControl de Turnos
 
         }
 
@@ -66,11 +65,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             AbrirUserControl(new ConsultaMedica()); // Poner el UserControl de Consultas
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Boton_Click(sender, e);
-            AbrirUserControl(new UC_Procedimiento()); // Poner el UserControl de Procedimientos
-        }
+        
 
         private void btn_salir_Click(object sender, EventArgs e)
         {
