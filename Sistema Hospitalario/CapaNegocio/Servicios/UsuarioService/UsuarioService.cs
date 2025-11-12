@@ -1,6 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaDatos.Interfaces; // Asegurate que el using sea correcto
-using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO; // O donde estén tus DTOs
 using Sistema_Hospitalario.CapaDatos.Repositories;
+using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO; // O donde estén tus DTOs
 using System; // Necesario para Exception
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +10,8 @@ using System.Text; // Necesario para hashing
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
 {
     public class UsuarioService
-    {        
-        private readonly IUsuarioRepository _repo;
+    {
+        private readonly UsuarioRepository _repo;
 
         public UsuarioService()
         {
@@ -20,7 +20,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
 
         public UsuarioService(IUsuarioRepository repo)
         {
-            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+            _repo = new UsuarioRepository();
         }
 
         // Obtener usuarios con filtrado y ordenamiento
@@ -160,5 +160,31 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             return conteoPorRol;
         }
 
+        internal UsuarioLoginResultadoDTO ValidarCredenciales(string usuario, string contraseña)
+        {
+            string hashedPasswordIngresada = HashPassword(contraseña);
+
+            var datosUsuario = _repo.ObtenerUsuarioParaLogin(usuario);
+
+            // 3. Verificamos si el usuario existe y la contraseña coincide
+            if (datosUsuario != null && datosUsuario.PasswordHashAlmacenado == hashedPasswordIngresada)
+            {
+                // ¡Éxito! Devolvemos los datos necesarios
+                return new UsuarioLoginResultadoDTO
+                {
+                    LoginExitoso = true,
+                    IdUsuario = datosUsuario.IdUsuario,
+                    Username = datosUsuario.Username,
+                    NombreRol = datosUsuario.NombreRol,
+                    IdMedicoAsociado = datosUsuario.IdMedicoAsociado // Puede ser null
+                };
+            }
+            else
+            {
+                // Falla (usuario no encontrado o contraseña incorrecta)
+                return new UsuarioLoginResultadoDTO { LoginExitoso = false };
+
+            }
+        }
     }
 }

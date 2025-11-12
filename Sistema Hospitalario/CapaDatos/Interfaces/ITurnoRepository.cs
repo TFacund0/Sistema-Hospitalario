@@ -14,5 +14,9 @@ namespace Sistema_Hospitalario.CapaDatos.Interfaces
         void Insertar(TurnoDto turno);
         void Actualizar(int id_turno, TurnoDto turno);
         void Eliminar(int id_turno);
+
+        List<TurnoAgendaDto> ObtenerTurnosParaAgenda(int idMedico, DateTime fecha);
+        AgendaContadoresDto ObtenerContadoresAgenda(int idMedico, DateTime fecha);
+        bool ActualizarEstadoTurno(int idTurno, int idNuevoEstado);
     }
 }

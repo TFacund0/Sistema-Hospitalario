@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
-using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.Interfaces
 {
@@ -14,5 +16,11 @@ namespace Sistema_Hospitalario.CapaDatos.Interfaces
         void Eliminar(int idMedico);
         List<MostrarMedicoDTO> ObtenerMedicos();
         List<MedicoDto> ListarMedicos();
+        void InsertarConsulta(Consulta consulta);
+        List<PacienteListadoMedicoDto> ObtenerTodosParaMedico(DateTime? fechaTurno);
+        int ContarTotalPacientes();
+        List<HistorialItemDto> ObtenerHistorialConsultas(int idPaciente);
+
+        List<HistorialItemDto> ObtenerHistorialInternaciones(int idPaciente);
     }
 }

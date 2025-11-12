@@ -10,10 +10,10 @@ using Sistema_Hospitalario.CapaDatos.Interfaces;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public class UsuarioRepository
     {
-        public UsuarioRepository() 
-        { 
+        public UsuarioRepository()
+        {
         }
 
         // Inserta un nuevo usuario en la base de datos
@@ -119,6 +119,27 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
                 return db.usuario.Any(u => u.username == username);
+            }
+        }
+
+        public DatosLoginUsuarioDTO ObtenerUsuarioParaLogin(string username)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var usuario = db.usuario
+                    .Where(u => u.username == username)
+                    .Select(u => new DatosLoginUsuarioDTO
+                    {
+                        IdUsuario = u.id_usuario,
+                        Username = u.username,
+                        PasswordHashAlmacenado = u.password, // El hash guardado
+                                                             // Manejo seguro por si el rol es nulo
+                        NombreRol = (u.rol != null ? u.rol.nombre : "Sin Rol"),
+                        IdMedicoAsociado = u.id_medico
+                    })
+                    .FirstOrDefault();
+
+                return usuario;
             }
         }
     }

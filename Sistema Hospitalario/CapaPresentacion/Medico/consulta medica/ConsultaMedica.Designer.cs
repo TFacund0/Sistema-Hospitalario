@@ -42,18 +42,16 @@
             this.panel26 = new System.Windows.Forms.Panel();
             this.panel23 = new System.Windows.Forms.Panel();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.panelform = new System.Windows.Forms.Panel();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
-            this.TBTYR = new System.Windows.Forms.TextBox();
-            this.TBDX = new System.Windows.Forms.TextBox();
-            this.TBAFILIADO = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.txtTratamiento = new System.Windows.Forms.TextBox();
+            this.txtDiagnostico = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.TBDNI = new System.Windows.Forms.TextBox();
+            this.txtDniPaciente = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.TBMOTIVO = new System.Windows.Forms.TextBox();
+            this.txtMotivo = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel3.SuspendLayout();
@@ -61,7 +59,7 @@
             this.panel25.SuspendLayout();
             this.panel28.SuspendLayout();
             this.panel23.SuspendLayout();
-            this.panelform.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -134,7 +132,7 @@
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.panel25);
-            this.panel7.Controls.Add(this.panelform);
+            this.panel7.Controls.Add(this.panel1);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(37, 106);
             this.panel7.Margin = new System.Windows.Forms.Padding(2);
@@ -210,98 +208,72 @@
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
-            // panelform
+            // panel1
             // 
-            this.panelform.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelform.Controls.Add(this.dateTimePicker1);
-            this.panelform.Controls.Add(this.label8);
-            this.panelform.Controls.Add(this.TBTYR);
-            this.panelform.Controls.Add(this.TBDX);
-            this.panelform.Controls.Add(this.TBAFILIADO);
-            this.panelform.Controls.Add(this.label7);
-            this.panelform.Controls.Add(this.label6);
-            this.panelform.Controls.Add(this.TBDNI);
-            this.panelform.Controls.Add(this.label5);
-            this.panelform.Controls.Add(this.label3);
-            this.panelform.Controls.Add(this.TBMOTIVO);
-            this.panelform.Controls.Add(this.label4);
-            this.panelform.Location = new System.Drawing.Point(39, 3);
-            this.panelform.Margin = new System.Windows.Forms.Padding(2);
-            this.panelform.Name = "panelform";
-            this.panelform.Size = new System.Drawing.Size(814, 389);
-            this.panelform.TabIndex = 1;
+            this.panel1.Controls.Add(this.dtpFecha);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.txtTratamiento);
+            this.panel1.Controls.Add(this.txtDiagnostico);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.txtDniPaciente);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.txtMotivo);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Location = new System.Drawing.Point(39, 3);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(814, 389);
+            this.panel1.TabIndex = 1;
             // 
-            // dateTimePicker1
+            // dtpFecha
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(100, 62);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 15;
-            this.dateTimePicker1.Validating += new System.ComponentModel.CancelEventHandler(this.dateTimePicker1_Validating);
+            this.dtpFecha.Location = new System.Drawing.Point(524, 37);
+            this.dtpFecha.Name = "dtpFecha";
+            this.dtpFecha.Size = new System.Drawing.Size(200, 20);
+            this.dtpFecha.TabIndex = 15;
+            this.dtpFecha.Validating += new System.ComponentModel.CancelEventHandler(this.dateTimePicker1_Validating);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(21, 65);
+            this.label8.Location = new System.Drawing.Point(445, 40);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(59, 17);
             this.label8.TabIndex = 14;
             this.label8.Text = "Fecha:";
             // 
-            // TBTYR
+            // txtTratamiento
             // 
-            this.TBTYR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtTratamiento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TBTYR.BackColor = System.Drawing.Color.White;
-            this.TBTYR.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TBTYR.Location = new System.Drawing.Point(0, 322);
-            this.TBTYR.Margin = new System.Windows.Forms.Padding(2);
-            this.TBTYR.Multiline = true;
-            this.TBTYR.Name = "TBTYR";
-            this.TBTYR.Size = new System.Drawing.Size(812, 64);
-            this.TBTYR.TabIndex = 13;
-            this.TBTYR.Validating += new System.ComponentModel.CancelEventHandler(this.TBTYR_Validating);
+            this.txtTratamiento.BackColor = System.Drawing.Color.White;
+            this.txtTratamiento.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTratamiento.Location = new System.Drawing.Point(0, 322);
+            this.txtTratamiento.Margin = new System.Windows.Forms.Padding(2);
+            this.txtTratamiento.Multiline = true;
+            this.txtTratamiento.Name = "txtTratamiento";
+            this.txtTratamiento.Size = new System.Drawing.Size(812, 64);
+            this.txtTratamiento.TabIndex = 13;
+            this.txtTratamiento.Validating += new System.ComponentModel.CancelEventHandler(this.TBTYR_Validating);
             // 
-            // TBDX
+            // txtDiagnostico
             // 
-            this.TBDX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TBDX.BackColor = System.Drawing.Color.White;
-            this.TBDX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TBDX.Location = new System.Drawing.Point(0, 221);
-            this.TBDX.Margin = new System.Windows.Forms.Padding(2);
-            this.TBDX.Multiline = true;
-            this.TBDX.Name = "TBDX";
-            this.TBDX.Size = new System.Drawing.Size(812, 64);
-            this.TBDX.TabIndex = 12;
-            this.TBDX.Validating += new System.ComponentModel.CancelEventHandler(this.TBDX_Validating);
-            // 
-            // TBAFILIADO
-            // 
-            this.TBAFILIADO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TBAFILIADO.BackColor = System.Drawing.Color.White;
-            this.TBAFILIADO.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TBAFILIADO.Location = new System.Drawing.Point(533, 20);
-            this.TBAFILIADO.Margin = new System.Windows.Forms.Padding(2);
-            this.TBAFILIADO.Name = "TBAFILIADO";
-            this.TBAFILIADO.Size = new System.Drawing.Size(163, 20);
-            this.TBAFILIADO.TabIndex = 11;
-            this.TBAFILIADO.Validating += new System.ComponentModel.CancelEventHandler(this.TBAFILIADO_Validating);
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(396, 23);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(133, 17);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "NRO de afiliado:";
+            this.txtDiagnostico.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDiagnostico.BackColor = System.Drawing.Color.White;
+            this.txtDiagnostico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDiagnostico.Location = new System.Drawing.Point(0, 221);
+            this.txtDiagnostico.Margin = new System.Windows.Forms.Padding(2);
+            this.txtDiagnostico.Multiline = true;
+            this.txtDiagnostico.Name = "txtDiagnostico";
+            this.txtDiagnostico.Size = new System.Drawing.Size(812, 64);
+            this.txtDiagnostico.TabIndex = 12;
+            this.txtDiagnostico.Validating += new System.ComponentModel.CancelEventHandler(this.TBDX_Validating);
             // 
             // label6
             // 
@@ -315,16 +287,16 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "Diagnostico";
             // 
-            // TBDNI
+            // txtDniPaciente
             // 
-            this.TBDNI.BackColor = System.Drawing.Color.White;
-            this.TBDNI.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TBDNI.Location = new System.Drawing.Point(137, 20);
-            this.TBDNI.Margin = new System.Windows.Forms.Padding(2);
-            this.TBDNI.Name = "TBDNI";
-            this.TBDNI.Size = new System.Drawing.Size(163, 20);
-            this.TBDNI.TabIndex = 3;
-            this.TBDNI.Validating += new System.ComponentModel.CancelEventHandler(this.TBDNI_Validating);
+            this.txtDniPaciente.BackColor = System.Drawing.Color.White;
+            this.txtDniPaciente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDniPaciente.Location = new System.Drawing.Point(137, 37);
+            this.txtDniPaciente.Margin = new System.Windows.Forms.Padding(2);
+            this.txtDniPaciente.Name = "txtDniPaciente";
+            this.txtDniPaciente.Size = new System.Drawing.Size(163, 20);
+            this.txtDniPaciente.TabIndex = 3;
+            this.txtDniPaciente.Validating += new System.ComponentModel.CancelEventHandler(this.TBDNI_Validating);
             // 
             // label5
             // 
@@ -342,26 +314,26 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(-3, 23);
+            this.label3.Location = new System.Drawing.Point(-3, 40);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(142, 17);
             this.label3.TabIndex = 2;
             this.label3.Text = "DNI del paciente:";
             // 
-            // TBMOTIVO
+            // txtMotivo
             // 
-            this.TBMOTIVO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtMotivo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TBMOTIVO.BackColor = System.Drawing.Color.White;
-            this.TBMOTIVO.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TBMOTIVO.Location = new System.Drawing.Point(0, 122);
-            this.TBMOTIVO.Margin = new System.Windows.Forms.Padding(2);
-            this.TBMOTIVO.Multiline = true;
-            this.TBMOTIVO.Name = "TBMOTIVO";
-            this.TBMOTIVO.Size = new System.Drawing.Size(812, 64);
-            this.TBMOTIVO.TabIndex = 4;
-            this.TBMOTIVO.Validating += new System.ComponentModel.CancelEventHandler(this.TBMOTIVO_Validating);
+            this.txtMotivo.BackColor = System.Drawing.Color.White;
+            this.txtMotivo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMotivo.Location = new System.Drawing.Point(0, 122);
+            this.txtMotivo.Margin = new System.Windows.Forms.Padding(2);
+            this.txtMotivo.Multiline = true;
+            this.txtMotivo.Name = "txtMotivo";
+            this.txtMotivo.Size = new System.Drawing.Size(812, 64);
+            this.txtMotivo.TabIndex = 4;
+            this.txtMotivo.Validating += new System.ComponentModel.CancelEventHandler(this.TBMOTIVO_Validating);
             // 
             // label4
             // 
@@ -395,8 +367,8 @@
             this.panel25.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
             this.panel23.ResumeLayout(false);
-            this.panelform.ResumeLayout(false);
-            this.panelform.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
@@ -417,19 +389,17 @@
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.Panel panelform;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox TBMOTIVO;
+        private System.Windows.Forms.TextBox txtMotivo;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox TBDNI;
+        private System.Windows.Forms.TextBox txtDniPaciente;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox TBAFILIADO;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox TBDX;
+        private System.Windows.Forms.TextBox txtDiagnostico;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox TBTYR;
+        private System.Windows.Forms.DateTimePicker dtpFecha;
+        private System.Windows.Forms.TextBox txtTratamiento;
         private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

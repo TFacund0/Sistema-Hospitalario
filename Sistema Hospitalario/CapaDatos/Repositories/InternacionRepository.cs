@@ -1,4 +1,5 @@
 ﻿using Sistema_Hospitalario.CapaDatos.Interfaces;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         public InternacionRepository()
         {
         }
+
         
         // Listar todas las internaciones
         public List<InternacionDto> GetAll()

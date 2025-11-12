@@ -13,5 +13,6 @@ namespace Sistema_Hospitalario.CapaDatos.Interfaces
         void Eliminar(int IdUsuario);
         List<MostrarUsuariosDTO> ObtenerUsuarios();
         bool ExisteUsername(string username);
+        DatosLoginUsuarioDTO ObtenerUsuarioParaLogin(string username);
     }
 }

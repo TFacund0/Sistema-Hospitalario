@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos.Interfaces;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-
-using Sistema_Hospitalario.CapaDatos.Interfaces;
-using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
@@ -16,6 +16,75 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
         }
 
+        public List<TurnoAgendaDto> ObtenerTurnosParaAgenda(int idMedico, DateTime fecha)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                // 1. Traemos datos "crudos" de la BD
+                var turnosCrudos = db.turno
+                    .Where(t => t.id_medico == idMedico &&
+                                DbFunctions.TruncateTime(t.fecha_turno) == fecha.Date)
+                    .OrderBy(t => t.fecha_turno) // Ordenamos por la fecha completa
+                    .Select(t => new
+                    {
+                        IdTurno = t.id_turno,
+                        FechaHoraTurno = t.fecha_turno,
+                        PacienteNombre = t.paciente.nombre,
+                        PacienteApellido = t.paciente.apellido,
+                        Estado = t.estado_turno.nombre
+                    })
+                    .ToList(); // El SQL se ejecuta aquí
+
+                // 2. Convertimos a DTO en C# para formatear la hora
+                var resultadoFinal = turnosCrudos
+                    .Select(t => new TurnoAgendaDto
+                    {
+                        IdTurno = t.IdTurno,
+                        Hora = t.FechaHoraTurno.ToString("HH:mm"), // Formato 24hs (ej: 09:05)
+                        Paciente = t.PacienteNombre + " " + t.PacienteApellido,
+                        Estado = t.Estado
+                    })
+                    .ToList();
+
+                return resultadoFinal;
+            }
+        }
+
+        public AgendaContadoresDto ObtenerContadoresAgenda(int idMedico, DateTime fecha)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var contadores = db.turno
+                    .Where(t => t.id_medico == idMedico &&
+                                DbFunctions.TruncateTime(t.fecha_turno) == fecha.Date)
+                    .GroupBy(t => t.estado_turno.nombre)
+                    .Select(g => new { Estado = g.Key, Cantidad = g.Count() })
+                    .ToDictionary(k => k.Estado, v => v.Cantidad);
+
+                // ¡IMPORTANTE! Reemplazá "Pendiente", "Completado", etc.,
+                // con los nombres EXACTOS de tu tabla 'estado_turno'.
+                return new AgendaContadoresDto
+                {
+                    Pendientes = contadores.ContainsKey("Pendiente") ? contadores["Pendiente"] : 0,
+                    Completadas = contadores.ContainsKey("Completado") ? contadores["Completado"] : 0,
+                    Canceladas = (contadores.ContainsKey("Cancelado") ? contadores["Cancelado"] : 0) +
+                                 (contadores.ContainsKey("Reprogramado") ? contadores["Reprogramado"] : 0)
+                };
+            }
+        }
+
+        public bool ActualizarEstadoTurno(int idTurno, int idNuevoEstado)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var turno = db.turno.Find(idTurno);
+                if (turno == null) return false;
+
+                turno.id_estado_turno = idNuevoEstado;
+                db.SaveChanges();
+                return true;
+            }
+        }
         // Obtener todos los turnos con detalles
         public List<TurnoDto> GetAll()
         {
@@ -91,6 +160,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                                  Id_turno = t.id_turno,
                                  Paciente = p.nombre + " " + p.apellido,
                                  Medico = m.nombre + " " + m.apellido,
+                                 Id_medico = m.id_medico,
                                  Procedimiento = pr.nombre,
                                  FechaTurno = t.fecha_turno,
                                  Estado = e.nombre

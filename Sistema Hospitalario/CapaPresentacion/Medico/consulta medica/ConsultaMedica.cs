@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio.DTOs.ConsultaDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,162 +15,171 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes
 {
     public partial class ConsultaMedica : UserControl
     {
+        private MedicoService _service = new MedicoService();
+        private int _idMedicoLogueado;
+
         public ConsultaMedica()
         {
             InitializeComponent();
+            registroConsulta();
         }
 
+        private void registroConsulta()
+        {
+            // Obtenemos el ID del médico de la sesión
+            if (!SesionUsuario.IdMedicoAsociado.HasValue)
+            {
+                MessageBox.Show("Error fatal: No se pudo identificar al médico. Cierre sesión y vuelva a intentarlo.", "Error de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnGuardar.Enabled = false; // Deshabilitamos el guardado
+                return;
+            }
+            _idMedicoLogueado = SesionUsuario.IdMedicoAsociado.Value;
+
+            // Asumimos que los TextBoxes se llaman:
+            // txtDniPaciente, txtNroAfiliado, dtpFecha, txtMotivo, txtDiagnostico, txtTratamiento
+
+            // Seteamos la fecha de hoy y la bloqueamos (el médico no debería cambiarla)
+            dtpFecha.Value = DateTime.Now;
+            dtpFecha.Enabled = false;
+        }
         // ============================= VALIDACIONES =============================
 
         private void TBDNI_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TBDNI.Text) && string.IsNullOrWhiteSpace(TBAFILIADO.Text))
+            if (string.IsNullOrWhiteSpace(txtDniPaciente.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(TBDNI, "Ingrese DNI o Nro de Afiliado.");
+                errorProvider1.SetError(txtDniPaciente, "Ingrese DNI ");
             }
-            else if (!string.IsNullOrWhiteSpace(TBDNI.Text))
+            else if (!string.IsNullOrWhiteSpace(txtDniPaciente.Text))
             {
-                if (!int.TryParse(TBDNI.Text, out _) || TBDNI.Text.Length > 15)
+                if (!int.TryParse(txtDniPaciente.Text, out _) || txtDniPaciente.Text.Length > 15)
                 {
                     e.Cancel = true;
-                    errorProvider1.SetError(TBDNI, "DNI numérico (máx. 15).");
+                    errorProvider1.SetError(txtDniPaciente, "DNI numérico (máx. 15).");
                 }
                 else
                 {
-                    errorProvider1.SetError(TBDNI, "");
+                    errorProvider1.SetError(txtDniPaciente, "");
                 }
             }
             else
             {
-                errorProvider1.SetError(TBDNI, "");
+                errorProvider1.SetError(txtDniPaciente, "");
             }
         }
 
-        private void TBAFILIADO_Validating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(TBDNI.Text) && string.IsNullOrWhiteSpace(TBAFILIADO.Text))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(TBAFILIADO, "Ingrese DNI o Nro de Afiliado.");
-            }
-            else if (!string.IsNullOrWhiteSpace(TBAFILIADO.Text))
-            {
-                if (!int.TryParse(TBAFILIADO.Text, out _) || TBAFILIADO.Text.Length > 20)
-                {
-                    e.Cancel = true;
-                    errorProvider1.SetError(TBAFILIADO, "Número de afiliado numérico (máx. 20).");
-                }
-                else
-                {
-                    errorProvider1.SetError(TBAFILIADO, "");
-                }
-            }
-            else
-            {
-                errorProvider1.SetError(TBAFILIADO, "");
-            }
-        }
 
         private void TBMOTIVO_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TBMOTIVO.Text))
+            if (string.IsNullOrWhiteSpace(txtMotivo.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(TBMOTIVO, "El motivo es obligatorio.");
+                errorProvider1.SetError(txtMotivo, "El motivo es obligatorio.");
             }
-            else if (TBMOTIVO.Text.Length > 300)
+            else if (txtMotivo.Text.Length > 300)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(TBMOTIVO, "Máximo 300 caracteres.");
+                errorProvider1.SetError(txtMotivo, "Máximo 300 caracteres.");
             }
             else
             {
-                errorProvider1.SetError(TBMOTIVO, "");
+                errorProvider1.SetError(txtMotivo, "");
             }
         }
 
         private void TBDX_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TBDX.Text))
+            if (string.IsNullOrWhiteSpace(txtDiagnostico.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(TBDX, "El diagnóstico es obligatorio.");
+                errorProvider1.SetError(txtDiagnostico, "El diagnóstico es obligatorio.");
             }
-            else if (TBDX.Text.Length > 300)
+            else if (txtDiagnostico.Text.Length > 300)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(TBDX, "Máximo 300 caracteres.");
+                errorProvider1.SetError(txtDiagnostico, "Máximo 300 caracteres.");
             }
             else
             {
-                errorProvider1.SetError(TBDX, "");
+                errorProvider1.SetError(txtDiagnostico, "");
             }
         }
 
         private void TBTYR_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TBTYR.Text))
+            if (string.IsNullOrWhiteSpace(txtTratamiento.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(TBTYR, "El tratamiento es obligatorio.");
+                errorProvider1.SetError(txtTratamiento, "El tratamiento es obligatorio.");
             }
-            else if (TBTYR.Text.Length > 300)
+            else if (txtTratamiento.Text.Length > 300)
             {
                 e.Cancel = true;
-                errorProvider1.SetError(TBTYR, "Máximo 300 caracteres.");
+                errorProvider1.SetError(txtTratamiento, "Máximo 300 caracteres.");
             }
             else
             {
-                errorProvider1.SetError(TBTYR, "");
+                errorProvider1.SetError(txtTratamiento, "");
             }
         }
 
         private void dateTimePicker1_Validating(object sender, CancelEventArgs e)
         {
-            if (dateTimePicker1.Value.Date > DateTime.Today)
+            if (dtpFecha.Value.Date > DateTime.Today)
             {
              e.Cancel = true;
-             errorProvider1.SetError(dateTimePicker1, "La fecha de la consulta no puede ser futura.");
+             errorProvider1.SetError(dtpFecha, "La fecha de la consulta no puede ser futura.");
             }
             else
             {
-                errorProvider1.SetError(dateTimePicker1, "");
+                errorProvider1.SetError(dtpFecha, "");
             }
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (this.ValidateChildren())
+            try
             {
-                MessageBox.Show("Consulta guardada correctamente.", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // 1. Recolectamos los datos del formulario
+                var dto = new ConsultaAltaDTO
+                {
+                    DniPaciente = txtDniPaciente.Text.Trim(),
+                    Fecha = dtpFecha.Value,
+                    Motivo = txtMotivo.Text.Trim(),
+                    Diagnostico = txtDiagnostico.Text.Trim(),
+                    Tratamiento = txtTratamiento.Text.Trim()
+                };
+
+                // 2. Llamamos al servicio para que haga la magia
+                var resultado = _service.RegistrarConsulta(dto, _idMedicoLogueado);
+
+                // 3. Mostramos el resultado
+                if (resultado.Ok)
+                {
+                    MessageBox.Show("Consulta registrada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    btnLimpiar_Click(sender, e); // Limpiamos el formulario
+                }
+                else
+                {
+                    // Mostramos el error específico que devolvió el servicio
+                    MessageBox.Show(resultado.Error, "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Corrija los errores antes de guardar.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ocurrió un error inesperado al guardar: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            TBDNI.Clear();
-            TBAFILIADO.Clear();
-            TBMOTIVO.Clear();
-            TBDX.Clear();
-            TBTYR.Clear();
-            dateTimePicker1.Value = DateTime.Today;
-            errorProvider1.Clear();
+            txtDniPaciente.Clear();
+            txtMotivo.Clear();
+            txtDiagnostico.Clear();
+            txtTratamiento.Clear();
+            panel1.Focus();
         }
 
-        public event EventHandler CancelarRegistroSolicitado;
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            CancelarRegistroSolicitado?.Invoke(this, EventArgs.Empty);
-        }
-
-        
     }
 }

@@ -14,10 +14,28 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
     public class TurnoService
     {
         private readonly TurnoRepository _repo = new TurnoRepository();
+        public TurnoService(TurnoRepository repo)
+        {
+            _repo = repo;
+        }
         public TurnoService()
         {
         }
 
+        public List<TurnoAgendaDto> ObtenerTurnosParaAgenda(int idMedico, DateTime fecha)
+        {
+            return _repo.ObtenerTurnosParaAgenda(idMedico, fecha);
+        }
+
+        public AgendaContadoresDto ObtenerContadoresAgenda(int idMedico, DateTime fecha)
+        {
+            return _repo.ObtenerContadoresAgenda(idMedico, fecha);
+        }
+
+        public bool ActualizarEstadoTurno(int idTurno, int idNuevoEstado)
+        {
+            return _repo.ActualizarEstadoTurno(idTurno, idNuevoEstado);
+        }
         // Listar todos los turnos
         public List<ListadoTurno> ListarTurnos ()
         {
