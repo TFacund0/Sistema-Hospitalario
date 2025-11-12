@@ -9,46 +9,86 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
     public partial class UC_VisualizarTurno : UserControl
     {
-        // Estado del turno que se está visualizando
+        // ================== ESTADO ==================
         private readonly TurnoDto _turno;
-        
-        // Modo edición
         private bool _modoEdicion = false;
+
+        // Servicios
+        private readonly PacienteService _servicioPaciente = new PacienteService();
+        private readonly MedicoService _servicioMedico = new MedicoService();
+        private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
+
+        // Listas maestras (texto) para validaciones
+        private readonly List<string> _maestroPaciente = new List<string>();
+        private readonly List<string> _maestroMedico = new List<string>();
+        private readonly List<string> _maestroProcedimiento = new List<string>();
+
+        // Cachés de DTO para filtros
+        private List<PacienteDto> _pacientesMaestroDtos = new List<PacienteDto>();
+        private List<MedicoDto> _medicosMaestroDtos = new List<MedicoDto>();
+        private List<ProcedimientoDto> _procedimientosMaestroDtos = new List<ProcedimientoDto>();
+
+        // Bandera anti reentrada en TextUpdate
+        private bool _actualizandoInterno = false;
 
         // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
         public event EventHandler CancelarVisualizacionSolicitada;
 
+        // ================== CTOR ==================
         public UC_VisualizarTurno(TurnoDto turno)
         {
             InitializeComponent();
             _turno = turno ?? throw new ArgumentNullException(nameof(turno));
 
+            InicializarCombosYFiltros();
             ConfigurarUISoloLectura();
         }
 
-        // ======================== CONFIGURACION DEL FORMULARIO ========================
-        // Configura la UI para modo solo lectura
+        // ================== CONFIG INICIAL ==================
+        private void InicializarCombosYFiltros()
+        {
+            // Cargar combos con datos de BD
+            DatosComboBoxPaciente();
+            DatosComboBoxMedico();
+            DatosComboBoxProcedimiento();
+
+            // Seleccionar valores del turno actual
+            SeleccionarValoresIniciales();
+
+            // Filtro médicos por procedimiento
+            cbProcedimiento.SelectedIndexChanged -= CbProcedimiento_SelectedIndexChanged;
+            cbProcedimiento.SelectedIndexChanged += CbProcedimiento_SelectedIndexChanged;
+
+            cbProcedimiento.SelectionChangeCommitted -= CbProcedimiento_SelectionChangeCommitted;
+            cbProcedimiento.SelectionChangeCommitted += CbProcedimiento_SelectionChangeCommitted;
+
+            // Filtro en vivo mientras escribís
+            cbPaciente.TextUpdate += CbPaciente_TextUpdate;
+            cbMedico.TextUpdate += CbMedico_TextUpdate;
+            cbProcedimiento.TextUpdate += CbProcedimiento_TextUpdate;
+
+            // Auto desplegar al entrar
+            cbPaciente.Enter += (s, e) => cbPaciente.DroppedDown = true;
+            cbMedico.Enter += (s, e) => cbMedico.DroppedDown = true;
+            cbProcedimiento.Enter += (s, e) => cbProcedimiento.DroppedDown = true;
+        }
+
         private void ConfigurarUISoloLectura()
         {
             ToggleEdicion(false);
             CargarDatosLectura(_turno);
-            CargarCombosBox(_turno);
+            CargarComboBoxTurno();
         }
 
-        // Carga los datos del turno en los controles de solo lectura
+        // ================== CARGA INICIAL DE DATOS ==================
         private void CargarDatosLectura(TurnoDto p_turno)
         {
             txtPaciente.Text = p_turno.Paciente;
@@ -60,16 +100,49 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             txtObservaciones.Text = p_turno.Observaciones ?? string.Empty;
         }
 
-        // Carga los datos en los ComboBox
-        private void CargarCombosBox(TurnoDto p_turno)
+        // Hace que los combos queden con el turno actual seleccionado
+        private void SeleccionarValoresIniciales()
         {
-            CargarComboPaciente(p_turno);
-            CargarComboMedico(p_turno);
-            CargarComboProcedimiento(p_turno);
-            CargarComboBoxTurno();
+            // Procedimiento primero (porque filtra médicos)
+            if (_turno.Id_procedimiento > 0)
+            {
+                var proc = _procedimientosMaestroDtos
+                    .FirstOrDefault(p => p.Id == _turno.Id_procedimiento);
+
+                if (proc != null)
+                {
+                    cbProcedimiento.SelectedValue = proc.Id;
+                    // filtrar médicos según este procedimiento
+                    RefrescarMedicosPorProcedimiento(proc.Name);
+                }
+                else
+                {
+                    RefrescarMedicosPorProcedimiento("");
+                }
+            }
+            else
+            {
+                RefrescarMedicosPorProcedimiento("");
+            }
+
+            // Paciente
+            if (_turno.Id_paciente > 0)
+            {
+                cbPaciente.SelectedValue = _turno.Id_paciente;
+                if (cbPaciente.SelectedItem != null)
+                    cbPaciente.Text = ((dynamic)cbPaciente.SelectedItem).Display;
+            }
+
+            // Médico
+            if (_turno.Id_medico > 0)
+            {
+                cbMedico.SelectedValue = _turno.Id_medico;
+                if (cbMedico.SelectedItem != null)
+                    cbMedico.Text = ((dynamic)cbMedico.SelectedItem).Display;
+            }
         }
 
-        // Habilita o deshabilita los controles para edición
+        // ================== TOGGLE EDICIÓN ==================
         private void ToggleEdicion(bool habilitar)
         {
             _modoEdicion = habilitar;
@@ -88,101 +161,91 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
             cbPaciente.Visible = habilitar;
             cbPaciente.Enabled = habilitar;
-            lblEstado.Visible = habilitar;
-            cbEstadoTurno.Visible = habilitar;
-            cbEstadoTurno.Enabled = habilitar;
             cbMedico.Visible = habilitar;
             cbMedico.Enabled = habilitar;
             cbProcedimiento.Visible = habilitar;
             cbProcedimiento.Enabled = habilitar;
 
+            lblEstado.Visible = habilitar;
+            cbEstadoTurno.Visible = habilitar;
+            cbEstadoTurno.Enabled = habilitar;
+
             btnModificar.Text = habilitar ? "Guardar" : "Modificar";
             btnEliminar.Enabled = !habilitar;
         }
 
-        // ======================== CARGA DE COMBOS ========================
-        // Carga los pacientes en el ComboBox
-        private void CargarComboPaciente(TurnoDto p_turno)
+        // ================== CARGA DE COMBOS (ESTILO REGISTRAR TURNO) ==================
+        private void DatosComboBoxPaciente()
         {
-            PacienteService _servicioPaciente = new PacienteService();
-            
             List<PacienteDto> listaPacientes = _servicioPaciente.ListarPacientes();
 
-            var fuente = listaPacientes
+            _pacientesMaestroDtos = listaPacientes
                 .Where(p => p.Estado_paciente == "activo" || p.Estado_paciente == "internado")
-                .Select(p => new {
+                .ToList();
+
+            var fuente = _pacientesMaestroDtos
+                .Select(p => new
+                {
                     p.Id,
-                    Display = $"{p.Nombre} ({p.Dni})"
+                    Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"
                 })
                 .ToList();
+
+            _maestroPaciente.Clear();
+            _maestroPaciente.AddRange(fuente.Select(x => x.Display));
 
             cbPaciente.DropDownStyle = ComboBoxStyle.DropDown;
             cbPaciente.DataSource = fuente;
             cbPaciente.DisplayMember = "Display";
             cbPaciente.ValueMember = "Id";
-
-            if (p_turno != null && p_turno.Id_paciente > 0)
-            {
-                cbPaciente.SelectedValue = p_turno.Id_paciente;
-                
-                cbPaciente.Text = ((dynamic)cbPaciente.SelectedItem)?.Display ?? string.Empty;
-            }
         }
 
-        // Carga los médicos en el ComboBox
-        private void CargarComboMedico(TurnoDto p_turno)
+        private void DatosComboBoxMedico()
         {
-            MedicoService _servicioMedico = new MedicoService();
-
             List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
-            
+
+            _medicosMaestroDtos = listaMedicos.ToList();
+
             var fuente = listaMedicos
-                .Select(m => new {
+                .Select(m => new
+                {
                     m.Id,
                     Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
                 })
                 .ToList();
-            
+
+            _maestroMedico.Clear();
+            _maestroMedico.AddRange(fuente.Select(x => x.Display));
+
             cbMedico.DropDownStyle = ComboBoxStyle.DropDown;
             cbMedico.DataSource = fuente;
             cbMedico.DisplayMember = "Display";
             cbMedico.ValueMember = "Id";
-
-            if (p_turno != null && p_turno.Id_medico > 0)
-            {
-                cbMedico.SelectedValue = p_turno.Id_medico;
-
-                cbMedico.Text = ((dynamic)cbMedico.SelectedItem)?.Display ?? string.Empty;
-            }
         }
 
-        // Carga los procedimientos en el ComboBox
-        private void CargarComboProcedimiento(TurnoDto p_turno)
+        private void DatosComboBoxProcedimiento()
         {
-            ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
             List<ProcedimientoDto> listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
 
+            _procedimientosMaestroDtos = listaProcedimientos.ToList();
+
             var fuente = listaProcedimientos
-                .Select(p => new {
+                .Select(p => new
+                {
                     p.Id,
                     Display = p.Name
                 })
                 .ToList();
 
+            _maestroProcedimiento.Clear();
+            _maestroProcedimiento.AddRange(fuente.Select(x => x.Display));
+
             cbProcedimiento.DropDownStyle = ComboBoxStyle.DropDown;
             cbProcedimiento.DataSource = fuente;
             cbProcedimiento.DisplayMember = "Display";
             cbProcedimiento.ValueMember = "Id";
-
-            if (p_turno != null && p_turno.Id_procedimiento > 0)
-            {
-                cbProcedimiento.SelectedValue = p_turno.Id_procedimiento;
-
-                cbProcedimiento.Text = ((dynamic)cbProcedimiento.SelectedItem)?.Display ?? string.Empty;
-            }
         }
 
-        // Carga los estados de turno en el ComboBox
         private void CargarComboBoxTurno()
         {
             var turnoService = new TurnoService();
@@ -199,52 +262,298 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbEstadoTurno.DataSource = lista;
             cbEstadoTurno.DisplayMember = nameof(ListadoEstadoTurno.Estado);
             cbEstadoTurno.ValueMember = nameof(ListadoEstadoTurno.Id_estado);
-            cbEstadoTurno.SelectedIndex = 0;
+
+            // seleccionar el estado actual si existe
+            if (!string.IsNullOrEmpty(_turno.Estado))
+            {
+                var idx = lista.FindIndex(e =>
+                    string.Equals(e.Estado, _turno.Estado, StringComparison.OrdinalIgnoreCase));
+                cbEstadoTurno.SelectedIndex = idx >= 0 ? idx : 0;
+            }
+            else
+            {
+                cbEstadoTurno.SelectedIndex = 0;
+            }
         }
 
-        // ======================== GUARDAR CAMBIOS ========================
-        // Actualiza el objeto turno con los datos de los controles
+        // ================== FILTRADO MÉDICOS POR PROCEDIMIENTO ==================
+        private void RefrescarMedicosPorProcedimiento(string nombreProc)
+        {
+            nombreProc = (nombreProc ?? "").Trim();
+
+            var medicosFiltrados =
+                (string.IsNullOrEmpty(nombreProc) || EsConsulta(nombreProc))
+                ? _medicosMaestroDtos
+                : _medicosMaestroDtos.Where(m =>
+                      string.Equals(m.Especialidad?.Trim(), nombreProc, StringComparison.OrdinalIgnoreCase)
+                  ).ToList();
+
+            cbMedico.BeginUpdate();
+            try
+            {
+                if (medicosFiltrados.Count == 0)
+                {
+                    cbMedico.DataSource = null;
+                    cbMedico.Items.Clear();
+                    cbMedico.Text = "";
+                    _maestroMedico.Clear();
+
+                    cbMedico.Enabled = false;
+                    cbMedico.CausesValidation = false;
+                }
+                else
+                {
+                    var fuente = medicosFiltrados.Select(m => new
+                    {
+                        m.Id,
+                        Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                    }).ToList();
+
+                    cbMedico.DataSource = fuente;
+                    cbMedico.DisplayMember = "Display";
+                    cbMedico.ValueMember = "Id";
+
+                    _maestroMedico.Clear();
+                    _maestroMedico.AddRange(fuente.Select(x => x.Display));
+
+                    cbMedico.Enabled = true;
+                    cbMedico.CausesValidation = true;
+                }
+            }
+            finally
+            {
+                cbMedico.EndUpdate();
+            }
+        }
+
+        private bool EsConsulta(string nombreProc)
+        {
+            if (string.IsNullOrWhiteSpace(nombreProc)) return false;
+            var t = nombreProc.Trim();
+            return t.Equals("consulta", StringComparison.OrdinalIgnoreCase)
+                || t.StartsWith("consulta", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void CbProcedimiento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefrescarMedicosPorProcedimiento(cbProcedimiento.Text);
+        }
+
+        private void CbProcedimiento_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            RefrescarMedicosPorProcedimiento(cbProcedimiento.Text);
+        }
+
+        // ================== AUTOFILTRADO DE COMBOS ==================
+        private bool TextoCoincideConLista(ComboBox cb, List<string> maestro)
+        {
+            var t = cb.Text?.Trim();
+            if (string.IsNullOrEmpty(t) || t == "— sin coincidencias —") return false;
+
+            return maestro.Any(x => string.Equals(x?.Trim(), t, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private void CbPaciente_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbPaciente.Text?.Trim() ?? "";
+            int caret = cbPaciente.SelectionStart;
+
+            var dtosFiltrados = string.IsNullOrEmpty(texto)
+                ? _pacientesMaestroDtos
+                : _pacientesMaestroDtos
+                    .Where(p =>
+                    {
+                        var display = $"{p.Apellido} {p.Nombre} ({p.Dni})";
+                        return display.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0;
+                    })
+                    .ToList();
+
+            var fuente = dtosFiltrados
+                .Select(p => new
+                {
+                    p.Id,
+                    Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"
+                })
+                .ToList();
+
+            if (fuente.Count == 0)
+            {
+                fuente.Add(new { Id = 0, Display = "— sin coincidencias —" });
+            }
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbPaciente.BeginUpdate();
+
+                cbPaciente.DataSource = null;
+                cbPaciente.DataSource = fuente;
+                cbPaciente.DisplayMember = "Display";
+                cbPaciente.ValueMember = "Id";
+
+                _maestroPaciente.Clear();
+                _maestroPaciente.AddRange(fuente.Select(x => x.Display));
+
+                cbPaciente.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbPaciente.EndUpdate();
+                cbPaciente.Text = texto;
+                cbPaciente.SelectionStart = Math.Min(caret, cbPaciente.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        private void CbMedico_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbMedico.Text?.Trim() ?? "";
+            int caret = cbMedico.SelectionStart;
+
+            var dtosFiltrados = string.IsNullOrEmpty(texto)
+                ? _medicosMaestroDtos
+                : _medicosMaestroDtos
+                    .Where(m =>
+                    {
+                        var display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})";
+                        return display.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0;
+                    })
+                    .ToList();
+
+            var fuente = dtosFiltrados
+                .Select(m => new
+                {
+                    m.Id,
+                    Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                })
+                .ToList();
+
+            if (fuente.Count == 0)
+            {
+                fuente.Add(new { Id = 0, Display = "— sin coincidencias —" });
+            }
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbMedico.BeginUpdate();
+
+                cbMedico.DataSource = null;
+                cbMedico.DataSource = fuente;
+                cbMedico.DisplayMember = "Display";
+                cbMedico.ValueMember = "Id";
+
+                _maestroMedico.Clear();
+                _maestroMedico.AddRange(fuente.Select(x => x.Display));
+
+                cbMedico.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbMedico.EndUpdate();
+                cbMedico.Text = texto;
+                cbMedico.SelectionStart = Math.Min(caret, cbMedico.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        private void CbProcedimiento_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbProcedimiento.Text?.Trim() ?? "";
+            int caret = cbProcedimiento.SelectionStart;
+
+            var dtosFiltrados = string.IsNullOrEmpty(texto)
+                ? _procedimientosMaestroDtos
+                : _procedimientosMaestroDtos
+                    .Where(p => (p.Name ?? "")
+                        .IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+
+            var fuente = dtosFiltrados
+                .Select(p => new
+                {
+                    p.Id,
+                    Display = p.Name
+                })
+                .ToList();
+
+            if (fuente.Count == 0)
+            {
+                fuente.Add(new { Id = 0, Display = "— sin coincidencias —" });
+            }
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbProcedimiento.BeginUpdate();
+
+                cbProcedimiento.DataSource = null;
+                cbProcedimiento.DataSource = fuente;
+                cbProcedimiento.DisplayMember = "Display";
+                cbProcedimiento.ValueMember = "Id";
+
+                _maestroProcedimiento.Clear();
+                _maestroProcedimiento.AddRange(fuente.Select(x => x.Display));
+
+                cbProcedimiento.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbProcedimiento.EndUpdate();
+                cbProcedimiento.Text = texto;
+                cbProcedimiento.SelectionStart = Math.Min(caret, cbProcedimiento.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        // ================== GUARDAR CAMBIOS ==================
         private void ActualizarTurno()
         {
             _turno.Paciente = cbPaciente.Text.Trim();
             _turno.Medico = cbMedico.Text.Trim();
             _turno.Procedimiento = cbProcedimiento.Text.Trim();
+
             _turno.Id_paciente = (int)(cbPaciente.SelectedValue ?? 0);
             _turno.Id_medico = (int)(cbMedico.SelectedValue ?? 0);
             _turno.Id_procedimiento = (int)(cbProcedimiento.SelectedValue ?? 0);
-            _turno.Correo = txtCorreo.Text.Trim();
 
+            _turno.Correo = txtCorreo.Text.Trim();
             _turno.Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text)
                 ? null
                 : txtTelefono.Text.Trim();
 
             _turno.FechaTurno = dtpFechaTurno.Value;
             _turno.Observaciones = txtObservaciones.Text.Trim();
+
             _turno.Estado = cbEstadoTurno.SelectedIndex > 0
                 ? ((ListadoEstadoTurno)cbEstadoTurno.SelectedItem).Estado
                 : _turno.Estado;
         }
 
-
-        // Guarda los cambios del turno en la base de datos
         private void GuardarCambios()
         {
             TurnoService turnoService = new TurnoService();
             turnoService.ActualizarTurno(_turno.Id_turno, _turno);
         }
 
-        // ======================== EVENTOS BOTONES ========================
-        // Botón Modificar/Guardar
+        // ================== BOTONES ==================
         private void BtnModificar_Click(object sender, EventArgs e)
         {
             if (!_modoEdicion)
             {
-                // Pasar a edición
                 ToggleEdicion(true);
             }
             else
             {
-                // Mensaje de confirmación
                 var confirmacion = MessageBox.Show(
                     "¿Estás seguro de que deseas guardar este turno?",
                     "Confirmar guardado",
@@ -255,14 +564,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 if (confirmacion != DialogResult.Yes)
                     return;
 
-                // alidar datos alineado con RegistrarTurno
                 if (!ValidarDatosTurno(out var msg))
                 {
                     MessageBox.Show(msg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Guardar cambios
                 ActualizarTurno();
                 GuardarCambios();
                 ConfigurarUISoloLectura();
@@ -272,7 +579,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
-        // Botón Eliminar
         private void BtnEliminar_Click(object sender, EventArgs e)
         {
             TurnoService turnoService = new TurnoService();
@@ -285,38 +591,39 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             {
                 turnoService.EliminarTurno(_turno.Id_turno);
                 CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
-            }            
+            }
         }
 
-        // Botón Volver
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             CancelarVisualizacionSolicitada?.Invoke(this, EventArgs.Empty);
         }
 
-        // ======================== VALIDACIONES ========================
+        // ================== VALIDACIONES (alineadas con RegistrarTurno) ==================
         private bool ValidarDatosTurno(out string error)
         {
             error = null;
 
-            // Paciente obligatorio
-            if (cbPaciente.SelectedValue == null)
+            // Paciente obligatorio + tiene que coincidir con la lista
+            if (cbPaciente.SelectedValue == null || !TextoCoincideConLista(cbPaciente, _maestroPaciente))
             {
-                error = "Debe seleccionar un paciente.";
+                error = "Debe seleccionar un paciente válido.";
                 return false;
             }
 
-            // Médico obligatorio
-            if (cbMedico.SelectedValue == null)
+            // Médico obligatorio + lista
+            if (cbMedico.SelectedValue == null ||
+                (cbMedico.Enabled && !TextoCoincideConLista(cbMedico, _maestroMedico)))
             {
-                error = "Debe seleccionar un médico.";
+                error = "Debe seleccionar un médico válido.";
                 return false;
             }
 
-            // Procedimiento obligatorio
-            if (cbProcedimiento.SelectedValue == null)
+            // Procedimiento obligatorio + lista
+            if (cbProcedimiento.SelectedValue == null ||
+                !TextoCoincideConLista(cbProcedimiento, _maestroProcedimiento))
             {
-                error = "Debe seleccionar un procedimiento.";
+                error = "Debe seleccionar un procedimiento válido.";
                 return false;
             }
 
@@ -333,7 +640,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 return false;
             }
 
-            // Observaciones obligatorias (igual que en registrar turno)
+            // Observaciones obligatorias
             var obs = txtObservaciones.Text.Trim();
             if (string.IsNullOrWhiteSpace(obs))
             {
@@ -346,7 +653,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 return false;
             }
 
-            // Fecha de turno: debe ser posterior a hoy (no hoy, no pasado)
+            // Fecha del turno: posterior a hoy
             var fecha = dtpFechaTurno.Value.Date;
             if (fecha <= DateTime.Today)
             {
@@ -356,7 +663,5 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 
             return true;
         }
-
     }
-
 }
