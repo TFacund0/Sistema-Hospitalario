@@ -114,6 +114,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvInternaciones.Columns["colPiso"].DataPropertyName = "Nro_piso";
             dgvInternaciones.Columns["colInternado"].DataPropertyName = "Internado";
             dgvInternaciones.Columns["colFechaIngreso"].DataPropertyName = "Fecha_ingreso";
+            dgvInternaciones.Columns["colFechaEgreso"].DataPropertyName = "Fecha_fin";
             dgvInternaciones.Columns["colCama"].DataPropertyName = "Id_Cama";
         }
 

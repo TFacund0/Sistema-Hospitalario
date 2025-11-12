@@ -77,15 +77,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbProcedimiento.Enter += (s, e) => cbProcedimiento.DroppedDown = true;
         }
 
-
-
-
-        // ========================= COMBO BOX PACIENTE =========================
+        // ========================= CARGA DE DATOS EN COMBOBOXES =========================
+        // ==== Carga ComboBox Paciente ====
         private void DatosComboBoxPaciente()
         {
             List<PacienteDto> listaPacientes = _servicioPaciente.ListarPacientes();
 
-            // <<< NUEVO: cache completo
             _pacientesMaestroDtos = listaPacientes
                 .Where(p => p.Estado_paciente == "activo")
                 .ToList();
@@ -104,10 +101,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbPaciente.DataSource = fuente;
             cbPaciente.DisplayMember = "Display";
             cbPaciente.ValueMember = "Id";
+
+            // <<< CLAVE: que no quede nada preseleccionado
+            cbPaciente.SelectedIndex = -1;
+            cbPaciente.Text = string.Empty;
         }
 
-
-        // ========================= COMBO BOX MEDICO =========================
+        // ==== Carga ComboBox Médico ====
         private void DatosComboBoxMedico()
         {
             List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
@@ -128,11 +128,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbMedico.DataSource = fuente;
             cbMedico.DisplayMember = "Display";
             cbMedico.ValueMember = "Id";
+
+            cbMedico.SelectedIndex = -1;          // <<< ahí
+            cbMedico.Text = string.Empty;
         }
 
-
-
-        // ========================= COMBOX BOX PROCEDIMIENTO =========================
+        // ==== Carga ComboBox Procedimiento ====
         private void DatosComboBoxProcedimiento()
         {
             List<ProcedimientoDto> listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
@@ -153,8 +154,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbProcedimiento.DataSource = fuente;
             cbProcedimiento.DisplayMember = "Display";
             cbProcedimiento.ValueMember = "Id";
-        }
 
+            cbProcedimiento.SelectedIndex = -1;   // <<< ahí
+            cbProcedimiento.Text = string.Empty;
+        }
 
 
         // ========================= VALIDACIONES =========================
