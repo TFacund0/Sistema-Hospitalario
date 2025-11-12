@@ -644,6 +644,62 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             errorProvider1.SetError(txtObservaciones, "");
         }
 
+        private int? ObtenerIdPacienteSeleccionado()
+        {
+            // Si SelectedValue ya es int, genial
+            if (cbPaciente.SelectedValue is int idInt)
+                return idInt;
+
+            var texto = cbPaciente.Text?.Trim();
+            if (string.IsNullOrEmpty(texto))
+                return null;
+
+            // El display lo armás así en DatosComboBoxPaciente
+            var paciente = listaPacientes.FirstOrDefault(p =>
+                string.Equals(
+                    $"{p.Apellido} {p.Nombre} ({p.Dni})".Trim(),
+                    texto,
+                    StringComparison.OrdinalIgnoreCase));
+
+            return paciente?.Id;
+        }
+
+        
+        private int? ObtenerIdMedicoSeleccionado()
+        {
+            if (cbMedico.SelectedValue is int idInt)
+                return idInt;
+
+            var texto = cbMedico.Text?.Trim();
+            if (string.IsNullOrEmpty(texto))
+                return null;
+
+            // Display: Apellido Nombre (Especialidad)
+            var medico = listaMedicos.FirstOrDefault(m =>
+                string.Equals(
+                    $"{m.Apellido} {m.Nombre} ({m.Especialidad})".Trim(),
+                    texto,
+                    StringComparison.OrdinalIgnoreCase));
+
+            return medico?.Id;
+        }
+
+        private int? ObtenerIdProcedimientoSeleccionado()
+        {
+            if (cbProcedimiento.SelectedValue is int idInt)
+                return idInt;
+
+            var texto = cbProcedimiento.Text?.Trim();
+            if (string.IsNullOrEmpty(texto))
+                return null;
+
+            var proc = listaProcedimientos.FirstOrDefault(p =>
+                string.Equals(p.Name?.Trim(), texto, StringComparison.OrdinalIgnoreCase));
+
+            return proc?.Id;
+        }
+
+
 
         // ============================= REESTRICCIONES DE ENTRADA DE DATOS =============================
         private void SoloLetras_KeyPress(object sender, KeyPressEventArgs e)
@@ -676,19 +732,25 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            int? idPaciente = ObtenerIdPacienteSeleccionado();
+            int? idMedico = ObtenerIdMedicoSeleccionado();
+            int? idProcedimiento = ObtenerIdProcedimientoSeleccionado();
 
-            int idPaciente = (int)cbPaciente.SelectedValue;
-            int idMedico = (int)cbMedico.SelectedValue;
-            int idProcedimiento = (int)cbProcedimiento.SelectedValue;
+            if (idPaciente == null || idMedico == null || idProcedimiento == null)
+            {
+                MessageBox.Show("Falta seleccionar un Paciente, Médico o Procedimiento válido.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             int nroHabitacion = int.Parse(cbHabitacion.Text);
             int nroCama = int.Parse(cbCama.Text);
 
             var dto = new InternacionDto
             {
-                Id_paciente = idPaciente,
-                Id_medico = idMedico,          
-                Id_procedimiento = idProcedimiento,
+                Id_paciente = idPaciente.Value,
+                Id_medico = idMedico.Value,
+                Id_procedimiento = idProcedimiento.Value,
                 Nro_habitacion = nroHabitacion,
                 Id_cama = nroCama,
                 Fecha_ingreso = dtpFechaInicio.Value,
