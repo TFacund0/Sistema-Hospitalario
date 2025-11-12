@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,44 +14,41 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
     public partial class Form_CambiarEstadoCama : Form
     {
+        // Propiedad pública para exponer el ID seleccionado
         public int NuevoEstadoIdSeleccionado { get; private set; }
 
+        // Campo privado para almacenar el estado actual
         private string _estadoActual; 
 
-        // 1. Modificamos el "Constructor" para que acepte el estado actual
+        // Modificamos el "Constructor" para que acepte el estado actual
         public Form_CambiarEstadoCama(string estadoActual)
         {
             InitializeComponent();
             _estadoActual = estadoActual;
         }
 
-        // 2. Hacemos doble clic en el evento "Load" del formulario
+        // ===================== EVENTOS DEL FORMULARIO =====================
+        // Carga del formulario
         private void Form_CambiarEstadoCama_Load(object sender, EventArgs e)
         {
             CargarComboBox();
         }
 
+        // ===================== MÉTODOS AUXILIARES =====================
+        // Carga del ComboBox con los estados de cama
         private void CargarComboBox()
         {
-            // Usamos la misma lógica que ya conocés para cargar el combo
-            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
-            {
-                var estados = db.estado_cama
-                                .Select(e => new {
-                                    Id = e.id_estado_cama,
-                                    Nombre = e.disponibilidad
-                                })
-                                .ToList();
+            var _camaService = new CamaService();
+            var estados = _camaService.ListarEstadosCama();
 
-                comboBox1.DataSource = estados;
-                comboBox1.DisplayMember = "Nombre";
-                comboBox1.ValueMember = "Id";
+            comboBox1.DataSource = estados;
+            comboBox1.DisplayMember = "Nombre";
+            comboBox1.ValueMember = "Id";
 
-                // ¡Importante! Dejamos seleccionado el estado actual
-                comboBox1.Text = _estadoActual;
-            }
+            comboBox1.Text = _estadoActual;
         }
 
+        // Botón Guardar
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             this.NuevoEstadoIdSeleccionado = (int)comboBox1.SelectedValue;
@@ -57,6 +56,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             this.Close();
         }
 
+        // Botón Agregar
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             var valorSeleccionado = (int)comboBox1.SelectedValue;

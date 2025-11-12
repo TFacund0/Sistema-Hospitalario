@@ -68,5 +68,16 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
                     EstadoCama = c.Estado
                 }).ToList();
         }
+
+        public List<CamaDto> ListarEstadosCama()
+        {
+            var camasList = _repo.GetEstadosCama();
+            return camasList
+                .Select(e => new CamaDto
+                {
+                    IdEstadoCama = e.id_estado_cama,
+                    EstadoCama = e.disponibilidad
+                }).ToList();
+        }
     }
 }

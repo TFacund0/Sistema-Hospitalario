@@ -15,6 +15,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
     public partial class UC_Habitaciones : UserControl
     {
+        // ===================== INSTANCIAS DE SERVICIOS =====================
         private readonly HabitacionService _service;
         public UC_Habitaciones()
         {
@@ -24,6 +25,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             CargarComboBox();
         }
 
+        // ===================== MÉTODOS AUXILIARES =====================
+        // Carga de habitaciones en el DataGridView
         private void CargarHabitaciones()
         {
             dgvHabitaciones.DataSource = _service.ObtenerHabitaciones();
@@ -44,6 +47,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 
         }
 
+        // Carga de tipos de habitación en el ComboBox
         private void CargarComboBox()
         {
             List<TiposHabitacionDTO> listaHabitacion = _service.ListarTiposHabitacion();
@@ -54,6 +58,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             
         }
 
+        // ===================== EVENTOS DEL FORMULARIO =====================
+        // Validación del campo de piso de habitación
         private void TBPISOHABITACION_Validating(object sender, CancelEventArgs e)
         {
             // Intentar convertir el texto a int de forma segura
@@ -88,11 +94,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             }
         }
 
+        // Botón Limpiar
         private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             TBPISOHABITACION.Clear();
         }
 
+        // Botón Agregar
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
@@ -112,6 +120,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                     MessageBox.Show("Error al agregar habitacion: " + ex.Message);
                 }
         }
+        
+        // Doble clic en una fila para eliminar la habitación
         private void DgvHabitaciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía

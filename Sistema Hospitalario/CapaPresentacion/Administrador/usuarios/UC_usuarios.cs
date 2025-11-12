@@ -15,6 +15,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 {
     public partial class UC_usuarios : UserControl
     {
+        // ===================== INSTANCIAS DE SERVICIOS =====================
         private static readonly UsuarioService usuarioService = new UsuarioService();
         private readonly UsuarioService _service = usuarioService;
         public UC_usuarios()
@@ -26,6 +27,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             ActualizarContadoresRoles();
         }
 
+        // ===================== MÉTODOS AUXILIARES =====================
+        // Carga de usuarios en el DataGridView
         private void RefrescarGrilla(string campo = null, string valor = null)
         {
             try
@@ -48,6 +51,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // Configuración de estilos del DataGridView
         private void ConfigurarEstilosGrilla()
         {
             // Puedes copiar los mismos estilos que usaste para dgvMedicos
@@ -64,6 +68,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             dgvUsuarios.DefaultCellStyle.Font = new Font("Segoe UI", 9);
         }
 
+        // Carga de campos del DTO en el ComboBox para ordenamiento
         private void CargarComboOrdenamiento()
         {
             var tipoDelDto = typeof(MostrarUsuariosDTO);
@@ -73,6 +78,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
                                             .ToList();
             cboCampo.DataSource = listaDeNombres; // Asume que tienes un ComboBox llamado cboCampo
         }
+
+        // ===================== EVENTOS DEL FORMULARIO =====================
+        // Nuevo usuario
         private void BtnNuevoUsuario_Click(object sender, EventArgs e)
         {
             MenuModer parentForm = this.FindForm() as MenuModer;
@@ -80,6 +88,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             parentForm.AbrirUserControl(new UC_registrarUsuario());
         }
 
+        // Búsqueda de usuarios
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             string campo = (string)cboCampo.SelectedItem;
@@ -94,6 +103,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             RefrescarGrilla(campo, valor);
         }
 
+        // Limpiar búsqueda
         private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             txtBuscar.Clear();
@@ -101,6 +111,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             txtBuscar.Focus();
         }
 
+        // Doble clic para eliminar usuario
         private void DgvUsuarios_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -133,6 +144,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // Actualizar contadores de usuarios por rol
         private void ActualizarContadoresRoles()
         {
             try

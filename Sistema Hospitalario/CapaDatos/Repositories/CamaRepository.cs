@@ -91,5 +91,13 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 }
             }
         }
+
+        public List<estado_cama> GetEstadosCama()
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                return db.estado_cama.ToList();
+            }
+        }
     }
 }

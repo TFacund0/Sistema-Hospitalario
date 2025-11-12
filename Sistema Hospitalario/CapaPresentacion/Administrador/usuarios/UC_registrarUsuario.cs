@@ -16,6 +16,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 {
     public partial class UC_registrarUsuario : UserControl
     {
+        // ===================== INSTANCIAS DE SERVICIOS =====================
         private static readonly UsuarioService usuarioService = new UsuarioService();
         private readonly UsuarioService _service = usuarioService;
 
@@ -29,6 +30,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             cboMedicos.Enabled = false;
         }
 
+        // ============================= MÉTODOS AUXILIARES ===========================
+        // Carga de roles en el ComboBox
         private void CargarRoles()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -42,6 +45,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // Carga de estados en el ComboBox
         private void CargarEstados()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -55,6 +59,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // Carga de médicos en el ComboBox
         private void CargarMedicos()
         {
             try
@@ -75,6 +80,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // ============================= EVENTOS DEL FORMULARIO ===========================
+        // Evento al cambiar la selección del rol
         private void cboRol_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboRol.SelectedItem != null && cboRol.Text == "medico") 
@@ -96,6 +103,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 
 
         // ============================= Validaciones ===========================
+        // Validaciones de los campos del formulario
         private void TBNOMBRE_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBNOMBRE.Text))
@@ -114,6 +122,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // Validaciones de los campos del formulario
         private void TBAPELLIDO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBAPELLIDO.Text))
@@ -132,6 +141,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // Validaciones de los campos del formulario
         private void TBCORREO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBCORREO.Text))
@@ -156,6 +166,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
                 errorProvider1.SetError(TBCORREO, "");
             }
         }
+
+        // Validaciones de los campos del formulario
         private void TBUSERNAME_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBUSERNAME.Text))
@@ -180,6 +192,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
+        // Validaciones de los campos del formulario
         private void TBPASSWORD_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBPASSWORD.Text))
@@ -205,6 +218,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 
         // ============================= BOTONES =============================
 
+        // Botón Guardar
         private void BtnGuardar_Click_1(object sender, EventArgs e)
         {
             try
@@ -271,7 +285,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
         }
 
-
+        // Botón Limpiar
         private void BtnLimpiar_Click_1(object sender, EventArgs e)
         {
             TBNOMBRE.Clear();
@@ -286,6 +300,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             errorProvider1.Clear();
         }
 
+        // Botón Cancelar
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
             MenuModer parentForm = this.FindForm() as MenuModer;
