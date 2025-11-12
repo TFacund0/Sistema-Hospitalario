@@ -47,6 +47,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private readonly List<string> _maestroMedico = new List<string>();
         private readonly List<string> _maestroProcedimiento = new List<string>();
 
+        // cache maestros para filtrar sin reconsultar BD
+        private List<MedicoDto> _medicosMaestro = new List<MedicoDto>();
+        private List<ProcedimientoDto> _procedimientosMaestro = new List<ProcedimientoDto>();
+
+
         // Bandera para evitar reentrancia en eventos de texto
         private bool _actualizandoInterno = false;
 
@@ -109,16 +114,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private void DatosComboBoxMedico()
         {
             listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
-            var fuente = listaMedicos
+            _medicosMaestro = listaMedicos.ToList(); // cache
+
+            var fuente = _medicosMaestro
                 .Select(m => new {
                     m.Id,
-                    Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                    Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})",
+                    m.Especialidad
                 })
                 .ToList();
-            
+
             _maestroMedico.Clear();
             _maestroMedico.AddRange(fuente.Select(x => x.Display));
-            
+
             cbMedico.DropDownStyle = ComboBoxStyle.DropDown;
             cbMedico.DataSource = fuente;
             cbMedico.DisplayMember = "Display";
@@ -129,12 +137,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         private void DatosComboBoxProcedimiento()
         {
             listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
+            _procedimientosMaestro = listaProcedimientos.ToList(); // cache
 
-            var fuente = listaProcedimientos
-                .Select(p => new {
-                    p.Id,
-                    Display = p.Name
-                })
+            var fuente = _procedimientosMaestro
+                .Select(p => new { p.Id, Display = p.Name })
                 .ToList();
 
             _maestroProcedimiento.Clear();
@@ -144,7 +150,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             cbProcedimiento.DataSource = fuente;
             cbProcedimiento.DisplayMember = "Display";
             cbProcedimiento.ValueMember = "Id";
+
+            // engancho eventos 1 sola vez
+            cbProcedimiento.SelectedIndexChanged -= CbProcedimiento_SelectedIndexChanged;
+            cbProcedimiento.SelectedIndexChanged += CbProcedimiento_SelectedIndexChanged;
+
+            cbProcedimiento.SelectionChangeCommitted -= CbProcedimiento_SelectionChangeCommitted;
+            cbProcedimiento.SelectionChangeCommitted += CbProcedimiento_SelectionChangeCommitted;
         }
+
 
         // ============================= COMBO HABITACIÓN =============================
         private void CargarHabitacionesPorPiso(string pisoTexto)
@@ -171,11 +185,24 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
                 cbHabitacion.SelectedIndex = -1;
                 cbHabitacion.Text = string.Empty;
+                
+                cbHabitacion.Enabled = _maestroHabitacion.Count > 0;
+                cbHabitacion.CausesValidation = _maestroHabitacion.Count > 0;
 
-                if (!string.IsNullOrEmpty(seleccionadoAntes) && _maestroHabitacion.Contains(seleccionadoAntes))
-                    cbHabitacion.Text = seleccionadoAntes;
+                if (_maestroHabitacion.Count == 0)
+                {
+                    errorProvider1.SetError(cbHabitacion, "No hay habitaciones disponibles para el piso seleccionado.");
+                    // si no hay habitaciones, también vaciamos/deshabilitamos camas
+                    VaciarCombo(cbCama);
+                    cbCama.Enabled = false;
+                    cbCama.CausesValidation = false;
+                    errorProvider1.SetError(cbCama, "");
+                }
+                else
+                {
+                    errorProvider1.SetError(cbHabitacion, "");
+                }
 
-                if (cbHabitacion.Focused) cbHabitacion.DroppedDown = true;
             }
             finally
             {
@@ -207,8 +234,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 cbCama.DataSource = new BindingList<string>(_maestroCama);
                 cbCama.SelectedIndex = -1;
                 cbCama.Text = string.Empty;
+                
+                // después de setear DataSource/Text...
+                cbCama.Enabled = _maestroCama.Count > 0;
+                cbCama.CausesValidation = _maestroCama.Count > 0;
 
-                if (cbCama.Focused) cbCama.DroppedDown = true;
+                if (_maestroCama.Count == 0)
+                {
+                    // aviso informativo (no es bloqueo de validación)
+                    errorProvider1.SetError(cbCama, "No hay camas disponibles en la habitación seleccionada.");
+                }
+                else
+                {
+                    errorProvider1.SetError(cbCama, "");
+                }
             }
             finally
             {
@@ -484,8 +523,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         // ============================= VALIDACION HABITACIÓN =============================
         private void CbHabitacion_Validating(object sender, CancelEventArgs e)
         {
-            if (!TextoCoincideConLista(cbHabitacion, _maestroHabitacion)
-                || !TextoEsEnteroPositivo(cbHabitacion.Text, out _))
+            if (!cbHabitacion.Enabled || !cbHabitacion.CausesValidation)
+            {
+                errorProvider1.SetError(cbHabitacion, "");
+                return;
+            }
+
+            if (!TextoCoincideConLista(cbHabitacion, _maestroHabitacion) || !TextoEsEnteroPositivo(cbHabitacion.Text, out _))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(cbHabitacion, "Seleccioná una habitación válida (número > 0 de la lista).");
@@ -497,11 +541,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
 
+
         // ============================= VALIDACION CAMA =============================
         private void CbCama_Validating(object sender, CancelEventArgs e)
         {
-            if (!TextoCoincideConLista(cbCama, _maestroCama)
-                || !TextoEsEnteroPositivo(cbCama.Text, out _))
+            if (!cbCama.Enabled || !cbCama.CausesValidation)
+            {
+                // no hay camas -> no validamos este control
+                errorProvider1.SetError(cbCama, "");
+                return;
+            }
+
+            if (!TextoCoincideConLista(cbCama, _maestroCama) || !TextoEsEnteroPositivo(cbCama.Text, out _))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(cbCama, "Seleccioná una cama válida (número > 0 de la lista).");
@@ -511,6 +562,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 errorProvider1.SetError(cbCama, "");
             }
         }
+
 
 
         // ============================= VALIDACION FECHA INICIO =============================
@@ -640,11 +692,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             };
 
             // Llamá a tu capa de negocio
-            var servicio = new InternacionService(); // o el que uses
+            var servicio = new InternacionService();
             servicio.AltaInternacion(dto);
 
             MessageBox.Show("Internación registrada con éxito.", "Éxito",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // refrescar UI y fuentes para que desaparezca el paciente y la cama ocupada
+            PostGuardarRefrescarUI();
+
         }
 
 
@@ -684,10 +740,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 // Habitación y Cama (vaciar, limpiar y deshabilitar en cascada)
                 VaciarCombo(cbHabitacion);
                 VaciarCombo(cbCama);
-
                 errorProvider1.Clear();
 
-                // Refrescar habilitación por dependencias
+                // restaurar médicos completos y procedimientos
+                DatosComboBoxMedico();
+
                 SincronizarHabilitacionControles();
             }
             finally
@@ -767,5 +824,95 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 dtpFechaFin.CustomFormat = " ";                // sin fecha visible
         }
 
+        private void PostGuardarRefrescarUI()
+        {
+            // Limpia los valores ingresados y estados visuales
+            ResetFormulario();
+
+            // Recarga las fuentes desde BD para que se apliquen los nuevos estados
+            _actualizandoInterno = true;
+            try
+            {
+                DatosComboBoxPaciente();       // quita pacientes ya internados
+                DatosComboBoxMedico();         // por si cambió algo de médicos
+                DatosComboBoxProcedimiento();  // idem procedimientos
+
+            }
+            finally
+            {
+                _actualizandoInterno = false;
+            }
+
+            // Re-sincroniza habilitaciones (quedan deshabilitados hasta que seleccione piso/habitación)
+            SincronizarHabilitacionControles();
+        }
+
+        private void RefrescarMedicosPorProcedimiento(string nombreProc)
+        {
+            nombreProc = (nombreProc ?? "").Trim();
+
+            var medicosFiltrados =
+                (string.IsNullOrEmpty(nombreProc) || EsConsulta(nombreProc))
+                ? _medicosMaestro
+                : _medicosMaestro.Where(m =>
+                      string.Equals(m.Especialidad?.Trim(), nombreProc, StringComparison.OrdinalIgnoreCase)
+                  ).ToList();
+
+            cbMedico.BeginUpdate();
+            try
+            {
+                if (medicosFiltrados.Count == 0)
+                {
+                    cbMedico.DataSource = null;
+                    cbMedico.Items.Clear();
+                    cbMedico.Text = "";
+                    _maestroMedico.Clear();
+                    errorProvider1.SetError(cbMedico, $"No hay médicos para «{nombreProc}».");
+                }
+                else
+                {
+                    var fuente = medicosFiltrados.Select(m => new
+                    {
+                        m.Id,
+                        Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                    }).ToList();
+
+                    cbMedico.DataSource = fuente;
+                    cbMedico.DisplayMember = "Display";
+                    cbMedico.ValueMember = "Id";
+                    cbMedico.SelectedIndex = 0;
+
+                    _maestroMedico.Clear();
+                    _maestroMedico.AddRange(fuente.Select(x => x.Display));
+
+                    errorProvider1.SetError(cbMedico, "");
+                }
+            }
+            finally
+            {
+                cbMedico.EndUpdate();
+            }
+        }
+
+
+        private void CbProcedimiento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // filtra por el texto visible del procedimiento
+            RefrescarMedicosPorProcedimiento(cbProcedimiento.Text);
+        }
+
+        private void CbProcedimiento_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            RefrescarMedicosPorProcedimiento(cbProcedimiento.Text);
+        }
+
+        private bool EsConsulta(string nombreProc)
+        {
+            if (string.IsNullOrWhiteSpace(nombreProc)) return false;
+            var t = nombreProc.Trim();
+            // por si viene como "Consulta", "consulta", "Consulta médica", etc.
+            return t.Equals("consulta", StringComparison.OrdinalIgnoreCase)
+                || t.StartsWith("consulta", StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

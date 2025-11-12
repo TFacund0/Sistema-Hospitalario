@@ -79,9 +79,10 @@
             this.TBContacto.BackColor = System.Drawing.Color.LightGray;
             this.TBContacto.Controls.Add(this.panel3);
             this.TBContacto.Controls.Add(this.paneltxtHistorialDetalle);
-            this.TBContacto.Location = new System.Drawing.Point(32, 31);
+            this.TBContacto.Location = new System.Drawing.Point(43, 38);
+            this.TBContacto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TBContacto.Name = "TBContacto";
-            this.TBContacto.Size = new System.Drawing.Size(900, 552);
+            this.TBContacto.Size = new System.Drawing.Size(1200, 679);
             this.TBContacto.TabIndex = 1;
             // 
             // panel3
@@ -93,10 +94,10 @@
             this.panel3.Controls.Add(this.tableLayoutPanel3);
             this.panel3.Controls.Add(this.tableLayoutPanel2);
             this.panel3.Controls.Add(this.tableLayoutPanel1);
-            this.panel3.Location = new System.Drawing.Point(33, 23);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2);
+            this.panel3.Location = new System.Drawing.Point(44, 28);
+            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(838, 102);
+            this.panel3.Size = new System.Drawing.Size(1117, 125);
             this.panel3.TabIndex = 20;
             // 
             // tableLayoutPanel3
@@ -110,11 +111,12 @@
             this.tableLayoutPanel3.Controls.Add(this.panel2, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel9, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 33);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 41);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(836, 31);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1115, 38);
             this.tableLayoutPanel3.TabIndex = 24;
             // 
             // panel5
@@ -122,9 +124,10 @@
             this.panel5.Controls.Add(this.label4);
             this.panel5.Controls.Add(this.TBHabitacion);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(515, 3);
+            this.panel5.Location = new System.Drawing.Point(687, 4);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(318, 25);
+            this.panel5.Size = new System.Drawing.Size(424, 30);
             this.panel5.TabIndex = 3;
             // 
             // label4
@@ -133,8 +136,9 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(103, 22);
+            this.label4.Size = new System.Drawing.Size(127, 27);
             this.label4.TabIndex = 28;
             this.label4.Text = "Habitacion:";
             // 
@@ -142,10 +146,11 @@
             // 
             this.TBHabitacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TBHabitacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBHabitacion.Location = new System.Drawing.Point(109, 4);
+            this.TBHabitacion.Location = new System.Drawing.Point(145, 5);
+            this.TBHabitacion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TBHabitacion.Name = "TBHabitacion";
             this.TBHabitacion.ReadOnly = true;
-            this.TBHabitacion.Size = new System.Drawing.Size(199, 21);
+            this.TBHabitacion.Size = new System.Drawing.Size(264, 24);
             this.TBHabitacion.TabIndex = 46;
             // 
             // panel2
@@ -153,18 +158,20 @@
             this.panel2.Controls.Add(this.TBContacton);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(182, 3);
+            this.panel2.Location = new System.Drawing.Point(243, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(319, 25);
+            this.panel2.Size = new System.Drawing.Size(425, 30);
             this.panel2.TabIndex = 1;
             // 
             // TBContacton
             // 
             this.TBContacton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBContacton.Location = new System.Drawing.Point(90, 1);
+            this.TBContacton.Location = new System.Drawing.Point(120, 1);
+            this.TBContacton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TBContacton.Name = "TBContacton";
             this.TBContacton.ReadOnly = true;
-            this.TBContacton.Size = new System.Drawing.Size(226, 21);
+            this.TBContacton.Size = new System.Drawing.Size(300, 24);
             this.TBContacton.TabIndex = 43;
             // 
             // label5
@@ -173,8 +180,9 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(0, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(89, 22);
+            this.label5.Size = new System.Drawing.Size(108, 27);
             this.label5.TabIndex = 31;
             this.label5.Text = "Contacto:";
             // 
@@ -183,9 +191,10 @@
             this.panel9.Controls.Add(this.DNILabel);
             this.panel9.Controls.Add(this.txtDni);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(3, 3);
+            this.panel9.Location = new System.Drawing.Point(4, 4);
+            this.panel9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(173, 25);
+            this.panel9.Size = new System.Drawing.Size(231, 30);
             this.panel9.TabIndex = 0;
             // 
             // DNILabel
@@ -194,18 +203,20 @@
             this.DNILabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DNILabel.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DNILabel.Location = new System.Drawing.Point(0, 0);
+            this.DNILabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DNILabel.Name = "DNILabel";
-            this.DNILabel.Size = new System.Drawing.Size(47, 22);
+            this.DNILabel.Size = new System.Drawing.Size(58, 27);
             this.DNILabel.TabIndex = 21;
             this.DNILabel.Text = "DNI:";
             // 
             // txtDni
             // 
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDni.Location = new System.Drawing.Point(45, 4);
+            this.txtDni.Location = new System.Drawing.Point(60, 5);
+            this.txtDni.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDni.Name = "txtDni";
             this.txtDni.ReadOnly = true;
-            this.txtDni.Size = new System.Drawing.Size(125, 21);
+            this.txtDni.Size = new System.Drawing.Size(165, 24);
             this.txtDni.TabIndex = 41;
             // 
             // tableLayoutPanel2
@@ -218,11 +229,12 @@
             this.tableLayoutPanel2.Controls.Add(this.panel10, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel13, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 64);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 79);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(836, 36);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1115, 44);
             this.tableLayoutPanel2.TabIndex = 23;
             // 
             // panel10
@@ -230,18 +242,20 @@
             this.panel10.Controls.Add(this.TBEdad);
             this.panel10.Controls.Add(this.label6);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(345, 3);
+            this.panel10.Location = new System.Drawing.Point(461, 4);
+            this.panel10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(488, 30);
+            this.panel10.Size = new System.Drawing.Size(650, 36);
             this.panel10.TabIndex = 4;
             // 
             // TBEdad
             // 
             this.TBEdad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBEdad.Location = new System.Drawing.Point(60, 2);
+            this.TBEdad.Location = new System.Drawing.Point(80, 2);
+            this.TBEdad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TBEdad.Name = "TBEdad";
             this.TBEdad.ReadOnly = true;
-            this.TBEdad.Size = new System.Drawing.Size(125, 21);
+            this.TBEdad.Size = new System.Drawing.Size(165, 24);
             this.TBEdad.TabIndex = 42;
             // 
             // label6
@@ -250,8 +264,9 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 22);
+            this.label6.Size = new System.Drawing.Size(67, 27);
             this.label6.TabIndex = 25;
             this.label6.Text = "Edad:";
             // 
@@ -260,9 +275,10 @@
             this.panel13.Controls.Add(this.label3);
             this.panel13.Controls.Add(this.TBEstado);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(3, 3);
+            this.panel13.Location = new System.Drawing.Point(4, 4);
+            this.panel13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(291, 30);
+            this.panel13.Size = new System.Drawing.Size(388, 36);
             this.panel13.TabIndex = 1;
             // 
             // label3
@@ -271,8 +287,9 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 22);
+            this.label3.Size = new System.Drawing.Size(85, 27);
             this.label3.TabIndex = 23;
             this.label3.Text = "Estado:";
             // 
@@ -280,10 +297,11 @@
             // 
             this.TBEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.TBEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBEstado.Location = new System.Drawing.Point(72, 2);
+            this.TBEstado.Location = new System.Drawing.Point(96, 1);
+            this.TBEstado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TBEstado.Name = "TBEstado";
             this.TBEstado.ReadOnly = true;
-            this.TBEstado.Size = new System.Drawing.Size(217, 21);
+            this.TBEstado.Size = new System.Drawing.Size(288, 24);
             this.TBEstado.TabIndex = 47;
             // 
             // tableLayoutPanel1
@@ -294,10 +312,11 @@
             this.tableLayoutPanel1.Controls.Add(this.panel6, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel7, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(-1, -1);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(838, 35);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1117, 43);
             this.tableLayoutPanel1.TabIndex = 22;
             // 
             // panel6
@@ -305,9 +324,10 @@
             this.panel6.Controls.Add(this.label1);
             this.panel6.Controls.Add(this.TBNombre);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(3, 3);
+            this.panel6.Location = new System.Drawing.Point(4, 4);
+            this.panel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(371, 29);
+            this.panel6.Size = new System.Drawing.Size(495, 35);
             this.panel6.TabIndex = 40;
             // 
             // label1
@@ -316,9 +336,8 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Verdana", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 23);
+            this.label1.Size = new System.Drawing.Size(131, 28);
             this.label1.TabIndex = 7;
             this.label1.Text = "Paciente:";
             // 
@@ -326,10 +345,11 @@
             // 
             this.TBNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TBNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBNombre.Location = new System.Drawing.Point(123, 4);
+            this.TBNombre.Location = new System.Drawing.Point(164, 5);
+            this.TBNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TBNombre.Name = "TBNombre";
             this.TBNombre.ReadOnly = true;
-            this.TBNombre.Size = new System.Drawing.Size(262, 21);
+            this.TBNombre.Size = new System.Drawing.Size(348, 24);
             this.TBNombre.TabIndex = 39;
             // 
             // panel7
@@ -337,9 +357,10 @@
             this.panel7.Controls.Add(this.label15);
             this.panel7.Controls.Add(this.TBDireccion);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(380, 3);
+            this.panel7.Location = new System.Drawing.Point(507, 4);
+            this.panel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(455, 29);
+            this.panel7.Size = new System.Drawing.Size(607, 35);
             this.panel7.TabIndex = 40;
             // 
             // label15
@@ -348,18 +369,20 @@
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label15.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(0, 0);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(91, 22);
+            this.label15.Size = new System.Drawing.Size(112, 27);
             this.label15.TabIndex = 37;
             this.label15.Text = "Direccion:";
             // 
             // TBDireccion
             // 
             this.TBDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBDireccion.Location = new System.Drawing.Point(100, 4);
+            this.TBDireccion.Location = new System.Drawing.Point(133, 5);
+            this.TBDireccion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TBDireccion.Name = "TBDireccion";
             this.TBDireccion.ReadOnly = true;
-            this.TBDireccion.Size = new System.Drawing.Size(344, 21);
+            this.TBDireccion.Size = new System.Drawing.Size(457, 24);
             this.TBDireccion.TabIndex = 40;
             // 
             // paneltxtHistorialDetalle
@@ -369,28 +392,30 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.paneltxtHistorialDetalle.BackColor = System.Drawing.Color.White;
             this.paneltxtHistorialDetalle.Controls.Add(this.txtHistorialDetalle);
-            this.paneltxtHistorialDetalle.Location = new System.Drawing.Point(33, 129);
-            this.paneltxtHistorialDetalle.Margin = new System.Windows.Forms.Padding(2);
+            this.paneltxtHistorialDetalle.Location = new System.Drawing.Point(44, 159);
+            this.paneltxtHistorialDetalle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.paneltxtHistorialDetalle.Name = "paneltxtHistorialDetalle";
-            this.paneltxtHistorialDetalle.Size = new System.Drawing.Size(838, 394);
+            this.paneltxtHistorialDetalle.Size = new System.Drawing.Size(1117, 485);
             this.paneltxtHistorialDetalle.TabIndex = 16;
             // 
             // txtHistorialDetalle
             // 
             this.txtHistorialDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtHistorialDetalle.Location = new System.Drawing.Point(0, 0);
+            this.txtHistorialDetalle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtHistorialDetalle.Name = "txtHistorialDetalle";
-            this.txtHistorialDetalle.Size = new System.Drawing.Size(838, 394);
+            this.txtHistorialDetalle.Size = new System.Drawing.Size(1117, 485);
             this.txtHistorialDetalle.TabIndex = 0;
             this.txtHistorialDetalle.Text = "";
             // 
             // UC_DetallePaciente
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TBContacto);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UC_DetallePaciente";
-            this.Size = new System.Drawing.Size(968, 618);
+            this.Size = new System.Drawing.Size(1291, 761);
             this.TBContacto.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
