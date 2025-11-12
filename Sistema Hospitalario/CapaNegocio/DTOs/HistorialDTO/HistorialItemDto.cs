@@ -14,6 +14,8 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO
         public string Diagnostico { get; set; }
         public string Tratamiento { get; set; }
         public string NombreMedico { get; set; }
-        public string DniMedico { get; set; } // ¡Clave para tu filtro!
+
+        public string DniMedico { get; set; }
+        public int IdMedico { get; set; } // ¡Clave para tu filtro!
     }
 }

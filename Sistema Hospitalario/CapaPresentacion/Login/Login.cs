@@ -1,4 +1,11 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
+using Sistema_Hospitalario.CapaPresentacion.Administrador;
+using Sistema_Hospitalario.CapaPresentacion.Administrativo;
+using Sistema_Hospitalario.CapaPresentacion.Gerente;
+using Sistema_Hospitalario.CapaPresentacion.Medico;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,12 +14,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Sistema_Hospitalario.CapaPresentacion.Administrativo;
-using Sistema_Hospitalario.CapaPresentacion.Medico;
-using Sistema_Hospitalario.CapaPresentacion.Gerente;
-using Sistema_Hospitalario.CapaPresentacion.Administrador;
-using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
 
 namespace WindowsFormsInicio_de_sesion
 {
@@ -35,18 +36,16 @@ namespace WindowsFormsInicio_de_sesion
 
             try
             {
-                // Obtenemos todos los usuarios desde el servicio
-                var usuarios = _usuarioService.ObtenerUsuarios();
 
-                // Buscamos un usuario que coincida con nombre de usuario y contraseña
-                var usuarioValido = usuarios
-                    .FirstOrDefault(u =>
-                        u.NombreUsuario.Equals(usuario, StringComparison.OrdinalIgnoreCase)
-                        && u.Password == CalcularSha256(contraseña));
+                UsuarioLoginResultadoDTO resultadoLogin = _usuarioService.ValidarCredenciales(usuario, contraseña);
 
+                if (resultadoLogin.LoginExitoso)
+                {
+                    SesionUsuario.Login(resultadoLogin);
+                }
 
-                // Usuarios de prueba (hardcodeados)
-                if (usuario == "admin" && contraseña == "1234")
+                    // Usuarios de prueba (hardcodeados)
+                    if (usuario == "admin" && contraseña == "1234")
                 {
                     this.Hide();
                     new MenuAdministrativo().ShowDialog();
@@ -72,11 +71,11 @@ namespace WindowsFormsInicio_de_sesion
                 }
 
                 // Usuarios reales desde la base de datos
-                else if (usuarioValido != null)
+                else if (resultadoLogin != null)
                 {
                     this.Hide();
 
-                    switch (usuarioValido.Rol.ToLower())
+                    switch (resultadoLogin.NombreRol.ToLower())
                     {
                         case "administrativo":
                             new MenuAdministrativo().ShowDialog();

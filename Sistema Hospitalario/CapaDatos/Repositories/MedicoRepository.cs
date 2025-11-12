@@ -221,7 +221,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Diagnostico = c.diagnostico,
                         Tratamiento = c.tratamiento,
                         NombreMedico = c.medico.nombre + " " + c.medico.apellido,
-                        DniMedico = c.medico.DNI.ToString() // Asumimos que dni es int
+                        DniMedico = c.medico.DNI.ToString(),
+                        IdMedico = c.medico.id_medico
                     })
                     .ToList();
             }
@@ -239,7 +240,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Motivo = i.motivo, 
                         Diagnostico = i.procedimiento.nombre,
                         NombreMedico = i.medico.nombre + " " + i.medico.apellido,
-                        DniMedico = i.medico.DNI.ToString()
+                        DniMedico = i.medico.DNI.ToString(),
+                        IdMedico = i.medico.id_medico
                     })
                     .ToList();
             }

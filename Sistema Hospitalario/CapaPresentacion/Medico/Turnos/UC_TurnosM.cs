@@ -22,6 +22,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         {
             InitializeComponent();
             cargarTurnos();
+            ConfigurarEnlazadoDatosTurnoColumnas();
         }
         private void cargarTurnos()
         {
@@ -34,8 +35,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 MessageBox.Show("Error: No se pudo identificar al médico logueado.", "Error de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return; // O deshabilitar el formulario
             }
-
-            // Asumimos que el DateTimePicker se llama 'dtpFecha'
             dtpFecha.Value = DateTime.Today;
             RefrescarAgenda();
             ConfigurarEstilosGrilla();
@@ -44,11 +43,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         {
             DateTime fechaSeleccionada = dtpFecha.Value.Date;
 
-            // 1. Cargar la Grilla
             try
             {
-                // Asumimos que el DGV se llama 'dgvTurnos'
-                var listaTurnos = _turnoService.ObtenerTurnosParaAgenda(_idMedicoLogueado, fechaSeleccionada);
+                var listaTurnos = _turnoService.ListarTurnos().Where(m => m.Id_medico == _idMedicoLogueado) ;
                 dgvTurnos.DataSource = listaTurnos;
             }
             catch (Exception ex)
@@ -138,6 +135,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                     MessageBox.Show("Error al actualizar el estado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void ConfigurarEnlazadoDatosTurnoColumnas()
+        {
+            dgvTurnos.AutoGenerateColumns = false;
+
+            dgvTurnos.Columns["colPaciente"].DataPropertyName = "Paciente";
+            dgvTurnos.Columns["colMedico"].DataPropertyName = "Medico";
+            dgvTurnos.Columns["colHora"].DataPropertyName = "FechaTurno";
+            dgvTurnos.Columns["colEstado"].DataPropertyName = "Estado";
         }
     }
 }

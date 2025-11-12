@@ -49,7 +49,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes
             if (string.IsNullOrWhiteSpace(txtDniPaciente.Text))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtDniPaciente, "Ingrese DNI o Nro de Afiliado.");
+                errorProvider1.SetError(txtDniPaciente, "Ingrese DNI ");
             }
             else if (!string.IsNullOrWhiteSpace(txtDniPaciente.Text))
             {
@@ -144,7 +144,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes
                 // 1. Recolectamos los datos del formulario
                 var dto = new ConsultaAltaDTO
                 {
-                    DniPaciente = panel1.Text.Trim(),
+                    DniPaciente = txtDniPaciente.Text.Trim(),
                     Fecha = dtpFecha.Value,
                     Motivo = txtMotivo.Text.Trim(),
                     Diagnostico = txtDiagnostico.Text.Trim(),

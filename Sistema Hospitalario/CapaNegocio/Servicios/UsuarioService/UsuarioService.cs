@@ -1,6 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaDatos.Interfaces; // Asegurate que el using sea correcto
-using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO; // O donde estén tus DTOs
 using Sistema_Hospitalario.CapaDatos.Repositories;
+using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO; // O donde estén tus DTOs
 using System; // Necesario para Exception
 using System.Collections.Generic;
 using System.Linq;
@@ -158,6 +158,33 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
                 })
                 .ToDictionary(item => item.NombreRol, item => item.Cantidad);
             return conteoPorRol;
+        }
+
+        internal UsuarioLoginResultadoDTO ValidarCredenciales(string usuario, string contraseña)
+        {
+            string hashedPasswordIngresada = HashPassword(contraseña);
+
+            var datosUsuario = _repo.ObtenerUsuarioParaLogin(usuario);
+
+            // 3. Verificamos si el usuario existe y la contraseña coincide
+            if (datosUsuario != null && datosUsuario.PasswordHashAlmacenado == hashedPasswordIngresada)
+            {
+                // ¡Éxito! Devolvemos los datos necesarios
+                return new UsuarioLoginResultadoDTO
+                {
+                    LoginExitoso = true,
+                    IdUsuario = datosUsuario.IdUsuario,
+                    Username = datosUsuario.Username,
+                    NombreRol = datosUsuario.NombreRol,
+                    IdMedicoAsociado = datosUsuario.IdMedicoAsociado // Puede ser null
+                };
+            }
+            else
+            {
+                // Falla (usuario no encontrado o contraseña incorrecta)
+                return new UsuarioLoginResultadoDTO { LoginExitoso = false };
+
+            }
         }
     }
 }

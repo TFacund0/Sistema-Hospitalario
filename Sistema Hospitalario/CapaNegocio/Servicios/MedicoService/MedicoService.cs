@@ -2,6 +2,7 @@
 using Sistema_Hospitalario.CapaDatos.Interfaces;
 using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ConsultaDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
@@ -215,51 +216,20 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             return resultado;
         }
 
-        public string ObtenerHistorialFormateado(string idPaciente, int filtroDniMedico, DateTime? filtroFecha)
+        public List<HistorialItemDto> ObtenerHistorial(int idPaciente, int IdMedico)
         {
-            
             // 1. Traemos las dos listas
-            var listaConsultas = _repo.ObtenerHistorialConsultas(Convert.ToInt32(idPaciente));
-            var listaInternaciones = _repo.ObtenerHistorialInternaciones(Convert.ToInt32(idPaciente));
+            var listaConsultas = _repo.ObtenerHistorialConsultas(idPaciente);
+            var listaInternaciones = _repo.ObtenerHistorialInternaciones(idPaciente);
 
+            // 2. Las juntamos
             var listaCompleta = listaConsultas.Concat(listaInternaciones).ToList();
+      
+            listaCompleta = listaCompleta.Where(h => h.IdMedico == IdMedico).ToList();
+            
 
-            string prueba = filtroDniMedico.ToString();
-            if (!string.IsNullOrWhiteSpace(prueba))
-            {
-                // Filtra por DNI de médico (si el DNI en la BD es int, hay que convertir)
-                listaCompleta = listaCompleta.Where(h => h.DniMedico == prueba).ToList();
-            }
-
-            if (filtroFecha.HasValue)
-            {
-                // Filtra por día (ignora la hora)
-                listaCompleta = listaCompleta.Where(h => h.Fecha.Date == filtroFecha.Value.Date).ToList();
-            }
-
-            // 4. Ordenamos la lista final por fecha, de más nueva a más vieja
-            var listaOrdenada = listaCompleta.OrderByDescending(h => h.Fecha);
-
-            // 5. Convertimos la lista en un solo string (¡La Magia!)
-            if (!listaOrdenada.Any())
-            {
-                return "--- No se encontraron registros para este paciente o filtros seleccionados ---";
-            }
-
-            var sb = new StringBuilder();
-            foreach (var item in listaOrdenada)
-            {
-                sb.AppendLine($"==================================================");
-                sb.AppendLine($"  {item.Tipo.ToUpper()} - {item.Fecha.ToString("dd/MM/yyyy HH:mm")} hs.");
-                sb.AppendLine($"  Médico: {item.NombreMedico} (DNI: {item.DniMedico})");
-                sb.AppendLine($"--------------------------------------------------");
-                sb.AppendLine($"Motivo/Obs: {item.Motivo}");
-                sb.AppendLine($"Diagnóstico/Proced: {item.Diagnostico}");
-                sb.AppendLine($"Tratamiento: {item.Tratamiento}");
-                sb.AppendLine($"==================================================\r\n"); // \r\n = nueva línea
-            }
-
-            return sb.ToString();
+            // 4. Ordenamos y devolvemos la lista de datos
+            return listaCompleta.OrderByDescending(h => h.Fecha).ToList();
         }
     }
 }

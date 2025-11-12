@@ -160,6 +160,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                                  Id_turno = t.id_turno,
                                  Paciente = p.nombre + " " + p.apellido,
                                  Medico = m.nombre + " " + m.apellido,
+                                 Id_medico = m.id_medico,
                                  Procedimiento = pr.nombre,
                                  FechaTurno = t.fecha_turno,
                                  Estado = e.nombre
