@@ -446,6 +446,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         // ============================= VALIDACION MÉDICO =============================
         private void CbMedico_Validating(object sender, CancelEventArgs e)
         {
+            // Si no hay médicos cargados para el procedimiento actual
+            if (!cbMedico.Enabled || !cbMedico.CausesValidation || _maestroMedico.Count == 0)
+            {
+                return;
+            }
+
             if (!TextoCoincideConLista(cbMedico, _maestroMedico))
             {
                 e.Cancel = true;
@@ -456,6 +462,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 errorProvider1.SetError(cbMedico, "");
             }
         }
+
 
         // ============================= VALIDACION PROCEDIMIENTO =============================
         private void CbProcedimiento_Validating(object sender, CancelEventArgs e)
@@ -564,8 +571,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
 
-
-        // ============================= VALIDACION FECHA INICIO =============================
         // ============================= VALIDACION FECHA INICIO =============================
         private void DtpFechaInicio_Validating(object sender, CancelEventArgs e)
         {
@@ -847,6 +852,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             SincronizarHabilitacionControles();
         }
 
+        // ============================= FILTRADO DE MÉDICOS POR PROCEDIMIENTO =============================
         private void RefrescarMedicosPorProcedimiento(string nombreProc)
         {
             nombreProc = (nombreProc ?? "").Trim();
@@ -867,6 +873,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                     cbMedico.Items.Clear();
                     cbMedico.Text = "";
                     _maestroMedico.Clear();
+
+                    // 🔴 CLAVE: deshabilitás y evitás validación bloqueante
+                    cbMedico.Enabled = false;
+                    cbMedico.CausesValidation = false;
+
                     errorProvider1.SetError(cbMedico, $"No hay médicos para «{nombreProc}».");
                 }
                 else
@@ -885,6 +896,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                     _maestroMedico.Clear();
                     _maestroMedico.AddRange(fuente.Select(x => x.Display));
 
+                    // Volvemos a habilitar y validar
+                    cbMedico.Enabled = true;
+                    cbMedico.CausesValidation = true;
+
                     errorProvider1.SetError(cbMedico, "");
                 }
             }
@@ -893,6 +908,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
                 cbMedico.EndUpdate();
             }
         }
+
 
 
         private void CbProcedimiento_SelectedIndexChanged(object sender, EventArgs e)
