@@ -1,4 +1,5 @@
-﻿using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -74,11 +75,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 DataGridViewRow fila = dgvPacientes.Rows[e.RowIndex];
                 
                 MenuMedicos menu = this.FindForm() as MenuMedicos;
-                PacienteDTO paciente = fila.DataBoundItem as PacienteDTO;
+                PacienteListadoMedicoDto pacienteSeleccionado = fila.DataBoundItem as PacienteListadoMedicoDto;
 
                 if (menu != null)
                 {
-                    menu.AbrirUserControl(new UC_DetallePaciente(paciente));
+                    menu.AbrirUserControl(new UC_DetallePaciente(pacienteSeleccionado));
                 }
             }
         }

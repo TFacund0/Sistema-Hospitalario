@@ -17,23 +17,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
     public partial class UC_DetallePaciente : UserControl
     {
         private readonly MedicoService service = new MedicoService();
-        private PacienteDTO paciente;
-        public UC_DetallePaciente(PacienteDTO paciente) // crea el user control con los datos del paciente
+        private PacienteListadoMedicoDto Paciente;
+        public UC_DetallePaciente(PacienteListadoMedicoDto paciente) // crea el user control con los datos del paciente
         {
             InitializeComponent();
             CargarHistorial();
-            this.paciente = paciente; 
-            this.TBNombre.Text = paciente.nombre + " " + paciente.apellido;
-            this.txtDni.Text = paciente.dni.ToString();
-            this.TBDireccion.Text = paciente.direccion;
-            this.TBObraSocial.Text = paciente.obraSocial;
-            int diasNacimiento = ((DateTime.Now - paciente.FechaNacimiento).Days);
-            // Calcula la edad en años o meses según corresponda
+            this.Paciente = paciente; 
+            this.TBNombre.Text = paciente.Nombre + " " + paciente.Apellido;
+            this.txtDni.Text = paciente.Dni.ToString();
+            this.TBDireccion.Text = paciente.Direccion;
+            int diasNacimiento = ((DateTime.Now - paciente.FechaNacim).Days);
             if (diasNacimiento < 365) this.TBEdad.Text = (diasNacimiento / 30).ToString() + " " + "meses";
             else this.TBEdad.Text = (diasNacimiento / 365).ToString() + " " + "años";
-            this.TBContacton.Text = paciente.telefono.ToString();
-            this.TBHabitacion.Text = paciente.habitacion.ToString();
-            this.TBAfiliado.Text = paciente.nroAfiliado.ToString();
+            this.TBContacton.Text = paciente.Telefono.ToString();
+            this.TBHabitacion.Text = paciente.Habitacion.ToString();
             this.TBEstado.Text = paciente.Estado;
         }
         private void CargarHistorial()

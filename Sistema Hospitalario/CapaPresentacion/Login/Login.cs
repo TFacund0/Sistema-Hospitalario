@@ -69,7 +69,7 @@ namespace WindowsFormsInicio_de_sesion
                             case "Administrativo":
                                 menuPrincipal = new MenuAdministrativo();
                                 break;
-                            case "Medico":
+                            case "medico":
                                 menuPrincipal = new MenuMedicos();
                                 break;
                             case "Moderador": // O "Administrador" o como lo llames
