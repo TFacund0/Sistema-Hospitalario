@@ -117,6 +117,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvInternaciones.Columns["colCama"].DataPropertyName = "Id_Cama";
         }
 
+        // Carga las opciones de filtro en el ComboBox
         private void CargarOpcionesDeFiltro()
         {
             if (cboCampo == null) return;
@@ -135,7 +136,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
 
-        // Aplica el filtro basado en el campo y el texto ingresado
         // Aplica el filtro basado en el campo y el texto ingresado
         private void AplicarFiltro(string campo, string texto)
         {
@@ -211,6 +211,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             enlaceInternaciones.ResetBindings(false);
         }
 
+        // ============================ EVENTOS DE BOTONES ============================
+        // Botón Buscar
         private void btnBuscar_Click_1(object sender, EventArgs e)
         {
             var campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
@@ -218,6 +220,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             AplicarFiltro(campo, texto);
         }
 
+        // Botón Limpiar
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtBuscar.Clear();

@@ -29,9 +29,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             InitializeComponent();
 
+            // Rango razonable para fecha de nacimiento
+            dtpNacimiento.MaxDate = DateTime.Today;
+            dtpNacimiento.MinDate = DateTime.Today.AddYears(-120);
+            dtpNacimiento.Format = DateTimePickerFormat.Short;
+
             SelectEventosPaciente();
             CargarEstadosEnCombo();
         }
+
 
         // ============================= COMBOBOX ESTADO INICIAL =============================
         // Seleccionar el ComboBox al hacer foco o click
@@ -122,73 +128,86 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         // ========== VALIDACIÓN FECHA DE NACIMIENTO ==========
         private void DtpNacimiento_Validating(object sender, CancelEventArgs e)
         {
-            dtpNacimiento.Format = DateTimePickerFormat.Short; 
-            dtpNacimiento.MaxDate = DateTime.Today;            
-            dtpNacimiento.MinDate = DateTime.Today.AddYears(-110); 
+            var fecha = dtpNacimiento.Value.Date;
 
-            if (dtpNacimiento.Value > DateTime.Today)
+            if (fecha > DateTime.Today)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(dtpNacimiento, "La fecha de nacimiento no puede ser futura.");
             }
-            else if (dtpNacimiento.Value < DateTime.Today.AddYears(-120))
+            else if (fecha < DateTime.Today.AddYears(-120))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(dtpNacimiento, "La fecha de nacimiento no puede ser mayor a 120 años.");
             }
             else
             {
+                e.Cancel = false;
                 errorProvider1.SetError(dtpNacimiento, "");
             }
         }
 
+
         // ========== VALIDACIÓN DNI ==========
         private void TxtDni_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtDni.Text) || !int.TryParse(txtDni.Text, out int _))
+            string dniTexto = txtDni.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(dniTexto))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtDni, "El DNI es obligatorio y númerico.");
+                errorProvider1.SetError(txtDni, "El DNI es obligatorio.");
             }
-            else if (txtDni.Text.Length > 8)
+            else if (!dniTexto.All(char.IsDigit))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtDni, "Máximo 15 caracteres.");
+                errorProvider1.SetError(txtDni, "El DNI debe contener solo números.");
             }
-            else if (int.TryParse(txtDni.Text, out int dni) && dni <= 0 )
+            else if (dniTexto.Length < 7 || dniTexto.Length > 8)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtDni, "El DNI debe tener entre 7 y 8 dígitos.");
+            }
+            else if (int.TryParse(dniTexto, out int dni) && dni <= 0)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtDni, "El DNI debe ser un número positivo.");
             }
-            else if (txtDni.Text.Length < 7)
-            {
-                e.Cancel= true;
-                errorProvider1.SetError(txtDni, "El DNI debe ser de al menos 7 digitos.");
-            }
             else
             {
+                e.Cancel = false;
                 errorProvider1.SetError(txtDni, "");
             }
         }
 
+
         // ========== VALIDACIÓN TELÉFONO ==========
         private void TxtTelefono_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtTelefono.Text) || !int.TryParse(txtTelefono.Text, out int _))
+            string telTexto = txtTelefono.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(telTexto))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtTelefono, "El teléfono es obligatorio y númerico.");
+                errorProvider1.SetError(txtTelefono, "El teléfono es obligatorio.");
             }
-            else if (txtTelefono.Text.Length > 15)
+            else if (!telTexto.All(char.IsDigit))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtTelefono, "Máximo 15 caracteres.");
+                errorProvider1.SetError(txtTelefono, "El teléfono debe contener solo números.");
+            }
+            else if (telTexto.Length > 10)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTelefono, "El teléfono debe tener como máximo 10 dígitos.");
             }
             else
             {
+                e.Cancel = false;
                 errorProvider1.SetError(txtTelefono, "");
             }
         }
+
 
         // ========= VALIDACIÓN CORREO ==========
         private void TxtEmail_Validating(object sender, CancelEventArgs e)
@@ -229,6 +248,22 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
+        // ========== VALIDACIÓN ESTADO INICIAL ==========
+        private void CbEstadoInicial_Validating(object sender, CancelEventArgs e)
+        {
+            if (cbEstadoInicial.SelectedValue == null || (int)cbEstadoInicial.SelectedValue == 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(cbEstadoInicial, "Debe seleccionar un estado inicial.");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(cbEstadoInicial, "");
+            }
+        }
+
+
         //============================= RESTRICCIONES DE TECLADO =============================
 
         // Permitir solo letras, espacios y teclas de control
@@ -249,6 +284,32 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         // ============================ BOTÓN GUARDAR =============================
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
+            // Ejecutar todas las validaciones de los controles
+            bool controlesValidos = this.ValidateChildren();
+
+            if (!controlesValidos)
+            {
+                MessageBox.Show(
+                    "Por favor, corregí los errores antes de guardar.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            // Chequeo extra por si el combo quedó raro
+            if (cbEstadoInicial.SelectedValue == null || (int)cbEstadoInicial.SelectedValue == 0)
+            {
+                MessageBox.Show(
+                    "Debe seleccionar un estado inicial.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             var dto = new PacienteAltaDto
             {
                 Nombre = txtNombre.Text.Trim(),
@@ -275,6 +336,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 MessageBox.Show(Error, "No se pudo guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // ============================ BOTÓN LIMPIAR =============================
         private void BtnLimpiar_Click(object sender, EventArgs e)

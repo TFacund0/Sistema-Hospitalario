@@ -16,6 +16,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         public ProcedimientoRepository()
         {
         }
+
+        // Implementación de los métodos de la interfaz IProcedimientoRepository
         public List<MostrarProcedimientoDTO> GetAll()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -29,6 +31,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Insertar un nuevo procedimiento
         public void Insertar(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -38,6 +41,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Eliminar un procedimiento por nombre
         public void Eliminar(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -51,6 +55,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Verificar si un procedimiento con el mismo nombre ya existe
         public bool ExisteNombre(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -59,6 +64,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Listar todos los procedimientos como DTOs
         public List<ProcedimientoDto> ListarProcedimientos()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

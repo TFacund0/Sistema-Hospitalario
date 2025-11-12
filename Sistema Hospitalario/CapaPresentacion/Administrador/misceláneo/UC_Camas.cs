@@ -22,6 +22,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             CargarCamas();
         }
 
+        // ===================== MÉTODOS AUXILIARES =====================
+        // Carga de camas en el DataGridView
         private void CargarCamas()
         {
             dgvCamas.DataSource = _service.ObtenerCamas();
@@ -41,6 +43,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 
         }
 
+        // ===================== EVENTOS DEL FORMULARIO =====================
         private void TBHabitacionCama_Validating(object sender, CancelEventArgs e)
         {
             // Intentar convertir el texto a int de forma segura
@@ -76,11 +79,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             }
         }
 
+        // Botón Limpiar
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             TBHabitacionCama.Clear();
         }
 
+        // Botón Agregar
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
@@ -102,6 +107,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 }
         }
 
+        // Doble clic en celda del DataGridView
         private void dgvCamas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía

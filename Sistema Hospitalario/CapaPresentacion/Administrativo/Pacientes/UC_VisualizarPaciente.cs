@@ -4,6 +4,7 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -32,12 +33,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             InitializeComponent();
 
-            _pacienteDto = paciente ?? throw new ArgumentNullException(nameof(paciente));
+            // Configuración de fecha de nacimiento
+            dtpNacimiento.MaxDate = DateTime.Today;
+            dtpNacimiento.MinDate = DateTime.Today.AddYears(-120);
+            dtpNacimiento.Format = DateTimePickerFormat.Short;
 
+            _pacienteDto = paciente ?? throw new ArgumentNullException(nameof(paciente));
 
             ConfigurarUiSoloLectura();
             CargarDatos(_pacienteDto);
-            
+
             SelectEventosPaciente();
             CargarEstadosEnCombo();
 
@@ -56,6 +61,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 btnCancelar.Click += btnCancelar_Click;
             }
         }
+
 
         // ========================= CARGA DE DATOS DEL PACIENTE =========================
         private void CargarDatos(PacienteDetalleDto p)
@@ -173,27 +179,113 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         {
             error = null;
 
-            if (string.IsNullOrWhiteSpace(txtNombre.Text) || txtNombre.Text.Length > 50)
-            { error = "Nombre es obligatorio (máx. 50)."; return false; }
-
-            if (string.IsNullOrWhiteSpace(txtApellido.Text) || txtApellido.Text.Length > 50)
-            { error = "Apellido es obligatorio (máx. 50)."; return false; }
-
-            if (string.IsNullOrWhiteSpace(txtDni.Text) || txtDni.Text.Length > 15 || !Regex.IsMatch(txtDni.Text, @"^\d+$"))
-            { error = "DNI es obligatorio, numérico y de hasta 15 dígitos."; return false; }
-
-            if (!string.IsNullOrWhiteSpace(txtTelefono.Text))
+            // ===== Nombre (obligatorio, máx. 50) =====
+            var nombre = txtNombre.Text.Trim();
+            if (string.IsNullOrWhiteSpace(nombre))
             {
-                if (txtTelefono.Text.Length > 15 || !Regex.IsMatch(txtTelefono.Text, @"^\d+$"))
-                { error = "Teléfono debe ser numérico y de hasta 15 dígitos."; return false; }
+                error = "El nombre es obligatorio.";
+                return false;
+            }
+            if (nombre.Length > 50)
+            {
+                error = "El nombre no puede superar 50 caracteres.";
+                return false;
             }
 
-            if (!string.IsNullOrWhiteSpace(txtDireccion.Text) && txtDireccion.Text.Length > 50)
-            { error = "Dirección no puede superar 50 caracteres."; return false; }
+            // ===== Apellido (obligatorio, máx. 50) =====
+            var apellido = txtApellido.Text.Trim();
+            if (string.IsNullOrWhiteSpace(apellido))
+            {
+                error = "El apellido es obligatorio.";
+                return false;
+            }
+            if (apellido.Length > 50)
+            {
+                error = "El apellido no puede superar 50 caracteres.";
+                return false;
+            }
 
-            if (!string.IsNullOrWhiteSpace(txtObservaciones.Text) && txtObservaciones.Text.Length > 200)
-            { error = "Observaciones no puede superar 200 caracteres."; return false; }
+            // ===== DNI (obligatorio, numérico, 7–8 dígitos, positivo) =====
+            var dniTexto = txtDni.Text.Trim();
+            if (string.IsNullOrWhiteSpace(dniTexto))
+            {
+                error = "El DNI es obligatorio.";
+                return false;
+            }
+            if (!dniTexto.All(char.IsDigit))
+            {
+                error = "El DNI debe contener solo números.";
+                return false;
+            }
+            if (dniTexto.Length < 7 || dniTexto.Length > 8)
+            {
+                error = "El DNI debe tener entre 7 y 8 dígitos.";
+                return false;
+            }
+            if (int.TryParse(dniTexto, out var dniVal) && dniVal <= 0)
+            {
+                error = "El DNI debe ser un número positivo.";
+                return false;
+            }
 
+            // ===== Teléfono (obligatorio, numérico, máx. 10 dígitos) =====
+            var telTexto = txtTelefono.Text.Trim();
+            if (string.IsNullOrWhiteSpace(telTexto))
+            {
+                error = "El teléfono es obligatorio.";
+                return false;
+            }
+            if (!telTexto.All(char.IsDigit))
+            {
+                error = "El teléfono debe contener solo números.";
+                return false;
+            }
+            if (telTexto.Length > 10)
+            {
+                error = "El teléfono debe tener como máximo 10 dígitos.";
+                return false;
+            }
+
+            // ===== Dirección (obligatoria, máx. 100) =====
+            var direccion = txtDireccion.Text.Trim();
+            if (string.IsNullOrWhiteSpace(direccion))
+            {
+                error = "La dirección es obligatoria.";
+                return false;
+            }
+            if (direccion.Length > 100)
+            {
+                error = "La dirección no puede superar 100 caracteres.";
+                return false;
+            }
+
+            // ===== Observaciones (opcional, máx. 200) =====
+            var obs = txtObservaciones.Text.Trim();
+            if (obs.Length > 200)
+            {
+                error = "Observaciones no puede superar 200 caracteres.";
+                return false;
+            }
+
+            // ===== Email (obligatorio, máx. 100, formato válido) =====
+            var email = txtEmail.Text.Trim();
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                error = "El correo es obligatorio.";
+                return false;
+            }
+            if (email.Length > 100)
+            {
+                error = "El correo no puede superar 100 caracteres.";
+                return false;
+            }
+            if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
+            {
+                error = "Formato de correo inválido.";
+                return false;
+            }
+
+            // ===== Estado (en modo edición, obligatorio) =====
             if (_modoEdicion)
             {
                 var sel = cbEstadoInicial.SelectedItem as EstadoPacienteDto;
@@ -204,18 +296,23 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(txtEmail.Text))
-            {
-                if (txtEmail.Text.Length > 100 || !Regex.IsMatch(txtEmail.Text,
-                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase))
-                { error = "Email debe ser válido y de hasta 100 caracteres."; return false; }
-            }
+            // ===== Fecha de nacimiento (no futura, no más de 120 años) =====
+            var fechaNac = dtpNacimiento.Value.Date;
 
-            if (dtpNacimiento.Value > DateTime.Today)
-            { error = "La fecha de nacimiento no puede ser futura."; return false; }
+            if (fechaNac > DateTime.Today)
+            {
+                error = "La fecha de nacimiento no puede ser futura.";
+                return false;
+            }
+            if (fechaNac < DateTime.Today.AddYears(-120))
+            {
+                error = "La fecha de nacimiento no puede ser mayor a 120 años.";
+                return false;
+            }
 
             return true;
         }
+
 
         // ========================= EVENTOS BOTONES =========================
 

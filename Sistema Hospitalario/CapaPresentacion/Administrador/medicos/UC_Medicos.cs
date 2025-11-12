@@ -16,6 +16,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
     public partial class UC_Medicos : UserControl
     {
+        // Servicio para interactuar con la capa de negocio
         private static readonly MedicoService medicoService = new MedicoService();
         private readonly MedicoService _service = medicoService;
 
@@ -27,6 +28,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             ConfigurarEstilosGrilla();
         }
 
+        // ===================== CONFIGURACIÓN Y CARGA DATAGRIDVIEW =====================
         private void RefrescarGrilla(string campo = null, string valor = null)
         {
 
@@ -40,6 +42,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
+        // ===================== CONFIGURAR ESTILOS GRILLA =====================
         private void ConfigurarEstilosGrilla()
         {
 
@@ -56,6 +59,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             dgvMedicos.DefaultCellStyle.Font = new Font("Segoe UI", 9);
         }
 
+        // ===================== CARGAR COMBO ORDENAMIENTO =====================
         private void CargarComboOrdenamiento()
         {
  
@@ -65,7 +69,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             cboCampo.DataSource = listaDeNombres;
         }
 
-         private void  BtnBuscar_Click(object sender, EventArgs e)
+        // ===================== EVENTOS CONTROLES =====================
+        // Botón Buscar
+        private void  BtnBuscar_Click(object sender, EventArgs e)
         {
  
             string campo = (string)cboCampo.SelectedItem;
@@ -74,6 +80,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             RefrescarGrilla(campo, valor);
         }
 
+        // Botón Limpiar
         private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             txtBuscar.Clear();
@@ -83,6 +90,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             txtBuscar.Focus();
         }
 
+        // Doble clic en fila del DataGridView para eliminar médico
         private void DgvMedicos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -114,6 +122,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
+        // Botón Nuevo Paciente
         private void BtnNuevoPaciente_Click(object sender, EventArgs e)
         {
             MenuModer parentForm = this.FindForm() as MenuModer;

@@ -47,6 +47,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             }
         }
 
+        // ===================== CONFIGURACIÓN Y CARGA DATAGRIDVIEW =====================
         private void ConfigurarTablaActividad()
         {
             dgvPacientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selección de fila completa
@@ -60,6 +61,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             dgvPacientes.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo del encabezado
         }
 
+        // Carga la lista de pacientes desde el servicio y la enlaza al DataGridView
         private void CargarPacientesDatagridview()
         {
             listaPacientes = pacienteService.ListadoPacientesDGV();
@@ -67,6 +69,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             dgvPacientes.DataSource = enlacePacientes;
         }
 
+        // ===================== CONFIGURAR ENLAZADO DE DATOS =====================
         // Configura el enlace entre las columnas del DataGridView y las propiedades del DTO
         private void ConfigurarEnlazadoDatosPacienteColumnas()
         {
@@ -79,7 +82,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
         }
 
         // ===================== BUSQUEDA DE PACIENTE POR FILTRADO =====================
-
         // Carga las opciones de filtro en el ComboBox
         private void CargarOpcionesDeFiltro()
         {
@@ -147,6 +149,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             enlacePacientes.ResetBindings(false);
         }
 
+        // ===================== CARGAR GRÁFICO PACIENTES REGISTRADOS POR DÍA =====================
         private void CargarGraficoPacientesRegistradosPorDia()
         {
             var _estadisticasService = new EstadisticasService();
@@ -172,6 +175,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             chartPacientesPorDia.Series.Add(serie);
             serie["PointWidth"] = "0.4"; // opcional, para que no queden barras súper anchas
         }
+
+        // ===================== CARGAR GRÁFICO PACIENTES POR ESTADO =====================
         private void CargarGraficoPacientesPorEstado()
         {
             var _estadisticasService = new EstadisticasService();

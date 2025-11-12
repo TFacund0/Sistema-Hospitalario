@@ -15,7 +15,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
     public partial class UC_Especialidades : UserControl
     {
-
+        // ===================== INSTANCIAS DE SERVICIOS =====================
         private readonly EspecialidadService _service; 
 
         public UC_Especialidades()
@@ -25,6 +25,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             CargarEspecialidades();
         }
 
+        // ===================== MÉTODOS AUXILIARES =====================
+        // Carga de especialidades en el DataGridView
         private void CargarEspecialidades()
         {
             dgvEspecialidades.DataSource = _service.ObtenerEspecialidades();
@@ -44,6 +46,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 
         }
 
+        // ===================== EVENTOS DEL FORMULARIO =====================
         private void TBESPECIALIDAD_Validating(object sender, CancelEventArgs e)
         {
             string nombre = TBESPECIALIDAD.Text.Trim();
@@ -93,12 +96,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             }
         }
 
-
+        // Botón Limpiar
         private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             TBESPECIALIDAD.Clear();
         }
 
+        // Botón Agregar
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
@@ -117,6 +121,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 }
         }
 
+        // Doble clic en la grilla para eliminar una especialidad
         private void DgvEspecialidades_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía

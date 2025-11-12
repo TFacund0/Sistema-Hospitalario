@@ -18,11 +18,13 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
         {
         }
 
+        // Obtener todas las habitaciones
         public List<MostrarHabitacionDTO> ObtenerHabitaciones()
         {
             return _repo.GetAll();
         }
 
+        // Agregar una nueva habitación
         public void AgregarHabitacion(int nroPiso, int tipoHabitacion)
         {
             if (nroPiso < 0)
@@ -31,22 +33,26 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
             _repo.Insertar(nroPiso, tipoHabitacion);
         }
 
+        // Eliminar una habitación por número de piso y número de habitación
         public void EliminarHabitacion(int nroPiso, int nroHabitacion)
         {
             _repo.Eliminar(nroPiso, nroHabitacion);
         }
 
+        // Listar tipos de habitación
         public List<TiposHabitacionDTO> ListarTiposHabitacion()
         {
             return _repo.ListarTiposHabitacion();
         }
 
+        // ===================== TOTAL HABITACIONES =====================
         public int TotalHabitaciones()
         {
             var totalHabitaciones = _repo.GetAll().Count;
             return totalHabitaciones;
         }
 
+        // Listar habitaciones por piso (entrada como texto)
         public List<HabitacionDto> ListarHabitacionesXPiso(string pisoTexto)
         {
             var habitaciones = new List<HabitacionDto>();

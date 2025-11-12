@@ -14,6 +14,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         public PacienteRepository()
         {
         }
+
+        // Método para obtener todos los pacientes con estado "Activo", "Internado" o "Alta"
         public List<PacienteDto> GetAll()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -41,6 +43,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Método para insertar un nuevo paciente
         public void Insertar(PacienteDto paciente)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -75,6 +78,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }   
         }
 
+        // Método para eliminar un paciente por su ID
         public void Eliminar(int id_paciente)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -88,6 +92,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Método para actualizar un paciente existente
         public void Actualizar(int id_paciente, PacienteDto pacienteActualizado)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -117,7 +122,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 paciente.correo_electronico = pacienteActualizado.Email;
                 paciente.id_estado_paciente = estado.id_estado_paciente;
 
-                // 🔧 Ahora actualizamos el teléfono
+                // Ahora actualizamos el teléfono
                 if (!string.IsNullOrWhiteSpace(pacienteActualizado.Telefono))
                 {
                     var primerTelefono = paciente.telefono.FirstOrDefault();
@@ -141,7 +146,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-
+        // Método para obtener todos los estados de paciente
         public List<EstadoPacienteDto> GetEstados()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())

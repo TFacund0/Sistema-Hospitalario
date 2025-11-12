@@ -36,6 +36,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
             btnClic.BackColor = Color.LightSeaGreen;
         }
 
+        // Método para abrir UserControls dentro del panel contenedor
         public void AbrirUserControl(UserControl uc)
         {
             try
@@ -54,30 +55,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
             }              // Lo trae al frente
         }
 
+        // ===================== EVENTOS DE BOTONES DEL MENÚ =====================
+        // Pacientes
         private void btn_pacientes_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_usuarios());
-        }
-
-        private void btn_home_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnHospitalizacion_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnProcedimientos_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btn_salir_Click(object sender, EventArgs e)
@@ -95,18 +78,21 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
             }
         }
 
+        // Médicos
         private void btn_medico_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Medicos());
         }
 
+        // Especialidades
         private void button1_Click_1(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Especialidades());
         }
 
+        // Camas
         private void button3_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
@@ -114,12 +100,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
             AbrirUserControl(new UC_Camas());
         }
 
+        // Habitaciones
         private void button2_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Habitaciones());
         }
 
+        // Procedimientos
         private void button4_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);

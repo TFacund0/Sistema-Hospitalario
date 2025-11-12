@@ -21,6 +21,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             CargarProcedimientos();
         }
 
+        // ===================== MÉTODOS AUXILIARES =====================
+        // Carga de procedimientos en el DataGridView
         private void CargarProcedimientos()
         {
             dgvProcedimientos.DataSource = _service.ObtenerProcedimientos();
@@ -40,6 +42,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 
         }
 
+        // ===================== EVENTOS DEL FORMULARIO =====================
+        // Validación del TextBox de procedimiento
         private void TBPROCEDIMIENTO_Validating(object sender, CancelEventArgs e)
         {
             string nombre = TBPROCEDIMIENTO.Text.Trim();
@@ -89,11 +93,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             }
         }
 
+        // Eventos de los botones
         private void BtnLimpiar_Click(object sender, EventArgs e)
         {
             TBPROCEDIMIENTO.Clear();
         }
 
+        // Evento para agregar procedimiento
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
@@ -111,6 +117,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                     MessageBox.Show("Error al agregar especialidad: " + ex.Message);
                 }
         }
+        
+        // Evento para eliminar procedimiento al hacer doble clic en una fila
         private void DgvProcedimientos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Evita que se ejecute si se hace doble clic en el encabezado o una fila vacía

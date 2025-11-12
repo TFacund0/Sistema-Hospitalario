@@ -18,6 +18,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HomeService
         {
         }
 
+        // Listar actividades recientes
         public List<HomeDto> ListarActividadReciente(int cantidad)
         {
             // Trae la lista y filtra solo las actividades del último mes

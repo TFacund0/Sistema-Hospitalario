@@ -145,9 +145,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         break;
                     case "DNI":
                         if (int.TryParse(busqueda, out int dniBuscado))
-                            query = query.Where(t => t.Dni == dniBuscado); // o Dni según el DTO que uses
+                            query = query.Where(t => t.Dni == dniBuscado); 
                         else
-                            query = Enumerable.Empty<PacienteDto>(); // o no aplicar filtro
+                            query = Enumerable.Empty<PacienteDto>();
                         break;
                     case "Estado":
                         query = query.Where(t => (t.Estado_paciente ?? "").ToLower().Contains(busqueda));

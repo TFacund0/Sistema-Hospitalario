@@ -14,6 +14,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         public InternacionRepository()
         {
         }
+        
+        // Listar todas las internaciones
         public List<InternacionDto> GetAll()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -35,6 +37,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Insertar una nueva internación
         public void Insertar(InternacionDto internacion)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -100,6 +103,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Eliminar una internación por ID
         public void Eliminar(int id_internacion)
             {
                 using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -113,6 +117,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 }
             }
 
+        // Actualizar una internación existente
         public void Actualizar(int id_internacion, InternacionDto internacion)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())

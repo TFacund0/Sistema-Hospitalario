@@ -18,6 +18,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             
         }
 
+        // Obtener todas las especialidades
         public List<EspecialidadDTO> GetAll()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -32,6 +33,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Insertar una nueva especialidad
         public void Insertar(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -41,6 +43,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Eliminar una especialidad por nombre
         public void Eliminar(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -68,6 +71,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        // Verificar si una especialidad con el mismo nombre ya existe
         public bool ExisteNombre(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

@@ -18,6 +18,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
     public partial class UC_agregarMedico : System.Windows.Forms.UserControl
     {
+        // Servicio para interactuar con la capa de negocio
         private static readonly MedicoService medicoService = new MedicoService();
         private readonly MedicoService _service = medicoService;
         public UC_agregarMedico()
@@ -26,7 +27,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             CargarEspecialidades();
         }
 
+        // ============================= VALIDACIONES =============================
         
+        // ====== Validacion Nombre ======
         private void TBNOMBRE_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBNOMBRE.Text))
@@ -45,6 +48,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
+        // ====== Validacion Apellido ======
         private void TBAPELLIDO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBAPELLIDO.Text))
@@ -63,6 +67,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
+        // ====== Validacion DNI ======
         private void TBDNI_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBDNI.Text) || !long.TryParse(TBDNI.Text, out _))
@@ -81,6 +86,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
+        // ====== Validacion Dirección ======
         private void TBDIRECCION_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBDIRECCION.Text))
@@ -99,8 +105,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
-        
-
+        // ====== Validacion Matrícula ======
         private void TBMATRICULA_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBMATRICULA.Text))
@@ -119,8 +124,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
-       
-
+        // ====== Validacion Correo Electrónico ======
         private void TBCORREO_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBCORREO.Text))
@@ -144,47 +148,44 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             }
         }
 
-        private void TBRUTAARCHIVO_Validating(object sender, CancelEventArgs e)
-        {
-
-        }
 
         // ============================= BOTONES =============================
-
-        private void BtnGuardar_Click_1(object sender, EventArgs e)
-{
-    try
-    {
-        if (!this.ValidateChildren())
+        // ====== Botón Guardar ======
+        private void BtnGuardar_Click_1(object sender, EventArgs e) 
         {
-          MessageBox.Show("Por favor, corrija los errores antes de guardar.", "Error",
-          MessageBoxButtons.OK, MessageBoxIcon.Error);
-          return;
-        }
-        string nombre = TBNOMBRE.Text.Trim();
-        string apellido = TBAPELLIDO.Text.Trim();
-        string dni = TBDNI.Text.Trim();
-        string direccion = TBDIRECCION.Text.Trim();
-        string matricula = TBMATRICULA.Text.Trim();
-        string correo = TBCORREO.Text.Trim();
+            try
+            {
+                if (!this.ValidateChildren())
+                {
+                    MessageBox.Show("Por favor, corrija los errores antes de guardar.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string nombre = TBNOMBRE.Text.Trim();
+                string apellido = TBAPELLIDO.Text.Trim();
+                string dni = TBDNI.Text.Trim();
+                string direccion = TBDIRECCION.Text.Trim();
+                string matricula = TBMATRICULA.Text.Trim();
+                string correo = TBCORREO.Text.Trim();
         
-        int idEspecialidad = (int)comboBox1.SelectedValue;  
+                int idEspecialidad = (int)comboBox1.SelectedValue;  
 
-        // Guardar en base de datos
-        _service.AgregarMedico(nombre, apellido, dni, direccion, matricula, correo, idEspecialidad);
+                // Guardar en base de datos
+                _service.AgregarMedico(nombre, apellido, dni, direccion, matricula, correo, idEspecialidad);
 
-        MessageBox.Show("Médico registrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Médico registrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        // Opcional: Limpiar el formulario después de guardar
-        BtnLimpiar_Click_1(sender, e); 
+                // Opcional: Limpiar el formulario después de guardar
+                BtnLimpiar_Click_1(sender, e); 
 
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show("Error al registrar el médico: " + ex.Message);
-    }
-}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al registrar el médico: " + ex.Message);
+            }
+        }
 
+        // ====== Botón Limpiar ======
         private void BtnLimpiar_Click_1(object sender, EventArgs e)
         {
             TBNOMBRE.Clear();
@@ -200,6 +201,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             errorProvider1.Clear();
         }
 
+        // ====== Botón Cancelar ======
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
             MenuModer parentForm = this.FindForm() as MenuModer;
@@ -207,6 +209,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
             parentForm.AbrirUserControl(new UC_Medicos()); 
         }
 
+        // ============================= MÉTODOS AUXILIARES =============================
+        // Cargar especialidades en el ComboBox
         private void CargarEspecialidades()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

@@ -19,6 +19,7 @@ namespace WindowsFormsInicio_de_sesion
 {
     public partial class Login : Form
     {
+        // Servicio para manejar la lógica de usuarios
         UsuarioService _usuarioService = new UsuarioService();
 
         public Login()
@@ -26,6 +27,8 @@ namespace WindowsFormsInicio_de_sesion
             InitializeComponent();
         }
 
+        // ======================= EVENTO DEL BOTÓN INGRESAR =======================
+        // Aquí se maneja la lógica de autenticación y redirección según el rol del usuario.
         private void BotonIngresar_Click_1(object sender, EventArgs e)
         {
             string usuario = txtUsuario.Text.Trim();
@@ -93,6 +96,8 @@ namespace WindowsFormsInicio_de_sesion
             }
         }
 
+        // ======================= MÉTODOS AUXILIARES =======================
+        // Método para calcular el hash SHA-256 de una cadena
         private string CalcularSha256(string texto)
         {
             using (var sha = System.Security.Cryptography.SHA256.Create())

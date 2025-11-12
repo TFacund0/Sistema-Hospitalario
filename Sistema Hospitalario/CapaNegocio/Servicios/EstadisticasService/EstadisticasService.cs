@@ -17,6 +17,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             _repo = new EstadisticasRepository();
         }
 
+        // Obtener cantidad de pacientes activos y altas por día en la última semana
         public List<PacientesPorDiaDto> ObtenerPacientesSemana()
         {
             var lista = new List<PacientesPorDiaDto>();
@@ -40,6 +41,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             return lista;
         }
 
+        // Obtener distribución de camas (ocupadas vs disponibles)
         public CamasDistribucionDto ObtenerDistribucionCamas()
         {
             int ocupadas = _repo.ContarCamasPorDisponibilidad("ocupada");
@@ -51,6 +53,8 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
                 Disponibles = disponibles
             };
         }
+
+        // Obtener cantidad de turnos por día en la última semana
         public List<TurnosPorDiaDto> ObtenerTurnosPorDiaUltimaSemana()
         {
             DateTime hoy = DateTime.Today;
@@ -76,6 +80,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             return lista;
         }
 
+        // Obtener distribución de estados de turnos en la última semana
         public TurnosEstadosDistribucionDto ObtenerDistribucionEstadosTurnosUltimaSemana()
         {
             DateTime hoy = DateTime.Today;
@@ -96,6 +101,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             };
         }
 
+        // Obtener cantidad de pacientes registrados por día en la última semana
         public List<PacientesRegistradosPorDiaDto> ObtenerPacientesRegistradosPorDiaUltimaSemana()
         {
             DateTime hoy = DateTime.Today;
@@ -121,6 +127,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             return lista;
         }
 
+        // Obtener distribución de pacientes por estado (activo, internado, alta)
         public PacientesEstadosDistribucionDto ObtenerDistribucionPacientesPorEstado()
         {
             // El repo devuelve un diccionario estado -> cantidad

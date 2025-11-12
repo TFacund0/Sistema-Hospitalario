@@ -15,6 +15,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
         }
 
+        // Listar actividad reciente: turnos, internaciones, pacientes registrados
         public List<HomeDto> ListarActividad(int cantidad)
         { 
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
