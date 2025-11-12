@@ -1,4 +1,5 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
+﻿using Sistema_Hospitalario.CapaPresentacion.Administrador.Backups;
+using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
 using System;
@@ -41,19 +42,24 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
         {
             try
             {
-                foreach (Control c in panelContenedor.Controls) c.Dispose();
+                // Limpia el contenedor correctamente
+                foreach (Control c in panelContenedor.Controls)
+                    c.Dispose();
+
                 panelContenedor.Controls.Clear();
 
+                // Configura el UserControl
                 uc.Dock = DockStyle.Fill;
                 panelContenedor.Controls.Add(uc);
                 uc.BringToFront();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al inicializar: {ex.Message}",
+                MessageBox.Show($"Error al cargar la sección: {ex.Message}",
                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }              // Lo trae al frente
+            }
         }
+
 
         // ===================== EVENTOS DE BOTONES DEL MENÚ =====================
         // Pacientes
@@ -113,5 +119,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Procedimientos());
         }
+
+        // Backups
+        private void btn_backup_Click(object sender, EventArgs e)
+        {
+            Boton_Click(sender, e);
+            AbrirUserControl(new UC_Backups());
+        }
+
     }
 }
