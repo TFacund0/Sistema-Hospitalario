@@ -40,6 +40,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             CargarGraficoEstadoTurnos();
         }
 
+        // ===================== CONFIGURACIÓN DE CONTROLES DE DATOS =====================
         private void ConfigurarLabelsDatosTurno()
         {
             lblTurnosPendientes.Text = _turnoService.CantidadTurnosPendientes().ToString();
@@ -47,6 +48,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             lblTurnosCancelados.Text = _turnoService.CantidadTurnosPorEstado("Cancelado").ToString();
         }
 
+        // ===================== CONFIGURACIÓN DEL DATAGRIDVIEW =====================
         private void ConfigurarActividad()
         {
             dgvTurnos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -149,6 +151,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             enlaceTurnos.ResetBindings(false);
         }
 
+        // ===================== CARGA DE GRÁFICOS TURNOS POR DIA =====================
         private void CargarGraficoTurnosPorDia()
         {
             var _estadisticasService = new EstadisticasService();
@@ -177,6 +180,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             serieTurnos["PointWidth"] = "0.4";
         }
 
+        // ===================== CARGA DE GRÁFICOS ESTADO DE TURNOS =====================
         private void CargarGraficoEstadoTurnos()
         {
             var _estadisticasService = new EstadisticasService();

@@ -36,6 +36,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             }
         }
 
+        // ===================== CARGAR INFORMACIÓN DE LOS PANELES =====================
         private void CargarInformacionPaneles()
         {
             var _turnoService = new TurnoService();
@@ -57,6 +58,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             lblPacientesEgresos.Text = _pacienteService.ListarPacienteEgresados().Count().ToString();
         }
 
+        // ===================== CARGAR GRÁFICOS =====================
         private void CargarGraficoPacientesSemana()
         {
             var _estadisticasService = new EstadisticasService();
@@ -65,7 +67,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             chartPacientes.ChartAreas[0].AxisX.Title = "Día";
             chartPacientes.ChartAreas[0].AxisY.Title = "Cantidad de Pacientes";
 
-            // 👉 Pedimos los datos ya procesados al servicio
             var datosSemana = _estadisticasService.ObtenerPacientesSemana();
 
             Series serieActivos = new Series("Activos")
@@ -95,7 +96,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             serieAltas["PointWidth"] = "0.4";
         }
 
-
+        // ===================== CARGAR GRÁFICO DE CAMAS =====================
         private void CargarGraficoCamas()
         {
             var _estadisticasService = new EstadisticasService();
