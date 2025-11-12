@@ -22,5 +22,6 @@ namespace Sistema_Hospitalario.CapaDatos.Interfaces
         List<HistorialItemDto> ObtenerHistorialConsultas(int idPaciente);
 
         List<HistorialItemDto> ObtenerHistorialInternaciones(int idPaciente);
+        List<HistorialItemDto> ObtenerHistorialTurnos(int idPaciente);
     }
 }

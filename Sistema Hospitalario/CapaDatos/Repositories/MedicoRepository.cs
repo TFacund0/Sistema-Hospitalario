@@ -246,5 +246,27 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     .ToList();
             }
         }
+
+        public List<HistorialItemDto> ObtenerHistorialTurnos(int idPaciente)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                return db.turno
+                    .Where(t => t.id_paciente == idPaciente)
+                    .OrderByDescending(t => t.fecha_turno) // Ordenamos
+                    .Select(t => new HistorialItemDto
+                    {
+                        Fecha = t.fecha_turno,
+                        Tipo = "Turno (" + t.estado_turno.nombre + ")", 
+                        Motivo = t.motivo,
+                        Diagnostico = (t.procedimiento != null ? t.procedimiento.nombre : "N/A"), // Mostramos el procedimiento si lo tiene
+                        Tratamiento = "N/A", 
+                        NombreMedico = t.medico.nombre + " " + t.medico.apellido,
+                        DniMedico = t.medico.DNI.ToString(),
+                        IdMedico = t.medico.id_medico
+                    })
+                    .ToList();
+            }
+        }
     }
 }
