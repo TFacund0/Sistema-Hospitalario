@@ -36,88 +36,96 @@ namespace WindowsFormsInicio_de_sesion
 
             try
             {
-
-                UsuarioLoginResultadoDTO resultadoLogin = _usuarioService.ValidarCredenciales(usuario, contraseña);
-
-                if (resultadoLogin.LoginExitoso)
-                {
-                    SesionUsuario.Login(resultadoLogin);
-                }
-
-                    // Usuarios de prueba (hardcodeados)
-                    if (usuario == "admin" && contraseña == "1234")
+                // ================== 1) Usuarios de prueba hardcodeados ==================
+                if (usuario == "admin" && contraseña == "1234")
                 {
                     this.Hide();
                     new MenuAdministrativo().ShowDialog();
                     this.Close();
+                    return;
                 }
                 else if (usuario == "medico" && contraseña == "1234")
                 {
                     this.Hide();
                     new MenuMedicos().ShowDialog();
                     this.Close();
+                    return;
                 }
                 else if (usuario == "mod" && contraseña == "1234")
                 {
                     this.Hide();
                     new MenuModer().ShowDialog();
                     this.Close();
+                    return;
                 }
                 else if (usuario == "gerente" && contraseña == "1234")
                 {
                     this.Hide();
                     new MenuGerente().ShowDialog();
                     this.Close();
+                    return;
                 }
 
-                // Usuarios reales desde la base de datos
-                else if (resultadoLogin != null)
+                // ================== 2) Usuarios reales en BD ==================
+                UsuarioLoginResultadoDTO resultadoLogin = _usuarioService.ValidarCredenciales(usuario, contraseña);
+
+                // Si el servicio devuelve null o LoginExitoso == false, credenciales inválidas
+                if (resultadoLogin == null || !resultadoLogin.LoginExitoso)
                 {
-                    this.Hide();
-
-                    switch (resultadoLogin.NombreRol.ToLower())
-                    {
-                        case "administrativo":
-                            new MenuAdministrativo().ShowDialog();
-                            break;
-
-                        case "medico":
-                            new MenuMedicos().ShowDialog();
-                            break;
-
-                        case "administrador":
-                        case "moderador":
-                            new MenuModer().ShowDialog();
-                            break;
-
-                        case "gerente":
-                            new MenuGerente().ShowDialog();
-                            break;
-
-                        default:
-                            MessageBox.Show("El rol del usuario no tiene una pantalla asignada.",
-                                            "Rol no configurado",
-                                            MessageBoxButtons.OK,
-                                            MessageBoxIcon.Warning);
-                            break;
-                    }
-
-                    this.Close();
+                    MessageBox.Show(
+                        "Usuario o contraseña incorrectos.",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                    return;
                 }
 
-                // Si no coincide ningún caso
-                else
+                // Si llegamos acá, el login fue exitoso
+                SesionUsuario.Login(resultadoLogin);
+
+                this.Hide();
+
+                switch (resultadoLogin.NombreRol.ToLower())
                 {
-                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    case "administrativo":
+                        new MenuAdministrativo().ShowDialog();
+                        break;
+
+                    case "medico":
+                        new MenuMedicos().ShowDialog();
+                        break;
+
+                    case "administrador":
+                    case "moderador":
+                        new MenuModer().ShowDialog();
+                        break;
+
+                    case "gerente":
+                        new MenuGerente().ShowDialog();
+                        break;
+
+                    default:
+                        MessageBox.Show("El rol del usuario no tiene una pantalla asignada.",
+                                        "Rol no configurado",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
+                        break;
                 }
+
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al inicializar: {ex.Message}",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    $"Error al inicializar: {ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
+
 
         // ======================= MÉTODOS AUXILIARES =======================
         // Método para calcular el hash SHA-256 de una cadena

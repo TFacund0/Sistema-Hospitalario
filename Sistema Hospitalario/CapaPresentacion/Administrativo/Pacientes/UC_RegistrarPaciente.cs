@@ -51,19 +51,33 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
         // Cargar los estados de paciente en el ComboBox
         private void CargarEstadosEnCombo()
         {
-            var estados = _estadoService.ListarEstados();
+            var estados = _estadoService.ListarEstados() ?? new List<EstadoPacienteDto>();
 
-            var lista = new List<EstadoPacienteDto>
-        {
-            new EstadoPacienteDto { Id = 0, Nombre = "— Seleccioná —" }
-        };
-            lista.AddRange(estados);
-
-            cbEstadoInicial.DataSource = lista;
+            // sin “— Seleccioná —” porque no queremos que el usuario cambie nada
+            cbEstadoInicial.DataSource = estados;
             cbEstadoInicial.DisplayMember = nameof(EstadoPacienteDto.Nombre);
             cbEstadoInicial.ValueMember = nameof(EstadoPacienteDto.Id);
-            cbEstadoInicial.SelectedIndex = 0;
+
+            // buscar el estado ACTIVO (case-insensitive)
+            var activo = estados.FirstOrDefault(e =>
+                string.Equals(e.Nombre?.Trim(), "activo", StringComparison.OrdinalIgnoreCase));
+
+            if (activo != null)
+            {
+                cbEstadoInicial.SelectedValue = activo.Id;
+                cbEstadoInicial.Text = activo.Nombre;
+            }
+            else
+            {
+                // fallback: primer estado disponible, por si no existe "activo" en BD
+                if (estados.Count > 0) cbEstadoInicial.SelectedIndex = 0;
+            }
+
+            // bloquear edición/selección
+            cbEstadoInicial.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbEstadoInicial.Enabled = false;      // o cbEstadoInicial.Visible = false; si querés ocultarlo
         }
+
 
 
         // ============================= VALIDACIONES DE CAMPOS PACIENTE =============================
@@ -248,21 +262,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             }
         }
 
-        // ========== VALIDACIÓN ESTADO INICIAL ==========
-        private void CbEstadoInicial_Validating(object sender, CancelEventArgs e)
-        {
-            if (cbEstadoInicial.SelectedValue == null || (int)cbEstadoInicial.SelectedValue == 0)
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(cbEstadoInicial, "Debe seleccionar un estado inicial.");
-            }
-            else
-            {
-                e.Cancel = false;
-                errorProvider1.SetError(cbEstadoInicial, "");
-            }
-        }
-
 
         //============================= RESTRICCIONES DE TECLADO =============================
 
@@ -320,7 +319,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
                 FechaNacimiento = dtpNacimiento.Value,
                 Email = txtEmail.Text.Trim(),
                 Observaciones = txtObservaciones.Text.Trim(),
-                EstadoInicial = cbEstadoInicial.Text.Trim(),
+                EstadoInicial = "activo" // <-- forzado
             };
 
             var (Ok, IdGenerado, Error) = _pacienteService.Alta(dto);
@@ -351,7 +350,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
             txtEmail.Clear();
             txtObservaciones.Clear();
             dtpNacimiento.Value = DateTime.Today;
-            cbEstadoInicial.SelectedIndex = 0;
+            cbEstadoInicial.SelectedIndex = cbEstadoInicial.SelectedIndex; 
+
             errorProvider1.Clear();
         }
 

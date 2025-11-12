@@ -34,6 +34,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         private readonly List<string> _maestroMedico = new List<string>();
         private readonly List<string> _maestroProcedimiento = new List<string>();
 
+        // <<< NUEVO: cachés de DTO para poder filtrar sin reconsultar BD
+        private List<MedicoDto> _medicosMaestroDtos = new List<MedicoDto>();
+        private List<ProcedimientoDto> _procedimientosMaestroDtos = new List<ProcedimientoDto>();
+        private List<PacienteDto> _pacientesMaestroDtos = new List<PacienteDto>();   // <<< NUEVO
+
+        // Bandera para evitar reentradas en TextUpdate
+        private bool _actualizandoInterno = false;   // <<< NUEVO
+
+
+
         // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
         public event EventHandler CancelarTurnoSolicitado;
 
@@ -42,23 +52,42 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         {
             InitializeComponent();
 
-            // No permitir elegir hoy ni fechas pasadas
             dtpFechaTurno.MinDate = DateTime.Today.AddDays(1);
             dtpFechaTurno.Value = DateTime.Today.AddDays(1);
 
             DatosComboBoxPaciente();
             DatosComboBoxMedico();
             DatosComboBoxProcedimiento();
+
+            // Filtro médicos por procedimiento
+            cbProcedimiento.SelectedIndexChanged -= CbProcedimiento_SelectedIndexChanged;
+            cbProcedimiento.SelectedIndexChanged += CbProcedimiento_SelectedIndexChanged;
+
+            cbProcedimiento.SelectionChangeCommitted -= CbProcedimiento_SelectionChangeCommitted;
+            cbProcedimiento.SelectionChangeCommitted += CbProcedimiento_SelectionChangeCommitted;
+
+            // <<< NUEVO: autofiltrado mientras escribís
+            cbPaciente.TextUpdate += CbPaciente_TextUpdate;
+            cbMedico.TextUpdate += CbMedico_TextUpdate;
+            cbProcedimiento.TextUpdate += CbProcedimiento_TextUpdate;
+
+            // (Opcional pero lindo: que se despliegue al entrar)
+            cbPaciente.Enter += (s, e) => cbPaciente.DroppedDown = true;
+            cbMedico.Enter += (s, e) => cbMedico.DroppedDown = true;
+            cbProcedimiento.Enter += (s, e) => cbProcedimiento.DroppedDown = true;
         }
 
-
-        // ========================= COMBO BOX PACIENTE =========================
+        // ========================= CARGA DE DATOS EN COMBOBOXES =========================
+        // ==== Carga ComboBox Paciente ====
         private void DatosComboBoxPaciente()
         {
             List<PacienteDto> listaPacientes = _servicioPaciente.ListarPacientes();
 
-            var fuente = listaPacientes
+            _pacientesMaestroDtos = listaPacientes
                 .Where(p => p.Estado_paciente == "activo")
+                .ToList();
+
+            var fuente = _pacientesMaestroDtos
                 .Select(p => new {
                     p.Id,
                     Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"
@@ -72,12 +101,19 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbPaciente.DataSource = fuente;
             cbPaciente.DisplayMember = "Display";
             cbPaciente.ValueMember = "Id";
+
+            // <<< CLAVE: que no quede nada preseleccionado
+            cbPaciente.SelectedIndex = -1;
+            cbPaciente.Text = string.Empty;
         }
 
-        // ========================= COMBO BOX MEDICO =========================
+        // ==== Carga ComboBox Médico ====
         private void DatosComboBoxMedico()
         {
             List<MedicoDto> listaMedicos = _servicioMedico.ListarMedicos() ?? new List<MedicoDto>();
+
+            _medicosMaestroDtos = listaMedicos.ToList();
+
             var fuente = listaMedicos
                 .Select(m => new {
                     m.Id,
@@ -92,12 +128,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbMedico.DataSource = fuente;
             cbMedico.DisplayMember = "Display";
             cbMedico.ValueMember = "Id";
+
+            cbMedico.SelectedIndex = -1;          // <<< ahí
+            cbMedico.Text = string.Empty;
         }
 
-        // ========================= COMBOX BOX PROCEDIMIENTO =========================
+        // ==== Carga ComboBox Procedimiento ====
         private void DatosComboBoxProcedimiento()
         {
             List<ProcedimientoDto> listaProcedimientos = _servicioProcedimiento.ListarProcedimientos() ?? new List<ProcedimientoDto>();
+
+            _procedimientosMaestroDtos = listaProcedimientos.ToList();
 
             var fuente = listaProcedimientos
                 .Select(p => new {
@@ -113,13 +154,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             cbProcedimiento.DataSource = fuente;
             cbProcedimiento.DisplayMember = "Display";
             cbProcedimiento.ValueMember = "Id";
+
+            cbProcedimiento.SelectedIndex = -1;   // <<< ahí
+            cbProcedimiento.Text = string.Empty;
         }
+
 
         // ========================= VALIDACIONES =========================
         // ==== Validacion ComboBox Paciente ====
         private void CbPaciente_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(cbPaciente.Text) || !_maestroPaciente.Contains(cbPaciente.Text))
+            if (!TextoCoincideConLista(cbPaciente, _maestroPaciente))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(cbPaciente, "Seleccione un paciente válido de la lista.");
@@ -134,7 +179,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // ==== Validacion ComboBox Medico ====
         private void CbMedico_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(cbMedico.Text) || !_maestroMedico.Contains(cbMedico.Text))
+            if (!cbMedico.Enabled || !cbMedico.CausesValidation || _maestroMedico.Count == 0)
+                return;
+
+            if (!TextoCoincideConLista(cbMedico, _maestroMedico))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(cbMedico, "Seleccione un médico válido de la lista.");
@@ -149,7 +197,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
         // ==== Validacion ComboBox Procedimiento ====
         private void CbProcedimiento_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(cbProcedimiento.Text) || !_maestroProcedimiento.Contains(cbProcedimiento.Text))
+            if (!TextoCoincideConLista(cbProcedimiento, _maestroProcedimiento))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(cbProcedimiento, "Seleccione un procedimiento válido de la lista.");
@@ -160,6 +208,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 errorProvider1.SetError(cbProcedimiento, null);
             }
         }
+
 
         // ==== Validacion TextBox Observaciones ====
         private void TxtObservaciones_Validating(object sender, CancelEventArgs e)
@@ -289,8 +338,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 Id_procedimiento = (int)cbProcedimiento.SelectedValue,
                 FechaTurno = dtpFechaTurno.Value,
                 Observaciones = txtObservaciones.Text.Trim(),
-                Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),  
-                Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim()         
+                Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
+                Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim()
             };
 
             // Guardar usando el servicio
@@ -317,8 +366,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             }
         }
 
-
-
         // ==== Boton Limpiar ====
         private void BtnLimpiar_Click_1(object sender, EventArgs e)
         {
@@ -333,6 +380,264 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             txtTelefono.Clear();
             txtCorreo.Clear();
             errorProvider1.Clear();
+
+            // recargar médicos completos
+            DatosComboBoxMedico();
+        }
+
+
+        // ========================= FILTRADO MÉDICOS POR PROCEDIMIENTO =========================
+        private void RefrescarMedicosPorProcedimiento(string nombreProc)
+        {
+            nombreProc = (nombreProc ?? "").Trim();
+
+            // Si el procedimiento es vacío o es una "consulta", mostramos todos
+            var medicosFiltrados =
+                (string.IsNullOrEmpty(nombreProc) || EsConsulta(nombreProc))
+                ? _medicosMaestroDtos
+                : _medicosMaestroDtos.Where(m =>
+                      string.Equals(m.Especialidad?.Trim(), nombreProc, StringComparison.OrdinalIgnoreCase)
+                  ).ToList();
+
+            cbMedico.BeginUpdate();
+            try
+            {
+                if (medicosFiltrados.Count == 0)
+                {
+                    cbMedico.DataSource = null;
+                    cbMedico.Items.Clear();
+                    cbMedico.Text = "";
+                    _maestroMedico.Clear();
+
+                    cbMedico.Enabled = false;
+                    cbMedico.CausesValidation = false;
+
+                    errorProvider1.SetError(cbMedico, $"No hay médicos para «{nombreProc}».");
+                }
+                else
+                {
+                    var fuente = medicosFiltrados.Select(m => new
+                    {
+                        m.Id,
+                        Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                    }).ToList();
+
+                    cbMedico.DataSource = fuente;
+                    cbMedico.DisplayMember = "Display";
+                    cbMedico.ValueMember = "Id";
+                    cbMedico.SelectedIndex = 0;
+
+                    _maestroMedico.Clear();
+                    _maestroMedico.AddRange(fuente.Select(x => x.Display));
+
+                    cbMedico.Enabled = true;
+                    cbMedico.CausesValidation = true;
+
+                    errorProvider1.SetError(cbMedico, "");
+                }
+            }
+            finally
+            {
+                cbMedico.EndUpdate();
+            }
+        }
+
+        // Determina si el nombre del procedimiento indica una "consulta"
+        private bool EsConsulta(string nombreProc)
+        {
+            if (string.IsNullOrWhiteSpace(nombreProc)) return false;
+            var t = nombreProc.Trim();
+            return t.Equals("consulta", StringComparison.OrdinalIgnoreCase)
+                || t.StartsWith("consulta", StringComparison.OrdinalIgnoreCase);
+        }
+
+        // Eventos para refrescar médicos al cambiar procedimiento
+        private void CbProcedimiento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefrescarMedicosPorProcedimiento(cbProcedimiento.Text);
+        }
+
+        // === Alternativo por si se usa SelectionChangeCommitted ===
+        private void CbProcedimiento_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            RefrescarMedicosPorProcedimiento(cbProcedimiento.Text);
+        }
+
+        // ========================= AUTOFILTRADO DE COMBOS =========================
+        private bool TextoCoincideConLista(ComboBox cb, List<string> maestro)
+        {
+            var t = cb.Text?.Trim();
+            if (string.IsNullOrEmpty(t) || t == "— sin coincidencias —") return false;
+
+            return maestro.Any(x => string.Equals(x?.Trim(), t, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // === Autofiltrado ComboBox Médico ===
+        private void CbPaciente_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbPaciente.Text?.Trim() ?? "";
+            int caret = cbPaciente.SelectionStart;
+
+            var dtosFiltrados = string.IsNullOrEmpty(texto)
+                ? _pacientesMaestroDtos
+                : _pacientesMaestroDtos
+                    .Where(p =>
+                    {
+                        var display = $"{p.Apellido} {p.Nombre} ({p.Dni})";
+                        return display.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0;
+                    })
+                    .ToList();
+
+            // Armamos la fuente para el combo (Id + Display)
+            var fuente = dtosFiltrados
+                .Select(p => new
+                {
+                    p.Id,
+                    Display = $"{p.Apellido} {p.Nombre} ({p.Dni})"
+                })
+                .ToList();
+
+            if (fuente.Count == 0)
+            {
+                // Mostramos solo un item informativo
+                fuente.Add(new { Id = 0, Display = "— sin coincidencias —" });
+            }
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbPaciente.BeginUpdate();
+
+                cbPaciente.DataSource = null;
+                cbPaciente.DataSource = fuente;
+                cbPaciente.DisplayMember = "Display";
+                cbPaciente.ValueMember = "Id";
+
+                // actualizar maestro de strings para la validación
+                _maestroPaciente.Clear();
+                _maestroPaciente.AddRange(fuente.Select(x => x.Display));
+
+                cbPaciente.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbPaciente.EndUpdate();
+                cbPaciente.Text = texto;
+                cbPaciente.SelectionStart = Math.Min(caret, cbPaciente.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        // === Autofiltrado ComboBox Médico ===
+        private void CbMedico_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbMedico.Text?.Trim() ?? "";
+            int caret = cbMedico.SelectionStart;
+
+            var dtosFiltrados = string.IsNullOrEmpty(texto)
+                ? _medicosMaestroDtos
+                : _medicosMaestroDtos
+                    .Where(m =>
+                    {
+                        var display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})";
+                        return display.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0;
+                    })
+                    .ToList();
+
+            var fuente = dtosFiltrados
+                .Select(m => new
+                {
+                    m.Id,
+                    Display = $"{m.Apellido} {m.Nombre} ({m.Especialidad})"
+                })
+                .ToList();
+
+            if (fuente.Count == 0)
+            {
+                fuente.Add(new { Id = 0, Display = "— sin coincidencias —" });
+            }
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbMedico.BeginUpdate();
+
+                cbMedico.DataSource = null;
+                cbMedico.DataSource = fuente;
+                cbMedico.DisplayMember = "Display";
+                cbMedico.ValueMember = "Id";
+
+                _maestroMedico.Clear();
+                _maestroMedico.AddRange(fuente.Select(x => x.Display));
+
+                cbMedico.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbMedico.EndUpdate();
+                cbMedico.Text = texto;
+                cbMedico.SelectionStart = Math.Min(caret, cbMedico.Text.Length);
+                _actualizandoInterno = false;
+            }
+        }
+
+        // === Autofiltrado ComboBox Procedimiento ===
+        private void CbProcedimiento_TextUpdate(object sender, EventArgs e)
+        {
+            if (_actualizandoInterno) return;
+
+            string texto = cbProcedimiento.Text?.Trim() ?? "";
+            int caret = cbProcedimiento.SelectionStart;
+
+            var dtosFiltrados = string.IsNullOrEmpty(texto)
+                ? _procedimientosMaestroDtos
+                : _procedimientosMaestroDtos
+                    .Where(p => (p.Name ?? "")
+                        .IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+
+            var fuente = dtosFiltrados
+                .Select(p => new
+                {
+                    p.Id,
+                    Display = p.Name
+                })
+                .ToList();
+
+            if (fuente.Count == 0)
+            {
+                fuente.Add(new { Id = 0, Display = "— sin coincidencias —" });
+            }
+
+            try
+            {
+                _actualizandoInterno = true;
+                cbProcedimiento.BeginUpdate();
+
+                cbProcedimiento.DataSource = null;
+                cbProcedimiento.DataSource = fuente;
+                cbProcedimiento.DisplayMember = "Display";
+                cbProcedimiento.ValueMember = "Id";
+
+                _maestroProcedimiento.Clear();
+                _maestroProcedimiento.AddRange(fuente.Select(x => x.Display));
+
+                cbProcedimiento.DroppedDown = true;
+                Cursor.Current = Cursors.Default;
+            }
+            finally
+            {
+                cbProcedimiento.EndUpdate();
+                cbProcedimiento.Text = texto;
+                cbProcedimiento.SelectionStart = Math.Min(caret, cbProcedimiento.Text.Length);
+                _actualizandoInterno = false;
+            }
         }
 
     }
