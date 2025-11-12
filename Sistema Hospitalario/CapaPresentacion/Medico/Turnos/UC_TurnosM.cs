@@ -18,12 +18,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
     {
         private TurnoService _turnoService = new TurnoService(new TurnoRepository());
         private int _idMedicoLogueado;
+
         public panel1()
         {
             InitializeComponent();
-            cargarTurnos();
-            ConfigurarEnlazadoDatosTurnoColumnas();
+            ConfigurarEnlazadoDatosTurnoColumnas(); // primero
+            cargarTurnos();                          // después
+            ConfigurarEstilosGrilla();
         }
+
+
+        // ===================== CARGAR TURNOS INICIALES =====================
         private void cargarTurnos()
         {
             if (SesionUsuario.IdMedicoAsociado.HasValue)
@@ -33,45 +38,37 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             else
             {
                 MessageBox.Show("Error: No se pudo identificar al médico logueado.", "Error de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // O deshabilitar el formulario
+                return;
             }
-            dtpFecha.Value = DateTime.Today;
+
             RefrescarAgenda();
-            ConfigurarEstilosGrilla();
         }
+
+        // ===================== REFRESCAR AGENDA Y CONTADORES =====================
         private void RefrescarAgenda()
         {
-            DateTime fechaSeleccionada = dtpFecha.Value.Date;
-
             try
             {
-                var listaTurnos = _turnoService.ListarTurnos().Where(m => m.Id_medico == _idMedicoLogueado) ;
-                dgvTurnos.DataSource = listaTurnos;
+                var turnosMedico = _turnoService.ListarTurnos()
+                    .Where(t => t.Id_medico == _idMedicoLogueado) // o IdMedico según tu DTO
+                    .ToList();
+
+                dgvTurnos.DataSource = null;
+                dgvTurnos.DataSource = turnosMedico;
+
+                // contadores coherentes al mismo filtro
+                lblTotalPendientes.Text = turnosMedico.Count(t => t.Estado.Equals("pendiente", StringComparison.OrdinalIgnoreCase)).ToString();
+                lblTotalCompletadas.Text = turnosMedico.Count(t => t.Estado.Equals("atendido", StringComparison.OrdinalIgnoreCase)).ToString();
+                lblTotalRecanceladas.Text = turnosMedico.Count(t => t.Estado.Equals("cancelado", StringComparison.OrdinalIgnoreCase)).ToString();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar la agenda: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            // 2. Cargar los Contadores
-            try
-            {
-                var contadores = _turnoService.ObtenerContadoresAgenda(_idMedicoLogueado, fechaSeleccionada);
-
-                // Reemplazá con los nombres de tus Labels
-                lblTotalPendientes.Text = contadores.Pendientes.ToString();
-                lblTotalCompletadas.Text = contadores.Completadas.ToString();
-                lblTotalRecanceladas.Text = contadores.Canceladas.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar los contadores: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                lblTotalPendientes.Text = "N/A";
-                lblTotalCompletadas.Text = "N/A";
-                lblTotalRecanceladas.Text = "N/A";
-            }
         }
 
+
+        // ===================== CONFIGURACIÓN ESTILOS GRILLA =====================
         private void ConfigurarEstilosGrilla()
         {
             if (dgvTurnos.Columns.Contains("IdTurno"))
@@ -96,8 +93,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            dtpFecha.Value = DateTime.Today;
-            // (Limpiá los otros filtros de texto/combo si los usás)
             RefrescarAgenda();
         }
 
@@ -145,6 +140,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             dgvTurnos.Columns["colMedico"].DataPropertyName = "Medico";
             dgvTurnos.Columns["colHora"].DataPropertyName = "FechaTurno";
             dgvTurnos.Columns["colEstado"].DataPropertyName = "Estado";
+
+            // si usás IdTurno en el doble clic, agregá y mapeá la columna oculta
+            if (dgvTurnos.Columns.Contains("colIdTurno"))
+            {
+                dgvTurnos.Columns["colIdTurno"].DataPropertyName = "IdTurno";
+                dgvTurnos.Columns["colIdTurno"].Visible = false;
+            }
         }
     }
 }
