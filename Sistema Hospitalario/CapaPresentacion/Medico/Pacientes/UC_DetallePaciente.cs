@@ -97,9 +97,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             txtHistorialDetalle.AppendText(text);
         }
 
-        /// <summary>
-        /// Escribe un TÍTULO (ej: CONSULTA - FECHA)
-        /// </summary>
         private void AppendHeader(string text)
         {
             Font headerFont = new Font("Segoe UI", 16, FontStyle.Bold);

@@ -221,9 +221,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             // 1. Traemos las dos listas
             var listaConsultas = _repo.ObtenerHistorialConsultas(idPaciente);
             var listaInternaciones = _repo.ObtenerHistorialInternaciones(idPaciente);
+            var listaTurnos = _repo.ObtenerHistorialTurnos(idPaciente);
 
             // 2. Las juntamos
-            var listaCompleta = listaConsultas.Concat(listaInternaciones).ToList();
+            var listaCompleta = listaConsultas.Concat(listaInternaciones).Concat(listaTurnos).ToList();
       
             listaCompleta = listaCompleta.Where(h => h.IdMedico == IdMedico).ToList();
             
