@@ -1,11 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio;
-using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
-using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
-using Sistema_Hospitalario.CapaPresentacion.Administrador;
-using Sistema_Hospitalario.CapaPresentacion.Administrativo;
-using Sistema_Hospitalario.CapaPresentacion.Gerente;
-using Sistema_Hospitalario.CapaPresentacion.Medico;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Sistema_Hospitalario.CapaPresentacion.Administrativo;
+using Sistema_Hospitalario.CapaPresentacion.Medico;
+using Sistema_Hospitalario.CapaPresentacion.Gerente;
+using Sistema_Hospitalario.CapaPresentacion.Administrador;
+using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
 
 namespace WindowsFormsInicio_de_sesion
 {
@@ -32,77 +31,93 @@ namespace WindowsFormsInicio_de_sesion
         private void BotonIngresar_Click_1(object sender, EventArgs e)
         {
             string usuario = txtUsuario.Text.Trim();
-            string contraseña = txtContraseña.Text;
+            string contraseña = txtContraseña.Text.Trim();
 
-            if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(contraseña))
+            try
             {
-                MessageBox.Show("Por favor, ingrese usuario y contraseña.", "Campos Vacíos",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            else
-            {
-                if (usuario == "admin" && contraseña == "admin")
+                // Obtenemos todos los usuarios desde el servicio
+                var usuarios = _usuarioService.ObtenerUsuarios();
+
+                // Buscamos un usuario que coincida con nombre de usuario y contraseña
+                var usuarioValido = usuarios
+                    .FirstOrDefault(u =>
+                        u.NombreUsuario.Equals(usuario, StringComparison.OrdinalIgnoreCase)
+                        && u.Password == CalcularSha256(contraseña));
+
+
+                // Usuarios de prueba (hardcodeados)
+                if (usuario == "admin" && contraseña == "1234")
                 {
-                    Form menuPrincipal = new MenuMedicos();
-                    menuPrincipal.ShowDialog();
+                    this.Hide();
+                    new MenuAdministrativo().ShowDialog();
                     this.Close();
                 }
+                else if (usuario == "medico" && contraseña == "1234")
+                {
+                    this.Hide();
+                    new MenuMedicos().ShowDialog();
+                    this.Close();
+                }
+                else if (usuario == "mod" && contraseña == "1234")
+                {
+                    this.Hide();
+                    new MenuModer().ShowDialog();
+                    this.Close();
+                }
+                else if (usuario == "gerente" && contraseña == "1234")
+                {
+                    this.Hide();
+                    new MenuGerente().ShowDialog();
+                    this.Close();
+                }
+
+                // Usuarios reales desde la base de datos
+                else if (usuarioValido != null)
+                {
+                    this.Hide();
+
+                    switch (usuarioValido.Rol.ToLower())
+                    {
+                        case "administrativo":
+                            new MenuAdministrativo().ShowDialog();
+                            break;
+
+                        case "medico":
+                            new MenuMedicos().ShowDialog();
+                            break;
+
+                        case "administrador":
+                        case "moderador":
+                            new MenuModer().ShowDialog();
+                            break;
+
+                        case "gerente":
+                            new MenuGerente().ShowDialog();
+                            break;
+
+                        default:
+                            MessageBox.Show("El rol del usuario no tiene una pantalla asignada.",
+                                            "Rol no configurado",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning);
+                            break;
+                    }
+
+                    this.Close();
+                }
+
+                // Si no coincide ningún caso
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-
-                try
-                {
-                    // 1. Llamamos al servicio para validar
-                    UsuarioLoginResultadoDTO resultadoLogin = _usuarioService.ValidarCredenciales(usuario, contraseña);
-
-                    if (resultadoLogin.LoginExitoso)
-                    {
-                        // 2. Guardamos los datos en la sesión estática
-                        SesionUsuario.Login(resultadoLogin);
-
-                        this.Hide();
-
-                        // 3. Abrimos el formulario según el Rol
-                        Form menuPrincipal = null;
-                        switch (SesionUsuario.NombreRol) // ¡Verificá que estos nombres sean los de tu BD!
-                        {
-                            case "Administrativo":
-                                menuPrincipal = new MenuAdministrativo();
-                                break;
-                            case "medico":
-                                menuPrincipal = new MenuMedicos();
-                                break;
-                            case "Moderador": // O "Administrador" o como lo llames
-                                menuPrincipal = new MenuModer();
-                                break;
-                            case "Gerente":
-                                menuPrincipal = new MenuGerente();
-                                break;
-                            default:
-                                MessageBox.Show("Rol de usuario no reconocido. Contacte al administrador.", "Error",
-                                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                this.Show();
-                                SesionUsuario.Logout();
-                                return;
-                        }
-
-                        menuPrincipal.ShowDialog();
-                        this.Close();
-                    }
-                    else
-                    {
-                        // Si el login falló
-                        MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Autenticación",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        txtContraseña.Clear();
-                        txtUsuario.Focus();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ocurrió un error inesperado durante el inicio de sesión: " + ex.Message,
-                                    "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al inicializar: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // ======================= MÉTODOS AUXILIARES =======================
