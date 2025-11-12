@@ -17,6 +17,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
         {
         }
 
+        // Obtener todas los pacientes
         public List<PacienteDto> ObtenerPacientes()
         {
             return _repo.GetAll();
@@ -181,6 +182,8 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                 })
                 .ToList();
         }
+
+        // ===================== LISTADO PACIENTES EGRESADOS =====================
         public List<PacienteDto> ListarPacienteEgresados()
         {
             var listaPacientes = this.ObtenerPacientes();
@@ -198,6 +201,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                 .ToList();
         }
 
+        // ===================== LISTADO COMPLETO PACIENTES =====================
         public List<PacienteDto> ListadoPacientesDGV()
         {
             var listaPacientes = this.ObtenerPacientes();

@@ -14,6 +14,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
         {
         }
 
+        // Listar todos los estados de paciente
         public List<EstadoPacienteDto> ListarEstados()
         {
             var listaEstados = _repo.GetEstados();

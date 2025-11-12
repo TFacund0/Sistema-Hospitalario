@@ -17,17 +17,20 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
         {
         }
 
+        // Obtener todas las internaciones
         public List<InternacionDto> ListadoInternacionDtos()
         {
             var listadoInternaciones = _repo.GetAll();
             return listadoInternaciones;
         }
 
+        // Alta de una nueva internación
         public void AltaInternacion(InternacionDto dto)
         {
             _repo.Insertar(dto);
         }
 
+        // ===================== TOTAL INTERNACIONES X PROCEDIMIENTO =====================
         public int TotalInternacionesXProcedimiento(int id_procedimiento)
         {
             var totalInternaciones = _repo.GetAll()

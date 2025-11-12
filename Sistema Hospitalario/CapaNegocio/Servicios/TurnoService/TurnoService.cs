@@ -18,6 +18,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         {
         }
 
+        // Listar todos los turnos
         public List<ListadoTurno> ListarTurnos ()
         {
             return _repo.ListadoTurnos();
@@ -37,6 +38,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             return turnos.Count();
         }
 
+        // Contar todos los turnos pendientes
         public int CantidadTurnosPendientes()
         {
             var turnosPendientes = _repo.GetAll()
@@ -68,6 +70,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
             return _repo.ObtenerDetalle(p_id_turno);
         }
 
+        // Listar estados de turnos
         public List<ListadoEstadoTurno> ListadoEstadosTurnos()
         {
             return _repo.ListarEstadosTurno();

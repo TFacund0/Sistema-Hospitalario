@@ -22,14 +22,14 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
         {
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
-        
 
+        // Obtener usuarios con filtrado y ordenamiento
         public List<MostrarUsuariosDTO> ObtenerUsuarios(string campo = null, string valor = null)
         {
             var listaMaestra = _repo.ObtenerUsuarios();
             List<MostrarUsuariosDTO> resultado;
 
-            // 2. Filtrado (si hay valor)
+            // Filtrado (si hay valor)
             if (!string.IsNullOrEmpty(valor))
             {
                 string valorLower = valor.ToLower();
@@ -63,7 +63,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
                 resultado = listaMaestra;
             }
 
-            // 3. Ordenamiento (si no hay valor)
+            // Ordenamiento (si no hay valor)
             if (string.IsNullOrEmpty(valor))
             {
                 switch (campo)
@@ -94,6 +94,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             return resultado;
         }
 
+        // Agregar un nuevo usuario
         public (bool Ok, int IdGenerado, string Error) AgregarUsuario(UsuarioAltaDTO dto)
         {
             if (_repo.ExisteUsername(dto.NombreUsuario))
@@ -115,6 +116,8 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
 
             );
         }
+
+        // Eliminar un usuario
         public void EliminarUsuario(int idUsuario)
         {
             if (idUsuario == 1)
@@ -125,6 +128,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             _repo.Eliminar(idUsuario);
         }
 
+        // Hashing de contraseñas usando SHA256
         private string HashPassword(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -140,6 +144,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             }
         }
 
+        // Obtener conteo de usuarios por rol
         public Dictionary<string, int> ObtenerConteoUsuariosPorRol()
         {
             var todosLosUsuarios = _repo.ObtenerUsuarios();
