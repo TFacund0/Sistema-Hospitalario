@@ -83,17 +83,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 txtHistorialDetalle.Text = "Error al cargar el historial: " + ex.Message;
             }
         }
-        private void AppendTextWithStyle(string text, Font font, Color color)
+        private void AppendTextWithStyle(string text, Font font, Color color, HorizontalAlignment alignment)
         {
-            // Mueve el cursor al final del texto
             txtHistorialDetalle.SelectionStart = txtHistorialDetalle.TextLength;
             txtHistorialDetalle.SelectionLength = 0;
 
-            // Aplica los estilos
+            // ¡NUEVO! Aplicamos la alineación
+            txtHistorialDetalle.SelectionAlignment = alignment;
+
             txtHistorialDetalle.SelectionFont = font;
             txtHistorialDetalle.SelectionColor = color;
 
-            // Escribe el texto
             txtHistorialDetalle.AppendText(text);
         }
 
@@ -102,38 +102,32 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         /// </summary>
         private void AppendHeader(string text)
         {
-            Font headerFont = new Font("Segoe UI", 11, FontStyle.Bold);
-            AppendTextWithStyle(text + "\n", headerFont, Color.FromArgb(0, 90, 150)); // Un azul oscuro
+            Font headerFont = new Font("Segoe UI", 16, FontStyle.Bold);
+            // ¡NUEVO! Le pasamos 'HorizontalAlignment.Center'
+            AppendTextWithStyle(text + "\n", headerFont, Color.FromArgb(0, 90, 150), HorizontalAlignment.Center);
         }
 
-        /// <summary>
-        /// Escribe una ETIQUETA (ej: "Médico:")
-        /// </summary>
         private void AppendLabel(string text)
         {
-            Font labelFont = new Font("Segoe UI", 9, FontStyle.Bold);
-            // Escribe "Médico: " (con espacio)
-            AppendTextWithStyle(text + ": ", labelFont, Color.Black);
+            Font labelFont = new Font("Segoe UI", 14, FontStyle.Bold);
+            // ¡NUEVO! Le pasamos 'HorizontalAlignment.Left'
+            AppendTextWithStyle(text + ": ", labelFont, Color.Black, HorizontalAlignment.Left);
         }
 
-        /// <summary>
-        /// Escribe el CONTENIDO (ej: "Dr. Perez")
-        /// </summary>
+
         private void AppendContent(string text)
         {
-            Font contentFont = new Font("Segoe UI", 9, FontStyle.Regular);
-            // Escribe "Dr. Perez" y un salto de línea
-            AppendTextWithStyle(text + "\n", contentFont, Color.FromArgb(64, 64, 64)); // Gris oscuro
+            Font contentFont = new Font("Segoe UI", 15, FontStyle.Regular);
+            AppendTextWithStyle(text + "\n", contentFont, Color.FromArgb(64, 64, 64), HorizontalAlignment.Left);
         }
 
-        /// <summary>
-        /// Escribe una línea separadora
-        /// </summary>
+
         private void AppendSeparator()
         {
-            Font separatorFont = new Font("Segoe UI", 9, FontStyle.Regular);
-            AppendTextWithStyle("=========================================================\n\n", separatorFont, Color.LightGray);
+            Font separatorFont = new Font("Segoe UI", 14, FontStyle.Regular);
+            // ¡NUEVO! Le pasamos 'HorizontalAlignment.Center'
+            AppendTextWithStyle("==================================================================\n\n", separatorFont, Color.LightGray, HorizontalAlignment.Center);
         }
-    
-}
+
+    }
 }
