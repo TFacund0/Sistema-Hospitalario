@@ -49,9 +49,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
             // DateTimePicker de inicio deshabilitado (solo se muestra)
             dtpFechaInicio.Enabled = false;
+            dtpFechaEgreso.Enabled = false;
 
-            // Dejamos editables:
-            dtpFechaEgreso.Enabled = true;
             txtMotivo.ReadOnly = false;
         }
 

@@ -1,4 +1,5 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Medico;
+﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,28 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
     public partial class MenuMedicos : Form
     {
+        int _idMedicoLogueado;
+
         public MenuMedicos()
         {
             InitializeComponent();
+
+            ObtenerMedico();
+        }
+
+        public void ObtenerMedico()
+        {
+            var _medicoService = new MedicoService();
+            if (!SesionUsuario.IdMedicoAsociado.HasValue)
+            {
+                MessageBox.Show("Error fatal: No se pudo identificar al médico. Cierre sesión y vuelva a intentarlo.", "Error de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            _idMedicoLogueado = SesionUsuario.IdMedicoAsociado.Value;
+
+            var medicoNombre = _medicoService.ObtenerMedicoPorId(_idMedicoLogueado);
+
+            lblMedicoNombre.Text = "Médico: Dr. " + medicoNombre.nombre;
         }
 
         public void AbrirUserControl(UserControl uc)

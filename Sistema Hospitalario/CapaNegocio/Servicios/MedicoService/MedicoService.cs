@@ -231,5 +231,11 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             // 4. Ordenamos y devolvemos la lista de datos
             return listaCompleta.OrderByDescending(h => h.Fecha).ToList();
         }
+
+        public medico ObtenerMedicoPorId(int idMedico)
+        {
+            var repo2 = new MedicoRepository();
+            return repo2.ObtenerMedicoPorId(idMedico);
+        }
     }
 }

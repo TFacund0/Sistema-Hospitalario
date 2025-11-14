@@ -63,9 +63,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -88,9 +88,9 @@
             this.panel1.Controls.Add(this.panel10);
             this.panel1.Controls.Add(this.panel9);
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(968, 618);
+            this.panel1.Size = new System.Drawing.Size(1291, 761);
             this.panel1.TabIndex = 0;
             // 
             // panel12
@@ -105,10 +105,10 @@
             this.panel12.Controls.Add(this.label2);
             this.panel12.Controls.Add(this.label1);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(34, 32);
-            this.panel12.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel12.Location = new System.Drawing.Point(45, 39);
+            this.panel12.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(900, 554);
+            this.panel12.Size = new System.Drawing.Size(1201, 683);
             this.panel12.TabIndex = 10;
             // 
             // btnNuevoTurno
@@ -119,10 +119,10 @@
             this.btnNuevoTurno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNuevoTurno.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNuevoTurno.ForeColor = System.Drawing.Color.White;
-            this.btnNuevoTurno.Location = new System.Drawing.Point(685, 28);
-            this.btnNuevoTurno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNuevoTurno.Location = new System.Drawing.Point(914, 34);
+            this.btnNuevoTurno.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNuevoTurno.Name = "btnNuevoTurno";
-            this.btnNuevoTurno.Size = new System.Drawing.Size(146, 32);
+            this.btnNuevoTurno.Size = new System.Drawing.Size(195, 39);
             this.btnNuevoTurno.TabIndex = 17;
             this.btnNuevoTurno.Text = "Nuevo Turno";
             this.btnNuevoTurno.UseVisualStyleBackColor = false;
@@ -135,19 +135,18 @@
             this.panel8.Controls.Add(this.label18);
             this.panel8.Controls.Add(this.lblTurnosPendientes);
             this.panel8.Controls.Add(this.label20);
-            this.panel8.Location = new System.Drawing.Point(677, 423);
-            this.panel8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel8.Location = new System.Drawing.Point(904, 522);
+            this.panel8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(155, 84);
+            this.panel8.Size = new System.Drawing.Size(207, 103);
             this.panel8.TabIndex = 14;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(50, 51);
-            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label18.Location = new System.Drawing.Point(67, 63);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(60, 13);
+            this.label18.Size = new System.Drawing.Size(75, 16);
             this.label18.TabIndex = 11;
             this.label18.Text = "Pendientes";
             // 
@@ -155,10 +154,9 @@
             // 
             this.lblTurnosPendientes.AutoSize = true;
             this.lblTurnosPendientes.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosPendientes.Location = new System.Drawing.Point(68, 32);
-            this.lblTurnosPendientes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTurnosPendientes.Location = new System.Drawing.Point(91, 39);
             this.lblTurnosPendientes.Name = "lblTurnosPendientes";
-            this.lblTurnosPendientes.Size = new System.Drawing.Size(18, 17);
+            this.lblTurnosPendientes.Size = new System.Drawing.Size(21, 20);
             this.lblTurnosPendientes.TabIndex = 10;
             this.lblTurnosPendientes.Text = "3";
             // 
@@ -166,10 +164,9 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(20, 13);
-            this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label20.Location = new System.Drawing.Point(27, 16);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(129, 14);
+            this.label20.Size = new System.Drawing.Size(160, 18);
             this.label20.TabIndex = 9;
             this.label20.Text = "Turnos Pendientes";
             // 
@@ -180,19 +177,18 @@
             this.panel7.Controls.Add(this.label15);
             this.panel7.Controls.Add(this.lblTurnosCompletados);
             this.panel7.Controls.Add(this.label17);
-            this.panel7.Location = new System.Drawing.Point(452, 423);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel7.Location = new System.Drawing.Point(604, 522);
+            this.panel7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(155, 84);
+            this.panel7.Size = new System.Drawing.Size(207, 103);
             this.panel7.TabIndex = 15;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(40, 51);
-            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label15.Location = new System.Drawing.Point(53, 63);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(79, 13);
+            this.label15.Size = new System.Drawing.Size(101, 16);
             this.label15.TabIndex = 8;
             this.label15.Text = "Finalizadas hoy";
             // 
@@ -200,10 +196,9 @@
             // 
             this.lblTurnosCompletados.AutoSize = true;
             this.lblTurnosCompletados.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosCompletados.Location = new System.Drawing.Point(64, 32);
-            this.lblTurnosCompletados.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTurnosCompletados.Location = new System.Drawing.Point(85, 39);
             this.lblTurnosCompletados.Name = "lblTurnosCompletados";
-            this.lblTurnosCompletados.Size = new System.Drawing.Size(28, 17);
+            this.lblTurnosCompletados.Size = new System.Drawing.Size(33, 20);
             this.lblTurnosCompletados.TabIndex = 7;
             this.lblTurnosCompletados.Text = "13";
             // 
@@ -211,10 +206,9 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(34, 13);
-            this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label17.Location = new System.Drawing.Point(45, 16);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(92, 14);
+            this.label17.Size = new System.Drawing.Size(115, 18);
             this.label17.TabIndex = 6;
             this.label17.Text = "Completadas";
             // 
@@ -225,19 +219,18 @@
             this.panel6.Controls.Add(this.label12);
             this.panel6.Controls.Add(this.lblTurnosCurso);
             this.panel6.Controls.Add(this.label14);
-            this.panel6.Location = new System.Drawing.Point(260, 391);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Location = new System.Drawing.Point(316, 522);
+            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(155, 84);
+            this.panel6.Size = new System.Drawing.Size(207, 103);
             this.panel6.TabIndex = 16;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(38, 50);
-            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label12.Location = new System.Drawing.Point(51, 62);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(90, 13);
+            this.label12.Size = new System.Drawing.Size(112, 16);
             this.label12.TabIndex = 5;
             this.label12.Text = "Consultas activas";
             // 
@@ -245,10 +238,9 @@
             // 
             this.lblTurnosCurso.AutoSize = true;
             this.lblTurnosCurso.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosCurso.Location = new System.Drawing.Point(66, 29);
-            this.lblTurnosCurso.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTurnosCurso.Location = new System.Drawing.Point(88, 36);
             this.lblTurnosCurso.Name = "lblTurnosCurso";
-            this.lblTurnosCurso.Size = new System.Drawing.Size(28, 17);
+            this.lblTurnosCurso.Size = new System.Drawing.Size(33, 20);
             this.lblTurnosCurso.TabIndex = 4;
             this.lblTurnosCurso.Text = "10";
             // 
@@ -256,10 +248,9 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(47, 12);
-            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label14.Location = new System.Drawing.Point(63, 15);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(63, 14);
+            this.label14.Size = new System.Drawing.Size(77, 18);
             this.label14.TabIndex = 3;
             this.label14.Text = "En curso";
             // 
@@ -270,19 +261,18 @@
             this.panel5.Controls.Add(this.label11);
             this.panel5.Controls.Add(this.lblTurnosHoy);
             this.panel5.Controls.Add(this.label9);
-            this.panel5.Location = new System.Drawing.Point(36, 391);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel5.Location = new System.Drawing.Point(47, 522);
+            this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(155, 84);
+            this.panel5.Size = new System.Drawing.Size(207, 103);
             this.panel5.TabIndex = 13;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(50, 52);
-            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label11.Location = new System.Drawing.Point(67, 64);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(60, 13);
+            this.label11.Size = new System.Drawing.Size(75, 16);
             this.label11.TabIndex = 2;
             this.label11.Text = "Pendientes";
             // 
@@ -290,10 +280,9 @@
             // 
             this.lblTurnosHoy.AutoSize = true;
             this.lblTurnosHoy.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurnosHoy.Location = new System.Drawing.Point(66, 29);
-            this.lblTurnosHoy.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTurnosHoy.Location = new System.Drawing.Point(88, 36);
             this.lblTurnosHoy.Name = "lblTurnosHoy";
-            this.lblTurnosHoy.Size = new System.Drawing.Size(28, 17);
+            this.lblTurnosHoy.Size = new System.Drawing.Size(33, 20);
             this.lblTurnosHoy.TabIndex = 1;
             this.lblTurnosHoy.Text = "15";
             // 
@@ -301,10 +290,9 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(41, 13);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Location = new System.Drawing.Point(55, 16);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(82, 14);
+            this.label9.Size = new System.Drawing.Size(101, 18);
             this.label9.TabIndex = 0;
             this.label9.Text = "Turnos Hoy";
             // 
@@ -320,10 +308,10 @@
             this.panel4.Controls.Add(this.cboCampoFiltroTurno);
             this.panel4.Controls.Add(this.dgvTurnos);
             this.panel4.Controls.Add(this.label7);
-            this.panel4.Location = new System.Drawing.Point(35, 87);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Location = new System.Drawing.Point(47, 107);
+            this.panel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(796, 321);
+            this.panel4.Size = new System.Drawing.Size(1062, 396);
             this.panel4.TabIndex = 12;
             // 
             // btnLimpiarFiltro
@@ -334,10 +322,10 @@
             this.btnLimpiarFiltro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiarFiltro.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiarFiltro.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiarFiltro.Location = new System.Drawing.Point(684, 40);
-            this.btnLimpiarFiltro.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLimpiarFiltro.Location = new System.Drawing.Point(913, 49);
+            this.btnLimpiarFiltro.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLimpiarFiltro.Name = "btnLimpiarFiltro";
-            this.btnLimpiarFiltro.Size = new System.Drawing.Size(84, 39);
+            this.btnLimpiarFiltro.Size = new System.Drawing.Size(112, 48);
             this.btnLimpiarFiltro.TabIndex = 19;
             this.btnLimpiarFiltro.Text = "Limpiar";
             this.btnLimpiarFiltro.UseVisualStyleBackColor = false;
@@ -351,10 +339,10 @@
             this.btnBuscarTurno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscarTurno.Font = new System.Drawing.Font("Verdana", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscarTurno.ForeColor = System.Drawing.Color.White;
-            this.btnBuscarTurno.Location = new System.Drawing.Point(579, 40);
-            this.btnBuscarTurno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBuscarTurno.Location = new System.Drawing.Point(773, 49);
+            this.btnBuscarTurno.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBuscarTurno.Name = "btnBuscarTurno";
-            this.btnBuscarTurno.Size = new System.Drawing.Size(90, 39);
+            this.btnBuscarTurno.Size = new System.Drawing.Size(120, 48);
             this.btnBuscarTurno.TabIndex = 18;
             this.btnBuscarTurno.Text = "Buscar";
             this.btnBuscarTurno.UseVisualStyleBackColor = false;
@@ -363,19 +351,19 @@
             // txtBuscarTurno
             // 
             this.txtBuscarTurno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscarTurno.Location = new System.Drawing.Point(174, 50);
-            this.txtBuscarTurno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBuscarTurno.Location = new System.Drawing.Point(232, 62);
+            this.txtBuscarTurno.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtBuscarTurno.Name = "txtBuscarTurno";
-            this.txtBuscarTurno.Size = new System.Drawing.Size(206, 21);
+            this.txtBuscarTurno.Size = new System.Drawing.Size(273, 24);
             this.txtBuscarTurno.TabIndex = 5;
             // 
             // cboCampoFiltroTurno
             // 
             this.cboCampoFiltroTurno.FormattingEnabled = true;
-            this.cboCampoFiltroTurno.Location = new System.Drawing.Point(26, 50);
-            this.cboCampoFiltroTurno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboCampoFiltroTurno.Location = new System.Drawing.Point(35, 62);
+            this.cboCampoFiltroTurno.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cboCampoFiltroTurno.Name = "cboCampoFiltroTurno";
-            this.cboCampoFiltroTurno.Size = new System.Drawing.Size(131, 21);
+            this.cboCampoFiltroTurno.Size = new System.Drawing.Size(173, 24);
             this.cboCampoFiltroTurno.TabIndex = 4;
             // 
             // dgvTurnos
@@ -395,14 +383,14 @@
             this.colEstado,
             this.colAccion});
             this.dgvTurnos.EnableHeadersVisualStyles = false;
-            this.dgvTurnos.Location = new System.Drawing.Point(26, 84);
-            this.dgvTurnos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvTurnos.Location = new System.Drawing.Point(35, 103);
+            this.dgvTurnos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvTurnos.Name = "dgvTurnos";
             this.dgvTurnos.ReadOnly = true;
             this.dgvTurnos.RowHeadersVisible = false;
             this.dgvTurnos.RowHeadersWidth = 51;
             this.dgvTurnos.RowTemplate.Height = 24;
-            this.dgvTurnos.Size = new System.Drawing.Size(742, 215);
+            this.dgvTurnos.Size = new System.Drawing.Size(990, 266);
             this.dgvTurnos.TabIndex = 3;
             this.dgvTurnos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTurnos_CellContentClick);
             // 
@@ -449,10 +437,9 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(22, 13);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Location = new System.Drawing.Point(29, 16);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 18);
+            this.label7.Size = new System.Drawing.Size(90, 25);
             this.label7.TabIndex = 0;
             this.label7.Text = "Turnos";
             // 
@@ -460,10 +447,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(33, 58);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(44, 71);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(363, 17);
+            this.label2.Size = new System.Drawing.Size(448, 20);
             this.label2.TabIndex = 10;
             this.label2.Text = "Programación y Gestión completa de citas médicas";
             // 
@@ -471,10 +457,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(32, 28);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(43, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(205, 23);
+            this.label1.Size = new System.Drawing.Size(244, 28);
             this.label1.TabIndex = 9;
             this.label1.Text = "Agenda de Turnos";
             // 
@@ -482,56 +467,56 @@
             // 
             this.panel11.Controls.Add(this.panel2);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel11.Location = new System.Drawing.Point(34, 586);
-            this.panel11.Margin = new System.Windows.Forms.Padding(2);
+            this.panel11.Location = new System.Drawing.Point(45, 722);
+            this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(900, 32);
+            this.panel11.Size = new System.Drawing.Size(1201, 39);
             this.panel11.TabIndex = 9;
             // 
             // panel2
             // 
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(900, 32);
+            this.panel2.Size = new System.Drawing.Size(1201, 39);
             this.panel2.TabIndex = 3;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(1246, 39);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(45, 722);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // panel10
+            // 
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel10.Location = new System.Drawing.Point(0, 39);
+            this.panel10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(45, 722);
+            this.panel10.TabIndex = 9;
             // 
             // panel9
             // 
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 0);
-            this.panel9.Margin = new System.Windows.Forms.Padding(2);
+            this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(968, 32);
+            this.panel9.Size = new System.Drawing.Size(1291, 39);
             this.panel9.TabIndex = 1;
-            // 
-            // panel10
-            // 
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel10.Location = new System.Drawing.Point(0, 32);
-            this.panel10.Margin = new System.Windows.Forms.Padding(2);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(34, 586);
-            this.panel10.TabIndex = 9;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(934, 32);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(34, 586);
-            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // UC_Turnos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UC_Turnos";
-            this.Size = new System.Drawing.Size(968, 618);
+            this.Size = new System.Drawing.Size(1291, 761);
             this.panel1.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();

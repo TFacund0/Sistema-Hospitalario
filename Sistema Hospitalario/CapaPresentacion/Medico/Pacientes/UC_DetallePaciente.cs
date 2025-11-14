@@ -62,7 +62,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 sb.AppendLine($"<p><span class='label'>Paciente:</span> {Paciente.Nombre} {Paciente.Apellido}</p>");
                 sb.AppendLine($"<p><span class='label'>DNI:</span> {Paciente.Dni}</p>");
                 sb.AppendLine($"<p><span class='label'>Direccion:</span> {Paciente.Direccion}</p>");
-                sb.AppendLine($"<p><span class='label'>Fecha de Nacimiento:</span> {Paciente.FechaNacim}</p>");
+                sb.AppendLine($"<p><span class='label'>Fecha de Nacimiento:</span> {Paciente.FechaNacim.ToString("dd/MM/yyyy")}</p>");
                 sb.AppendLine("</div>");
                 sb.AppendLine("</div>");
 
@@ -91,6 +91,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
                         // Tratamiento
                         sb.AppendLine($"<p><span class='label'>Tratamiento:</span> <span class='content'>{item.Tratamiento}</span></p>");
+
+                        if (item.FechaFin.HasValue && item.FechaFin.Value != null)
+                        {
+                            sb.AppendLine($"<p><span class='label'>Fecha Fin:</span> <span class='content'>{item.FechaFin.Value.ToString("dd/MM/yyyy")}</span></p>");
+                        }
 
                         sb.AppendLine("</div>");
                     }
