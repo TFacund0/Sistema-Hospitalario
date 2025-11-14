@@ -135,11 +135,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Aplica el filtro basado en el campo y el texto ingresado
         private void AplicarFiltro(string campo, string texto)
         {
-            // Normaliza el texto para comparación
             string busqueda = (texto ?? "").Trim().ToLowerInvariant();
             IEnumerable<ListadoTurno> query = _listadoTurnos;
 
-            // Si hay texto, aplica el filtro según el campo seleccionado
             if (!string.IsNullOrEmpty(busqueda))
             {
                 switch (campo)
@@ -147,13 +145,49 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                     case "Paciente":
                         query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
                         break;
-                    case "Hora":
-                        query = query.Where(t => t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda));
+
+                    case "Fecha":
+                        // Intento 1: fecha completa (ej: 15/02/2025)
+                        if (DateTime.TryParse(texto, out var fechaExacta))
+                        {
+                            query = query.Where(t => t.Fecha_Del_Turno.Date == fechaExacta.Date);
+                        }
+                        else
+                        {
+                            // Intento 2: mes/año (ej: 02/2025 o 2-2025)
+                            char[] sep = new[] { '/', '-', ' ' };
+                            var partes = texto.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+                            // mes + año
+                            if (partes.Length == 2 &&
+                                int.TryParse(partes[0], out int mes) &&
+                                int.TryParse(partes[1], out int anio) &&
+                                mes >= 1 && mes <= 12)
+                            {
+                                query = query.Where(t =>
+                                    t.Fecha_Del_Turno.Month == mes &&
+                                    t.Fecha_Del_Turno.Year == anio);
+                            }
+                            // solo mes (1-12): filtra por mes sin importar el año
+                            else if (int.TryParse(texto, out int mesSolo) &&
+                                     mesSolo >= 1 && mesSolo <= 12)
+                            {
+                                query = query.Where(t => t.Fecha_Del_Turno.Month == mesSolo);
+                            }
+                            else
+                            {
+                                // fallback: filtra por texto sobre la fecha formateada
+                                query = query.Where(t =>
+                                    t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda));
+                            }
+                        }
                         break;
+
                     case "Estado":
                         query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
                         break;
-                    default:
+
+                    default: // "Todos"
                         query = query.Where(t =>
                             (t.Paciente ?? "").ToLower().Contains(busqueda) ||
                             t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda) ||
@@ -162,10 +196,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                 }
             }
 
-            // Actualiza el BindingSource con los resultados filtrados
             enlaceTurnos.DataSource = query.OrderBy(t => t.Fecha_Del_Turno).ToList();
             enlaceTurnos.ResetBindings(false);
         }
+
 
         // ===================== EVENTO CLIC EN CELDA DEL DATAGRIDVIEW =====================
         private void dgvTurnos_CellContentClick(object sender, DataGridViewCellEventArgs e)

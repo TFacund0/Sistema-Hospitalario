@@ -36,37 +36,7 @@ namespace WindowsFormsInicio_de_sesion
 
             try
             {
-                // ================== 1) Usuarios de prueba hardcodeados ==================
-                if (usuario == "admin" && contraseña == "1234")
-                {
-                    this.Hide();
-                    new MenuAdministrativo().ShowDialog();
-                    this.Close();
-                    return;
-                }
-                else if (usuario == "medico" && contraseña == "1234")
-                {
-                    this.Hide();
-                    new MenuMedicos().ShowDialog();
-                    this.Close();
-                    return;
-                }
-                else if (usuario == "mod" && contraseña == "1234")
-                {
-                    this.Hide();
-                    new MenuModer().ShowDialog();
-                    this.Close();
-                    return;
-                }
-                else if (usuario == "gerente" && contraseña == "1234")
-                {
-                    this.Hide();
-                    new MenuGerente().ShowDialog();
-                    this.Close();
-                    return;
-                }
-
-                // ================== 2) Usuarios reales en BD ==================
+                // ================== 1) Usuarios reales en BD ==================
                 UsuarioLoginResultadoDTO resultadoLogin = _usuarioService.ValidarCredenciales(usuario, contraseña);
 
                 // Si el servicio devuelve null o LoginExitoso == false, credenciales inválidas

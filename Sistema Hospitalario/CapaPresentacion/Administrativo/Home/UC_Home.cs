@@ -186,22 +186,44 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         break;
 
                     case "Tipo":
-                        // Puede venir null cuando es "Paciente registrado"
                         query = query.Where(t => (t.Tipo ?? "").ToLowerInvariant().Contains(busqueda));
                         break;
 
                     case "Fecha":
-                        // Busca por coincidencia de texto en la fecha formateada,
-                        // y si el texto parece fecha válida, filtra por igualdad de día.
-                        query = query.Where(t => t.Horario.ToString("dd/MM/yyyy HH:mm").ToLowerInvariant()
-                                                        .Contains(busqueda)
-                                               || t.Horario.ToString("dd/MM/yyyy").ToLowerInvariant()
-                                                        .Contains(busqueda));
-
-                        if (DateTime.TryParse(texto, out var fechaBuscada))
+                        // 1) Intento: fecha completa (ej: 15/02/2025)
+                        if (DateTime.TryParse(texto, out var fechaExacta))
                         {
-                            var f = fechaBuscada.Date;
+                            var f = fechaExacta.Date;
                             query = query.Where(t => t.Horario.Date == f);
+                        }
+                        else
+                        {
+                            // 2) Intento: mes/año (ej: 02/2025, 2-2025, 2 2025)
+                            char[] sep = new[] { '/', '-', ' ' };
+                            var partes = texto.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+                            if (partes.Length == 2 &&
+                                int.TryParse(partes[0], out int mes) &&
+                                int.TryParse(partes[1], out int anio) &&
+                                mes >= 1 && mes <= 12)
+                            {
+                                query = query.Where(t =>
+                                    t.Horario.Month == mes &&
+                                    t.Horario.Year == anio);
+                            }
+                            // 3) Intento: solo mes (1–12) → todos los años
+                            else if (int.TryParse(texto, out int mesSolo) &&
+                                     mesSolo >= 1 && mesSolo <= 12)
+                            {
+                                query = query.Where(t => t.Horario.Month == mesSolo);
+                            }
+                            else
+                            {
+                                // Fallback: coincidencia de texto en la fecha formateada
+                                query = query.Where(t =>
+                                    t.Horario.ToString("dd/MM/yyyy HH:mm").ToLowerInvariant().Contains(busqueda) ||
+                                    t.Horario.ToString("dd/MM/yyyy").ToLowerInvariant().Contains(busqueda));
+                            }
                         }
                         break;
 
