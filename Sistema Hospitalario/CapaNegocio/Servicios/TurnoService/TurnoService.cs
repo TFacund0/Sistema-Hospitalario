@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Sistema_Hospitalario.CapaDatos.Interfaces;
+using Sistema_Hospitalario.CapaDatos.Repositories;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;   
-using System.Data.Entity;
-
-using Sistema_Hospitalario.CapaDatos.Repositories;
-using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
 {
@@ -92,6 +92,18 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService
         public List<ListadoEstadoTurno> ListadoEstadosTurnos()
         {
             return _repo.ListarEstadosTurno();
+        }
+        
+        // Verificar si existe un turno para el mismo día, mismo médico y mismo paciente
+        public bool ExisteTurnoMismoDiaMismoMedicoPaciente(int idPaciente, int idMedico, DateTime fecha)
+        {
+            return _repo.ExisteTurnoMismoDiaMismoMedicoPaciente(idPaciente, idMedico, fecha);
+        }
+
+        public bool ExisteTurnoMismoDiaMismoMedicoPacienteExcluyendo(int idTurnoExcluir, int idPaciente, int idMedico, DateTime fecha)
+        {
+            return _repo.ExisteTurnoMismoDiaMismoMedicoPacienteExcluyendo(
+                idTurnoExcluir, idPaciente, idMedico, fecha);
         }
     }
 }

@@ -18,5 +18,7 @@ namespace Sistema_Hospitalario.CapaDatos.Interfaces
         List<TurnoAgendaDto> ObtenerTurnosParaAgenda(int idMedico, DateTime fecha);
         AgendaContadoresDto ObtenerContadoresAgenda(int idMedico, DateTime fecha);
         bool ActualizarEstadoTurno(int idTurno, int idNuevoEstado);
+        bool ExisteTurnoMismoDiaMismoMedicoPaciente(int idPaciente, int idMedico, DateTime fecha);
+        bool ExisteTurnoMismoDiaMismoMedicoPacienteExcluyendo(int idTurnoExcluir, int idPaciente, int idMedico, DateTime fecha);
     }
 }

@@ -274,5 +274,34 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return estados.ToList();
             }
         }
+
+        public bool ExisteTurnoMismoDiaMismoMedicoPaciente(int idPaciente, int idMedico, DateTime fecha)
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var fechaSoloDia = fecha.Date;
+
+                return db.turno.Any(t =>
+                    t.id_paciente == idPaciente &&
+                    t.id_medico == idMedico &&
+                    DbFunctions.TruncateTime(t.fecha_turno) == fechaSoloDia
+                );
+            }
+        }
+
+        public bool ExisteTurnoMismoDiaMismoMedicoPacienteExcluyendo( int idTurnoExcluir, int idPaciente, int idMedico, DateTime fecha)
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var fechaSoloDia = fecha.Date;
+
+                return db.turno.Any(t =>
+                    t.id_turno != idTurnoExcluir &&              // <<< excluimos el actual
+                    t.id_paciente == idPaciente &&
+                    t.id_medico == idMedico &&
+                    DbFunctions.TruncateTime(t.fecha_turno) == fechaSoloDia
+                );
+            }
+        }
     }
 }
