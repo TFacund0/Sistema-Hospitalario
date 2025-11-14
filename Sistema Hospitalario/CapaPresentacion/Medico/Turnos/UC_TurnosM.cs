@@ -69,6 +69,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 {
                     dgvTurnos.Columns["Id_medico"].Visible = false;
                 }
+
+                if (dgvTurnos.Columns["FechaTurno"] != null)
+                {
+                    dgvTurnos.Columns["FechaTurno"].Visible = false;
+                }
+
                 // contadores coherentes al mismo filtro
                 lblTotalPendientes.Text = turnosMedico.Count(t => t.Estado.Equals("pendiente", StringComparison.OrdinalIgnoreCase)).ToString();
                 lblTotalCompletadas.Text = turnosMedico.Count(t => t.Estado.Equals("atendido", StringComparison.OrdinalIgnoreCase)).ToString();
