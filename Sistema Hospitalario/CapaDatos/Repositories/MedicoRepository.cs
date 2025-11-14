@@ -246,7 +246,6 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Fecha = i.fecha_inicio,
                         FechaFin = i.fecha_fin,
                         Tipo = "Procedimiento/Internación",
-                        FechaFin = i.fecha_fin,
                         Motivo = i.motivo, 
                         Diagnostico = i.procedimiento.nombre,
                         NombreMedico = i.medico.nombre + " " + i.medico.apellido,
