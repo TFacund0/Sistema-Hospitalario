@@ -99,7 +99,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             txtBuscarTurno.Clear();
             if (cboCampoFiltroTurno != null) cboCampoFiltroTurno.SelectedIndex = 0;
 
-            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.Fecha_Del_Turno).ToList();
             enlaceTurnos.ResetBindings(false);
         }
 
@@ -131,25 +131,62 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
                     case "Paciente":
                         query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
                         break;
-                    case "Hora":
-                        query = query.Where(t => t.FechaTurno.ToString("g").ToLower().Contains(busqueda));
+
+                    case "Fecha":
+                        // 1) Intento: fecha completa (ej: 15/02/2025)
+                        if (DateTime.TryParse(texto, out var fechaExacta))
+                        {
+                            query = query.Where(t => t.Fecha_Del_Turno.Date == fechaExacta.Date);
+                        }
+                        else
+                        {
+                            // 2) Intento: mes/año (ej: 02/2025, 2-2025, 2 2025)
+                            char[] sep = new[] { '/', '-', ' ' };
+                            var partes = texto.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+                            // mes + año
+                            if (partes.Length == 2 &&
+                                int.TryParse(partes[0], out int mes) &&
+                                int.TryParse(partes[1], out int anio) &&
+                                mes >= 1 && mes <= 12)
+                            {
+                                query = query.Where(t =>
+                                    t.Fecha_Del_Turno.Month == mes &&
+                                    t.Fecha_Del_Turno.Year == anio);
+                            }
+                            // 3) Intento: solo mes (1-12) → sin importar el año
+                            else if (int.TryParse(texto, out int mesSolo) &&
+                                     mesSolo >= 1 && mesSolo <= 12)
+                            {
+                                query = query.Where(t => t.Fecha_Del_Turno.Month == mesSolo);
+                            }
+                            else
+                            {
+                                // Fallback: filtra por texto sobre la fecha formateada
+                                query = query.Where(t =>
+                                    t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda));
+                            }
+                        }
                         break;
+
                     case "Estado":
                         query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
                         break;
-                    default:
+
+                    default: // "Todos"
                         query = query.Where(t =>
                             (t.Paciente ?? "").ToLower().Contains(busqueda) ||
-                            t.FechaTurno.ToString("g").ToLower().Contains(busqueda) ||
+                            t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda) ||
                             (t.Estado ?? "").ToLower().Contains(busqueda));
                         break;
                 }
             }
 
             // Actualiza el BindingSource con los resultados filtrados
-            enlaceTurnos.DataSource = query.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.DataSource = query.OrderBy(t => t.Fecha_Del_Turno).ToList();
             enlaceTurnos.ResetBindings(false);
         }
+
 
         // ===================== CARGA DE GRÁFICOS TURNOS POR DIA =====================
         private void CargarGraficoTurnosPorDia()

@@ -114,6 +114,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvInternaciones.Columns["colPiso"].DataPropertyName = "Nro_piso";
             dgvInternaciones.Columns["colInternado"].DataPropertyName = "Internado";
             dgvInternaciones.Columns["colFechaIngreso"].DataPropertyName = "Fecha_ingreso";
+            dgvInternaciones.Columns["colFechaEgreso"].DataPropertyName = "Fecha_egreso";
             dgvInternaciones.Columns["colCama"].DataPropertyName = "Id_Cama";
         }
 
@@ -167,21 +168,43 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         break;
 
                     case "Fecha ingreso":
-                        // Podés hacer búsqueda por día (dd/MM/yyyy)
-                        if (DateTime.TryParse(busqueda, out DateTime fecha))
+                        if (DateTime.TryParse(texto, out DateTime fechaExacta))
                         {
-                            var soloFecha = fecha.Date;
-                            query = query.Where(i => i.Fecha_ingreso.Date == soloFecha);
+                            var f = fechaExacta.Date;
+                            query = query.Where(i => i.Fecha_ingreso.Date == f);
                         }
                         else
                         {
-                            // o por string
-                            query = query.Where(i =>
-                                i.Fecha_ingreso.ToShortDateString()
-                                .ToLower()
-                                .Contains(busqueda));
+                            char[] separadores = new[] { '/', '-', ' ' };
+                            var partes = texto.Split(separadores, StringSplitOptions.RemoveEmptyEntries);
+
+                            if (partes.Length == 2 &&
+                                int.TryParse(partes[0], out int mes) &&
+                                int.TryParse(partes[1], out int anio) &&
+                                mes >= 1 && mes <= 12)
+                            {
+                                query = query.Where(i =>
+                                    i.Fecha_ingreso.Month == mes &&
+                                    i.Fecha_ingreso.Year == anio);
+                            }
+                            // 3) Solo mes (1 - 12)
+                            else if (int.TryParse(texto, out int mesSolo) &&
+                                     mesSolo >= 1 && mesSolo <= 12)
+                            {
+                                query = query.Where(i =>
+                                    i.Fecha_ingreso.Month == mesSolo);
+                            }
+                            else
+                            {
+                                // 4) Fallback: búsqueda textual
+                                query = query.Where(i =>
+                                    i.Fecha_ingreso.ToShortDateString()
+                                    .ToLower()
+                                    .Contains(busqueda));
+                            }
                         }
                         break;
+
 
                     case "Cama":
                         if (int.TryParse(busqueda, out int idCama))

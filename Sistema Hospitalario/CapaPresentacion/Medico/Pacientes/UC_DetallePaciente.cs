@@ -24,15 +24,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         {
             InitializeComponent();
             this.Paciente = paciente; 
-            this.TBNombre.Text = paciente.Nombre + " " + paciente.Apellido;
-            this.txtDni.Text = paciente.Dni.ToString();
-            this.TBDireccion.Text = paciente.Direccion;
-            int diasNacimiento = ((DateTime.Now - paciente.FechaNacim).Days);
-            if (diasNacimiento < 365) this.TBEdad.Text = (diasNacimiento / 30).ToString() + " " + "meses";
-            else this.TBEdad.Text = (diasNacimiento / 365).ToString() + " " + "años";
-            this.TBContacton.Text = paciente.Telefono.ToString();
-            this.TBHabitacion.Text = paciente.Habitacion.ToString();
-            this.TBEstado.Text = paciente.Estado;
             CargarHistorial();
         }
         private void CargarHistorial()
@@ -40,91 +31,85 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             // 1. Recolectamos los filtros
             int idPaciente = this.Paciente.IdPaciente;
             int _idMedicoLogueado = (int)SesionUsuario.IdMedicoAsociado;
-            
             try
             {
                 var listaHistorial = service.ObtenerHistorial(idPaciente, _idMedicoLogueado);
-                txtHistorialDetalle.Clear();
+
                 // 3. Mostramos el resultado en el TextBox grande
+                var sb = new StringBuilder();
+
+                sb.AppendLine("<html>");
+                sb.AppendLine("<head>");
+                sb.AppendLine("<style>");
+                sb.AppendLine("  body { font-family: 'Segoe UI', Arial, sans-serif; }");
+                sb.AppendLine("  .item { border: 1px solid #ccc; border-radius: 8px; margin-bottom: 15px; padding: 15px; background-color: #f9f9f9; }");
+                sb.AppendLine("  .header { font-size: 1.2em; font-weight: bold; color: #005A96; text-align: center; border-bottom: 1px solid #ccc; padding-bottom: 5px; }");
+                sb.AppendLine("  .label { font-weight: bold; color: #333; }");
+                sb.AppendLine("  .content { color: #555; padding-left: 10px; }");
+                sb.AppendLine("  .patient-header { border-bottom: 2px solid #005A96; padding-bottom: 10px; margin-bottom: 20px; }");
+                sb.AppendLine("  .patient-header h1 { color: #005A96; margin: 0; padding: 0; font-size: 1.8em; }");
+                sb.AppendLine("  .patient-details p { margin: 2px 0; font-size: 1.1em; color: #333; }");
+                sb.AppendLine("  .patient-details .label { font-weight: bold; color: #000; }");
+
+                
+                sb.AppendLine("</style>");
+                sb.AppendLine("</head>");
+                sb.AppendLine("<body>");
+
+                sb.AppendLine("<div class='patient-header'>");
+                sb.AppendLine("<h1>Historial Clínico del Paciente</h1>");
+                sb.AppendLine("<div class='patient-details'>");
+                sb.AppendLine($"<p><span class='label'>Paciente:</span> {Paciente.Nombre} {Paciente.Apellido}</p>");
+                sb.AppendLine($"<p><span class='label'>DNI:</span> {Paciente.Dni}</p>");
+                sb.AppendLine($"<p><span class='label'>Direccion:</span> {Paciente.Direccion}</p>");
+                sb.AppendLine($"<p><span class='label'>Fecha de Nacimiento:</span> {Paciente.FechaNacim}</p>");
+                sb.AppendLine("</div>");
+                sb.AppendLine("</div>");
+
                 if (!listaHistorial.Any())
                 {
-                    AppendHeader("--- No se encontraron registros para este paciente o filtros seleccionados ---");
-                    return;
+                    sb.AppendLine("<h3 style='text-align: center;'>--- No se encontraron registros ---</h3>");
                 }
-
-                // 4. Recorremos la lista y aplicamos los estilos
-                foreach (var item in listaHistorial)
+                else
                 {
-                    // Título (ej: CONSULTA - 12/10/2025 09:30 hs.)
-                    AppendHeader($"{item.Tipo.ToUpper()} - {item.Fecha.ToString("dd/MM/yyyy HH:mm")} hs.");
+                    // 3. Recorremos la lista y creamos un "div" por cada item
+                    foreach (var item in listaHistorial)
+                    {
+                        sb.AppendLine("<div class='item'>");
 
-                    // Médico
-                    AppendLabel("Médico");
-                    AppendContent($"{item.NombreMedico} (DNI: {item.DniMedico})");
+                        // Título
+                        sb.AppendLine($"<div class='header'>{item.Tipo.ToUpper()} - {item.Fecha.ToString("dd/MM/yyyy HH:mm")} hs.</div>");
 
-                    // Motivo
-                    AppendLabel("Motivo/Obs");
-                    AppendContent(item.Motivo);
+                        // Médico
+                        sb.AppendLine($"<p><span class='label'>Médico:</span> <span class='content'>{item.NombreMedico} (DNI: {item.DniMedico})</span></p>");
 
-                    // Diagnóstico
-                    AppendLabel("Diagnóstico/Proced");
-                    AppendContent(item.Diagnostico);
+                        // Motivo
+                        sb.AppendLine($"<p><span class='label'>Motivo/Obs:</span> <span class='content'>{item.Motivo}</span></p>");
 
-                    // Tratamiento
-                    AppendLabel("Tratamiento");
-                    AppendContent(item.Tratamiento);
+                        // Diagnóstico
+                        sb.AppendLine($"<p><span class='label'>Diagnóstico/Proced:</span> <span class='content'>{item.Diagnostico}</span></p>");
 
-                    // Separador
-                    AppendSeparator();
+                        // Tratamiento
+                        sb.AppendLine($"<p><span class='label'>Tratamiento:</span> <span class='content'>{item.Tratamiento}</span></p>");
+
+                        sb.AppendLine("</div>");
+                    }
                 }
+
+                sb.AppendLine("</body></html>");
+
+                // 4. Cargamos el string HTML en el WebBrowser
+                webBrowserHistorial.DocumentText = sb.ToString();
             }
             catch (Exception ex)
             {
-                txtHistorialDetalle.Text = "Error al cargar el historial: " + ex.Message;
+                webBrowserHistorial.DocumentText = $"<html><body><h1>Error al cargar el historial</h1><p>{ex.Message}</p></body></html>";
             }
         }
-        private void AppendTextWithStyle(string text, Font font, Color color, HorizontalAlignment alignment)
+
+        private void btnImprimir_Click(object sender, EventArgs e)
         {
-            txtHistorialDetalle.SelectionStart = txtHistorialDetalle.TextLength;
-            txtHistorialDetalle.SelectionLength = 0;
-
-            // ¡NUEVO! Aplicamos la alineación
-            txtHistorialDetalle.SelectionAlignment = alignment;
-
-            txtHistorialDetalle.SelectionFont = font;
-            txtHistorialDetalle.SelectionColor = color;
-
-            txtHistorialDetalle.AppendText(text);
+            webBrowserHistorial.ShowPrintDialog();
         }
-
-        private void AppendHeader(string text)
-        {
-            Font headerFont = new Font("Segoe UI", 16, FontStyle.Bold);
-            // ¡NUEVO! Le pasamos 'HorizontalAlignment.Center'
-            AppendTextWithStyle(text + "\n", headerFont, Color.FromArgb(0, 90, 150), HorizontalAlignment.Center);
-        }
-
-        private void AppendLabel(string text)
-        {
-            Font labelFont = new Font("Segoe UI", 14, FontStyle.Bold);
-            // ¡NUEVO! Le pasamos 'HorizontalAlignment.Left'
-            AppendTextWithStyle(text + ": ", labelFont, Color.Black, HorizontalAlignment.Left);
-        }
-
-
-        private void AppendContent(string text)
-        {
-            Font contentFont = new Font("Segoe UI", 15, FontStyle.Regular);
-            AppendTextWithStyle(text + "\n", contentFont, Color.FromArgb(64, 64, 64), HorizontalAlignment.Left);
-        }
-
-
-        private void AppendSeparator()
-        {
-            Font separatorFont = new Font("Segoe UI", 14, FontStyle.Regular);
-            // ¡NUEVO! Le pasamos 'HorizontalAlignment.Center'
-            AppendTextWithStyle("==================================================================\n\n", separatorFont, Color.LightGray, HorizontalAlignment.Center);
-        }
-
     }
 }

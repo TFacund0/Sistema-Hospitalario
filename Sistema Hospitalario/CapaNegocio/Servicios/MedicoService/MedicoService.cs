@@ -225,8 +225,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
 
             // 2. Las juntamos
             var listaCompleta = listaConsultas.Concat(listaInternaciones).Concat(listaTurnos).ToList();
-      
-            listaCompleta = listaCompleta.Where(h => h.IdMedico == IdMedico).ToList();
+     
             
 
             // 4. Ordenamos y devolvemos la lista de datos
