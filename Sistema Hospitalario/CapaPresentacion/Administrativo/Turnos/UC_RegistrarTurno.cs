@@ -305,7 +305,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             bool controlesValidos = this.ValidateChildren();
 
             // Refuerzo explícito de la validación de fecha (por si el Validating no se disparó)
-            bool fechaValida = ValidarFechaTurno(); //
+            bool fechaValida = ValidarFechaTurno();
 
             if (!controlesValidos || !fechaValida)
             {
@@ -330,13 +330,35 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 return;
             }
 
+            int idPaciente = (int)cbPaciente.SelectedValue;
+            int idMedico = (int)cbMedico.SelectedValue;
+            DateTime fechaTurno = dtpFechaTurno.Value;
+
+            // >>>>>> NUEVA VALIDACIÓN DE REGRA DE NEGOCIO <<<<<<
+            var turnoService = new TurnoService();
+            bool yaTieneTurnoEseDia = turnoService
+                .ExisteTurnoMismoDiaMismoMedicoPaciente(idPaciente, idMedico, fechaTurno);
+
+            if (yaTieneTurnoEseDia)
+            {
+                MessageBox.Show(
+                    "Este paciente ya tiene un turno con el mismo médico para ese día.\n" +
+                    "No se puede registrar otro turno igual.",
+                    "Turno duplicado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+            // >>>>>> FIN VALIDACIÓN <<<<<<
+
             // Construir el DTO del turno
             var nuevoTurno = new TurnoDto
             {
-                Id_paciente = (int)cbPaciente.SelectedValue,
-                Id_medico = (int)cbMedico.SelectedValue,
+                Id_paciente = idPaciente,
+                Id_medico = idMedico,
                 Id_procedimiento = (int)cbProcedimiento.SelectedValue,
-                FechaTurno = dtpFechaTurno.Value,
+                FechaTurno = fechaTurno,
                 Observaciones = txtObservaciones.Text.Trim(),
                 Telefono = string.IsNullOrWhiteSpace(txtTelefono.Text) ? null : txtTelefono.Text.Trim(),
                 Correo = string.IsNullOrWhiteSpace(txtCorreo.Text) ? null : txtCorreo.Text.Trim()
@@ -345,7 +367,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             // Guardar usando el servicio
             try
             {
-                var turnoService = new TurnoService();
                 turnoService.RegistrarTurno(nuevoTurno);
 
                 MessageBox.Show(

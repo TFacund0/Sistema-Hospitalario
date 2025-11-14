@@ -79,14 +79,23 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
             cbMedico.TextUpdate += CbMedico_TextUpdate;
             cbProcedimiento.TextUpdate += CbProcedimiento_TextUpdate;
 
+            // Cargar fuentes
             DatosComboBoxPaciente();
             DatosComboBoxMedico();
             DatosComboBoxProcedimiento();
+
+            // Limpiar selecciones iniciales
+            LimpiarSeleccionCombo(cbPaciente);
+            LimpiarSeleccionCombo(cbMedico);
+            LimpiarSeleccionCombo(cbProcedimiento);
+
+            // Habitaciones / camas se controlan por piso, arrancan deshabilitadas
             SincronizarHabilitacionControles();
 
             ConfigurarFechaInicioConHora();
             ConfigurarFechaFinNull();
         }
+
 
         // ============================= COMBO PACIENTE =============================
         private void DatosComboBoxPaciente()

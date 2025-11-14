@@ -661,7 +661,29 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
                 return false;
             }
 
+            // ========== NUEVA REGLA: evitar duplicado excluyendo este turno ==========
+            var turnoService = new TurnoService();
+
+            int idPaciente = (int)cbPaciente.SelectedValue;
+            int idMedico = (int)cbMedico.SelectedValue;
+            DateTime fechaTurno = dtpFechaTurno.Value;
+
+            bool yaExiste = turnoService
+                .ExisteTurnoMismoDiaMismoMedicoPacienteExcluyendo(
+                    _turno.Id_turno,    // <<< excluimos este mismo turno
+                    idPaciente,
+                    idMedico,
+                    fechaTurno);
+
+            if (yaExiste)
+            {
+                error = "Este paciente ya tiene un turno con el mismo médico para ese día.";
+                return false;
+            }
+            // ========================================================================
+
             return true;
         }
+
     }
 }
