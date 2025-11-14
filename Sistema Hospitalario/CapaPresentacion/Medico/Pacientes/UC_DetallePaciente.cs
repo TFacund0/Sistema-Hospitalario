@@ -78,7 +78,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                         sb.AppendLine("<div class='item'>");
 
                         // Título
-                        sb.AppendLine($"<div class='header'>{item.Tipo.ToUpper()} - {item.Fecha.ToString("dd/MM/yyyy HH:mm")} hs.</div>");
+                        sb.AppendLine($"<div class='header'>{item.Tipo.ToUpper()} - {item.Fecha.ToString("dd/MM/yyyy")}</div>");
 
                         // Médico
                         sb.AppendLine($"<p><span class='label'>Médico:</span> <span class='content'>{item.NombreMedico} (DNI: {item.DniMedico})</span></p>");
@@ -92,12 +92,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                         // Tratamiento
                         sb.AppendLine($"<p><span class='label'>Tratamiento:</span> <span class='content'>{item.Tratamiento}</span></p>");
 
-                        if (item.FechaFin.HasValue && item.FechaFin.Value != null)
+                        if (item.FechaFin != null)
                         {
-                            sb.AppendLine($"<p><span class='label'>Fecha Fin:</span> <span class='content'>{item.FechaFin.Value.ToString("dd/MM/yyyy")}</span></p>");
+                            sb.AppendLine($"<p><span class='label'>Fecha de Finalización:</span> <span class='content'>{item.FechaFin?.ToString("dd/MM/yyyy")}</span></p>");
+                        }
+                        else
+                        {
+                            sb.AppendLine($"<p><span class='label'>Fecha de Finalización:</span> <span class='content'> Sin finalizar.</span></p>");
                         }
 
-                        sb.AppendLine("</div>");
+                            sb.AppendLine("</div>");
                     }
                 }
 

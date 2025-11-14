@@ -232,10 +232,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             return listaCompleta.OrderByDescending(h => h.Fecha).ToList();
         }
 
-        public medico ObtenerMedicoPorId(int idMedico)
+        public MedicoDto ObtenerMedicoPorId(int idMedico)
         {
-            var repo2 = new MedicoRepository();
-            return repo2.ObtenerMedicoPorId(idMedico);
+            var medicos = _repo.ListarMedicos();
+            return medicos.FirstOrDefault(m => m.Id == idMedico);
         }
     }
 }

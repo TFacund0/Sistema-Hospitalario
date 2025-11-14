@@ -21,12 +21,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         {
             InitializeComponent();
 
-            ObtenerMedico();
+            ConfigurarPerfilMedico();
         }
 
-        public void ObtenerMedico()
+        public void ConfigurarPerfilMedico()
         {
+            int _idMedicoLogueado;
             var _medicoService = new MedicoService();
+
+            // Obtenemos el ID del médico de la sesión
             if (!SesionUsuario.IdMedicoAsociado.HasValue)
             {
                 MessageBox.Show("Error fatal: No se pudo identificar al médico. Cierre sesión y vuelva a intentarlo.", "Error de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -34,16 +37,26 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             }
             _idMedicoLogueado = SesionUsuario.IdMedicoAsociado.Value;
 
-            var medicoNombre = _medicoService.ObtenerMedicoPorId(_idMedicoLogueado);
+            // Obtenemos los datos del médico
+            var medico = _medicoService.ObtenerMedicoPorId(_idMedicoLogueado);
+            if (medico != null)
+            {
+                lblMedico.Text = $"Dr. {medico.Nombre} {medico.Apellido}";
+                lblEspecialidad.Text = $"Especialidad: {medico.Especialidad}";
+            }
+            else
+            {
+                MessageBox.Show("Error al cargar el perfil del médico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            lblMedicoNombre.Text = "Médico: Dr. " + medicoNombre.nombre;
+
         }
 
         public void AbrirUserControl(UserControl uc)
         {
-            Panel_contenedor.Controls.Clear();   // Limpia el panel
+            panelMenu.Controls.Clear();   // Limpia el panel
             uc.Dock = DockStyle.Fill;           // Que ocupe todo el espacio disponible
-            Panel_contenedor.Controls.Add(uc);   // Lo agrega al panel
+            panelMenu.Controls.Add(uc);   // Lo agrega al panel
             uc.BringToFront();                  // Lo trae al frente
         }
 
@@ -64,14 +77,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         }
         
 
-        private void btn_pacientes_Click(object sender, EventArgs e)
+        private void Btn_pacientes_Click(object sender, EventArgs e)
         {
             
             Boton_Click(sender, e);
             AbrirUserControl(new UC_PacientesM()); // Poner el UserControl de Pacientes
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Btn_turnos_Click(object sender, EventArgs e)
         {
             
             Boton_Click(sender, e);
@@ -79,14 +92,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Btn_consulta_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new ConsultaMedica()); // Poner el UserControl de Consultas
         }
-
-        
-
+       
         private void btn_salir_Click(object sender, EventArgs e)
         {
             // Confirmación para salir
