@@ -99,7 +99,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
             txtBuscarTurno.Clear();
             if (cboCampoFiltroTurno != null) cboCampoFiltroTurno.SelectedIndex = 0;
 
-            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.Fecha_Del_Turno).ToList();
             enlaceTurnos.ResetBindings(false);
         }
 
@@ -132,7 +132,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
                         query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
                         break;
                     case "Hora":
-                        query = query.Where(t => t.FechaTurno.ToString("g").ToLower().Contains(busqueda));
+                        query = query.Where(t => t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda));
                         break;
                     case "Estado":
                         query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
@@ -140,14 +140,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Gerente
                     default:
                         query = query.Where(t =>
                             (t.Paciente ?? "").ToLower().Contains(busqueda) ||
-                            t.FechaTurno.ToString("g").ToLower().Contains(busqueda) ||
+                            t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda) ||
                             (t.Estado ?? "").ToLower().Contains(busqueda));
                         break;
                 }
             }
 
             // Actualiza el BindingSource con los resultados filtrados
-            enlaceTurnos.DataSource = query.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.DataSource = query.OrderBy(t => t.Fecha_Del_Turno).ToList();
             enlaceTurnos.ResetBindings(false);
         }
 

@@ -22,8 +22,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         public panel1()
         {
             InitializeComponent();
-            ConfigurarEnlazadoDatosTurnoColumnas(); // primero
-            cargarTurnos();                          // después
+            cargarTurnos();                          
             ConfigurarEstilosGrilla();
         }
 
@@ -41,21 +40,35 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 return;
             }
 
-            RefrescarAgenda();
+            RefrescarAgenda(null);
         }
 
         // ===================== REFRESCAR AGENDA Y CONTADORES =====================
-        private void RefrescarAgenda()
+        private void RefrescarAgenda(DateTime? fecha)
         {
+
             try
             {
                 var turnosMedico = _turnoService.ListarTurnos()
                     .Where(t => t.Id_medico == _idMedicoLogueado) // o IdMedico según tu DTO
                     .ToList();
+                if (fecha.HasValue)
+                    turnosMedico = turnosMedico.Where (t => t.Fecha_Del_Turno.Date == fecha).ToList();
+
+                turnosMedico = turnosMedico.OrderBy(t => t.Fecha_Del_Turno).ToList();
 
                 dgvTurnos.DataSource = null;
                 dgvTurnos.DataSource = turnosMedico;
 
+                if (dgvTurnos.Columns["Id_turno"] != null)
+                {
+                    dgvTurnos.Columns["Id_turno"].Visible = false;
+                }
+
+                if (dgvTurnos.Columns["Id_medico"] != null)
+                {
+                    dgvTurnos.Columns["Id_medico"].Visible = false;
+                }
                 // contadores coherentes al mismo filtro
                 lblTotalPendientes.Text = turnosMedico.Count(t => t.Estado.Equals("pendiente", StringComparison.OrdinalIgnoreCase)).ToString();
                 lblTotalCompletadas.Text = turnosMedico.Count(t => t.Estado.Equals("atendido", StringComparison.OrdinalIgnoreCase)).ToString();
@@ -71,10 +84,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         // ===================== CONFIGURACIÓN ESTILOS GRILLA =====================
         private void ConfigurarEstilosGrilla()
         {
-            if (dgvTurnos.Columns.Contains("IdTurno"))
-            {
-                dgvTurnos.Columns["IdTurno"].Visible = false;
-            }
+
             dgvTurnos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvTurnos.RowHeadersVisible = false;
             dgvTurnos.BackgroundColor = Color.White;
@@ -93,19 +103,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            RefrescarAgenda();
+            RefrescarAgenda(null);
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            RefrescarAgenda();
+            DateTime fechaSeleccionada = dtpFecha.Value.Date;
+            RefrescarAgenda(fechaSeleccionada);
         }
 
         private void dgvTurnos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return; // Si hace clic en el header
 
-            int idTurno = (int)dgvTurnos.Rows[e.RowIndex].Cells["IdTurno"].Value;
+            int idTurno = (int)dgvTurnos.Rows[e.RowIndex].Cells["Id_turno"].Value;
             string estadoActual = (string)dgvTurnos.Rows[e.RowIndex].Cells["Estado"].Value;
 
             Form_CambiarEstadoTurno formDialogo = new Form_CambiarEstadoTurno(estadoActual);
@@ -118,7 +129,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                     int nuevoEstadoId = formDialogo.NuevoEstadoId;
                     if (_turnoService.ActualizarEstadoTurno(idTurno, nuevoEstadoId))
                     {
-                        RefrescarAgenda(); // ¡Actualizamos todo!
+                        DateTime fechaSeleccionada = dtpFecha.Value.Date;
+                        RefrescarAgenda(fechaSeleccionada);
                     }
                     else
                     {
@@ -132,21 +144,5 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             }
         }
 
-        private void ConfigurarEnlazadoDatosTurnoColumnas()
-        {
-            dgvTurnos.AutoGenerateColumns = false;
-
-            dgvTurnos.Columns["colPaciente"].DataPropertyName = "Paciente";
-            dgvTurnos.Columns["colMedico"].DataPropertyName = "Medico";
-            dgvTurnos.Columns["colHora"].DataPropertyName = "FechaTurno";
-            dgvTurnos.Columns["colEstado"].DataPropertyName = "Estado";
-
-            // si usás IdTurno en el doble clic, agregá y mapeá la columna oculta
-            if (dgvTurnos.Columns.Contains("colIdTurno"))
-            {
-                dgvTurnos.Columns["colIdTurno"].DataPropertyName = "IdTurno";
-                dgvTurnos.Columns["colIdTurno"].Visible = false;
-            }
-        }
     }
 }

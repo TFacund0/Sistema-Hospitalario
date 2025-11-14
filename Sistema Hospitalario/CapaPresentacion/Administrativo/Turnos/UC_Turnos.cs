@@ -95,7 +95,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         // Carga los turnos en el DataGridView
         public void CargarTurnosDGV()
         {
-            _listadoTurnos = _turnoService.ListarTurnos().Where(t => t.FechaTurno >= DateTime.Now.AddDays(-7)).ToList();
+            _listadoTurnos = _turnoService.ListarTurnos().Where(t => t.Fecha_Del_Turno >= DateTime.Now.AddDays(-7)).ToList();
             enlaceTurnos.DataSource = _listadoTurnos;
             dgvTurnos.DataSource = enlaceTurnos;
         }
@@ -115,7 +115,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             txtBuscarTurno.Clear();
             if (cboCampoFiltroTurno != null) cboCampoFiltroTurno.SelectedIndex = 0;
 
-            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.DataSource = _listadoTurnos.OrderBy(t => t.Fecha_Del_Turno).ToList();
             enlaceTurnos.ResetBindings(false);
         }
 
@@ -148,7 +148,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         query = query.Where(t => (t.Paciente ?? "").ToLower().Contains(busqueda));
                         break;
                     case "Hora":
-                        query = query.Where(t => t.FechaTurno.ToString("g").ToLower().Contains(busqueda));
+                        query = query.Where(t => t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda));
                         break;
                     case "Estado":
                         query = query.Where(t => (t.Estado ?? "").ToLower().Contains(busqueda));
@@ -156,14 +156,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                     default:
                         query = query.Where(t =>
                             (t.Paciente ?? "").ToLower().Contains(busqueda) ||
-                            t.FechaTurno.ToString("g").ToLower().Contains(busqueda) ||
+                            t.Fecha_Del_Turno.ToString("g").ToLower().Contains(busqueda) ||
                             (t.Estado ?? "").ToLower().Contains(busqueda));
                         break;
                 }
             }
 
             // Actualiza el BindingSource con los resultados filtrados
-            enlaceTurnos.DataSource = query.OrderBy(t => t.FechaTurno).ToList();
+            enlaceTurnos.DataSource = query.OrderBy(t => t.Fecha_Del_Turno).ToList();
             enlaceTurnos.ResetBindings(false);
         }
 
