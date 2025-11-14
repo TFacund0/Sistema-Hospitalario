@@ -1,5 +1,6 @@
 ﻿using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 using Sistema_Hospitalario.CapaPresentacion.Medico.Turnos;
 using System;
@@ -19,16 +20,20 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         private TurnoService _turnoService = new TurnoService(new TurnoRepository());
         private int _idMedicoLogueado;
 
+        // Lista base (todos los turnos del médico)
+        private List<ListadoTurno> _turnosBase = new List<ListadoTurno>();
         public panel1()
         {
             InitializeComponent();
-            cargarTurnos();                          
+
             ConfigurarEstilosGrilla();
+            CargarOpcionesDeFiltro();
+            CargarTurnos();        // carga base y aplica filtro “Todos”
         }
 
 
         // ===================== CARGAR TURNOS INICIALES =====================
-        private void cargarTurnos()
+        private void CargarTurnos()
         {
             if (SesionUsuario.IdMedicoAsociado.HasValue)
             {
@@ -36,53 +41,58 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             }
             else
             {
-                MessageBox.Show("Error: No se pudo identificar al médico logueado.", "Error de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: No se pudo identificar al médico logueado.",
+                                "Error de Sesión",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            RefrescarAgenda(null);
-        }
-
-        // ===================== REFRESCAR AGENDA Y CONTADORES =====================
-        private void RefrescarAgenda(DateTime? fecha)
-        {
-
             try
             {
-                var turnosMedico = _turnoService.ListarTurnos()
-                    .Where(t => t.Id_medico == _idMedicoLogueado) // o IdMedico según tu DTO
-                    .ToList();
-                if (fecha.HasValue)
-                    turnosMedico = turnosMedico.Where (t => t.Fecha_Del_Turno.Date == fecha).ToList();
+                _turnosBase = _turnoService.ListarTurnos()
+                                           .Where(t => t.Id_medico == _idMedicoLogueado)
+                                           .ToList();
 
-                turnosMedico = turnosMedico.OrderBy(t => t.Fecha_Del_Turno).ToList();
-
-                dgvTurnos.DataSource = null;
-                dgvTurnos.DataSource = turnosMedico;
-
-                if (dgvTurnos.Columns["Id_turno"] != null)
-                {
-                    dgvTurnos.Columns["Id_turno"].Visible = false;
-                }
-
-                if (dgvTurnos.Columns["Id_medico"] != null)
-                {
-                    dgvTurnos.Columns["Id_medico"].Visible = false;
-                }
-
-                if (dgvTurnos.Columns["FechaTurno"] != null)
-                {
-                    dgvTurnos.Columns["FechaTurno"].Visible = false;
-                }
-
-                // contadores coherentes al mismo filtro
-                lblTotalPendientes.Text = turnosMedico.Count(t => t.Estado.Equals("pendiente", StringComparison.OrdinalIgnoreCase)).ToString();
-                lblTotalCompletadas.Text = turnosMedico.Count(t => t.Estado.Equals("atendido", StringComparison.OrdinalIgnoreCase)).ToString();
-                lblTotalRecanceladas.Text = turnosMedico.Count(t => t.Estado.Equals("cancelado", StringComparison.OrdinalIgnoreCase)).ToString();
+                AplicarFiltro("Todos", "", null);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar la agenda: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar la agenda: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void CargarOpcionesDeFiltro()
+        {
+            if (cboCampo == null) return;
+
+            cboCampo.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCampo.Items.Clear();
+            cboCampo.Items.AddRange(new[] { "Todos", "Paciente", "Estado" });
+            cboCampo.SelectedIndex = 0;
+        }
+
+        // ===================== REFRESCAR AGENDA Y CONTADORES =====================
+        private void RefrescarAgenda()
+        {
+            try
+            {
+                _turnosBase = _turnoService.ListarTurnos()
+                                           .Where(t => t.Id_medico == _idMedicoLogueado)
+                                           .ToList();
+
+                string campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
+                string texto = txtBuscar.Text;
+
+                DateTime? desde = dtpDesde.Checked ? dtpDesde.Value.Date : (DateTime?)null;
+
+                AplicarFiltro(campo, texto, desde);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la agenda: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -109,14 +119,24 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            RefrescarAgenda(null);
+            txtBuscar.Clear();
+            if (cboCampo != null) cboCampo.SelectedIndex = 0;
+
+            dtpDesde.Checked = false;
+
+            AplicarFiltro("Todos", "", null);
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            DateTime fechaSeleccionada = dtpFecha.Value.Date;
-            RefrescarAgenda(fechaSeleccionada);
+            string campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
+            string texto = txtBuscar.Text;
+
+            DateTime? desde = dtpDesde.Checked ? dtpDesde.Value.Date : (DateTime?)null;
+
+            AplicarFiltro(campo, texto, desde);
         }
+
 
         private void dgvTurnos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -135,8 +155,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                     int nuevoEstadoId = formDialogo.NuevoEstadoId;
                     if (_turnoService.ActualizarEstadoTurno(idTurno, nuevoEstadoId))
                     {
-                        DateTime fechaSeleccionada = dtpFecha.Value.Date;
-                        RefrescarAgenda(fechaSeleccionada);
+                        RefrescarAgenda();
                     }
                     else
                     {
@@ -150,5 +169,73 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             }
         }
 
+        private void AplicarFiltro(string campo, string texto, DateTime? fechaDesde)
+        {
+            IEnumerable<ListadoTurno> query = _turnosBase;
+
+            // --- Filtro por fecha (día exacto) ---
+            if (fechaDesde.HasValue)
+            {
+                var dia = fechaDesde.Value.Date;
+                var diaSiguiente = dia.AddDays(1);
+
+                // Turnos cuyo Fecha_Del_Turno esté en [dia, diaSiguiente)
+                query = query.Where(t =>
+                    t.Fecha_Del_Turno >= dia &&
+                    t.Fecha_Del_Turno < diaSiguiente);
+            }
+
+            // --- Filtro por texto ---
+            string busqueda = (texto ?? "").Trim().ToLowerInvariant();
+
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                switch (campo)
+                {
+                    case "Paciente":
+                        query = query.Where(t =>
+                            (t.Paciente ?? "").ToLowerInvariant().Contains(busqueda));
+                        break;
+
+                    case "Estado":
+                        query = query.Where(t =>
+                            (t.Estado ?? "").ToLowerInvariant().Contains(busqueda));
+                        break;
+
+                    case "Todos":
+                    default:
+                        query = query.Where(t =>
+                            (t.Paciente ?? "").ToLowerInvariant().Contains(busqueda) ||
+                            (t.Estado ?? "").ToLowerInvariant().Contains(busqueda) ||
+                            t.Fecha_Del_Turno.ToString("dd/MM/yyyy").Contains(busqueda));
+                        break;
+                }
+            }
+
+            var listaFinal = query.OrderBy(t => t.Fecha_Del_Turno).ToList();
+
+            // --- Actualizar grilla ---
+            dgvTurnos.DataSource = null;
+            dgvTurnos.DataSource = listaFinal;
+
+            if (dgvTurnos.Columns["Id_turno"] != null)
+                dgvTurnos.Columns["Id_turno"].Visible = false;
+
+            if (dgvTurnos.Columns["Id_medico"] != null)
+                dgvTurnos.Columns["Id_medico"].Visible = false;
+
+            if (dgvTurnos.Columns["FechaTurno"] != null)
+                dgvTurnos.Columns["FechaTurno"].Visible = false;
+
+            // --- Contadores ---
+            lblTotalPendientes.Text = listaFinal.Count(t =>
+                t.Estado.Equals("pendiente", StringComparison.OrdinalIgnoreCase)).ToString();
+
+            lblTotalCompletadas.Text = listaFinal.Count(t =>
+                t.Estado.Equals("atendido", StringComparison.OrdinalIgnoreCase)).ToString();
+
+            lblTotalRecanceladas.Text = listaFinal.Count(t =>
+                t.Estado.Equals("cancelado", StringComparison.OrdinalIgnoreCase)).ToString();
+        }
     }
 }
