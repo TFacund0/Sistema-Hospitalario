@@ -109,6 +109,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvInternaciones.Columns["colFechaIngreso"].DataPropertyName = "Fecha_ingreso";
             dgvInternaciones.Columns["colFechaEgreso"].DataPropertyName = "Fecha_egreso";
             dgvInternaciones.Columns["colCama"].DataPropertyName = "Id_Cama";
+
+            // FORMATO SOLO FECHA
+            dgvInternaciones.Columns["colFechaEgreso"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvInternaciones.Columns["colFechaIngreso"].DefaultCellStyle.Format = "dd/MM/yyyy";
         }
 
         // Carga las opciones de filtro en el ComboBox
