@@ -236,6 +236,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     .Select(i => new HistorialItemDto
                     {
                         Fecha = i.fecha_inicio,
+                        FechaFin = i.fecha_fin,
                         Tipo = "Procedimiento/Internación",
                         Motivo = i.motivo, 
                         Diagnostico = i.procedimiento.nombre,

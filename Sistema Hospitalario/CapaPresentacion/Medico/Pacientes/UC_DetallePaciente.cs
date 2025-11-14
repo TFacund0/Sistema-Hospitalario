@@ -62,7 +62,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                 sb.AppendLine($"<p><span class='label'>Paciente:</span> {Paciente.Nombre} {Paciente.Apellido}</p>");
                 sb.AppendLine($"<p><span class='label'>DNI:</span> {Paciente.Dni}</p>");
                 sb.AppendLine($"<p><span class='label'>Direccion:</span> {Paciente.Direccion}</p>");
-                sb.AppendLine($"<p><span class='label'>Fecha de Nacimiento:</span> {Paciente.FechaNacim}</p>");
+                sb.AppendLine($"<p><span class='label'>Fecha de Nacimiento:</span> {Paciente.FechaNacim.ToString("dd/MM/yyyy")}</p>");
                 sb.AppendLine("</div>");
                 sb.AppendLine("</div>");
 
@@ -78,7 +78,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                         sb.AppendLine("<div class='item'>");
 
                         // Título
-                        sb.AppendLine($"<div class='header'>{item.Tipo.ToUpper()} - {item.Fecha.ToString("dd/MM/yyyy HH:mm")} hs.</div>");
+                        sb.AppendLine($"<div class='header'>{item.Tipo.ToUpper()} - {item.Fecha.ToString("dd/MM/yyyy")}</div>");
 
                         // Médico
                         sb.AppendLine($"<p><span class='label'>Médico:</span> <span class='content'>{item.NombreMedico} (DNI: {item.DniMedico})</span></p>");
@@ -92,7 +92,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
                         // Tratamiento
                         sb.AppendLine($"<p><span class='label'>Tratamiento:</span> <span class='content'>{item.Tratamiento}</span></p>");
 
-                        sb.AppendLine("</div>");
+                        if (item.FechaFin != null)
+                        {
+                            sb.AppendLine($"<p><span class='label'>Fecha de Finalización:</span> <span class='content'>{item.FechaFin?.ToString("dd/MM/yyyy")}</span></p>");
+                        }
+                        else
+                        {
+                            sb.AppendLine($"<p><span class='label'>Fecha de Finalización:</span> <span class='content'> Sin finalizar.</span></p>");
+                        }
+
+                            sb.AppendLine("</div>");
                     }
                 }
 

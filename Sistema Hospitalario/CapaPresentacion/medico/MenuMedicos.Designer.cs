@@ -33,7 +33,6 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnConsultas = new System.Windows.Forms.Button();
-            this.lblMedico = new System.Windows.Forms.Button();
             this.btnTurnos = new System.Windows.Forms.Button();
             this.btnPacientes = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,11 +40,15 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblMedico = new System.Windows.Forms.Label();
+            this.lblEspecialidad = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelMenu.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -83,8 +86,8 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.panel2.Controls.Add(this.panel1);
             this.panel2.Controls.Add(this.btnConsultas);
-            this.panel2.Controls.Add(this.lblMedico);
             this.panel2.Controls.Add(this.btnTurnos);
             this.panel2.Controls.Add(this.btnPacientes);
             this.panel2.Controls.Add(this.label2);
@@ -110,21 +113,6 @@
             this.btnConsultas.Text = "Nueva Consulta";
             this.btnConsultas.UseVisualStyleBackColor = true;
             this.btnConsultas.Click += new System.EventHandler(this.Btn_consulta_Click);
-            // 
-            // lblMedico
-            // 
-            this.lblMedico.BackColor = System.Drawing.Color.MediumTurquoise;
-            this.lblMedico.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblMedico.FlatAppearance.BorderSize = 0;
-            this.lblMedico.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblMedico.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMedico.Location = new System.Drawing.Point(0, 484);
-            this.lblMedico.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.lblMedico.Name = "lblMedico";
-            this.lblMedico.Size = new System.Drawing.Size(235, 50);
-            this.lblMedico.TabIndex = 12;
-            this.lblMedico.Text = "Rol: Dr Medico";
-            this.lblMedico.UseVisualStyleBackColor = false;
             // 
             // btnTurnos
             // 
@@ -219,6 +207,40 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "BIENVENIDO!!";
             // 
+            // lblMedico
+            // 
+            this.lblMedico.AutoSize = true;
+            this.lblMedico.BackColor = System.Drawing.Color.Transparent;
+            this.lblMedico.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMedico.Location = new System.Drawing.Point(6, 15);
+            this.lblMedico.Name = "lblMedico";
+            this.lblMedico.Size = new System.Drawing.Size(70, 19);
+            this.lblMedico.TabIndex = 5;
+            this.lblMedico.Text = "Médico:";
+            // 
+            // lblEspecialidad
+            // 
+            this.lblEspecialidad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblEspecialidad.AutoSize = true;
+            this.lblEspecialidad.BackColor = System.Drawing.Color.Transparent;
+            this.lblEspecialidad.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEspecialidad.Location = new System.Drawing.Point(7, 50);
+            this.lblEspecialidad.Name = "lblEspecialidad";
+            this.lblEspecialidad.Size = new System.Drawing.Size(95, 17);
+            this.lblEspecialidad.TabIndex = 14;
+            this.lblEspecialidad.Text = "Especialidad:";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Turquoise;
+            this.panel1.Controls.Add(this.lblEspecialidad);
+            this.panel1.Controls.Add(this.lblMedico);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 452);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(235, 82);
+            this.panel1.TabIndex = 5;
+            // 
             // MenuMedicos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -242,6 +264,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -252,7 +276,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnConsultas;
-        private System.Windows.Forms.Button lblMedico;
         private System.Windows.Forms.Button btnTurnos;
         private System.Windows.Forms.Button btnPacientes;
         private System.Windows.Forms.Label label2;
@@ -260,5 +283,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblEspecialidad;
+        private System.Windows.Forms.Label lblMedico;
+        private System.Windows.Forms.Panel panel1;
     }
 }
