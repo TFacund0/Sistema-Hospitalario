@@ -27,6 +27,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         // Evento para notificar cuando se solicita registrar una internación
         public event EventHandler RegistrarInternacionSolicitada;
+        public event EventHandler<InternacionDto> FinalizarInternacionSolicitada;
 
         // ============================ CONSTRUCTOR DEL UC HOSPITALIZACIÓN ============================
         public UC_Hospitalizacion()
@@ -39,6 +40,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             ConfigurarEnlazadoDatosPacienteColumnas();
             CargarDatosDGV();
             CargarOpcionesDeFiltro();
+
+            dgvInternaciones.CellDoubleClick += dgvInternaciones_CellDoubleClick;
         }
 
         // ============================ BOTÓN REGISTRAR INTERNACIÓN ============================
@@ -269,6 +272,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             // Sin texto ni fechas → lista completa ordenada
             AplicarFiltro("Todos", "", null, null);
+        }
+
+        private void dgvInternaciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var internacionSeleccionada = dgvInternaciones.Rows[e.RowIndex].DataBoundItem as InternacionDto;
+
+            if (internacionSeleccionada != null)
+            {
+                FinalizarInternacionSolicitada?.Invoke(this, internacionSeleccionada);
+            }
         }
     }
 }

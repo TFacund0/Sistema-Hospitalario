@@ -41,6 +41,8 @@
             this.lblTotalHabitaciones = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.dtpEgreso = new System.Windows.Forms.DateTimePicker();
+            this.dtpIngreso = new System.Windows.Forms.DateTimePicker();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -60,8 +62,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtpIngreso = new System.Windows.Forms.DateTimePicker();
-            this.dtpEgreso = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -226,6 +226,22 @@
             this.panel8.Size = new System.Drawing.Size(1118, 377);
             this.panel8.TabIndex = 6;
             // 
+            // dtpEgreso
+            // 
+            this.dtpEgreso.Location = new System.Drawing.Point(265, 89);
+            this.dtpEgreso.Name = "dtpEgreso";
+            this.dtpEgreso.ShowCheckBox = true;
+            this.dtpEgreso.Size = new System.Drawing.Size(215, 22);
+            this.dtpEgreso.TabIndex = 22;
+            // 
+            // dtpIngreso
+            // 
+            this.dtpIngreso.Location = new System.Drawing.Point(19, 89);
+            this.dtpIngreso.Name = "dtpIngreso";
+            this.dtpIngreso.ShowCheckBox = true;
+            this.dtpIngreso.Size = new System.Drawing.Size(215, 22);
+            this.dtpIngreso.TabIndex = 21;
+            // 
             // btnLimpiar
             // 
             this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -300,6 +316,7 @@
             this.dgvInternaciones.RowTemplate.Height = 24;
             this.dgvInternaciones.Size = new System.Drawing.Size(1071, 232);
             this.dgvInternaciones.TabIndex = 9;
+            this.dgvInternaciones.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInternaciones_CellDoubleClick);
             // 
             // colHabitacion
             // 
@@ -431,22 +448,6 @@
             this.label1.Size = new System.Drawing.Size(209, 28);
             this.label1.TabIndex = 0;
             this.label1.Text = "Hospitalización";
-            // 
-            // dtpIngreso
-            // 
-            this.dtpIngreso.Location = new System.Drawing.Point(19, 89);
-            this.dtpIngreso.Name = "dtpIngreso";
-            this.dtpIngreso.ShowCheckBox = true;
-            this.dtpIngreso.Size = new System.Drawing.Size(215, 22);
-            this.dtpIngreso.TabIndex = 21;
-            // 
-            // dtpEgreso
-            // 
-            this.dtpEgreso.Location = new System.Drawing.Point(265, 89);
-            this.dtpEgreso.Name = "dtpEgreso";
-            this.dtpEgreso.ShowCheckBox = true;
-            this.dtpEgreso.Size = new System.Drawing.Size(215, 22);
-            this.dtpEgreso.TabIndex = 22;
             // 
             // UC_Hospitalizacion
             // 
