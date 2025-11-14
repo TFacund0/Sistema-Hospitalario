@@ -43,14 +43,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
             try
             {
                 // Limpia el contenedor correctamente
-                foreach (Control c in panelContenedor.Controls)
+                foreach (Control c in panelMenu.Controls)
                     c.Dispose();
 
-                panelContenedor.Controls.Clear();
+                panelMenu.Controls.Clear();
 
                 // Configura el UserControl
                 uc.Dock = DockStyle.Fill;
-                panelContenedor.Controls.Add(uc);
+                panelMenu.Controls.Add(uc);
                 uc.BringToFront();
             }
             catch (Exception ex)
@@ -63,13 +63,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
 
         // ===================== EVENTOS DE BOTONES DEL MENÚ =====================
         // Pacientes
-        private void btn_pacientes_Click(object sender, EventArgs e)
+        private void Btn_usuarios_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_usuarios());
         }
 
-        private void btn_salir_Click(object sender, EventArgs e)
+        private void Btn_salir_Click(object sender, EventArgs e)
         {
             {
                 DialogResult dr = MessageBox.Show("¿Seguro que desea salir?",
@@ -85,21 +85,21 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
         }
 
         // Médicos
-        private void btn_medico_Click(object sender, EventArgs e)
+        private void Btn_medico_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Medicos());
         }
 
         // Especialidades
-        private void button1_Click_1(object sender, EventArgs e)
+        private void Btn_especialidades_Click_1(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Especialidades());
         }
 
         // Camas
-        private void button3_Click(object sender, EventArgs e)
+        private void Btn_camas_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
 
@@ -107,25 +107,24 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
         }
 
         // Habitaciones
-        private void button2_Click(object sender, EventArgs e)
+        private void Btn_habitaciones_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Habitaciones());
         }
 
         // Procedimientos
-        private void button4_Click(object sender, EventArgs e)
+        private void Btn_procedimientos_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Procedimientos());
         }
 
         // Backups
-        private void btn_backup_Click(object sender, EventArgs e)
+        private void Btn_backup_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_Backups());
         }
-
     }
 }

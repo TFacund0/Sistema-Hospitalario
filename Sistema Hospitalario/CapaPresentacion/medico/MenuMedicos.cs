@@ -21,9 +21,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
         public void AbrirUserControl(UserControl uc)
         {
-            Panel_contenedor.Controls.Clear();   // Limpia el panel
+            panelMenu.Controls.Clear();   // Limpia el panel
             uc.Dock = DockStyle.Fill;           // Que ocupe todo el espacio disponible
-            Panel_contenedor.Controls.Add(uc);   // Lo agrega al panel
+            panelMenu.Controls.Add(uc);   // Lo agrega al panel
             uc.BringToFront();                  // Lo trae al frente
         }
 
@@ -44,14 +44,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
         }
         
 
-        private void btn_pacientes_Click(object sender, EventArgs e)
+        private void Btn_pacientes_Click(object sender, EventArgs e)
         {
             
             Boton_Click(sender, e);
             AbrirUserControl(new UC_PacientesM()); // Poner el UserControl de Pacientes
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Btn_turnos_Click(object sender, EventArgs e)
         {
             
             Boton_Click(sender, e);
@@ -59,14 +59,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Btn_consulta_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new ConsultaMedica()); // Poner el UserControl de Consultas
         }
-
-        
-
+       
         private void btn_salir_Click(object sender, EventArgs e)
         {
             // Confirmación para salir
