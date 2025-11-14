@@ -122,7 +122,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 
             try
             {
-                // Validaciones básicas desde la capa de presentación (opcionales, pero ayudan)
                 if (dtpFechaEgreso.Value < dtpFechaInicio.Value)
                 {
                     MessageBox.Show("La fecha de egreso no puede ser anterior a la fecha de ingreso.",
