@@ -35,10 +35,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes
             }
             _idMedicoLogueado = SesionUsuario.IdMedicoAsociado.Value;
 
-            // Asumimos que los TextBoxes se llaman:
-            // txtDniPaciente, txtNroAfiliado, dtpFecha, txtMotivo, txtDiagnostico, txtTratamiento
-
-            // Seteamos la fecha de hoy y la bloqueamos (el médico no debería cambiarla)
             dtpFecha.Value = DateTime.Now;
             dtpFecha.Enabled = false;
         }

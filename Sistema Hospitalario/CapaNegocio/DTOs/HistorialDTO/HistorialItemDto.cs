@@ -9,6 +9,7 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO
     public class HistorialItemDto
     {
         public DateTime Fecha { get; set; }
+        public DateTime? FechaFin { get; set; }
         public string Tipo { get; set; } // Ej: "Consulta" o "Procedimiento"
         public string Motivo { get; set; }
         public string Diagnostico { get; set; }

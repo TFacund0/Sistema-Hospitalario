@@ -6,6 +6,7 @@ using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using System.Linq.Expressions;
+using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
@@ -130,9 +131,28 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private UC_Hospitalizacion CrearUCHospitalizacion()
         {
             var uc = new UC_Hospitalizacion();
+
             uc.RegistrarInternacionSolicitada += (_, __) => AbrirRegistrarInternacion();
+
+            // 👉 NUEVO: cuando el UC de Hospitalización pide finalizar una internación:
+            uc.FinalizarInternacionSolicitada += (_, internacion) =>
+                AbrirFinalizarInternacion(internacion);
+
             return uc;
         }
+
+        // 👉 NUEVO: abrir el UC_FinalizarInternacion con la internación seleccionada
+        private void AbrirFinalizarInternacion(InternacionDto internacion)
+        {
+            var ucFinalizar = new UC_FinalizarInternacion(internacion);
+
+            // Cuando cancela, volvés a la pantalla de hospitalización
+            ucFinalizar.CancelarFinalizacionSolicitada += (_, __) =>
+                AbrirUserControl(CrearUCHospitalizacion());
+
+            AbrirUserControl(ucFinalizar);
+        }
+
 
         // Abrir el UserControl para registrar una nueva internación
         private void AbrirRegistrarInternacion()
