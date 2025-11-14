@@ -1,18 +1,12 @@
-﻿
-using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
+﻿using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
@@ -25,10 +19,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         private readonly HabitacionService habitacionService = new HabitacionService();
         private readonly CamaService camaService = new CamaService();
 
-        // Lista para almacenar los pacientes obtenidos del servicio en el dgvInternaciones
+        // Lista para almacenar las internaciones
         private List<InternacionDto> listaInternaciones = new List<InternacionDto>();
 
-        // BindingSource para enlazar la lista de habitaciones al DataGridView
+        // BindingSource para enlazar la lista de internaciones al DataGridView
         private readonly BindingSource enlaceInternaciones = new BindingSource();
 
         // Evento para notificar cuando se solicita registrar una internación
@@ -47,7 +41,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             CargarOpcionesDeFiltro();
         }
 
-
         // ============================ BOTÓN REGISTRAR INTERNACIÓN ============================
         private void BtnRegistrarInternacion_Click(object sender, EventArgs e)
         {
@@ -55,8 +48,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ============================ CONFIGURACION DE LAS CAJAS DE RESUMEN ============================
-
-        // Método que configura la información en las cajas de resumen
         private void ConfigurarInformacionCajas()
         {
             int totalHabitaciones = habitacionService.TotalHabitaciones();
@@ -82,19 +73,18 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         // ============================ CONFIGURACION DEL DATAGRIDVIEW ============================
 
-        // Método que configura el DataGridView de Habitaciones en el UC Hospitalización
         private void ConfigurarTablaInternaciones()
         {
-            dgvInternaciones.AutoGenerateColumns = false; // Desactiva la generación automática de columnas
-            dgvInternaciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selección de fila completa
+            dgvInternaciones.AutoGenerateColumns = false;
+            dgvInternaciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            dgvInternaciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Ajusta el tamaño de las columnas para llenar el espacio disponible
-            dgvInternaciones.DefaultCellStyle.Font = new Font("Segoe UI", 10F); // Establece la fuente predeterminada para las celdas
-            dgvInternaciones.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248); // Color de fondo para filas alternas
+            dgvInternaciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvInternaciones.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvInternaciones.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
 
-            dgvInternaciones.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold); // Fuente en negrita para los encabezados de columna
-            dgvInternaciones.ColumnHeadersHeight = 35; // Altura de los encabezados de columna
-            dgvInternaciones.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke; // Color de fondo para los encabezados de columna
+            dgvInternaciones.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvInternaciones.ColumnHeadersHeight = 35;
+            dgvInternaciones.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
         }
 
         // Método que carga los datos en el DataGridView de Internaciones
@@ -105,7 +95,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             dgvInternaciones.DataSource = enlaceInternaciones;
         }
 
-        // Método que configura el enlace de datos entre las columnas del DataGridView y las propiedades del DTO
+        // Enlazado de columnas
         private void ConfigurarEnlazadoDatosPacienteColumnas()
         {
             dgvInternaciones.AutoGenerateColumns = false;
@@ -126,23 +116,44 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             cboCampo.DropDownStyle = ComboBoxStyle.DropDownList;
             cboCampo.Items.Clear();
             cboCampo.Items.AddRange(new[] {
-                                "Todos",
-                                "Habitación",
-                                "Piso",
-                                "Internado",
-                                "Fecha ingreso",
-                                "Cama"
-                            });
+                "Todos",
+                "Habitación",
+                "Piso",
+                "Internado",
+                "Fecha ingreso",
+                "Cama"
+            });
             cboCampo.SelectedIndex = 0;
         }
 
+        // ============================ APLICAR FILTRO (TEXTO + FECHA INGRESO + FECHA EGRESO) ============================
 
-        // Aplica el filtro basado en el campo y el texto ingresado
-        private void AplicarFiltro(string campo, string texto)
+        private void AplicarFiltro(
+            string campo,
+            string texto,
+            DateTime? fechaIngreso,
+            DateTime? fechaEgreso)
         {
             string busqueda = (texto ?? "").Trim().ToLowerInvariant();
             IEnumerable<InternacionDto> query = listaInternaciones;
 
+            // ===== 1) FILTRO POR FECHA DE INGRESO =====
+            if (fechaIngreso.HasValue)
+            {
+                var f = fechaIngreso.Value.Date;
+                query = query.Where(i => i.Fecha_ingreso.Date == f);
+            }
+
+            // ===== 2) FILTRO POR FECHA DE EGRESO =====
+            if (fechaEgreso.HasValue)
+            {
+                var f = fechaEgreso.Value.Date;
+                query = query.Where(i =>
+                    i.Fecha_egreso.HasValue &&
+                    i.Fecha_egreso.Value.Date == f);
+            }
+
+            // ===== 3) FILTRO POR TEXTO (COMBO + TXT) =====
             if (!string.IsNullOrEmpty(busqueda))
             {
                 switch (campo)
@@ -163,15 +174,16 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
                     case "Internado":
                         query = query.Where(i => (i.Internado ?? "")
-                            .ToLower()
+                            .ToLowerInvariant()
                             .Contains(busqueda));
                         break;
 
                     case "Fecha ingreso":
+                        // mantengo tu lógica textual de fecha
                         if (DateTime.TryParse(texto, out DateTime fechaExacta))
                         {
-                            var f = fechaExacta.Date;
-                            query = query.Where(i => i.Fecha_ingreso.Date == f);
+                            var fdi = fechaExacta.Date;
+                            query = query.Where(i => i.Fecha_ingreso.Date == fdi);
                         }
                         else
                         {
@@ -187,7 +199,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                                     i.Fecha_ingreso.Month == mes &&
                                     i.Fecha_ingreso.Year == anio);
                             }
-                            // 3) Solo mes (1 - 12)
                             else if (int.TryParse(texto, out int mesSolo) &&
                                      mesSolo >= 1 && mesSolo <= 12)
                             {
@@ -196,15 +207,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                             }
                             else
                             {
-                                // 4) Fallback: búsqueda textual
                                 query = query.Where(i =>
                                     i.Fecha_ingreso.ToShortDateString()
-                                    .ToLower()
+                                    .ToLowerInvariant()
                                     .Contains(busqueda));
                             }
                         }
                         break;
-
 
                     case "Cama":
                         if (int.TryParse(busqueda, out int idCama))
@@ -218,14 +227,15 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
                         query = query.Where(i =>
                             i.Nro_habitacion.ToString().Contains(busqueda) ||
                             i.Nro_piso.ToString().Contains(busqueda) ||
-                            (i.Internado ?? "").ToLower().Contains(busqueda) ||
-                            i.Fecha_ingreso.ToShortDateString().ToLower().Contains(busqueda) ||
+                            (i.Internado ?? "").ToLowerInvariant().Contains(busqueda) ||
+                            i.Fecha_ingreso.ToShortDateString().ToLowerInvariant().Contains(busqueda) ||
                             i.Id_cama.ToString().Contains(busqueda)
                         );
                         break;
                 }
             }
 
+            // ===== 4) ACTUALIZAR GRILLA =====
             enlaceInternaciones.DataSource = query
                 .OrderBy(i => i.Nro_habitacion)
                 .ThenBy(i => i.Id_cama)
@@ -235,12 +245,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
         }
 
         // ============================ EVENTOS DE BOTONES ============================
+
         // Botón Buscar
         private void btnBuscar_Click_1(object sender, EventArgs e)
         {
             var campo = cboCampo.SelectedItem?.ToString() ?? "Todos";
             var texto = txtBuscar.Text;
-            AplicarFiltro(campo, texto);
+
+            DateTime? fechaIngreso = dtpIngreso.Checked ? dtpIngreso.Value.Date : (DateTime?)null;
+            DateTime? fechaEgreso = dtpEgreso.Checked ? dtpEgreso.Value.Date : (DateTime?)null;
+
+            AplicarFiltro(campo, texto, fechaIngreso, fechaEgreso);
         }
 
         // Botón Limpiar
@@ -249,12 +264,11 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
             txtBuscar.Clear();
             if (cboCampo != null) cboCampo.SelectedIndex = 0;
 
-            enlaceInternaciones.DataSource = listaInternaciones
-                .OrderBy(i => i.Nro_habitacion)
-                .ThenBy(i => i.Id_cama)
-                .ToList();
+            dtpIngreso.Checked = false;
+            dtpEgreso.Checked = false;
 
-            enlaceInternaciones.ResetBindings(false);
+            // Sin texto ni fechas → lista completa ordenada
+            AplicarFiltro("Todos", "", null, null);
         }
     }
 }
