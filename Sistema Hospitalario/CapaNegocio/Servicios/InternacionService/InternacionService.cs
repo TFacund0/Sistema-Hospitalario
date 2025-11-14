@@ -37,5 +37,19 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
                 .Count(i => i.Id_procedimiento == id_procedimiento);
             return totalInternaciones;
         }
+
+        // ===================== FINALIZAR INTERNACIÓN =====================
+        public void FinalizarInternacion(FinalizarInternacionDto dto)
+        {
+            // 🔹 Validaciones de negocio
+            if (dto.FechaEgreso < dto.FechaIngreso)
+                throw new InvalidOperationException("La fecha de egreso no puede ser anterior a la fecha de ingreso.");
+
+            if (string.IsNullOrWhiteSpace(dto.DiagnosticoEgreso))
+                throw new InvalidOperationException("Debe ingresar un diagnóstico de egreso.");
+
+            // 🔹 Delegamos al repositorio la actualización en BD
+            _repo.FinalizarInternacion(dto);
+        }
     }
 }

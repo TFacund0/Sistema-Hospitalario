@@ -277,6 +277,12 @@
     <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.Designer.cs">
       <DependentUpon>UC_RegistrarInternacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_FinalizarInternacion.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_FinalizarInternacion.Designer.cs">
+      <DependentUpon>UC_FinalizarInternacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="CapaPresentacion\Administrativo\MenuAdministrativo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -435,6 +441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.resx">
       <DependentUpon>UC_RegistrarInternacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\Administrativo\Hospitalización\UC_FinalizarInternacion.resx">
+      <DependentUpon>UC_FinalizarInternacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\MenuAdministrativo.resx">
       <DependentUpon>MenuAdministrativo.cs</DependentUpon>

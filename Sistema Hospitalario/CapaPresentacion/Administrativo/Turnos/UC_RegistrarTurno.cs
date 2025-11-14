@@ -84,7 +84,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
             List<PacienteDto> listaPacientes = _servicioPaciente.ListarPacientes();
 
             _pacientesMaestroDtos = listaPacientes
-                .Where(p => p.Estado_paciente == "activo")
+                .Where(p => p.Estado_paciente.ToLower() == "activo" || p.Estado_paciente.ToLower() == "alta")
                 .ToList();
 
             var fuente = _pacientesMaestroDtos

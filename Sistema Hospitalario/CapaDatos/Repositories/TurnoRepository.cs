@@ -172,82 +172,110 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
 
         // Insertar un nuevo turno
         public void Insertar(TurnoDto p_turno)
-        {
-            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
-                var estado = db.estado_turno
-                            .AsNoTracking()
-                            .FirstOrDefault(e => e.nombre.ToLower() == "pendiente");
-
-                if (estado == null)
-                    throw new Exception("No se encontró el estado 'Programado' en la base de datos.");
-
-                var nuevoTurno = new turno
+                using (var db = new Sistema_HospitalarioEntities_Conexion())
                 {
-                    id_paciente = p_turno.Id_paciente,
-                    id_medico = p_turno.Id_medico,
-                    id_procedimiento = p_turno.Id_procedimiento,
-                    fecha_turno = p_turno.FechaTurno,
-                    correo_electronico = p_turno.Correo,
-                    fecha_registracion = DateTime.Now,
-                    telefono = p_turno.Telefono,
-                    motivo = p_turno.Observaciones,
-                    id_estado_turno = db.estado_turno.AsNoTracking().FirstOrDefault(e => e.nombre.ToLower() == "pendiente").id_estado_turno,
-                };
+                    // ================== 1) Estado del turno: Pendiente ==================
+                    var estadoPendiente = db.estado_turno
+                        .AsNoTracking()
+                        .FirstOrDefault(e => e.nombre.ToLower() == "pendiente");
 
-                db.turno.Add(nuevoTurno);
-                db.SaveChanges();
+                    if (estadoPendiente == null)
+                        throw new Exception("No se encontró el estado 'Pendiente' en la tabla estado_turno.");
+
+                    // ================== 2) Obtener paciente ==================
+                    var paciente = db.paciente.SingleOrDefault(p => p.id_paciente == p_turno.Id_paciente);
+                    if (paciente == null)
+                        throw new Exception($"No se encontró el paciente con ID {p_turno.Id_paciente}.");
+
+                    // ================== 3) Cambiar estado del paciente si está "Dado de alta" ==================
+                    var estadoAlta = db.estado_paciente
+                        .AsNoTracking()
+                        .FirstOrDefault(e => e.nombre.ToLower() == "alta");
+                    var estadoActivo = db.estado_paciente
+                        .AsNoTracking()
+                        .FirstOrDefault(e => e.nombre.ToLower() == "activo");
+
+                    if (estadoAlta == null || estadoActivo == null)
+                        throw new Exception("No se encontraron los estados 'alta' y/o 'activo' en la tabla estado_paciente.");
+
+                    // Si el paciente está "dado de alta", lo pasamos a "Activo"
+                    if (paciente.id_estado_paciente == estadoAlta.id_estado_paciente)
+                    {
+                        paciente.id_estado_paciente = estadoActivo.id_estado_paciente;
+                        db.Entry(paciente).State = EntityState.Modified;
+                    }
+
+                    // ================== 4) Crear turno ==================
+                    var nuevoTurno = new turno
+                    {
+                        id_paciente = p_turno.Id_paciente,
+                        id_medico = p_turno.Id_medico,
+                        id_procedimiento = p_turno.Id_procedimiento,
+                        fecha_turno = p_turno.FechaTurno,
+                        correo_electronico = p_turno.Correo,
+                        fecha_registracion = DateTime.Now,
+                        telefono = p_turno.Telefono,
+                        motivo = p_turno.Observaciones,
+                        id_estado_turno = estadoPendiente.id_estado_turno
+                    };
+
+                    db.turno.Add(nuevoTurno);
+
+                    // ================== 5) Guardar TODO junto ==================
+                    db.SaveChanges();
+                }
             }
-        }
+
 
         // Actualizar un turno existente
         public void Actualizar(int id_turno, TurnoDto turnoDto)
-        {
-            using (var db = new Sistema_HospitalarioEntities_Conexion())
             {
-                var turnoExistente = db.turno.Find(id_turno)
-                                     ?? throw new Exception("Turno no encontrado.");
-
-                turnoExistente.id_paciente = turnoDto.Id_paciente;
-                turnoExistente.id_medico = turnoDto.Id_medico;
-                turnoExistente.id_procedimiento = turnoDto.Id_procedimiento;
-                turnoExistente.fecha_turno = turnoDto.FechaTurno;
-                turnoExistente.motivo = turnoDto.Observaciones;
-
-                // Actualizar estado SOLO si viene texto en el DTO
-                if (!string.IsNullOrWhiteSpace(turnoDto.Estado))
+                using (var db = new Sistema_HospitalarioEntities_Conexion())
                 {
-                    // Buscamos el ID del estado por nombre (case-insensitive)
-                    var nuevoEstadoId = db.estado_turno
-                        .Where(e => e.nombre.Equals(
-                            turnoDto.Estado,
-                            StringComparison.OrdinalIgnoreCase))
-                        .Select(e => e.id_estado_turno)   // ajustá el nombre si la PK se llama distinto
-                        .FirstOrDefault();                // si no encuentra, devuelve 0
+                    var turnoExistente = db.turno.Find(id_turno)
+                                         ?? throw new Exception("Turno no encontrado.");
 
-                    // Si encontramos un estado válido, lo asignamos
-                    if (nuevoEstadoId != 0)
+                    turnoExistente.id_paciente = turnoDto.Id_paciente;
+                    turnoExistente.id_medico = turnoDto.Id_medico;
+                    turnoExistente.id_procedimiento = turnoDto.Id_procedimiento;
+                    turnoExistente.fecha_turno = turnoDto.FechaTurno;
+                    turnoExistente.motivo = turnoDto.Observaciones;
+
+                    // Actualizar estado SOLO si viene texto en el DTO
+                    if (!string.IsNullOrWhiteSpace(turnoDto.Estado))
                     {
-                        turnoExistente.id_estado_turno = nuevoEstadoId; // FK en la tabla turno
+                        // Buscamos el ID del estado por nombre (case-insensitive)
+                        var nuevoEstadoId = db.estado_turno
+                            .Where(e => e.nombre.Equals(
+                                turnoDto.Estado,
+                                StringComparison.OrdinalIgnoreCase))
+                            .Select(e => e.id_estado_turno)   // ajustá el nombre si la PK se llama distinto
+                            .FirstOrDefault();                // si no encuentra, devuelve 0
+
+                        // Si encontramos un estado válido, lo asignamos
+                        if (nuevoEstadoId != 0)
+                        {
+                            turnoExistente.id_estado_turno = nuevoEstadoId; // FK en la tabla turno
+                        }
+                        // Si no lo encuentra, conserva el estado actual
                     }
-                    // Si no lo encuentra, conserva el estado actual
+
+                    // Correo: si viene vacío, lo guardamos como null
+                    turnoExistente.correo_electronico =
+                        string.IsNullOrWhiteSpace(turnoDto.Correo)
+                            ? null
+                            : turnoDto.Correo.Trim();
+
+                    // Teléfono: igual idea
+                    turnoExistente.telefono =
+                        string.IsNullOrWhiteSpace(turnoDto.Telefono)
+                            ? null
+                            : turnoDto.Telefono.Trim();
+
+                    db.SaveChanges();
                 }
-
-                // Correo: si viene vacío, lo guardamos como null
-                turnoExistente.correo_electronico =
-                    string.IsNullOrWhiteSpace(turnoDto.Correo)
-                        ? null
-                        : turnoDto.Correo.Trim();
-
-                // Teléfono: igual idea
-                turnoExistente.telefono =
-                    string.IsNullOrWhiteSpace(turnoDto.Telefono)
-                        ? null
-                        : turnoDto.Telefono.Trim();
-
-                db.SaveChanges();
             }
-        }
 
         // Eliminar un turno por ID
         public void Eliminar(int id_turno)

@@ -15,6 +15,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
     public partial class MenuMedicos : Form
     {
+        int _idMedicoLogueado;
+
         public MenuMedicos()
         {
             InitializeComponent();

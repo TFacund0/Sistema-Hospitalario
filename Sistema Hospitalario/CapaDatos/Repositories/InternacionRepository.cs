@@ -25,9 +25,12 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return db.internacion
                     .Select(i => new InternacionDto
                     {
+                        Id_internacion = i.id_internacion,
                         Id_paciente = i.id_paciente,
                         Id_medico = i.id_medico,
+                        NombreCompletoMedico = i.medico.nombre + " " + i.medico.apellido,
                         Id_procedimiento = i.id_procedimiento,
+                        procedimiento = i.procedimiento.nombre,
                         Internado = i.paciente.nombre + " " + i.paciente.apellido,
                         Fecha_ingreso = i.fecha_inicio,
                         Fecha_egreso = i.fecha_fin,
@@ -138,6 +141,41 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     db.Entry(internacionExistente).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
+            }
+        }
+
+        public void FinalizarInternacion(FinalizarInternacionDto dto)
+        {
+            using (var db = new Sistema_HospitalarioEntities_Conexion())
+            {
+                var entidad = db.internacion.SingleOrDefault(i => i.id_internacion == dto.IdInternacion);
+
+                if (entidad == null)
+                    throw new InvalidOperationException("No se encontró la internación.");
+
+                // Campos de internación
+                entidad.fecha_fin = dto.FechaEgreso;
+                entidad.motivo = dto.DiagnosticoEgreso;
+
+                // Cambiar estado de cama
+                var cama = db.cama.SingleOrDefault(c => c.id_cama == dto.IdCama);
+                if (cama != null)
+                {
+                    cama.id_estado_cama = 1;
+                }
+                var paciente = db.paciente.SingleOrDefault(p => p.id_paciente == entidad.id_paciente);
+                if (paciente != null)
+                {
+                    // cambiar estado de paciente a "alta" segun el campo de texto, no el id
+                    var estadoAlta = db.estado_paciente.SingleOrDefault(e => e.nombre.ToLower() == "alta");
+                    if (estadoAlta != null)
+                    {
+                        paciente.id_estado_paciente = estadoAlta.id_estado_paciente;
+                    }
+
+                }
+
+                db.SaveChanges();
             }
         }
     }

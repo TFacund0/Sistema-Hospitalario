@@ -19,6 +19,14 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
         {
         }
 
+        public medico ObtenerMedicoPorId(int idMedico)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                return db.medico.FirstOrDefault(m => m.id_medico == idMedico);
+            }
+        }
+
         // Inserta un nuevo médico en la base de datos
         public (bool Ok, int IdGenerado, string Error) Insertar(string nombre, string apellido, string dni, string direccion, string matricula, string correo, int idEspecialidad)
         {
@@ -238,6 +246,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                         Fecha = i.fecha_inicio,
                         FechaFin = i.fecha_fin,
                         Tipo = "Procedimiento/Internación",
+                        FechaFin = i.fecha_fin,
                         Motivo = i.motivo, 
                         Diagnostico = i.procedimiento.nombre,
                         NombreMedico = i.medico.nombre + " " + i.medico.apellido,
