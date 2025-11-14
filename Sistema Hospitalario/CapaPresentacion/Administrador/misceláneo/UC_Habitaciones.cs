@@ -31,6 +31,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         {
             dgvHabitaciones.DataSource = _service.ObtenerHabitaciones();
             dgvHabitaciones.Columns["IdTipoHabitacion"].Visible = false;
+            dgvHabitaciones.Columns["TotalCamas"].Visible = false;
             dgvHabitaciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvHabitaciones.RowHeadersVisible = false;
             dgvHabitaciones.BackgroundColor = Color.White;

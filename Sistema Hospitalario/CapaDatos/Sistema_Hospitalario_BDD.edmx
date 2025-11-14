@@ -13,6 +13,7 @@
           <Property Name="id_cama" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nro_habitacion" Type="int" Nullable="false" />
           <Property Name="id_estado_cama" Type="int" Nullable="false" />
+          <Property Name="nro_cama_en_habitacion" Type="int" />
         </EntityType>
         <EntityType Name="Consulta">
           <Key>
@@ -159,6 +160,7 @@
           </Key>
           <Property Name="id_tipo_habitacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="limite_camas" Type="int" />
         </EntityType>
         <EntityType Name="turno">
           <Key>
@@ -547,6 +549,7 @@
           <NavigationProperty Name="estado_cama" Relationship="Self.fk_cama_estado_cama" FromRole="cama" ToRole="estado_cama" />
           <NavigationProperty Name="habitacion" Relationship="Self.fk_cama_habitacion" FromRole="cama" ToRole="habitacion" />
           <NavigationProperty Name="internacion" Relationship="Self.fk_internacion_cama" FromRole="cama" ToRole="internacion" />
+          <Property Name="nro_cama_en_habitacion" Type="Int32" />
         </EntityType>
         <EntityType Name="especialidad">
           <Key>
@@ -709,6 +712,7 @@
           <Property Name="id_tipo_habitacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="habitacion" Relationship="Self.fk_habitacion_tipo_habitacion" FromRole="tipo_habitacion" ToRole="habitacion" />
+          <Property Name="limite_camas" Type="Int32" />
         </EntityType>
         <EntityType Name="turno">
           <Key>
@@ -1112,7 +1116,8 @@
     <EntitySetMapping Name="cama">
       <EntityTypeMapping TypeName="IsTypeOf(Sistema_HospitalarioModel.cama)">
         <MappingFragment StoreEntitySet="cama">
-          <ScalarProperty Name="id_cama" ColumnName="id_cama" />
+          <ScalarProperty Name="nro_cama_en_habitacion" ColumnName="nro_cama_en_habitacion" />
+                <ScalarProperty Name="id_cama" ColumnName="id_cama" />
           <ScalarProperty Name="nro_habitacion" ColumnName="nro_habitacion" />
           <ScalarProperty Name="id_estado_cama" ColumnName="id_estado_cama" />
         </MappingFragment>
@@ -1260,7 +1265,8 @@
     <EntitySetMapping Name="tipo_habitacion">
       <EntityTypeMapping TypeName="IsTypeOf(Sistema_HospitalarioModel.tipo_habitacion)">
         <MappingFragment StoreEntitySet="tipo_habitacion">
-          <ScalarProperty Name="id_tipo_habitacion" ColumnName="id_tipo_habitacion" />
+          <ScalarProperty Name="limite_camas" ColumnName="limite_camas" />
+                <ScalarProperty Name="id_tipo_habitacion" ColumnName="id_tipo_habitacion" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -29,10 +29,31 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                              NroPiso = e.nro_piso,
                              NroHabitacion = e.nro_habitacion,
                              TipoHabitacion = e.tipo_habitacion.nombre,
-                             IdTipoHabitacion = e.id_tipo_habitacion
+                             IdTipoHabitacion = e.id_tipo_habitacion,
+                             TotalCamas = e.tipo_habitacion.limite_camas
 
                          })
                          .ToList();
+            }
+        }
+        public MostrarHabitacionDTO GetById(int nroHabitacion)
+        {
+            using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
+            {
+                var habitacion = db.habitacion
+                                  .FirstOrDefault(e => e.nro_habitacion == nroHabitacion);
+                if (habitacion != null)
+                {
+                    return new MostrarHabitacionDTO
+                    {
+                        NroPiso = habitacion.nro_piso,
+                        NroHabitacion = habitacion.nro_habitacion,
+                        TipoHabitacion = habitacion.tipo_habitacion.nombre,
+                        IdTipoHabitacion = habitacion.id_tipo_habitacion,
+                        TotalCamas = habitacion.tipo_habitacion.limite_camas
+                    };
+                }
+                return null;
             }
         }
 
@@ -90,5 +111,6 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                             .ToList();
             }
         }
+        
     }
 }

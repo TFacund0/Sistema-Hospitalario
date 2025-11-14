@@ -28,35 +28,20 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                             {
                                 NroHabitacion = e.nro_habitacion,
                                 Estado = e.estado_cama.disponibilidad,
-                                NroCama = e.id_cama,
-                                IdEstadoCama = e.id_estado_cama
+                                IdCama = e.id_cama,
+                                IdEstadoCama = e.id_estado_cama,
+                                nro_cama = e.nro_cama_en_habitacion
+
                             })
                             .ToList();
             }
         }
 
         // Insertar una nueva cama con el estado "Disponible" por defecto
-        public void Insertar(int nroHabitacion)
+        public void Insertar(cama nuevaCama)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
             {
-                int idEstadoPorDefecto = db.estado_cama
-                                           .Where(e => e.disponibilidad == "Disponible")
-                                           .Select(e => e.id_estado_cama)
-                                           .FirstOrDefault();
-
-                if (idEstadoPorDefecto == 0)
-                {
-                    // Lanzamos un error claro si no existe el estado "Disponible"
-                    throw new Exception("Error de configuración: No se encontró el estado 'Disponible' en la base de datos.");
-                }
-
-                // 3. Creamos la cama con el ID de estado correcto
-                var nuevaCama = new cama
-                {
-                    nro_habitacion = nroHabitacion,
-                    id_estado_cama = idEstadoPorDefecto
-                };
 
                 db.cama.Add(nuevaCama);
                 db.SaveChanges();

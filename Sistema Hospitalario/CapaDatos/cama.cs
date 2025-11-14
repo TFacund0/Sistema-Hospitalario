@@ -23,6 +23,7 @@ namespace Sistema_Hospitalario.CapaDatos
         public int id_cama { get; set; }
         public int nro_habitacion { get; set; }
         public int id_estado_cama { get; set; }
+        public Nullable<int> nro_cama_en_habitacion { get; set; }
     
         public virtual estado_cama estado_cama { get; set; }
         public virtual habitacion habitacion { get; set; }

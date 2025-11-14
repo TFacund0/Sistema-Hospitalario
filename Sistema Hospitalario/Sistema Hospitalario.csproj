@@ -188,20 +188,12 @@
     <Compile Include="CapaNegocio\DTOs\UsuarioDTO\DatosLoginUsuarioDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\UsuarioDTO\UsuarioDTO.cs" />
     <Compile Include="CapaNegocio\DTOs\UsuarioDTO\UsuarioLoginResultadoDTO.cs" />
-    <Compile Include="CapaNegocio\Servicios\BackupService\BackupService.cs" />
-    <Compile Include="CapaNegocio\Servicios\BackupService\Util\ConnectionHelper.cs" />
     <Compile Include="CapaNegocio\Servicios\EstadisticasService\EstadisticasService.cs" />
     <Compile Include="CapaNegocio\Servicios\MedicoService\MedicoService.cs" />
     <Compile Include="CapaNegocio\Servicios\EspecialidadService\EspecialidadService.cs" />
     <Compile Include="CapaNegocio\Servicios\ProcedimientoService\ProcedimientoService.cs" />
     <Compile Include="CapaNegocio\Servicios\UsuarioService\UsuarioService.cs" />
     <Compile Include="CapaNegocio\SesionUsuario.cs" />
-    <Compile Include="CapaPresentacion\Administrador\Backup\UC_AdminBackups.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CapaPresentacion\Administrador\Backup\UC_AdminBackups.Designer.cs">
-      <DependentUpon>UC_AdminBackups.cs</DependentUpon>
-    </Compile>
     <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -400,9 +392,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CapaPresentacion\Administrador\Backup\UC_AdminBackups.resx">
-      <DependentUpon>UC_AdminBackups.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.resx">
       <DependentUpon>UC_agregarMedico.cs</DependentUpon>
     </EmbeddedResource>

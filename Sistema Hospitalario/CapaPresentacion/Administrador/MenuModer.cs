@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrador.Backups;
+﻿
 using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
@@ -124,7 +124,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
         private void btn_backup_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
-            AbrirUserControl(new UC_Backups());
         }
 
     }

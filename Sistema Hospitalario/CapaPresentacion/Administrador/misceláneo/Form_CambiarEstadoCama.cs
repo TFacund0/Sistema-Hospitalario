@@ -43,7 +43,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 
             comboBox1.DataSource = estados;
             comboBox1.DisplayMember = "Nombre";
-            comboBox1.ValueMember = "Id";
+            comboBox1.ValueMember = "IdEstadoCama";
 
             comboBox1.Text = _estadoActual;
         }

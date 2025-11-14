@@ -1,4 +1,5 @@
-﻿using Sistema_Hospitalario.CapaDatos.Repositories;
+﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
     public class CamaService
     {
         private readonly CamaRepository _repo = new CamaRepository();
-
+        private readonly HabitacionRepository _habitacionRepo = new HabitacionRepository();
         public CamaService()
         {
         }
@@ -26,10 +27,38 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
         // Agregar una nueva cama a una habitación específica
         public void AgregarCama(int nroHabitacion)
         {
-            if (nroHabitacion < 0)
-                throw new ArgumentException("el numero de habitacion debe ser positivo");
+            try
+            {
+                if (nroHabitacion < 0)
+                    throw new ArgumentException("el numero de habitacion debe ser positivo");
 
-            _repo.Insertar(nroHabitacion);
+                var habitacion = _habitacionRepo.GetById(nroHabitacion);
+                if (habitacion == null)
+                    throw new ArgumentException("La habitación no existe.");
+
+                int? limite_cama = habitacion.TotalCamas;
+
+                if (limite_cama == null)
+                    throw new ArgumentException("El tipo de habitación no tiene un límite de camas definido.");
+
+                //buscar cuantas camas tiene la habitacion
+                var camasExistentes = _repo.GetAll().Count(c => c.NroHabitacion == nroHabitacion);
+                if (camasExistentes >= limite_cama)
+                    throw new ArgumentException("No se pueden agregar más camas a esta habitación, se ha alcanzado el límite.");
+
+                var nuevaCama = new cama
+                {
+                    nro_habitacion = nroHabitacion,
+                    id_estado_cama = 1,
+                    nro_cama_en_habitacion = camasExistentes + 1
+                };
+
+                _repo.Insertar(nuevaCama);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al agregar la cama: {ex.Message}");
+            }
         }
 
         // Eliminar una cama por número de habitación y número de cama
@@ -67,7 +96,7 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaServi
                 .Where(c => c.NroHabitacion.ToString() == p_nroHabitacion)
                 .Select(c => new CamaDto
                 {
-                    NroCama = c.NroCama,
+                    NroCama = c.IdCama,
                     NroHabitacion = c.NroHabitacion,
                     IdEstadoCama = c.IdEstadoCama,
                     EstadoCama = c.Estado

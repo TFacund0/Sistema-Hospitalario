@@ -10,7 +10,7 @@ namespace Sistema_Hospitalario.CapaDatos.Interfaces
     public interface ICamaRepository
     {
         List<MostrarCamaDTO> GetAll();
-        void Insertar(int NroHabitacion);
+        void Insertar(cama NuevaCama);
         void Eliminar(int NroHabitacion, int NroCama);
         void CambiarEstado(int NroHabitacion, int NroCama, int NuevoEstadoId);
     }

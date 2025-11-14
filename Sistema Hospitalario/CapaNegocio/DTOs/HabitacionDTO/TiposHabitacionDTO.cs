@@ -10,5 +10,6 @@ namespace Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO
     {
         public int IdTipoHabitacion { get; set; }
         public string Nombre { get; set; }
+        public int? LimiteCamas { get; set; }
     }
 }

@@ -27,6 +27,8 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
         private void CargarCamas()
         {
             dgvCamas.DataSource = _service.ObtenerCamas();
+            dgvCamas.Columns["IdCama"].Visible = false;
+            dgvCamas.Columns["IdEstadoCama"].Visible = false;
             dgvCamas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCamas.RowHeadersVisible = false;
             dgvCamas.BackgroundColor = Color.White;
@@ -115,7 +117,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 return;
 
             var row = dgvCamas.Rows[e.RowIndex];
-            int nroCama = Convert.ToInt32(row.Cells["NroCama"].Value);
+            int nroCama = Convert.ToInt32(row.Cells["IdCama"].Value);
             int nroHabitacion = Convert.ToInt32(row.Cells["NroHabitacion"].Value);
 
             string nombreColumna = dgvCamas.Columns[e.ColumnIndex].Name;
@@ -174,5 +176,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 
         }
 
+        
     }
 }
