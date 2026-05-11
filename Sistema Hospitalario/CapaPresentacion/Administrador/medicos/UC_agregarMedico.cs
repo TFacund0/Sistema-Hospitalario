@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,11 +16,21 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
+    /// <summary>
+    /// Control de usuario que permite el registro de nuevos médicos en el sistema.
+    /// Incluye validaciones de campos obligatorios, formatos de DNI y correo electrónico.
+    /// </summary>
     public partial class UC_agregarMedico : System.Windows.Forms.UserControl
     {
-        // Servicio para interactuar con la capa de negocio
+        /// <summary>Instancia estática del servicio de médicos.</summary>
         private static readonly MedicoService medicoService = new MedicoService();
+        /// <summary>Instancia local del servicio de médicos.</summary>
         private readonly MedicoService _service = medicoService;
+
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_agregarMedico"/>.
+        /// Carga las especialidades disponibles desde la base de datos para su selección.
+        /// </summary>
         public UC_agregarMedico()
         {
             InitializeComponent();
@@ -175,7 +185,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 
                 MessageBox.Show("Médico registrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Opcional: Limpiar el formulario después de guardar
+                // Limpiar el formulario después de guardar
                 BtnLimpiar_Click_1(sender, e); 
 
             }

@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO; 
+using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO; 
 
 using System;
 using System.Collections.Generic;
@@ -13,10 +13,19 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
+    /// <summary>
+    /// Control de usuario que gestiona la configuración de habitaciones del hospital.
+    /// Permite asignar habitaciones a pisos específicos y definir su tipo (común, cuidados intensivos, etc.).
+    /// </summary>
     public partial class UC_Habitaciones : UserControl
     {
-        // ===================== INSTANCIAS DE SERVICIOS =====================
+        /// <summary>Servicio para la gestión de lógica de negocio de habitaciones.</summary>
         private readonly HabitacionService _service;
+
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_Habitaciones"/>.
+        /// Prepara el servicio, carga los tipos de habitación y el listado actual en la grilla.
+        /// </summary>
         public UC_Habitaciones()
         {
             InitializeComponent();
@@ -82,7 +91,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 e.Cancel = true;
                 errorProvider1.SetError(TBPISOHABITACION, "Máximo 50 caracteres.");
             }
-            // Validar que solo sean números (ya validado con TryParse, pero se mantiene la estructura)
+            // Validar que solo sean números
             else if (!System.Text.RegularExpressions.Regex.IsMatch(TBPISOHABITACION.Text.Trim(), @"^\d+$"))
             {
                 e.Cancel = true;

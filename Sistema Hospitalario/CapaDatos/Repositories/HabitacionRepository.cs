@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -12,13 +12,20 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de la gestión de la infraestructura de habitaciones mediante Entity Framework.
+    /// Permite la administración de pisos, habitaciones y sus tipos asociados.
+    /// </summary>
     public class HabitacionRepository : IHabitacionRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="HabitacionRepository"/>.
+        /// </summary>
         public HabitacionRepository()
         {
         }
 
-        // Obtener todas las habitaciones
+        /// <inheritdoc />
         public List<MostrarHabitacionDTO> GetAll()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -36,7 +43,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Insertar una nueva habitación
+        /// <inheritdoc />
         public void Insertar(int nroPiso, int tipoHabitacion)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -46,7 +53,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Eliminar una habitación por número de piso y número de habitación
+        /// <inheritdoc />
         public void Eliminar(int nroPiso, int nroHabitacion)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -75,7 +82,10 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Listar tipos de habitación
+        /// <summary>
+        /// Obtiene el catálogo de tipos de habitaciones registrados en el sistema.
+        /// </summary>
+        /// <returns>Lista de <see cref="TiposHabitacionDTO"/>.</returns>
         public List<TiposHabitacionDTO> ListarTiposHabitacion()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.Interfaces; // Asegurate que el using sea correcto
+using Sistema_Hospitalario.CapaDatos.Interfaces; // Asegurate que el using sea correcto
 using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO; // O donde estén tus DTOs
 using System; // Necesario para Exception
@@ -9,21 +9,37 @@ using System.Text; // Necesario para hashing
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
 {
+    /// <summary>
+    /// Servicio que gestiona la seguridad y administración de usuarios del sistema.
+    /// Incluye funcionalidades para autenticación, gestión de perfiles, roles y hashing de contraseñas.
+    /// </summary>
     public class UsuarioService
     {
         private readonly UsuarioRepository _repo;
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="UsuarioService"/> con el repositorio por defecto.
+        /// </summary>
         public UsuarioService()
         {
             _repo = new UsuarioRepository();
         }
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="UsuarioService"/> con un repositorio inyectado (útil para pruebas).
+        /// </summary>
+        /// <param name="repo">Instancia del repositorio de usuarios.</param>
         public UsuarioService(IUsuarioRepository repo)
         {
             _repo = new UsuarioRepository();
         }
 
-        // Obtener usuarios con filtrado y ordenamiento
+        /// <summary>
+        /// Obtiene y filtra el listado de usuarios según un campo y valor específicos.
+        /// </summary>
+        /// <param name="campo">Campo por el cual filtrar u ordenar (NombreUsuario, Nombre, Apellido, correo, Rol, Estado).</param>
+        /// <param name="valor">Valor de búsqueda para el filtro.</param>
+        /// <returns>Lista de <see cref="MostrarUsuariosDTO"/> filtrada y ordenada.</returns>
         public List<MostrarUsuariosDTO> ObtenerUsuarios(string campo = null, string valor = null)
         {
             var listaMaestra = _repo.ObtenerUsuarios();
@@ -94,7 +110,11 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             return resultado;
         }
 
-        // Agregar un nuevo usuario
+        /// <summary>
+        /// Registra un nuevo usuario en el sistema, realizando el hashing de la contraseña y validando unicidad.
+        /// </summary>
+        /// <param name="dto">DTO con los datos del nuevo usuario.</param>
+        /// <returns>Tupla con el estado de éxito, el ID generado y un mensaje de error si aplica.</returns>
         public (bool Ok, int IdGenerado, string Error) AgregarUsuario(UsuarioAltaDTO dto)
         {
             if (_repo.ExisteUsername(dto.NombreUsuario))
@@ -117,7 +137,11 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             );
         }
 
-        // Eliminar un usuario
+        /// <summary>
+        /// Elimina un usuario del sistema por su ID, con restricciones de seguridad para cuentas críticas.
+        /// </summary>
+        /// <param name="idUsuario">ID del usuario a eliminar.</param>
+        /// <exception cref="Exception">Se lanza si se intenta eliminar al Administrador principal (ID 1).</exception>
         public void EliminarUsuario(int idUsuario)
         {
             if (idUsuario == 1)
@@ -128,7 +152,11 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             _repo.Eliminar(idUsuario);
         }
 
-        // Hashing de contraseñas usando SHA256
+        /// <summary>
+        /// Genera un hash SHA256 de una contraseña en texto plano.
+        /// </summary>
+        /// <param name="password">Contraseña en texto plano.</param>
+        /// <returns>Representación hexadecimal del hash generado.</returns>
         private string HashPassword(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -144,7 +172,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             }
         }
 
-        // Obtener conteo de usuarios por rol
+        /// <summary>
+        /// Genera un informe estadístico de la cantidad de usuarios agrupados por su rol.
+        /// </summary>
+        /// <returns>Diccionario donde la clave es el nombre del rol y el valor es la cantidad de usuarios.</returns>
         public Dictionary<string, int> ObtenerConteoUsuariosPorRol()
         {
             var todosLosUsuarios = _repo.ObtenerUsuarios();
@@ -160,6 +191,12 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService
             return conteoPorRol;
         }
 
+        /// <summary>
+        /// Valida las credenciales de acceso de un usuario.
+        /// </summary>
+        /// <param name="usuario">Nombre de usuario (username).</param>
+        /// <param name="contraseña">Contraseña en texto plano para validar.</param>
+        /// <returns>Objeto <see cref="UsuarioLoginResultadoDTO"/> con el resultado de la autenticación y datos de sesión.</returns>
         internal UsuarioLoginResultadoDTO ValidarCredenciales(string usuario, string contraseña)
         {
             string hashedPasswordIngresada = HashPassword(contraseña);

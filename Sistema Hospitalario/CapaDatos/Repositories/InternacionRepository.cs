@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.Interfaces;
+using Sistema_Hospitalario.CapaDatos.Interfaces;
 using Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 using System;
@@ -10,14 +10,20 @@ using System.Threading.Tasks;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de gestionar la persistencia de las internaciones y el estado 
+    /// de los recursos asociados (pacientes y camas) mediante Entity Framework.
+    /// </summary>
     public class InternacionRepository : IInternacionRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="InternacionRepository"/>.
+        /// </summary>
         public InternacionRepository()
         {
         }
 
-        
-        // Listar todas las internaciones
+        /// <inheritdoc />
         public List<InternacionDto> GetAll()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -42,7 +48,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Insertar una nueva internación
+        /// <inheritdoc />
         public void Insertar(InternacionDto internacion)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -108,7 +114,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Eliminar una internación por ID
+        /// <inheritdoc />
         public void Eliminar(int id_internacion)
             {
                 using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -122,7 +128,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 }
             }
 
-        // Actualizar una internación existente
+        /// <inheritdoc />
         public void Actualizar(int id_internacion, InternacionDto internacion)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -144,6 +150,11 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        /// <summary>
+        /// Registra el egreso de un paciente, liberando la cama y actualizando el estado del paciente a 'Alta'.
+        /// </summary>
+        /// <param name="dto">DTO con los datos necesarios para finalizar la internación.</param>
+        /// <exception cref="InvalidOperationException">Se lanza si no se encuentra la internación especificada.</exception>
         public void FinalizarInternacion(FinalizarInternacionDto dto)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())

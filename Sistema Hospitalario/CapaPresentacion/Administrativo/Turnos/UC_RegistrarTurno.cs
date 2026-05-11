@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,33 +21,45 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
+    /// <summary>
+    /// Control de usuario que gestiona el registro de nuevos turnos médicos.
+    /// Incluye lógica avanzada de autofiltrado en ComboBoxes, validación de duplicados y filtrado de médicos por procedimiento.
+    /// </summary>
     public partial class UC_RegistrarTurno : UserControl
     {
-        // Servicio para interactuar con la capa de negocio
+        /// <summary>Servicio de pacientes para obtener la lista de candidatos.</summary>
         private static readonly PacienteService pacienteService = new PacienteService();
+        /// <summary>Servicio de pacientes local.</summary>
         private readonly PacienteService _servicioPaciente = pacienteService;
+        /// <summary>Servicio de médicos para obtener profesionales disponibles.</summary>
         private readonly MedicoService _servicioMedico = new MedicoService();
+        /// <summary>Servicio de procedimientos para catalogar el tipo de cita.</summary>
         private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
-        // Listas maestras para validaciones de ComboBox
+        /// <summary>Maestro de nombres de pacientes para validación de entrada de texto.</summary>
         private readonly List<string> _maestroPaciente = new List<string>();
+        /// <summary>Maestro de nombres de médicos para validación de entrada de texto.</summary>
         private readonly List<string> _maestroMedico = new List<string>();
+        /// <summary>Maestro de procedimientos para validación de entrada de texto.</summary>
         private readonly List<string> _maestroProcedimiento = new List<string>();
 
-        // <<< NUEVO: cachés de DTO para poder filtrar sin reconsultar BD
+        /// <summary>Caché local de DTOs de médicos para filtrado rápido sin reconsultar la base de datos.</summary>
         private List<MedicoDto> _medicosMaestroDtos = new List<MedicoDto>();
+        /// <summary>Caché local de DTOs de procedimientos.</summary>
         private List<ProcedimientoDto> _procedimientosMaestroDtos = new List<ProcedimientoDto>();
-        private List<PacienteDto> _pacientesMaestroDtos = new List<PacienteDto>();   // <<< NUEVO
+        /// <summary>Caché local de DTOs de pacientes.</summary>
+        private List<PacienteDto> _pacientesMaestroDtos = new List<PacienteDto>();
 
-        // Bandera para evitar reentradas en TextUpdate
-        private bool _actualizandoInterno = false;   // <<< NUEVO
+        /// <summary>Bandera para evitar recursividad infinita durante la actualización de texto en combos de autofiltrado.</summary>
+        private bool _actualizandoInterno = false;
 
-
-
-        // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
+        /// <summary>Evento que notifica que se ha cancelado el registro del turno.</summary>
         public event EventHandler CancelarTurnoSolicitado;
 
-        // ======================== CONSTRUCTOR UC REGISTRAR TURNO ========================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_RegistrarTurno"/>.
+        /// Configura las fechas permitidas y puebla los catálogos iniciales de pacientes, médicos y procedimientos.
+        /// </summary>
         public UC_RegistrarTurno()
         {
             InitializeComponent();

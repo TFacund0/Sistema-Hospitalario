@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.Repositories;
+using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
@@ -15,13 +15,25 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
+    /// <summary>
+    /// Control de usuario que gestiona la agenda de turnos del médico logueado.
+    /// Permite visualizar, filtrar por paciente/estado/fecha y actualizar el estado de los turnos.
+    /// </summary>
     public partial class panel1 : UserControl
     {
+        /// <summary>Servicio para la gestión de turnos.</summary>
         private TurnoService _turnoService = new TurnoService(new TurnoRepository());
+
+        /// <summary>ID del médico que inició sesión.</summary>
         private int _idMedicoLogueado;
 
-        // Lista base (todos los turnos del médico)
+        /// <summary>Lista base que contiene todos los turnos del médico sin filtrar.</summary>
         private List<ListadoTurno> _turnosBase = new List<ListadoTurno>();
+
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="panel1"/>.
+        /// Configura la grilla, los filtros y carga los turnos iniciales.
+        /// </summary>
         public panel1()
         {
             InitializeComponent();
@@ -169,6 +181,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             }
         }
 
+        /// <summary>
+        /// Aplica los criterios de filtrado sobre la lista base de turnos y actualiza la visualización de la grilla.
+        /// </summary>
+        /// <param name="campo">Nombre del campo por el cual filtrar (Paciente, Estado, Todos).</param>
+        /// <param name="texto">Texto de búsqueda.</param>
+        /// <param name="fechaDesde">Fecha específica para filtrar el día de los turnos.</param>
         private void AplicarFiltro(string campo, string texto, DateTime? fechaDesde)
         {
             IEnumerable<ListadoTurno> query = _turnosBase;

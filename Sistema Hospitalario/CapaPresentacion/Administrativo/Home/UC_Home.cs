@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,13 +16,21 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
+    /// <summary>
+    /// Control de usuario que representa la pantalla de inicio para el personal administrativo.
+    /// Muestra un resumen de estadísticas (pacientes, camas e internaciones) y el listado de actividad reciente.
+    /// </summary>
     public partial class UC_HomeGerente : UserControl
     {
-        // ========= Campos/miembros del UC/Form =========
-        private List<HomeDto> listaActividad = new List<HomeDto>();   // Cargada desde HomeService
-        private BindingSource enlaceActividad = new BindingSource();  // DataSource del DataGridView
+        /// <summary>Lista que almacena la actividad reciente del sistema.</summary>
+        private List<HomeDto> listaActividad = new List<HomeDto>();
+        /// <summary>Enlace de datos para el DataGridView de actividad.</summary>
+        private BindingSource enlaceActividad = new BindingSource();
 
-        // ============================ CONSTRUCTOR DEL UC HOME ADMINISTRATIVO ============================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_HomeGerente"/> (Panel de Inicio Administrativo).
+        /// Carga los paneles estadísticos y configura la tabla de actividad reciente.
+        /// </summary>
         public UC_HomeGerente()
         {
             InitializeComponent();

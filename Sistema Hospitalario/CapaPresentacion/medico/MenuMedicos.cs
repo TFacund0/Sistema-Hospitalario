@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio;
 using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes;
 using System;
@@ -13,10 +13,19 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
+    /// <summary>
+    /// Formulario principal para el perfil del Médico. 
+    /// Proporciona acceso a la gestión de pacientes, turnos y realización de consultas.
+    /// </summary>
     public partial class MenuMedicos : Form
     {
+        /// <summary>Identificador del médico que ha iniciado sesión.</summary>
         int _idMedicoLogueado;
 
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario <see cref="MenuMedicos"/>.
+        /// Configura el perfil del médico basado en la sesión activa.
+        /// </summary>
         public MenuMedicos()
         {
             InitializeComponent();
@@ -24,6 +33,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             ConfigurarPerfilMedico();
         }
 
+        /// <summary>
+        /// Recupera los datos del médico desde el servicio utilizando la información de la sesión
+        /// y actualiza las etiquetas de la interfaz (Nombre y Especialidad).
+        /// </summary>
         public void ConfigurarPerfilMedico()
         {
             int _idMedicoLogueado;
@@ -52,6 +65,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
 
         }
 
+        /// <summary>
+        /// Carga dinámicamente un Control de Usuario (UserControl) dentro del panel principal del menú.
+        /// </summary>
+        /// <param name="uc">El control de usuario que se desea mostrar.</param>
         public void AbrirUserControl(UserControl uc)
         {
             panelMenu.Controls.Clear();   // Limpia el panel

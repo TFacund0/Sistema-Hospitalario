@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -12,13 +12,20 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de gestionar la persistencia y estados de las camas mediante Entity Framework.
+    /// Maneja la asignación de camas a habitaciones y el control de disponibilidad.
+    /// </summary>
     public class CamaRepository : ICamaRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="CamaRepository"/>.
+        /// </summary>
         public CamaRepository()
         {
         }
 
-        // Obtener todas las camas con su estado y número de habitación
+        /// <inheritdoc />
         public List<MostrarCamaDTO> GetAll()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -35,7 +42,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Insertar una nueva cama con el estado "Disponible" por defecto
+        /// <inheritdoc />
         public void Insertar(int nroHabitacion)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -63,7 +70,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Eliminar una cama específica
+        /// <inheritdoc />
         public void Eliminar(int nroHabitacion, int nroCama)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -82,7 +89,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Cambiar el estado de una cama específica
+        /// <inheritdoc />
         public void CambiarEstado(int nroHabitacion, int nroCama, int nuevoEstadoId)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -96,7 +103,10 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Obtener todos los estados de cama disponibles
+        /// <summary>
+        /// Obtiene el catálogo completo de estados de cama (Disponible, Ocupada, etc.) desde la base de datos.
+        /// </summary>
+        /// <returns>Lista de entidades <see cref="estado_cama"/>.</returns>
         public List<estado_cama> GetEstadosCama()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

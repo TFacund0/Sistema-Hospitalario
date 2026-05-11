@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,21 +9,35 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.EspecialidadDTO;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.EspecialidadService
 {
+    /// <summary>
+    /// Servicio que gestiona el catálogo de especialidades médicas disponibles en el hospital.
+    /// Proporciona métodos para listar, agregar y eliminar especialidades.
+    /// </summary>
     public class EspecialidadService
     {
         private readonly EspecialidadRepository _repo = new EspecialidadRepository();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="EspecialidadService"/>.
+        /// </summary>
         public EspecialidadService()
         {
         }
 
-        // Obtener todas las especialidades
+        /// <summary>
+        /// Obtiene el listado completo de todas las especialidades médicas registradas.
+        /// </summary>
+        /// <returns>Lista de <see cref="EspecialidadDTO"/>.</returns>
         public List<EspecialidadDTO> ObtenerEspecialidades()
         {
             return _repo.GetAll();
         }
 
-        // Agregar una nueva especialidad
+        /// <summary>
+        /// Registra una nueva especialidad médica en el catálogo.
+        /// </summary>
+        /// <param name="nombre">Nombre de la especialidad (ej. Cardiología, Pediatría).</param>
+        /// <exception cref="ArgumentException">Se lanza si el nombre es nulo o está vacío.</exception>
         public void AgregarEspecialidad(string nombre)
         {
             if (string.IsNullOrWhiteSpace(nombre))
@@ -32,7 +46,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EspecialidadService
             _repo.Insertar(nombre);
         }
 
-        // Eliminar una especialidad por nombre
+        /// <summary>
+        /// Elimina una especialidad médica del sistema buscando por su nombre exacto.
+        /// </summary>
+        /// <param name="nombre">Nombre de la especialidad a eliminar.</param>
         public void EliminarEspecialidad(string nombre)
         {
             _repo.Eliminar(nombre);

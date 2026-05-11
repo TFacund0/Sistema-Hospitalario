@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +10,36 @@ using Sistema_Hospitalario.CapaDatos.Repositories;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
 {
+    /// <summary>
+    /// Servicio que gestiona la infraestructura de habitaciones del hospital.
+    /// Permite administrar la creación, eliminación y consulta de habitaciones por piso y tipo.
+    /// </summary>
     public class HabitacionService
     {
         private readonly HabitacionRepository _repo = new HabitacionRepository();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="HabitacionService"/>.
+        /// </summary>
         public HabitacionService()
         {
         }
 
-        // Obtener todas las habitaciones
+        /// <summary>
+        /// Obtiene el listado completo de todas las habitaciones con su información detallada.
+        /// </summary>
+        /// <returns>Lista de <see cref="MostrarHabitacionDTO"/>.</returns>
         public List<MostrarHabitacionDTO> ObtenerHabitaciones()
         {
             return _repo.GetAll();
         }
 
-        // Agregar una nueva habitación
+        /// <summary>
+        /// Registra una nueva habitación en el sistema.
+        /// </summary>
+        /// <param name="nroPiso">Número de piso donde se ubica la habitación.</param>
+        /// <param name="tipoHabitacion">ID del tipo de habitación (ej. individual, compartida).</param>
+        /// <exception cref="ArgumentException">Se lanza si el número de piso es negativo.</exception>
         public void AgregarHabitacion(int nroPiso, int tipoHabitacion)
         {
             if (nroPiso < 0)
@@ -33,26 +48,40 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService
             _repo.Insertar(nroPiso, tipoHabitacion);
         }
 
-        // Eliminar una habitación por número de piso y número de habitación
+        /// <summary>
+        /// Elimina una habitación específica identificada por su ubicación.
+        /// </summary>
+        /// <param name="nroPiso">Número de piso.</param>
+        /// <param name="nroHabitacion">Número de habitación.</param>
         public void EliminarHabitacion(int nroPiso, int nroHabitacion)
         {
             _repo.Eliminar(nroPiso, nroHabitacion);
         }
 
-        // Listar tipos de habitación
+        /// <summary>
+        /// Obtiene el catálogo de tipos de habitaciones disponibles.
+        /// </summary>
+        /// <returns>Lista de <see cref="TiposHabitacionDTO"/>.</returns>
         public List<TiposHabitacionDTO> ListarTiposHabitacion()
         {
             return _repo.ListarTiposHabitacion();
         }
 
-        // ===================== TOTAL HABITACIONES =====================
+        /// <summary>
+        /// Obtiene la cantidad total de habitaciones registradas en el hospital.
+        /// </summary>
+        /// <returns>Total de habitaciones.</returns>
         public int TotalHabitaciones()
         {
             var totalHabitaciones = _repo.GetAll().Count;
             return totalHabitaciones;
         }
 
-        // Listar habitaciones por piso (entrada como texto)
+        /// <summary>
+        /// Obtiene la lista de habitaciones filtradas por un piso específico, proporcionado como texto.
+        /// </summary>
+        /// <param name="pisoTexto">Cadena de texto que representa el número de piso.</param>
+        /// <returns>Lista de <see cref="HabitacionDto"/> del piso indicado, o lista vacía si el formato es inválido.</returns>
         public List<HabitacionDto> ListarHabitacionesXPiso(string pisoTexto)
         {
             var habitaciones = new List<HabitacionDto>();

@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using System;
@@ -14,17 +14,25 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
+    /// <summary>
+    /// Control de usuario que proporciona una visión analítica de los pacientes para el perfil de Gerente.
+    /// Incluye listado de pacientes con filtros y gráficos estadísticos de registros por día y distribución por estado.
+    /// </summary>
     public partial class UC_PacientesGerente : UserControl
     {
-        // Servicio para interactuar con la capa de negocio
+        /// <summary>Servicio para operaciones relacionadas con pacientes.</summary>
         private readonly PacienteService pacienteService = new PacienteService();
 
-        // BindingSource para enlazar la lista de pacientes al DataGridView
+        /// <summary>BindingSource para el enlace de datos entre la lista de pacientes y la grilla.</summary>
         private readonly BindingSource enlacePacientes = new BindingSource();
 
-        // Lista completa de pacientes cargada desde el servicio
+        /// <summary>Lista interna que contiene los DTOs de pacientes cargados.</summary>
         private List<PacienteDto> listaPacientes = new List<PacienteDto>();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_PacientesGerente"/>.
+        /// Configura la grilla, los filtros y procesa la generación de gráficos estadísticos de pacientes.
+        /// </summary>
         public UC_PacientesGerente()
         {
             InitializeComponent();

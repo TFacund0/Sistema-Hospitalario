@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.Repositories;
+using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.DTOs.EstadisticasDTO;
 using System;
 using System.Collections.Generic;
@@ -8,16 +8,26 @@ using System.Threading.Tasks;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
 {
+    /// <summary>
+    /// Servicio encargado de generar datos estadísticos y reportes consolidados para el dashboard del sistema.
+    /// Proporciona información sobre evolución de pacientes, disponibilidad de camas y estados de turnos.
+    /// </summary>
     public class EstadisticasService
     {
         private readonly EstadisticasRepository _repo;
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="EstadisticasService"/>.
+        /// </summary>
         public EstadisticasService()
         {
             _repo = new EstadisticasRepository();
         }
 
-        // Obtener cantidad de pacientes activos y altas por día en la última semana
+        /// <summary>
+        /// Obtiene el conteo de pacientes activos y altas por día durante los últimos 7 días.
+        /// </summary>
+        /// <returns>Lista de <see cref="PacientesPorDiaDto"/> con la evolución semanal.</returns>
         public List<PacientesPorDiaDto> ObtenerPacientesSemana()
         {
             var lista = new List<PacientesPorDiaDto>();
@@ -41,7 +51,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             return lista;
         }
 
-        // Obtener distribución de camas (ocupadas vs disponibles)
+        /// <summary>
+        /// Obtiene la distribución actual de camas entre ocupadas y disponibles.
+        /// </summary>
+        /// <returns>Objeto <see cref="CamasDistribucionDto"/> con los totales por estado.</returns>
         public CamasDistribucionDto ObtenerDistribucionCamas()
         {
             int ocupadas = _repo.ContarCamasPorDisponibilidad("ocupada");
@@ -54,7 +67,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             };
         }
 
-        // Obtener cantidad de turnos por día en la última semana
+        /// <summary>
+        /// Obtiene la cantidad de turnos programados diariamente durante la última semana.
+        /// </summary>
+        /// <returns>Lista de <see cref="TurnosPorDiaDto"/> con la serie temporal de turnos.</returns>
         public List<TurnosPorDiaDto> ObtenerTurnosPorDiaUltimaSemana()
         {
             DateTime hoy = DateTime.Today;
@@ -80,7 +96,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             return lista;
         }
 
-        // Obtener distribución de estados de turnos en la última semana
+        /// <summary>
+        /// Obtiene la distribución de los estados de los turnos (Pendientes, Atendidos, Cancelados) registrados en los últimos 7 días.
+        /// </summary>
+        /// <returns>Objeto <see cref="TurnosEstadosDistribucionDto"/> con la distribución de estados.</returns>
         public TurnosEstadosDistribucionDto ObtenerDistribucionEstadosTurnosUltimaSemana()
         {
             DateTime hoy = DateTime.Today;
@@ -101,7 +120,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             };
         }
 
-        // Obtener cantidad de pacientes registrados por día en la última semana
+        /// <summary>
+        /// Obtiene la cantidad de nuevos pacientes registrados en el sistema por cada día de la última semana.
+        /// </summary>
+        /// <returns>Lista de <see cref="PacientesRegistradosPorDiaDto"/>.</returns>
         public List<PacientesRegistradosPorDiaDto> ObtenerPacientesRegistradosPorDiaUltimaSemana()
         {
             DateTime hoy = DateTime.Today;
@@ -127,7 +149,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService
             return lista;
         }
 
-        // Obtener distribución de pacientes por estado (activo, internado, alta)
+        /// <summary>
+        /// Obtiene la distribución actual de pacientes según su estado clínico (Activo, Internado, Alta).
+        /// </summary>
+        /// <returns>Objeto <see cref="PacientesEstadosDistribucionDto"/> con los totales de distribución.</returns>
         public PacientesEstadosDistribucionDto ObtenerDistribucionPacientesPorEstado()
         {
             // El repo devuelve un diccionario estado -> cantidad

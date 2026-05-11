@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaDatos.Interfaces;
 using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ConsultaDTO;
@@ -13,18 +13,39 @@ using System.Text;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
 {
+    /// <summary>
+    /// Servicio que gestiona la lógica de negocio para los médicos.
+    /// Proporciona funcionalidades para la gestión de médicos, consultas, historial de pacientes y listados.
+    /// </summary>
     public class MedicoService
     {
         private readonly IMedicoRepository _repo;
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="MedicoService"/>.
+        /// </summary>
         public MedicoService()
         {
             _repo = new MedicoRepository();
         }
+
+        /// <summary>
+        /// Obtiene el número total de pacientes registrados en el sistema.
+        /// </summary>
+        /// <returns>Cantidad total de pacientes.</returns>
         public int ObtenerConteoTotalPacientes()
         {
             return _repo.ContarTotalPacientes();
         }
+
+        /// <summary>
+        /// Obtiene una lista de pacientes filtrada por nombre, apellido, DNI y opcionalmente por fecha de turno.
+        /// </summary>
+        /// <param name="nombre">Filtro por nombre de paciente.</param>
+        /// <param name="apellido">Filtro por apellido de paciente.</param>
+        /// <param name="dni">Filtro por DNI (comienza con).</param>
+        /// <param name="fechaTurno">Filtro opcional por fecha de turno.</param>
+        /// <returns>Lista de <see cref="PacienteListadoMedicoDto"/> ordenada por apellido y nombre.</returns>
         public List<PacienteListadoMedicoDto> ObtenerPacientes(string nombre, string apellido, string dni, DateTime? fechaTurno)
         {
             // 1. Obtenemos la lista "maestra" completa
@@ -52,6 +73,12 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             return listaMaestra.OrderBy(p => p.Apellido).ThenBy(p => p.Nombre).ToList();
         }
 
+        /// <summary>
+        /// Registra una nueva consulta médica para un paciente.
+        /// </summary>
+        /// <param name="dto">DTO con los datos de la consulta.</param>
+        /// <param name="idMedicoLogueado">ID del médico que realiza la consulta.</param>
+        /// <returns>Una tupla con el estado de éxito y un mensaje de error si falla.</returns>
         public (bool Ok, string Error) RegistrarConsulta(ConsultaAltaDTO dto, int idMedicoLogueado)
         {
             try
@@ -104,6 +131,12 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
                 return (false, "Error inesperado: " + ex.Message);
             }
         }
+        /// <summary>
+        /// Obtiene y filtra la lista de médicos según un campo y valor específicos.
+        /// </summary>
+        /// <param name="campo">Nombre del campo por el cual filtrar (Nombre, Apellido, DNI, etc.).</param>
+        /// <param name="valor">Valor a buscar en el campo especificado.</param>
+        /// <returns>Lista de médicos filtrada y ordenada según el campo especificado.</returns>
         public List<MostrarMedicoDTO> ObtenerMedicos(string campo = null, string valor = null)
         {
             var listaCompleta = _repo.ObtenerMedicos();
@@ -183,6 +216,17 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             return resultado;
         }
 
+        /// <summary>
+        /// Agrega un nuevo médico al sistema.
+        /// </summary>
+        /// <param name="nombre">Nombre del médico.</param>
+        /// <param name="apellido">Apellido del médico.</param>
+        /// <param name="dni">DNI del médico.</param>
+        /// <param name="direccion">Dirección de residencia.</param>
+        /// <param name="matricula">Número de matrícula profesional.</param>
+        /// <param name="correo">Correo electrónico.</param>
+        /// <param name="idEspecialidad">Identificador de la especialidad médica.</param>
+        /// <exception cref="System.Exception">Se lanza si el repositorio reporta un error en la inserción.</exception>
         public void AgregarMedico(string nombre, string apellido, string dni, string direccion, string matricula, string correo, int idEspecialidad)
         {
             var (Ok, _, Error) = _repo.Insertar(nombre, apellido, dni, direccion, matricula, correo, idEspecialidad);
@@ -192,15 +236,27 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             }
         }
 
+        /// <summary>
+        /// Elimina un médico del sistema por su ID.
+        /// </summary>
+        /// <param name="idMedico">Identificador único del médico.</param>
         public void EliminarMedico(int idMedico)
         {
             _repo.Eliminar(idMedico);
         }
+        /// <summary>
+        /// Obtiene un listado básico de todos los médicos.
+        /// </summary>
+        /// <returns>Lista de <see cref="MedicoDto"/>.</returns>
         public List<MedicoDto> ListarMedicos()
         {
             return _repo.ListarMedicos();
         }
 
+        /// <summary>
+        /// Obtiene una lista simplificada de médicos optimizada para mostrar en controles de selección (ComboBox).
+        /// </summary>
+        /// <returns>Lista de <see cref="MedicoSimpleDTO"/> con nombre formateado y DNI.</returns>
         public List<MedicoSimpleDTO> ObtenerMedicosParaComboBox()
         {
             var todosLosMedicos = _repo.ObtenerMedicos();
@@ -216,6 +272,12 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             return resultado;
         }
 
+        /// <summary>
+        /// Obtiene el historial médico consolidado de un paciente, incluyendo consultas, internaciones y turnos.
+        /// </summary>
+        /// <param name="idPaciente">ID del paciente.</param>
+        /// <param name="IdMedico">ID del médico solicitante (usado para control de acceso si aplica).</param>
+        /// <returns>Lista de <see cref="HistorialItemDto"/> ordenada cronológicamente en forma descendente.</returns>
         public List<HistorialItemDto> ObtenerHistorial(int idPaciente, int IdMedico)
         {
             // 1. Traemos las dos listas
@@ -232,6 +294,11 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService
             return listaCompleta.OrderByDescending(h => h.Fecha).ToList();
         }
 
+        /// <summary>
+        /// Busca la información detallada de un médico por su identificador único.
+        /// </summary>
+        /// <param name="idMedico">ID del médico a buscar.</param>
+        /// <returns>Objeto <see cref="MedicoDto"/> o <c>null</c> si no se encuentra.</returns>
         public MedicoDto ObtenerMedicoPorId(int idMedico)
         {
             var medicos = _repo.ListarMedicos();

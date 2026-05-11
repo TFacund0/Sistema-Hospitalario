@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +13,21 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 {
+    /// <summary>
+    /// Control de usuario que gestiona la administración de usuarios del sistema.
+    /// Permite visualizar, buscar, filtrar por roles y eliminar cuentas de usuario.
+    /// </summary>
     public partial class UC_usuarios : UserControl
     {
-        // ===================== INSTANCIAS DE SERVICIOS =====================
+        /// <summary>Instancia estática del servicio de usuarios para operaciones transversales.</summary>
         private static readonly UsuarioService usuarioService = new UsuarioService();
+        /// <summary>Instancia local del servicio para manejo de lógica de usuarios.</summary>
         private readonly UsuarioService _service = usuarioService;
+
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_usuarios"/>.
+        /// Configura los filtros, carga el listado de usuarios y actualiza los contadores de roles.
+        /// </summary>
         public UC_usuarios()
         {
             InitializeComponent();
@@ -54,7 +64,6 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         // Configuración de estilos del DataGridView
         private void ConfigurarEstilosGrilla()
         {
-            // Puedes copiar los mismos estilos que usaste para dgvMedicos
             dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUsuarios.RowHeadersVisible = false;
             dgvUsuarios.BackgroundColor = Color.White;
@@ -74,9 +83,9 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             var tipoDelDto = typeof(MostrarUsuariosDTO);
             var propiedades = tipoDelDto.GetProperties();
             var listaDeNombres = propiedades.Select(p => p.Name)
-                                            .Where(name => name != "Password") // No mostrar Password en el combo
+                                            .Where(name => name != "Password")
                                             .ToList();
-            cboCampo.DataSource = listaDeNombres; // Asume que tienes un ComboBox llamado cboCampo
+            cboCampo.DataSource = listaDeNombres;
         }
 
         // ===================== EVENTOS DEL FORMULARIO =====================
@@ -92,7 +101,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             string campo = (string)cboCampo.SelectedItem;
-            string valor = txtBuscar.Text.Trim(); // Asume que tienes un TextBox llamado txtBuscar
+            string valor = txtBuscar.Text.Trim();
 
             if (string.IsNullOrEmpty(campo))
             {

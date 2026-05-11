@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
@@ -20,17 +20,25 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Medico.Turnos
 {
+    /// <summary>
+    /// Control de usuario que permite visualizar y editar el detalle de un turno desde la perspectiva médica.
+    /// Soporta cambio de paciente, médico, procedimiento, estado y observaciones del turno.
+    /// </summary>
     public partial class UC_VisualizarTurnoMedico : UserControl
     {
-        // Estado del turno que se está visualizando
+        /// <summary>DTO que contiene los datos del turno que se está visualizando.</summary>
         private readonly TurnoDto _turno;
         
-        // Modo edición
+        /// <summary>Bandera que indica si el control se encuentra en modo edición.</summary>
         private bool _modoEdicion = false;
 
-        // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
+        /// <summary>Evento que notifica que se ha cancelado o finalizado la visualización del turno.</summary>
         public event EventHandler CancelarVisualizacionSolicitada;
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_VisualizarTurnoMedico"/>.
+        /// </summary>
+        /// <param name="turno">El DTO del turno a cargar.</param>
         public UC_VisualizarTurnoMedico(TurnoDto turno)
         {
             InitializeComponent();

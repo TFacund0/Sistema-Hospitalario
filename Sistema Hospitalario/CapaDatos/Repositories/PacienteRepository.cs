@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +9,19 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de las operaciones CRUD de pacientes utilizando Entity Framework.
+    /// </summary>
     public class PacienteRepository : IPacienteRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="PacienteRepository"/>.
+        /// </summary>
         public PacienteRepository()
         {
         }
 
-        // Método para obtener todos los pacientes con estado "Activo", "Internado" o "Alta"
+        /// <inheritdoc />
         public List<PacienteDto> GetAll()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -43,7 +49,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Método para insertar un nuevo paciente
+        /// <inheritdoc />
         public void Insertar(PacienteDto paciente)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -78,7 +84,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }   
         }
 
-        // Método para eliminar un paciente por su ID
+        /// <inheritdoc />
         public void Eliminar(int id_paciente)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -92,7 +98,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Método para actualizar un paciente existente
+        /// <inheritdoc />
         public void Actualizar(int id_paciente, PacienteDto pacienteActualizado)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -146,7 +152,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Método para obtener todos los estados de paciente
+        /// <inheritdoc />
         public List<EstadoPacienteDto> GetEstados()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())

@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaPresentacion.Administrativo;
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización;
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes;
@@ -17,18 +17,27 @@ using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Turnos;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
+    /// <summary>
+    /// Formulario principal para el perfil de Gerente.
+    /// Proporciona acceso a las métricas del sistema y visualización de pacientes y turnos.
+    /// </summary>
     public partial class MenuGerente : Form
     {
-        // ======================= CONSTRUCTOR DEL MENÚ GERENTE =======================
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario <see cref="MenuGerente"/>.
+        /// </summary>
         public MenuGerente()
         {
             InitializeComponent();
-            this.Text = "Menú Gerente"; // título del formulario
+            this.Text = "Menú Gerente"; 
         }
 
         // ======================= NAVEGACIÓN CENTRAL =======================
 
-        // Método común para mostrar un UserControl en el panel contenedor.
+        /// <summary>
+        /// Carga un <see cref="UserControl"/> en el panel de contenido principal, gestionando la limpieza de controles previos.
+        /// </summary>
+        /// <param name="uc">Control de usuario a mostrar.</param>
         private void AbrirUserControl(UserControl uc)
         {
             try
