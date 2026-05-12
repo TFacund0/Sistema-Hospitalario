@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.Interfaces;
+using Sistema_Hospitalario.CapaDatos.Interfaces;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,20 @@ using System.Threading.Tasks;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de la gestión de turnos médicos y agenda utilizando Entity Framework.
+    /// Maneja la persistencia de los estados de turnos y colisiones de horarios.
+    /// </summary>
     public class TurnoRepository : ITurnoRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="TurnoRepository"/>.
+        /// </summary>
         public TurnoRepository()
         {
         }
 
+        /// <inheritdoc />
         public List<TurnoAgendaDto> ObtenerTurnosParaAgenda(int idMedico, DateTime fecha)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -50,6 +58,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        /// <inheritdoc />
         public AgendaContadoresDto ObtenerContadoresAgenda(int idMedico, DateTime fecha)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -73,6 +82,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        /// <inheritdoc />
         public bool ActualizarEstadoTurno(int idTurno, int idNuevoEstado)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -85,7 +95,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return true;
             }
         }
-        // Obtener todos los turnos con detalles
+        /// <inheritdoc />
         public List<TurnoDto> GetAll()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -115,7 +125,11 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Obtener detalle de un turno por ID
+        /// <summary>
+        /// Obtiene el detalle completo de un turno específico por su ID.
+        /// </summary>
+        /// <param name="id_turno">ID del turno.</param>
+        /// <returns>DTO con el detalle del turno.</returns>
         public TurnoDto ObtenerDetalle(int id_turno)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -145,7 +159,10 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Listar todos los turnos en formato listado
+        /// <summary>
+        /// Obtiene un listado simplificado de turnos para su visualización masiva.
+        /// </summary>
+        /// <returns>Lista de <see cref="ListadoTurno"/>.</returns>
         public List<ListadoTurno> ListadoTurnos()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -170,7 +187,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Insertar un nuevo turno
+        /// <inheritdoc />
         public void Insertar(TurnoDto p_turno)
             {
                 using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -228,7 +245,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
 
 
-        // Actualizar un turno existente
+        /// <inheritdoc />
         public void Actualizar(int id_turno, TurnoDto turnoDto)
             {
                 using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -277,7 +294,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 }
             }
 
-        // Eliminar un turno por ID
+        /// <inheritdoc />
         public void Eliminar(int id_turno)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -288,7 +305,10 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Listar todos los estados de turno
+        /// <summary>
+        /// Obtiene el catálogo de estados de turnos disponibles.
+        /// </summary>
+        /// <returns>Lista de <see cref="ListadoEstadoTurno"/>.</returns>
         public List<ListadoEstadoTurno> ListarEstadosTurno()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -303,6 +323,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        /// <inheritdoc />
         public bool ExisteTurnoMismoDiaMismoMedicoPaciente(int idPaciente, int idMedico, DateTime fecha)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -317,7 +338,8 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        public bool ExisteTurnoMismoDiaMismoMedicoPacienteExcluyendo( int idTurnoExcluir, int idPaciente, int idMedico, DateTime fecha)
+        /// <inheritdoc />
+        public bool ExisteTurnoMismoDiaMismoMedicoPacienteExcluyendo(int idTurnoExcluir, int idPaciente, int idMedico, DateTime fecha)
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
             {

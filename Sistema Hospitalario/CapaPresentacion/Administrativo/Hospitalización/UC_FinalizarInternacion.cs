@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,17 +12,24 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
+    /// <summary>
+    /// Control de usuario que gestiona la finalización de una internación (alta médica).
+    /// Permite registrar la fecha de egreso, el diagnóstico de salida y libera automáticamente la cama ocupada.
+    /// </summary>
     public partial class UC_FinalizarInternacion : UserControl
     {
-        // Evento para avisar al menú que el usuario canceló
+        /// <summary>Evento que notifica que se ha cancelado la operación de finalización.</summary>
         public event EventHandler CancelarFinalizacionSolicitada;
 
+        /// <summary>DTO que contiene los datos de la internación activa que se va a finalizar.</summary>
         private readonly InternacionDto _internacion;
 
-        // 👉 Service para hablar con la capa de negocio
+        /// <summary>Servicio para la gestión de lógica de internaciones.</summary>
         private readonly InternacionService _internacionService = new InternacionService();
 
-        // Constructor por defecto (si el diseñador lo necesita)
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_FinalizarInternacion"/>.
+        /// </summary>
         public UC_FinalizarInternacion()
         {
             InitializeComponent();
@@ -55,7 +62,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
         }
 
 
-        // 👉 Constructor para cuando venís desde Hospitalización con una internación seleccionada
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_FinalizarInternacion"/> con los datos de una internación específica.
+        /// </summary>
+        /// <param name="internacion">Datos de la internación a finalizar.</param>
         public UC_FinalizarInternacion(InternacionDto internacion) : this()
         {
             _internacion = internacion ?? throw new ArgumentNullException(nameof(internacion));

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,28 +9,45 @@ using Sistema_Hospitalario.CapaDatos.Repositories;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
 {
+    /// <summary>
+    /// Servicio que gestiona el ciclo de vida de las internaciones de pacientes.
+    /// Incluye el registro de ingresos, seguimiento por procedimiento y finalización de internaciones (egresos).
+    /// </summary>
     public class InternacionService
     {
         private readonly InternacionRepository _repo = new InternacionRepository();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="InternacionService"/>.
+        /// </summary>
         public InternacionService()
         {
         }
 
-        // Obtener todas las internaciones
+        /// <summary>
+        /// Obtiene el listado completo de todas las internaciones registradas.
+        /// </summary>
+        /// <returns>Lista de <see cref="InternacionDto"/>.</returns>
         public List<InternacionDto> ListadoInternacionDtos()
         {
             var listadoInternaciones = _repo.GetAll();
             return listadoInternaciones;
         }
 
-        // Alta de una nueva internación
+        /// <summary>
+        /// Registra un nuevo ingreso de internación en el sistema.
+        /// </summary>
+        /// <param name="dto">DTO con los datos de la internación a crear.</param>
         public void AltaInternacion(InternacionDto dto)
         {
             _repo.Insertar(dto);
         }
 
-        // ===================== TOTAL INTERNACIONES X PROCEDIMIENTO =====================
+        /// <summary>
+        /// Cuenta cuántas internaciones están asociadas a un procedimiento médico específico.
+        /// </summary>
+        /// <param name="id_procedimiento">ID del procedimiento a consultar.</param>
+        /// <returns>Número total de internaciones encontradas.</returns>
         public int TotalInternacionesXProcedimiento(int id_procedimiento)
         {
             var totalInternaciones = _repo.GetAll()
@@ -38,7 +55,14 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService
             return totalInternaciones;
         }
 
-        // ===================== FINALIZAR INTERNACIÓN =====================
+        /// <summary>
+        /// Finaliza un proceso de internación registrando la fecha y diagnóstico de egreso.
+        /// Realiza validaciones de coherencia de fechas y datos obligatorios.
+        /// </summary>
+        /// <param name="dto">DTO con los datos de finalización.</param>
+        /// <exception cref="InvalidOperationException">
+        /// Se lanza si la fecha de egreso es anterior a la de ingreso o si falta el diagnóstico.
+        /// </exception>
         public void FinalizarInternacion(FinalizarInternacionDto dto)
         {
             // 🔹 Validaciones de negocio

@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.moderDTO;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
 using System;
 using System.Collections.Generic;
@@ -14,12 +14,21 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.medicos
 {
+    /// <summary>
+    /// Control de usuario que permite la administración (listado, búsqueda y eliminación) de médicos en el sistema.
+    /// Utilizado por el perfil Administrador.
+    /// </summary>
     public partial class UC_Medicos : UserControl
     {
-        // Servicio para interactuar con la capa de negocio
+        /// <summary>Instancia estática del servicio de médicos para operaciones transversales.</summary>
         private static readonly MedicoService medicoService = new MedicoService();
+        /// <summary>Instancia local del servicio para manejo de lógica de médicos.</summary>
         private readonly MedicoService _service = medicoService;
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_Medicos"/>.
+        /// Configura los estilos de la grilla, los filtros y carga la lista inicial de profesionales.
+        /// </summary>
         public UC_Medicos()
         {
             InitializeComponent();

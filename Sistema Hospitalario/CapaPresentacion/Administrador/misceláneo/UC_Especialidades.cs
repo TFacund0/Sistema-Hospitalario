@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,11 +13,19 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.EspecialidadService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
+    /// <summary>
+    /// Control de usuario que gestiona el catálogo de especialidades médicas.
+    /// Permite listar, agregar (con validación de duplicados) y eliminar especialidades del sistema.
+    /// </summary>
     public partial class UC_Especialidades : UserControl
     {
-        // ===================== INSTANCIAS DE SERVICIOS =====================
+        /// <summary>Servicio para la gestión de especialidades médicas.</summary>
         private readonly EspecialidadService _service; 
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_Especialidades"/>.
+        /// Prepara el servicio y carga el listado actual de especialidades en la grilla.
+        /// </summary>
         public UC_Especialidades()
         {
             InitializeComponent();
@@ -63,7 +71,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 e.Cancel = true;
                 errorProvider1.SetError(TBESPECIALIDAD, "Máximo 50 caracteres.");
             }
-            // Validar solo letras y espacios (opcional)
+            // Validar solo letras y espacios
             else if (!System.Text.RegularExpressions.Regex.IsMatch(nombre, @"^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$"))
             {
                 e.Cancel = true;

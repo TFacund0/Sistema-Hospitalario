@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 using Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización;
@@ -10,9 +10,15 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
+    /// <summary>
+    /// Formulario principal para el personal Administrativo.
+    /// Gestiona la navegación centralizada entre Pacientes, Turnos y Hospitalizaciones.
+    /// </summary>
     public partial class MenuAdministrativo : Form
     {
-        // ======================= CONSTRUCTOR DEL MENÚ ADMINISTRATIVO =======================
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario <see cref="MenuAdministrativo"/>.
+        /// </summary>
         public MenuAdministrativo()
         {
             InitializeComponent();
@@ -21,7 +27,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
         // ======================= NAVEGACIÓN CENTRAL =======================
         
-        // Método común para mostrar un UserControl en el panel contenedor.
+        /// <summary>
+        /// Libera los controles previos y carga un nuevo <see cref="UserControl"/> en el panel contenedor principal.
+        /// </summary>
+        /// <param name="uc">El control de usuario que se desea mostrar.</param>
         private void AbrirUserControl(UserControl uc)
         {
             try
@@ -134,14 +143,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 
             uc.RegistrarInternacionSolicitada += (_, __) => AbrirRegistrarInternacion();
 
-            // 👉 NUEVO: cuando el UC de Hospitalización pide finalizar una internación:
+            // Cuando el UC de Hospitalización pide finalizar una internación:
             uc.FinalizarInternacionSolicitada += (_, internacion) =>
                 AbrirFinalizarInternacion(internacion);
 
             return uc;
         }
 
-        // 👉 NUEVO: abrir el UC_FinalizarInternacion con la internación seleccionada
+        // Abrir el UC_FinalizarInternacion con la internación seleccionada
         private void AbrirFinalizarInternacion(InternacionDto internacion)
         {
             var ucFinalizar = new UC_FinalizarInternacion(internacion);

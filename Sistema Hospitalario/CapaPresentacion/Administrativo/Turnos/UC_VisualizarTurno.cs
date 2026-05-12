@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
@@ -15,34 +15,49 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Turnos
 {
+    /// <summary>
+    /// Control de usuario que permite visualizar y editar el detalle de un turno existente.
+    /// Soporta la actualización de paciente, médico, procedimiento, fecha, estado y observaciones,
+    /// incluyendo lógica de validación para evitar duplicidad de citas.
+    /// </summary>
     public partial class UC_VisualizarTurno : UserControl
     {
-        // ================== ESTADO ==================
+        /// <summary>DTO que contiene los datos del turno que se está visualizando.</summary>
         private readonly TurnoDto _turno;
+        /// <summary>Bandera que indica si el control se encuentra en modo edición.</summary>
         private bool _modoEdicion = false;
 
-        // Servicios
+        /// <summary>Servicio para gestión de pacientes.</summary>
         private readonly PacienteService _servicioPaciente = new PacienteService();
+        /// <summary>Servicio para gestión de médicos.</summary>
         private readonly MedicoService _servicioMedico = new MedicoService();
+        /// <summary>Servicio para gestión de procedimientos.</summary>
         private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
-        // Listas maestras (texto) para validaciones
+        /// <summary>Maestro de visualización de pacientes.</summary>
         private readonly List<string> _maestroPaciente = new List<string>();
+        /// <summary>Maestro de visualización de médicos.</summary>
         private readonly List<string> _maestroMedico = new List<string>();
+        /// <summary>Maestro de visualización de procedimientos.</summary>
         private readonly List<string> _maestroProcedimiento = new List<string>();
 
-        // Cachés de DTO para filtros
+        /// <summary>Caché de DTOs de pacientes filtrados.</summary>
         private List<PacienteDto> _pacientesMaestroDtos = new List<PacienteDto>();
+        /// <summary>Caché de DTOs de médicos filtrados.</summary>
         private List<MedicoDto> _medicosMaestroDtos = new List<MedicoDto>();
+        /// <summary>Caché de DTOs de procedimientos filtrados.</summary>
         private List<ProcedimientoDto> _procedimientosMaestroDtos = new List<ProcedimientoDto>();
 
-        // Bandera anti reentrada en TextUpdate
+        /// <summary>Bandera para evitar recursividad en eventos de actualización de texto.</summary>
         private bool _actualizandoInterno = false;
 
-        // Notifica al contenedor (MenuAdministrativo) que se pidió cancelar
+        /// <summary>Evento que notifica que se ha cancelado la visualización del turno.</summary>
         public event EventHandler CancelarVisualizacionSolicitada;
 
-        // ================== CTOR ==================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_VisualizarTurno"/>.
+        /// </summary>
+        /// <param name="turno">DTO con la información del turno a cargar.</param>
         public UC_VisualizarTurno(TurnoDto turno)
         {
             InitializeComponent();

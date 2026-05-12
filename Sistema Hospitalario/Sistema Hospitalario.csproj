@@ -202,16 +202,16 @@
     <Compile Include="CapaPresentacion\Administrador\Backup\UC_AdminBackups.Designer.cs">
       <DependentUpon>UC_AdminBackups.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.cs">
+    <Compile Include="CapaPresentacion\Administrador\Medicos\UC_agregarMedico.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Medicos\UC_agregarMedico.Designer.cs">
       <DependentUpon>UC_agregarMedico.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\medicos\UC_Medicos.cs">
+    <Compile Include="CapaPresentacion\Administrador\Medicos\UC_Medicos.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\medicos\UC_Medicos.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Medicos\UC_Medicos.Designer.cs">
       <DependentUpon>UC_Medicos.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaNegocio\DTOs\ProcedimientoDTO\ProcedimientoDto.cs" />
@@ -229,46 +229,46 @@
     <Compile Include="CapaPresentacion\Administrador\MenuModer.Designer.cs">
       <DependentUpon>MenuModer.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\Form_CambiarEstadoCama.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\Form_CambiarEstadoCama.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\Form_CambiarEstadoCama.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\Form_CambiarEstadoCama.Designer.cs">
       <DependentUpon>Form_CambiarEstadoCama.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Camas.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Camas.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Camas.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Camas.Designer.cs">
       <DependentUpon>UC_Camas.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Especialidades.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Especialidades.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Especialidades.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Especialidades.Designer.cs">
       <DependentUpon>UC_Especialidades.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Habitaciones.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Habitaciones.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Habitaciones.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Habitaciones.Designer.cs">
       <DependentUpon>UC_Habitaciones.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Procedimientos.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Procedimientos.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\misceláneo\UC_Procedimientos.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Misceláneo\UC_Procedimientos.Designer.cs">
       <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_registrarUsuario.cs">
+    <Compile Include="CapaPresentacion\Administrador\Usuarios\UC_registrarUsuario.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_registrarUsuario.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Usuarios\UC_registrarUsuario.Designer.cs">
       <DependentUpon>UC_registrarUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_usuarios.cs">
+    <Compile Include="CapaPresentacion\Administrador\Usuarios\UC_usuarios.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Administrador\usuarios\UC_usuarios.Designer.cs">
+    <Compile Include="CapaPresentacion\Administrador\Usuarios\UC_usuarios.Designer.cs">
       <DependentUpon>UC_usuarios.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.cs">
@@ -367,10 +367,10 @@
     <Compile Include="CapaPresentacion\Login\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.cs">
+    <Compile Include="CapaPresentacion\Medico\ConsultaMedica\ConsultaMedica.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.Designer.cs">
+    <Compile Include="CapaPresentacion\Medico\ConsultaMedica\ConsultaMedica.Designer.cs">
       <DependentUpon>ConsultaMedica.cs</DependentUpon>
     </Compile>
     <Compile Include="CapaPresentacion\Medico\MenuMedicos.cs">
@@ -409,34 +409,34 @@
     <EmbeddedResource Include="CapaPresentacion\Administrador\Backup\UC_AdminBackups.resx">
       <DependentUpon>UC_AdminBackups.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\medicos\UC_agregarMedico.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Medicos\UC_agregarMedico.resx">
       <DependentUpon>UC_agregarMedico.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\medicos\UC_Medicos.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Medicos\UC_Medicos.resx">
       <DependentUpon>UC_Medicos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrador\MenuModer.resx">
       <DependentUpon>MenuModer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\misceláneo\Form_CambiarEstadoCama.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Misceláneo\Form_CambiarEstadoCama.resx">
       <DependentUpon>Form_CambiarEstadoCama.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\misceláneo\UC_Camas.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Misceláneo\UC_Camas.resx">
       <DependentUpon>UC_Camas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\misceláneo\UC_Especialidades.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Misceláneo\UC_Especialidades.resx">
       <DependentUpon>UC_Especialidades.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\misceláneo\UC_Habitaciones.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Misceláneo\UC_Habitaciones.resx">
       <DependentUpon>UC_Habitaciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\misceláneo\UC_Procedimientos.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Misceláneo\UC_Procedimientos.resx">
       <DependentUpon>UC_Procedimientos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\usuarios\UC_registrarUsuario.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Usuarios\UC_registrarUsuario.resx">
       <DependentUpon>UC_registrarUsuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Administrador\usuarios\UC_usuarios.resx">
+    <EmbeddedResource Include="CapaPresentacion\Administrador\Usuarios\UC_usuarios.resx">
       <DependentUpon>UC_usuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Administrativo\Hospitalización\UC_RegistrarInternacion.resx">
@@ -487,7 +487,7 @@
     <EmbeddedResource Include="CapaPresentacion\Login\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CapaPresentacion\Medico\consulta medica\ConsultaMedica.resx">
+    <EmbeddedResource Include="CapaPresentacion\Medico\ConsultaMedica\ConsultaMedica.resx">
       <DependentUpon>ConsultaMedica.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CapaPresentacion\Medico\MenuMedicos.resx">

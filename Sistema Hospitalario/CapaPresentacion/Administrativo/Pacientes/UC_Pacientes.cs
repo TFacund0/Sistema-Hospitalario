@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,24 +13,31 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
+    /// <summary>
+    /// Control de usuario para la gestión administrativa de pacientes.
+    /// Permite visualizar el listado completo, filtrar y acceder al registro o detalle de pacientes.
+    /// </summary>
     public partial class UC_Pacientes : UserControl
     {
-        // Servicio para interactuar con la capa de negocio
+        /// <summary>Servicio para interactuar con la lógica de negocio de pacientes.</summary>
         private readonly PacienteService pacienteService = new PacienteService();
 
-        // BindingSource para enlazar la lista de pacientes al DataGridView
+        /// <summary>BindingSource para enlazar la lista de pacientes al DataGridView.</summary>
         private readonly BindingSource enlacePacientes = new BindingSource();
 
-        // Lista completa de pacientes cargada desde el servicio
+        /// <summary>Lista completa de pacientes cargada desde el servicio.</summary>
         private List<PacienteDto> listaPacientes = new List<PacienteDto>();
 
-        // Evento que notifica al formulario padre que se solicitó registrar un nuevo paciente
+        /// <summary>Evento que notifica que se ha solicitado el registro de un nuevo paciente.</summary>
         public event EventHandler RegistrarPacienteSolicitado;
 
-        // Evento que pasa el detalle del paciente seleccionado
+        /// <summary>Evento que notifica que se ha solicitado ver el detalle de un paciente específico.</summary>
         public event EventHandler<PacienteDetalleDto> VerPacienteSolicitado;
 
-        // ===================== CONSTRUCTOR DEL UC PACIENTES =====================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_Pacientes"/>.
+        /// Configura la interfaz, carga los contadores de estado y puebla la grilla.
+        /// </summary>
         public UC_Pacientes()
         {
             InitializeComponent();

@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.Interfaces;
+using Sistema_Hospitalario.CapaDatos.Interfaces;
 using System;
 using System.Data.SqlClient;
 using System.Threading;
@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Implementación concreta de <see cref="IBackupRepository"/> para SQL Server.
+    /// Utiliza comandos T-SQL nativos para gestionar el respaldo y restauración de la base de datos.
+    /// </summary>
+    /// <remarks>
+    /// Esta clase requiere conexión a la base de datos 'master' para realizar operaciones de restauración
+    /// que requieren poner la base de datos principal en modo de usuario único.
+    /// </remarks>
     public sealed class BackupRepository : IBackupRepository
     {
         private readonly string _providerCnn; // connection string SqlClient
         private readonly string _dbName;      // nombre de la BD
         private readonly string _masterCnn;   // misma cnn pero a master
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="BackupRepository"/>.
+        /// </summary>
+        /// <param name="providerConnectionString">Cadena de conexión nativa (SqlClient) a la base de datos.</param>
+        /// <param name="databaseName">Nombre de la base de datos a respaldar/restaurar.</param>
         public BackupRepository(string providerConnectionString, string databaseName)
         {
             _providerCnn = providerConnectionString;
@@ -22,6 +35,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             _masterCnn = b.ConnectionString;
         }
 
+        /// <inheritdoc />
         public async Task BackupAsync(string backupFullPath, IProgress<int> progreso = null, CancellationToken ct = default)
         {
             string sql = @"
@@ -63,6 +77,7 @@ EXEC sp_executesql @sql, N'@path nvarchar(4000)', @path;
 
 
 
+        /// <inheritdoc />
         public async Task RestoreAsync(string backupFullPath, IProgress<int> progreso = null, CancellationToken ct = default)
         {
             string sql = @"

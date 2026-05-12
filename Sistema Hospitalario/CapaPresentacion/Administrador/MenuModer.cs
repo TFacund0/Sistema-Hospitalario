@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaPresentacion.Administrador.Backups;
+using Sistema_Hospitalario.CapaPresentacion.Administrador.Backups;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.medicos;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo;
 using Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios;
@@ -14,8 +14,15 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador
 {
+    /// <summary>
+    /// Formulario principal para el perfil de Administrador/Moderador.
+    /// Permite la gestión global del sistema: usuarios, médicos, infraestructura (camas/habitaciones) y seguridad (backups).
+    /// </summary>
     public partial class MenuModer : Form
     {
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario <see cref="MenuModer"/>.
+        /// </summary>
         public MenuModer()
         {
             InitializeComponent();
@@ -23,12 +30,13 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
 
         private void Boton_Click(object sender, EventArgs e)
         {
-            // sender es el botón que se clickeó
+            // Sender es el botón que se hizo clic, lo convertimos a Button para acceder a sus propiedades
             Button btnClic = (Button)sender;
 
             // Recorre todos los botones dentro del mismo contenedor
             foreach (Control ctrl in panelMenu.Controls)
             {
+                // Si el control es un botón, restablece su color de fondo
                 if (ctrl is Button b)
                     b.BackColor = Color.FromArgb(49, 163, 166);
             }
@@ -37,7 +45,10 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
             btnClic.BackColor = Color.LightSeaGreen;
         }
 
-        // Método para abrir UserControls dentro del panel contenedor
+        /// <summary>
+        /// Carga un <see cref="UserControl"/> específico en el panel de navegación principal, liberando los recursos del control anterior.
+        /// </summary>
+        /// <param name="uc">El control de usuario a visualizar.</param>
         public void AbrirUserControl(UserControl uc)
         {
             try
@@ -62,13 +73,14 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador
 
 
         // ===================== EVENTOS DE BOTONES DEL MENÚ =====================
-        // Pacientes
+        // Usuarios
         private void Btn_usuarios_Click(object sender, EventArgs e)
         {
             Boton_Click(sender, e);
             AbrirUserControl(new UC_usuarios());
         }
 
+        // Salir
         private void Btn_salir_Click(object sender, EventArgs e)
         {
             {

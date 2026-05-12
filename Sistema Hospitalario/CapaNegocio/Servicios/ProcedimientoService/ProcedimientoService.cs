@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,21 +9,35 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.ProcedimientoDTO;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService
 {
+    /// <summary>
+    /// Servicio que gestiona el catálogo de procedimientos médicos del hospital.
+    /// Permite la administración (creación, eliminación) y consulta de los diversos tipos de procedimientos.
+    /// </summary>
     public class ProcedimientoService
     {
         private readonly ProcedimientoRepository _repo = new ProcedimientoRepository();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="ProcedimientoService"/>.
+        /// </summary>
         public ProcedimientoService()
         {
         }
 
-        // Obtener todas los procedimientos
+        /// <summary>
+        /// Obtiene el listado de todos los procedimientos registrados para su visualización.
+        /// </summary>
+        /// <returns>Lista de <see cref="MostrarProcedimientoDTO"/>.</returns>
         public List<MostrarProcedimientoDTO> ObtenerProcedimientos()
         {
             return _repo.GetAll();
         }
 
-        // Agregar un nuevo procedimiento
+        /// <summary>
+        /// Registra un nuevo tipo de procedimiento médico.
+        /// </summary>
+        /// <param name="nombre">Nombre descriptivo del procedimiento.</param>
+        /// <exception cref="ArgumentException">Se lanza si el nombre es nulo o está vacío.</exception>
         public void AgregarProcedimiento(string nombre)
         {
             if (string.IsNullOrWhiteSpace(nombre))
@@ -32,13 +46,19 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.ProcedimientoService
             _repo.Insertar(nombre);
         }
 
-        // Eliminar un procedimiento por nombre
+        /// <summary>
+        /// Elimina un procedimiento médico del catálogo buscando por su nombre.
+        /// </summary>
+        /// <param name="nombre">Nombre del procedimiento a eliminar.</param>
         public void EliminarProcedimiento(string nombre)
         {
             _repo.Eliminar(nombre);
         }
 
-        // Listar procedimientos
+        /// <summary>
+        /// Obtiene una lista simplificada de todos los procedimientos registrados.
+        /// </summary>
+        /// <returns>Lista de <see cref="ProcedimientoDto"/>.</returns>
         public List<ProcedimientoDto> ListarProcedimientos() { 
            return _repo.ListarProcedimientos();
         }

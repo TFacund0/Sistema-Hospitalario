@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +10,19 @@ using Sistema_Hospitalario.CapaDatos.Interfaces;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
-    public class UsuarioRepository
+    /// <summary>
+    /// Repositorio encargado de la gestión de usuarios, autenticación y seguridad en la base de datos.
+    /// </summary>
+    public class UsuarioRepository : IUsuarioRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="UsuarioRepository"/>.
+        /// </summary>
         public UsuarioRepository()
         {
         }
 
-        // Inserta un nuevo usuario en la base de datos
+        /// <inheritdoc />
         public (bool Ok, int IdGenerado, string Error) Insertar(string Nombre, string Apellido, string NombreUsuario, int Estado, int Rol, string Password, string correo, int? IdMedico)
         {
             try
@@ -61,7 +67,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Eliminar un usuario específico
+        /// <inheritdoc />
         public void Eliminar(int IdUsuario)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -89,7 +95,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Obtener todos los usuarios con su estado y rol
+        /// <inheritdoc />
         public List<MostrarUsuariosDTO> ObtenerUsuarios()
         {
             using (var db = new Sistema_HospitalarioEntities_Conexion())
@@ -113,7 +119,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
 
         }
 
-        // Verificar si un usuario con el mismo nombre de usuario ya existe
+        /// <inheritdoc />
         public bool ExisteUsername(string username)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -122,6 +128,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        /// <inheritdoc />
         public DatosLoginUsuarioDTO ObtenerUsuarioParaLogin(string username)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

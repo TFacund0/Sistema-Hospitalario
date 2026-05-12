@@ -64,7 +64,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
             if (valorSeleccionado == 0) // '0' es el ID que le dimos a "ninguna"
             {
                 MessageBox.Show("Por favor, seleccione un estado válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; // Detenemos el guardado
+                return;
             }
 
             // 2. Guardamos el ID seleccionado en nuestra propiedad pública

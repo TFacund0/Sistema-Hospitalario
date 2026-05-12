@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.InternacionService;
@@ -11,25 +11,37 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
+    /// <summary>
+    /// Control de usuario que gestiona el módulo de hospitalización para el personal administrativo.
+    /// Permite monitorear la ocupación de camas, registrar nuevas internaciones y procesar altas.
+    /// </summary>
     public partial class UC_Hospitalizacion : UserControl
     {
-        // Servicio para interactuar con la capa de negocio
+        /// <summary>Servicio para operaciones relacionadas con pacientes.</summary>
         private readonly PacienteService pacienteService = new PacienteService();
+        /// <summary>Servicio para la gestión de internaciones.</summary>
         private readonly InternacionService internacionService = new InternacionService();
+        /// <summary>Servicio para la gestión de habitaciones.</summary>
         private readonly HabitacionService habitacionService = new HabitacionService();
+        /// <summary>Servicio para la gestión de camas.</summary>
         private readonly CamaService camaService = new CamaService();
 
-        // Lista para almacenar las internaciones
+        /// <summary>Lista para almacenar las internaciones cargadas desde la base de datos.</summary>
         private List<InternacionDto> listaInternaciones = new List<InternacionDto>();
 
-        // BindingSource para enlazar la lista de internaciones al DataGridView
+        /// <summary>BindingSource para el enlace de datos con la grilla de internaciones.</summary>
         private readonly BindingSource enlaceInternaciones = new BindingSource();
 
-        // Evento para notificar cuando se solicita registrar una internación
+        /// <summary>Evento que notifica la solicitud de registrar una nueva internación.</summary>
         public event EventHandler RegistrarInternacionSolicitada;
+
+        /// <summary>Evento que notifica la solicitud de finalizar (dar el alta) una internación específica.</summary>
         public event EventHandler<InternacionDto> FinalizarInternacionSolicitada;
 
-        // ============================ CONSTRUCTOR DEL UC HOSPITALIZACIÓN ============================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_Hospitalizacion"/>.
+        /// Configura la visualización de estadísticas de ocupación y carga el listado de internados.
+        /// </summary>
         public UC_Hospitalizacion()
         {
             InitializeComponent();

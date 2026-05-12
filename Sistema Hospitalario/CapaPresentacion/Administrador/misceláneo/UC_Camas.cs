@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos.Repositories;
+using Sistema_Hospitalario.CapaDatos.Repositories;
 using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,19 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
 {
+    /// <summary>
+    /// Control de usuario que gestiona el inventario de camas del hospital.
+    /// Permite agregar nuevas camas a habitaciones existentes, eliminar camas y cambiar su estado de ocupación/mantenimiento.
+    /// </summary>
     public partial class UC_Camas : UserControl
     {
+        /// <summary>Servicio para la gestión de lógica de negocio de camas.</summary>
         private readonly CamaService _service;
+
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_Camas"/>.
+        /// Prepara el servicio y carga el listado actual de camas en la grilla.
+        /// </summary>
         public UC_Camas()
         {
             InitializeComponent();
@@ -67,7 +77,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 e.Cancel = true;
                 errorProvider1.SetError(TBHabitacionCama, "Máximo 50 caracteres.");
             }
-            // Validar que solo sean números (ya validado con TryParse, pero se mantiene la estructura)
+            // Validar que solo sean números
             else if (!System.Text.RegularExpressions.Regex.IsMatch(TBHabitacionCama.Text.Trim(), @"^\d+$"))
             {
                 e.Cancel = true;
@@ -127,18 +137,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.misceláneo
                 // Le pasamos el estado actual para que el ComboBox aparezca pre-seleccionado.
                 Form_CambiarEstadoCama formDialogo = new Form_CambiarEstadoCama(estadoActual);
 
-                // .ShowDialog() es clave: congela el formulario principal
-                // y espera a que el usuario presione "Aceptar" o "Cancelar".
                 DialogResult resultado = formDialogo.ShowDialog();
 
-                // ----- 4. ACTUAR SEGÚN EL RESULTADO -----
                 if (resultado == DialogResult.OK)
                 {
-                    // El usuario presionó "Aceptar". Obtenemos el nuevo ID del formulario.
                     int nuevoEstadoId = formDialogo.NuevoEstadoIdSeleccionado;
 
-                    // Llamamos al servicio para que haga la magia en la BD
-                    // (Crearemos este método en el Paso 4)
                     _service.CambiarEstado(nroHabitacion, nroCama, nuevoEstadoId);
 
                     CargarCamas();

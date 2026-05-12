@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 using System;
@@ -14,17 +14,25 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
+    /// <summary>
+    /// Control de usuario que proporciona un panel de gestión de turnos para el perfil de Gerente.
+    /// Incluye métricas rápidas (pendientes, completados, cancelados), listado con filtros y gráficos de tendencias de citas.
+    /// </summary>
     public partial class UC_TurnosGerente : UserControl
     {
-        // Acceso a los servicios de Turnos
+        /// <summary>Servicio para la gestión de lógica de negocio de turnos.</summary>
         TurnoService _turnoService = new TurnoService();
 
-        // Listado de turnos
+        /// <summary>Lista interna que almacena los turnos cargados.</summary>
         List<ListadoTurno> _listadoTurnos = new List<ListadoTurno>();
 
-        // Enlace de datos para el DataGridView
+        /// <summary>BindingSource para el enlace de datos entre la lista de turnos y la grilla.</summary>
         BindingSource enlaceTurnos = new BindingSource();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_TurnosGerente"/>.
+        /// Configura los indicadores, la tabla de datos y procesa la generación de gráficos de turnos por día y estado.
+        /// </summary>
         public UC_TurnosGerente()
         {
             InitializeComponent();

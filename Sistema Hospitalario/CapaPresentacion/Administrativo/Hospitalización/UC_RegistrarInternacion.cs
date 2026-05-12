@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.HabitacionDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.CamaDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.InternacionDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
@@ -24,41 +24,62 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Hospitalización
 {
+    /// <summary>
+    /// Control de usuario que gestiona el registro de nuevas internaciones de pacientes.
+    /// Maneja la asignación de médicos, procedimientos, pisos, habitaciones y camas disponibles,
+    /// con lógica de filtrado dinámico y validaciones de negocio.
+    /// </summary>
     public partial class UC_RegistrarInternacion : UserControl
     {
-        // Servicios para manejar la lógica de negocio
+        /// <summary>Servicio para operaciones de pacientes.</summary>
         private readonly PacienteService _servicioPaciente = new PacienteService();
+        /// <summary>Servicio para gestión de habitaciones.</summary>
         private readonly HabitacionService _servicioHabitacion = new HabitacionService();
+        /// <summary>Servicio para gestión de camas.</summary>
         private readonly CamaService _servicioCama = new CamaService();
+        /// <summary>Servicio para gestión de médicos.</summary>
         private readonly MedicoService _servicioMedico = new MedicoService();
+        /// <summary>Servicio para gestión de procedimientos médicos.</summary>
         private readonly ProcedimientoService _servicioProcedimiento = new ProcedimientoService();
 
-        // Atributos que almacenan la informacion de la base de datos a traves de los DTOs
+        /// <summary>Lista de pacientes candidatos para internación.</summary>
         private List<PacienteDto> listaPacientes = new List<PacienteDto>();
+        /// <summary>Lista de habitaciones filtradas.</summary>
         private List<HabitacionDto> listaHabitaciones = new List<HabitacionDto>();
+        /// <summary>Lista de camas disponibles en la habitación seleccionada.</summary>
         private List<CamaDto> listaCamas = new List<CamaDto>();
+        /// <summary>Lista de médicos disponibles.</summary>
         private List<MedicoDto> listaMedicos = new List<MedicoDto>();
+        /// <summary>Lista de procedimientos disponibles.</summary>
         private List<ProcedimientoDto> listaProcedimientos = new List<ProcedimientoDto>();
 
-        // Listas de texto (lo que se muestra en los combos)
+        /// <summary>Maestro de visualización de pacientes.</summary>
         private readonly List<string> _maestroPaciente = new List<string>();
+        /// <summary>Maestro de visualización de habitaciones.</summary>
         private readonly List<string> _maestroHabitacion = new List<string>();
+        /// <summary>Maestro de visualización de camas.</summary>
         private readonly List<string> _maestroCama = new List<string>();
+        /// <summary>Maestro de visualización de médicos.</summary>
         private readonly List<string> _maestroMedico = new List<string>();
+        /// <summary>Maestro de visualización de procedimientos.</summary>
         private readonly List<string> _maestroProcedimiento = new List<string>();
 
-        // cache maestros para filtrar sin reconsultar BD
+        /// <summary>Cached para filtrar médicos sin consultar BD.</summary>
         private List<MedicoDto> _medicosMaestro = new List<MedicoDto>();
+        /// <summary>Cached para filtrar procedimientos sin consultar BD.</summary>
         private List<ProcedimientoDto> _procedimientosMaestro = new List<ProcedimientoDto>();
 
 
-        // Bandera para evitar reentrancia en eventos de texto
+        /// <summary>Bandera para evitar reentrancia en eventos de texto.</summary>
         private bool _actualizandoInterno = false;
 
-        // Evento para notificar al menuAdministrativo que se solicitó cancelar el registro
+        /// <summary>Evento que notifica que se ha cancelado el registro de internación.</summary>
         public event EventHandler CancelarInternacionSolicitada;
 
-        // ============================= CONSTRUCTOR =============================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_RegistrarInternacion"/>.
+        /// Configura los eventos de filtrado, carga los catálogos iniciales y prepara los controles de fecha.
+        /// </summary>
         public UC_RegistrarInternacion()
         {
             InitializeComponent();

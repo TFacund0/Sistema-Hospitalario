@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaDatos;
+using Sistema_Hospitalario.CapaDatos;
 using Sistema_Hospitalario.CapaDatos.Interfaces;
 using Sistema_Hospitalario.CapaNegocio.DTOs.HistorialDTO;
 using Sistema_Hospitalario.CapaNegocio.DTOs.MedicoDTO;
@@ -13,12 +13,24 @@ using System.Text;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de la persistencia de médicos, consultas e historial clínico consolidado.
+    /// Utiliza Entity Framework para interactuar con las tablas de Médicos, Consultas e Internaciones.
+    /// </summary>
     public class MedicoRepository : IMedicoRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="MedicoRepository"/>.
+        /// </summary>
         public MedicoRepository()
         {
         }
 
+        /// <summary>
+        /// Recupera un objeto de entidad médico completo por su identificador único.
+        /// </summary>
+        /// <param name="idMedico">ID del médico a buscar.</param>
+        /// <returns>Objeto <see cref="medico"/> o null si no se encuentra.</returns>
         public medico ObtenerMedicoPorId(int idMedico)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -27,7 +39,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Inserta un nuevo médico en la base de datos
+        /// <inheritdoc />
         public (bool Ok, int IdGenerado, string Error) Insertar(string nombre, string apellido, string dni, string direccion, string matricula, string correo, int idEspecialidad)
         {
             try
@@ -72,7 +84,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Elimina un médico por su ID
+        /// <inheritdoc />
         public void Eliminar(int idMedico)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -101,7 +113,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Obtener la lista de médicos con sus detalles
+        /// <inheritdoc />
         public List<MostrarMedicoDTO> ObtenerMedicos()
         {
 
@@ -125,7 +137,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Listar todos los médicos como DTOs
+        /// <inheritdoc />
         public List<MedicoDto> ListarMedicos()
         {
             using (var context = new Sistema_HospitalarioEntities_Conexion())
@@ -144,6 +156,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return medicoDtos;
             }
         }
+        /// <inheritdoc />
         public List<PacienteListadoMedicoDto> ObtenerTodosParaMedico(DateTime? fechaTurno)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -183,6 +196,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return lista;
             }
         }
+        /// <inheritdoc />
         public int ContarTotalPacientes()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -191,6 +205,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 return db.paciente.Count();
             }
         }
+        /// <inheritdoc />
         public void InsertarConsulta(Consulta consulta)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -215,6 +230,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                 }
             }
         }
+        /// <inheritdoc />
         public List<HistorialItemDto> ObtenerHistorialConsultas(int idPaciente)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -235,6 +251,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
                     .ToList();
             }
         }
+        /// <inheritdoc />
         public List<HistorialItemDto> ObtenerHistorialInternaciones(int idPaciente)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -256,6 +273,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
+        /// <inheritdoc />
         public List<HistorialItemDto> ObtenerHistorialTurnos(int idPaciente)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

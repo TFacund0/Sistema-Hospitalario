@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,21 +9,42 @@ using Sistema_Hospitalario.CapaDatos.Repositories;
 
 namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
 {
+    /// <summary>
+    /// Servicio que gestiona la lógica de negocio relacionada con los pacientes.
+    /// Proporciona métodos para el registro, edición, consulta y conteo de pacientes.
+    /// </summary>
     public class PacienteService
     {
         private readonly PacienteRepository _repo = new PacienteRepository();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="PacienteService"/>.
+        /// </summary>
         public PacienteService()
         {
         }
 
-        // Obtener todas los pacientes
+        /// <summary>
+        /// Obtiene la lista completa de todos los pacientes registrados en el sistema.
+        /// </summary>
+        /// <returns>Lista de objetos <see cref="PacienteDto"/>.</returns>
         public List<PacienteDto> ObtenerPacientes()
         {
             return _repo.GetAll();
         }
 
-        // ===================== ALTA (guardar en BD) =====================
+        /// <summary>
+        /// Registra un nuevo paciente en el sistema realizando validaciones de negocio.
+        /// </summary>
+        /// <param name="dtoPaciente">Datos del paciente para el alta.</param>
+        /// <returns>
+        /// Una tupla conteniendo:
+        /// <list type="bullet">
+        /// <item><description><c>Ok</c>: Indica si la operación fue exitosa.</description></item>
+        /// <item><description><c>IdGenerado</c>: El ID del paciente recién creado.</description></item>
+        /// <item><description><c>Error</c>: Mensaje descriptivo en caso de fallo.</description></item>
+        /// </list>
+        /// </returns>
         public (bool Ok, int IdGenerado, string Error) Alta(PacienteAltaDto dtoPaciente)
         {
             try
@@ -86,7 +107,11 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
             }
         }
 
-        // ===================== EDITAR (actualizar en BD) =====================
+        /// <summary>
+        /// Actualiza los datos de un paciente existente.
+        /// </summary>
+        /// <param name="dto">DTO con los nuevos datos del paciente y su identificador.</param>
+        /// <returns>Una tupla con el estado de éxito y un mensaje de error opcional.</returns>
         public (bool Ok, string Error) Editar(PacienteDetalleDto dto)
         {
             try
@@ -136,14 +161,22 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
             }
         }
 
-        // ===================== CONTAR CANTIDAD PACIENTES (por estado) =====================
+        /// <summary>
+        /// Cuenta la cantidad de pacientes que se encuentran en un estado específico.
+        /// </summary>
+        /// <param name="estado">Nombre del estado (ej. "activo", "internado").</param>
+        /// <returns>Número total de pacientes en ese estado.</returns>
         public int ContarPorEstadoId(string estado)
         {
             var listaPacientes = this.ObtenerPacientes();
             return listaPacientes.Where(p => p.Estado_paciente.ToLower() == estado.ToLower()).Count();
         }
 
-        // ===================== DETALLE (para ver/editar) =====================
+        /// <summary>
+        /// Obtiene el detalle extendido de un paciente específico por su ID.
+        /// </summary>
+        /// <param name="p_id_paciente">Identificador único del paciente.</param>
+        /// <returns>Un <see cref="PacienteDetalleDto"/> con la información detallada, o <c>null</c> si no se encuentra.</returns>
         public PacienteDetalleDto ObtenerDetalle(int p_id_paciente)
         {
             var listaPacientes = this.ObtenerPacientes();
@@ -165,7 +198,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                 .FirstOrDefault();
         }
 
-        // ===================== LISTADO (para el DataGridView) =====================
+        /// <summary>
+        /// Obtiene un listado de pacientes filtrado por estados relevantes para la gestión diaria (Activo, Internado, Alta).
+        /// </summary>
+        /// <returns>Lista de <see cref="PacienteDto"/>.</returns>
         public List<PacienteDto> ListarPacientes()
         {
             var listaPacientes = this.ObtenerPacientes();
@@ -183,7 +219,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                 .ToList();
         }
 
-        // ===================== LISTADO PACIENTES EGRESADOS =====================
+        /// <summary>
+        /// Obtiene la lista de pacientes que ya han sido dados de alta (egresados).
+        /// </summary>
+        /// <returns>Lista de <see cref="PacienteDto"/> egresados.</returns>
         public List<PacienteDto> ListarPacienteEgresados()
         {
             var listaPacientes = this.ObtenerPacientes();
@@ -201,7 +240,10 @@ namespace Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService
                 .ToList();
         }
 
-        // ===================== LISTADO COMPLETO PACIENTES =====================
+        /// <summary>
+        /// Obtiene el listado completo de pacientes sin filtros para visualización general.
+        /// </summary>
+        /// <returns>Lista completa de <see cref="PacienteDto"/>.</returns>
         public List<PacienteDto> ListadoPacientesDGV()
         {
             var listaPacientes = this.ObtenerPacientes();

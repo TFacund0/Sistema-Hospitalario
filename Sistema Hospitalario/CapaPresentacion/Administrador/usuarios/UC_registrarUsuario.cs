@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,14 +14,25 @@ using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
 {
+    /// <summary>
+    /// Control de usuario que permite la creación y alta de nuevos usuarios en el sistema.
+    /// Soporta la asignación de roles, estados y la vinculación opcional con un perfil médico,
+    /// incluyendo validaciones de seguridad para contraseñas y nombres de usuario únicos.
+    /// </summary>
     public partial class UC_registrarUsuario : UserControl
     {
-        // ===================== INSTANCIAS DE SERVICIOS =====================
+        /// <summary>Servicio para la gestión de lógica de usuarios.</summary>
         private static readonly UsuarioService usuarioService = new UsuarioService();
+        /// <summary>Referencia local al servicio de usuarios.</summary>
         private readonly UsuarioService _service = usuarioService;
 
+        /// <summary>Servicio para la gestión de médicos (usado para vinculación de cuentas).</summary>
         private readonly MedicoService _medicoService = new MedicoService();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_registrarUsuario"/>.
+        /// Carga los catálogos de roles y estados, e inhabilita inicialmente la selección de médicos.
+        /// </summary>
         public UC_registrarUsuario()
         {
             InitializeComponent();
@@ -182,7 +193,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
             }
             else if (!System.Text.RegularExpressions.Regex.IsMatch(
                          TBUSERNAME.Text, @"^[a-zA-Z0-9_]+$"))
-            { // Validar caracteres permitidos (opcional)
+            { // Validar caracteres permitidos 
                 e.Cancel = true;
                 errorProvider1.SetError(TBUSERNAME, "Solo se permiten letras, números y guión bajo.");
             }
@@ -206,7 +217,7 @@ namespace Sistema_Hospitalario.CapaPresentacion.Administrador.usuarios
                 errorProvider1.SetError(TBPASSWORD, "Máximo 60 caracteres.");
             }
             else if (TBPASSWORD.Text.Length < 6)
-            { // Validar longitud mínima básica (opcional)
+            { // Validar longitud mínima básica
                 e.Cancel = true;
                 errorProvider1.SetError(TBPASSWORD, "Debe tener al menos 6 caracteres.");
             }

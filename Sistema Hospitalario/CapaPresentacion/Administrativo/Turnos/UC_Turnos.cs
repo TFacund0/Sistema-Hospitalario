@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs;
+using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.TurnoDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
@@ -17,23 +17,31 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo
 {
+    /// <summary>
+    /// Control de usuario que gestiona el listado y búsqueda de turnos para el personal administrativo.
+    /// Permite visualizar turnos recientes, filtrar por paciente/fecha/estado y acceder al detalle o registro de citas.
+    /// </summary>
     public partial class UC_Turnos : UserControl
     {
-        // Acceso a los servicios de Turnos
+        /// <summary>Servicio para el manejo de lógica de turnos.</summary>
         TurnoService _turnoService = new TurnoService();
 
-        // Listado de turnos
+        /// <summary>Lista interna que almacena los turnos cargados.</summary>
         List<ListadoTurno> _listadoTurnos = new List<ListadoTurno>();
 
-        // Enlace de datos para el DataGridView
+        /// <summary>Enlace de datos para la sincronización con la grilla de turnos.</summary>
         BindingSource enlaceTurnos = new BindingSource();
 
-        // ============== EVENTOS ==============
+        /// <summary>Evento que notifica que se ha solicitado ver el detalle de un turno específico.</summary>
         public event EventHandler<TurnoDto> VerTurnoSolicitado;
+
+        /// <summary>Evento que notifica que se ha solicitado el registro de un nuevo turno.</summary>
         public event EventHandler RegistrarTurnoSolicitado;
 
-
-        // ============== CONSTRUCTOR UC TURNOS ==============
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_Turnos"/>.
+        /// Configura la grilla, carga los indicadores de estado y puebla los datos iniciales.
+        /// </summary>
         public UC_Turnos()
         {
             InitializeComponent();     

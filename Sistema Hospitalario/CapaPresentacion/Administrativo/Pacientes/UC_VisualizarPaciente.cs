@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio;
 using Sistema_Hospitalario.CapaNegocio.DTOs;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
@@ -10,25 +10,33 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
+    /// <summary>
+    /// Control de usuario que permite visualizar y editar el detalle de un paciente existente.
+    /// Soporta la actualización de datos personales, contacto, observaciones y cambio de estado clínico.
+    /// </summary>
     public partial class UC_VisualizarPaciente : UserControl
     {
-        // Servicios de negocio
+        /// <summary>Servicio para operaciones de pacientes.</summary>
         private readonly PacienteService _pacienteService = new PacienteService();
+        /// <summary>Servicio para gestión de estados de pacientes.</summary>
         private readonly EstadoPacienteService _estadoService = new EstadoPacienteService();
 
-        // DTO local para mantener el estado actual del paciente
+        /// <summary>DTO que mantiene la información detallada del paciente actual.</summary>
         private PacienteDetalleDto _pacienteDto;
 
-        // Modo edición
+        /// <summary>Bandera que indica si el control está en modo edición.</summary>
         private bool _modoEdicion = false;
 
-        // Evento para notificar que se canceló la visualización (volver al listado)
+        /// <summary>Evento que notifica que se ha cancelado la visualización para volver al listado.</summary>
         public event EventHandler CancelarVisualizacionSolicitada;
 
-        // Evento para notificar que el paciente fue actualizado
+        /// <summary>Evento que notifica que los datos del paciente han sido actualizados con éxito.</summary>
         public event EventHandler<PacienteDetalleDto> PacienteActualizado;
 
-        // ========================= CONSTRUCTOR UC VISUALIZAR PACIENTE =========================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_VisualizarPaciente"/>.
+        /// </summary>
+        /// <param name="paciente">DTO con los datos iniciales del paciente a visualizar.</param>
         public UC_VisualizarPaciente(PacienteDetalleDto paciente)
         {
             InitializeComponent();

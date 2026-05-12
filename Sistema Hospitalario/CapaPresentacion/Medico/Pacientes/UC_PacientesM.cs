@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
+using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using System;
 using System.Collections.Generic;
@@ -15,13 +15,22 @@ using static Sistema_Hospitalario.CapaPresentacion.Administrativo.UC_Pacientes;
 namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
 
+    /// <summary>
+    /// Control de usuario que muestra el listado de pacientes para el perfil médico.
+    /// Incluye funcionalidades de filtrado por nombre, apellido o DNI y acceso al detalle del paciente.
+    /// </summary>
     public partial class UC_PacientesM : UserControl
     {
+        /// <summary>Servicio de operaciones médicas.</summary>
         private MedicoService _service = new MedicoService();
 
-        // Enlace para el DataGridView
+        /// <summary>Fuente de datos para el enlace con el DataGridView.</summary>
         private readonly BindingSource _enlacePacientes = new BindingSource();
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_PacientesM"/>.
+        /// Configura la interfaz, carga los filtros iniciales y puebla la grilla.
+        /// </summary>
         public UC_PacientesM()
         {
             InitializeComponent();
@@ -31,10 +40,17 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico
             RefrescarGrilla();
             CargarContadores();
 
-            // (por si no lo hiciste en el diseñador)
+            // Suscripción al evento de doble clic para abrir detalles
             dgvPacientes.CellDoubleClick += DgvPacientes_CellDoubleClick;
         }
 
+        /// <summary>
+        /// Actualiza el contenido de la grilla de pacientes aplicando los filtros especificados.
+        /// </summary>
+        /// <param name="nombre">Filtro por nombre.</param>
+        /// <param name="apellido">Filtro por apellido.</param>
+        /// <param name="dni">Filtro por DNI.</param>
+        /// <param name="fechaTurno">Filtro por fecha de turno (opcional).</param>
         private void RefrescarGrilla(string nombre = null, string apellido = null, string dni = null, DateTime? fechaTurno = null)
         {
             try

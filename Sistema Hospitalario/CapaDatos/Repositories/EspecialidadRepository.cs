@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -11,14 +11,20 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.EspecialidadDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de gestionar el catálogo de especialidades médicas mediante Entity Framework.
+    /// </summary>
     public class EspecialidadRepository : IEspecialidadRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="EspecialidadRepository"/>.
+        /// </summary>
         public EspecialidadRepository()
         {
             
         }
 
-        // Obtener todas las especialidades
+        /// <inheritdoc />
         public List<EspecialidadDTO> GetAll()
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -33,7 +39,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Insertar una nueva especialidad
+        /// <inheritdoc />
         public void Insertar(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -43,7 +49,7 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Eliminar una especialidad por nombre
+        /// <inheritdoc />
         public void Eliminar(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())
@@ -71,7 +77,11 @@ namespace Sistema_Hospitalario.CapaDatos.Repositories
             }
         }
 
-        // Verificar si una especialidad con el mismo nombre ya existe
+        /// <summary>
+        /// Verifica si una especialidad con el mismo nombre ya existe en la base de datos.
+        /// </summary>
+        /// <param name="nombre">Nombre de la especialidad a verificar.</param>
+        /// <returns>True si el nombre ya está registrado.</returns>
         public bool ExisteNombre(string nombre)
         {
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

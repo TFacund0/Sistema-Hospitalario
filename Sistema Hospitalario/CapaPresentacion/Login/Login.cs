@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio;
 using Sistema_Hospitalario.CapaNegocio.DTOs.UsuarioDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.UsuarioService;
 using Sistema_Hospitalario.CapaPresentacion.Administrador;
@@ -17,18 +17,30 @@ using System.Windows.Forms;
 
 namespace WindowsFormsInicio_de_sesion
 {
+    /// <summary>
+    /// Formulario de acceso al sistema. Gestiona la autenticación de usuarios y la redirección según el rol.
+    /// </summary>
     public partial class Login : Form
     {
-        // Servicio para manejar la lógica de usuarios
+        /// <summary>
+        /// Servicio para manejar la lógica de negocio de usuarios.
+        /// </summary>
         UsuarioService _usuarioService = new UsuarioService();
 
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario <see cref="Login"/>.
+        /// </summary>
         public Login()
         {
             InitializeComponent();
         }
 
-        // ======================= EVENTO DEL BOTÓN INGRESAR =======================
-        // Aquí se maneja la lógica de autenticación y redirección según el rol del usuario.
+        /// <summary>
+        /// Maneja el evento de clic en el botón ingresar.
+        /// Realiza la validación de credenciales y redirige al menú correspondiente según el rol del usuario.
+        /// </summary>
+        /// <param name="sender">Objeto que dispara el evento.</param>
+        /// <param name="e">Argumentos del evento.</param>
         private void BotonIngresar_Click_1(object sender, EventArgs e)
         {
             string usuario = txtUsuario.Text.Trim();

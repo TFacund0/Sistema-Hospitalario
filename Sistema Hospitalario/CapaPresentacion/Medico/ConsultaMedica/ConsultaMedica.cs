@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio;
 using Sistema_Hospitalario.CapaNegocio.DTOs.ConsultaDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using System;
@@ -13,11 +13,22 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes
 {
+    /// <summary>
+    /// Control de usuario que gestiona el registro de nuevas consultas médicas.
+    /// Permite al médico ingresar diagnóstico, tratamiento y motivo de la consulta para un paciente identificado por DNI.
+    /// </summary>
     public partial class ConsultaMedica : UserControl
     {
+        /// <summary>Servicio para el manejo de operaciones médicas.</summary>
         private MedicoService _service = new MedicoService();
+
+        /// <summary>ID del médico logueado recuperado de la sesión.</summary>
         private int _idMedicoLogueado;
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="ConsultaMedica"/>.
+        /// Prepara el formulario para el registro de una consulta.
+        /// </summary>
         public ConsultaMedica()
         {
             InitializeComponent();
@@ -133,6 +144,12 @@ namespace Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes
             }
         }
 
+        /// <summary>
+        /// Procesa el guardado de la consulta médica.
+        /// Valida los datos, crea el DTO y utiliza el servicio para persistir la información.
+        /// </summary>
+        /// <param name="sender">Objeto que dispara el evento.</param>
+        /// <param name="e">Argumentos del evento.</param>
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             try

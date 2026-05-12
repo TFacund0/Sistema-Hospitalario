@@ -48,7 +48,7 @@
             // txtUsuario
             // 
             this.txtUsuario.Location = new System.Drawing.Point(175, 170);
-            this.txtUsuario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUsuario.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(199, 22);
             this.txtUsuario.TabIndex = 0;
@@ -56,7 +56,7 @@
             // txtContraseña
             // 
             this.txtContraseña.Location = new System.Drawing.Point(175, 249);
-            this.txtContraseña.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtContraseña.Margin = new System.Windows.Forms.Padding(4);
             this.txtContraseña.Name = "txtContraseña";
             this.txtContraseña.Size = new System.Drawing.Size(199, 22);
             this.txtContraseña.TabIndex = 1;
@@ -81,7 +81,7 @@
             this.BotonIngresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BotonIngresar.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.BotonIngresar.Location = new System.Drawing.Point(192, 320);
-            this.BotonIngresar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BotonIngresar.Margin = new System.Windows.Forms.Padding(4);
             this.BotonIngresar.Name = "BotonIngresar";
             this.BotonIngresar.Size = new System.Drawing.Size(163, 28);
             this.BotonIngresar.TabIndex = 3;
@@ -132,7 +132,7 @@
             this.panelLogin.Controls.Add(this.panelFormLogin);
             this.panelLogin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLogin.Location = new System.Drawing.Point(0, 0);
-            this.panelLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelLogin.Margin = new System.Windows.Forms.Padding(4);
             this.panelLogin.Name = "panelLogin";
             this.panelLogin.Size = new System.Drawing.Size(1067, 469);
             this.panelLogin.TabIndex = 9;
@@ -143,7 +143,7 @@
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(537, 469);
             this.panel2.TabIndex = 0;
@@ -152,7 +152,7 @@
             // 
             this.pictureBox1.Image = global::Sistema_Hospitalario.Properties.Resources.ChatGPT_Image_1_sept_2025__03_00_36_p_m_;
             this.pictureBox1.Location = new System.Drawing.Point(65, 23);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(376, 325);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -170,7 +170,7 @@
             this.panelFormLogin.Controls.Add(this.label4);
             this.panelFormLogin.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panelFormLogin.Location = new System.Drawing.Point(533, 0);
-            this.panelFormLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelFormLogin.Margin = new System.Windows.Forms.Padding(4);
             this.panelFormLogin.Name = "panelFormLogin";
             this.panelFormLogin.Size = new System.Drawing.Size(533, 469);
             this.panelFormLogin.TabIndex = 9;
@@ -182,10 +182,10 @@
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1067, 469);
             this.Controls.Add(this.panelLogin);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Iniciar Sesión";
             this.panelLogin.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

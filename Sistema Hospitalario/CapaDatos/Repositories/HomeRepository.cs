@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +9,20 @@ using Sistema_Hospitalario.CapaNegocio.DTOs.HomeDTO;
 
 namespace Sistema_Hospitalario.CapaDatos.Repositories
 {
+    /// <summary>
+    /// Repositorio encargado de consolidar información de diversas fuentes para la vista de inicio.
+    /// Combina datos de turnos, internaciones y registros de pacientes.
+    /// </summary>
     public class HomeRepository : IHomeRepository
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="HomeRepository"/>.
+        /// </summary>
         public HomeRepository()
         {
         }
 
-        // Listar actividad reciente: turnos, internaciones, pacientes registrados
+        /// <inheritdoc />
         public List<HomeDto> ListarActividad(int cantidad)
         { 
             using (var db = new Sistema_Hospitalario.CapaDatos.Sistema_HospitalarioEntities_Conexion())

@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio;
 using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using System;
@@ -15,16 +15,24 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Administrativo.Pacientes
 {
+    /// <summary>
+    /// Control de usuario que gestiona el alta de nuevos pacientes en el sistema.
+    /// Realiza validaciones exhaustivas de datos personales, contacto y asignación de estado inicial.
+    /// </summary>
     public partial class UC_RegistrarPaciente : UserControl
     {
-        // Servicio para interactuar con la capa de negocio de paciente y estado
+        /// <summary>Servicio para la gestión de lógica de pacientes.</summary>
         private readonly PacienteService _pacienteService = new PacienteService();
+        /// <summary>Servicio para la gestión de estados de pacientes.</summary>
         private readonly EstadoPacienteService _estadoService = new EstadoPacienteService();
 
-        // Evento para notificar al menuAdministrativo que se solicitó cancelar el registro
+        /// <summary>Evento que notifica que se ha cancelado el registro del paciente.</summary>
         public event EventHandler CancelarRegistroSolicitado;
 
-        // ============================= CONSTRUCTOR DEL UC REGISTRAR PACIENTE =============================
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_RegistrarPaciente"/>.
+        /// Configura los rangos de fecha permitidos y carga el catálogo de estados iniciales.
+        /// </summary>
         public UC_RegistrarPaciente()
         {
             InitializeComponent();

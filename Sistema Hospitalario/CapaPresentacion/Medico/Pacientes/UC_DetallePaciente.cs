@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio;
+using Sistema_Hospitalario.CapaNegocio;
 using Sistema_Hospitalario.CapaNegocio.DTOs.PacienteDTO;
 using Sistema_Hospitalario.CapaNegocio.Servicios.MedicoService;
 using Sistema_Hospitalario.CapaPresentacion.Medico.Pacientes;
@@ -15,17 +15,32 @@ using System.Windows.Forms;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Medico
 {
+    /// <summary>
+    /// Control de usuario que muestra el historial clínico detallado de un paciente.
+    /// Utiliza un componente WebBrowser para renderizar el historial en formato HTML.
+    /// </summary>
     public partial class UC_DetallePaciente : UserControl
     {
+        /// <summary>Servicio de operaciones médicas.</summary>
         private readonly MedicoService service = new MedicoService();
+
+        /// <summary>Datos del paciente seleccionado.</summary>
         private PacienteListadoMedicoDto Paciente;
 
-        public UC_DetallePaciente(PacienteListadoMedicoDto paciente) // crea el user control con los datos del paciente
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_DetallePaciente"/>.
+        /// </summary>
+        /// <param name="paciente">DTO del paciente del cual se desea ver el historial.</param>
+        public UC_DetallePaciente(PacienteListadoMedicoDto paciente)
         {
             InitializeComponent();
             this.Paciente = paciente; 
             CargarHistorial();
         }
+        /// <summary>
+        /// Genera y carga el historial clínico consolidado en el control WebBrowser.
+        /// Construye un documento HTML dinámico con la información de consultas e internaciones.
+        /// </summary>
         private void CargarHistorial()
         {
             // 1. Recolectamos los filtros

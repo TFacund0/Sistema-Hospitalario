@@ -1,4 +1,4 @@
-﻿using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
+using Sistema_Hospitalario.CapaNegocio.Servicios.HabitacionService.CamaService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.PacienteService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.TurnoService;
 using Sistema_Hospitalario.CapaNegocio.Servicios.EstadisticasService;
@@ -17,8 +17,16 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Sistema_Hospitalario.CapaPresentacion.Gerente
 {
+    /// <summary>
+    /// Control de usuario que actúa como panel principal (Dashboard) para el Gerente.
+    /// Muestra estadísticas clave y gráficos visuales sobre la actividad del hospital.
+    /// </summary>
     public partial class UC_HomeGerente : UserControl
     {
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="UC_HomeGerente"/>.
+        /// Procesa la carga de datos estadísticos y la generación de gráficos de ocupación y pacientes.
+        /// </summary>
         public UC_HomeGerente()
         {
             InitializeComponent();
