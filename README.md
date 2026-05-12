@@ -1,5 +1,7 @@
 # 🏥 Sistema de Gestión Hospitalaria (N-Layer)
 
+[<img src="https://img.shields.io/badge/Descargar-Ejecutable_v1.0-orange?style=for-the-badge&logo=windows" />](https://github.com/TFacund0/Sistema-Hospitalario/releases/tag/v1.0)
+
 [![.NET](https://img.shields.io/badge/.NET-v4.8-blueviolet.svg)](https://dotnet.microsoft.com/)
 [![C#](https://img.shields.io/badge/Language-C%23-blue.svg)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 [![SQL Server](https://img.shields.io/badge/Database-SQL%20Server-red.svg)](https://www.microsoft.com/en-us/sql-server/)
